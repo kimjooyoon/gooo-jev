@@ -1,6 +1,9 @@
 package decision
 
-import "testing"
+import (
+	"testing"
+	"time"
+)
 
 func validRevisionActionVerificationGuard(t *testing.T) ExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionGuardBinding {
 	t.Helper()
@@ -12,9 +15,9 @@ func TestVerifyExecutionEnvelopeGoooEvidenceFullProvenanceRevisionAction(t *test
 	output := VerifyExecutionEnvelopeGoooEvidenceFullProvenanceRevisionAction(ExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionVerificationInput{
 		Guard: guard,
 		ReverseObservation: ExecutionEnvelopeReverseObservationOutput{
-			Status:           "reproduced",
-			EvidenceDigest:   "reverse-observation-evidence",
-			NonAuthorizing:   true,
+			Status:         "reproduced",
+			EvidenceDigest: "reverse-observation-evidence",
+			NonAuthorizing: true,
 		},
 		NonAuthorizing: true,
 	})
@@ -31,10 +34,10 @@ func TestVerifyExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionKeepsCou
 	output := VerifyExecutionEnvelopeGoooEvidenceFullProvenanceRevisionAction(ExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionVerificationInput{
 		Guard: guard,
 		ReverseObservation: ExecutionEnvelopeReverseObservationOutput{
-			Status:           "counterexample",
-			EvidenceDigest:   "counterexample-evidence",
-			FirstMismatch:    "generated-output",
-			NonAuthorizing:   true,
+			Status:         "counterexample",
+			EvidenceDigest: "counterexample-evidence",
+			FirstMismatch:  "generated-output",
+			NonAuthorizing: true,
 		},
 		NonAuthorizing: true,
 	})
