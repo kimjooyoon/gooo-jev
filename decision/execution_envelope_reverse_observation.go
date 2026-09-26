@@ -13,7 +13,7 @@ type ExecutionEnvelopeReverseObservationInput struct {
 }
 
 // ExecutionEnvelopeReverseObservationOutput records the first exact
-// divergence, or reproduced when every supplied boundary agrees.
+// divergence, or reproduced when every applicable boundary agrees.
 type ExecutionEnvelopeReverseObservationOutput struct {
 	Status         string `json:"status"`
 	FirstMismatch  string `json:"first_mismatch"`
@@ -40,6 +40,9 @@ func ObserveExecutionEnvelopeProvenanceReverse(input ExecutionEnvelopeReverseObs
 		{name: "evidence_digest", observed: input.ObservedEvidenceDigest, expected: input.ExpectedEvidenceDigest},
 	}
 	for _, check := range checks {
+		if check.name == "missing_stage" && check.observed == "" && check.expected == "" && input.ObservedStatus == "ready" && input.ExpectedStatus == "ready" {
+			continue
+		}
 		if check.observed == "" || check.expected == "" {
 			output.FirstMismatch = check.name
 			return output

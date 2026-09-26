@@ -10,8 +10,8 @@ func TestObserveExecutionEnvelopeProvenanceReverseReproducesExactBoundary(t *tes
 		ExpectedEvidenceDigest: "digest",
 		NonAuthorizing:         true,
 	})
-	if result.Status != "reproduced" || result.FirstMismatch != "missing_stage" || !result.NonAuthorizing {
-		t.Fatalf("incomplete reverse boundary was not preserved: %#v", result)
+	if result.Status != "reproduced" || result.FirstMismatch != "" || result.EvidenceDigest != "digest" || !result.NonAuthorizing {
+		t.Fatalf("complete reverse boundary was not preserved: %#v", result)
 	}
 }
 
@@ -19,8 +19,6 @@ func TestObserveExecutionEnvelopeProvenanceReverseReportsFirstCounterexample(t *
 	result := ObserveExecutionEnvelopeProvenanceReverse(ExecutionEnvelopeReverseObservationInput{
 		ObservedStatus:         "ready",
 		ExpectedStatus:         "hold",
-		ObservedMissingStage:   "",
-		ExpectedMissingStage:   "",
 		ObservedEvidenceDigest: "observed",
 		ExpectedEvidenceDigest: "expected",
 		NonAuthorizing:         true,
