@@ -1,0 +1,27 @@
+package jevgoooevidencefullprovenancerevisioncandidate
+namespace jevgoooevidencefullprovenancerevisioncandidate
+
+entity ExecutionEnvelopeGoooEvidenceFullProvenanceRevisionCandidateInput id "gooo://gooo-jev/gooo-evidence-full-provenance-revision-candidate-input"
+property EvidenceBinding GoooEvidenceFullProvenanceBinding
+property Ledger JEVImprovementReplayFeedbackLedger
+property Directive JEVImprovementDirectionDirective
+property RevisionSource string
+property RevisionChangeDigest string
+property NonAuthorizing boolean
+
+entity ExecutionEnvelopeGoooEvidenceFullProvenanceRevisionCandidateBinding id "gooo://gooo-jev/gooo-evidence-full-provenance-revision-candidate-binding"
+property Status string
+property MissingStage string
+property EvidenceBindingDigest string
+property ProvenanceEvidenceDigest string
+property LedgerEvidenceDigest string
+property LedgerEntryDigest string
+property CandidateStatus string
+property CandidateDigest string
+property CandidateEvidenceDigest string
+property BoundRevisionChangeDigest string
+property BindingDigest string
+property NonExecuting boolean
+property NonAuthorizing boolean
+
+activity GenerateExecutionEnvelopeGoooEvidenceFullProvenanceRevisionCandidate(ExecutionEnvelopeGoooEvidenceFullProvenanceRevisionCandidateInput) -> ExecutionEnvelopeGoooEvidenceFullProvenanceRevisionCandidateBinding
