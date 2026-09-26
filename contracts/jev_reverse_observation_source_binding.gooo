@@ -1,0 +1,18 @@
+entity ExecutionEnvelopeReverseObservationSourceInput id "gooo://gooo-jev/reverse-observation-source-input"
+  property ObservedStatus string
+  property ExpectedStatus string
+  property ObservedMissingStage string
+  property ExpectedMissingStage string
+  property ObservedEvidenceDigest string
+  property ExpectedEvidenceDigest string
+  property SourceText string
+  property NonAuthorizing boolean
+
+entity ExecutionEnvelopeReverseObservationSourceBinding id "gooo://gooo-jev/reverse-observation-source-binding"
+  property Status string
+  property FirstMismatch string
+  property SourceDigest string
+  property ObservationDigest string
+  property NonAuthorizing boolean
+
+activity BindExecutionEnvelopeReverseObservationFromSource(ExecutionEnvelopeReverseObservationSourceInput) -> ExecutionEnvelopeReverseObservationSourceBinding
