@@ -1,0 +1,23 @@
+package jevimprovementreplayfeedbackreconciliation
+namespace jevimprovementreplayfeedbackreconciliation
+
+entity ImprovementReplayFeedbackReconciliationInput id "gooo://gooo-jev/improvement-replay-feedback-reconciliation-input"
+  property ReplayFeedbackStatus string
+  property ReplayFeedbackMetricName string
+  property ReplayFeedbackEvidenceDigest string
+  property HistoryDigest string
+  property MetricName string
+  property NonAuthorizing boolean
+
+entity ImprovementReplayFeedbackReconciliation id "gooo://gooo-jev/improvement-replay-feedback-reconciliation"
+  property Status string
+  property MetricName string
+  property HistoryDigest string
+  property ReplayEvidenceDigest string
+  property LatestSummaryDigest string
+  property EvidenceDigest string
+  property MissingStage string
+  property NonExecuting boolean
+  property NonAuthorizing boolean
+
+activity ReconcileImprovementReplayFeedback(ImprovementReplayFeedbackReconciliationInput) -> ImprovementReplayFeedbackReconciliation
