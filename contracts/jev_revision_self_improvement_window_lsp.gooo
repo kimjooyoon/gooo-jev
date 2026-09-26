@@ -1,0 +1,26 @@
+package jevrevisionselfimprovementwindowlsp
+namespace jevrevisionselfimprovementwindowlsp
+
+entity RevisionSelfImprovementWindowLSPInput id "gooo://gooo-jev/revision-self-improvement-window-lsp-input"
+property SourceText string
+property SymbolName string
+property Window RevisionSelfImprovementWindow
+property NonAuthorizing boolean
+
+entity RevisionSelfImprovementWindowLSPProjection id "gooo://gooo-jev/revision-self-improvement-window-lsp-projection"
+property Status string
+property SourceDigest string
+property IRDigest string
+property SymbolName string
+property SymbolDigest string
+property BaselineReceiptDigest string
+property CandidateReceiptDigest string
+property ByteDelta integer
+property LineDelta integer
+property ComparisonSignal string
+property WindowDigest string
+property MissingStage string
+property NonExecuting boolean
+property NonAuthorizing boolean
+
+activity ExplainRevisionSelfImprovementWindow(RevisionSelfImprovementWindowLSPInput) -> RevisionSelfImprovementWindowLSPProjection
