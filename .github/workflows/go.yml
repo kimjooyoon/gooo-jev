@@ -2,7 +2,7 @@ name: Go
 
 on:
   push:
-    branches: [main]
+    branches: [main, "agent/jev-execution-envelope-dev-20260926-r1"]
   pull_request:
     branches: [main]
 
@@ -19,3 +19,4 @@ jobs:
           go-version: "1.23"
       - name: Test
         run: go test ./...
+
