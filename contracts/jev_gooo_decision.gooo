@@ -1,0 +1,6 @@
+package jevdecision
+namespace jevdecision
+entity GoooDecisionDocument id "gooo://gooo-jev/decision/document"
+entity GoooDecisionDeclaration id "gooo://gooo-jev/decision/declaration"
+entity GoooDecisionReceipt id "gooo://gooo-jev/decision/receipt"
+activity ParseGoooDecision(GoooDecisionDocument) -> GoooDecisionReceipt

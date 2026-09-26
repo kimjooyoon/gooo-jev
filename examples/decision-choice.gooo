@@ -1,0 +1,8 @@
+package jevdecision
+namespace jevdecision
+entity DecisionSpec id "gooo://jev/decision/spec"
+entity DecisionReceipt id "gooo://jev/decision/receipt"
+decision ChooseReceipt kind choice id "gooo://jev/decision/choose-receipt"
+decision Confidence kind score id "gooo://jev/decision/confidence"
+decision Approved kind boolean id "gooo://jev/decision/approved"
+activity ObserveDecision(DecisionSpec) -> DecisionReceipt
