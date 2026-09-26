@@ -100,7 +100,7 @@ func DispositionDecisionConfidenceChangePlanWithFeedback(input DecisionConfidenc
     case changePlanFeedbackStatusRefuted:
         output.Status = changePlanFeedbackDispositionAbort
     case changePlanFeedbackStatusConfirmed:
-        output.Status = disposition.Status
+        output.Status = string(disposition.Status)
     default:
         output.MissingStage = "feedback-disposition"
         return output
