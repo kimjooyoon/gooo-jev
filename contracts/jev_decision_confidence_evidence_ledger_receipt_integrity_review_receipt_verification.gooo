@@ -1,0 +1,15 @@
+package jevdecisionconfidenceledgerreceiptintegrityreviewreceiptverification
+namespace jevdecisionconfidenceledgerreceiptintegrityreviewreceiptverification
+
+entity DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceipt id "gooo://gooo-jev/decision-confidence-evidence-ledger-receipt-integrity-review-receipt"
+  property HandoffDigest string
+  property OutcomeDigest string
+  property ReceiptDigest string
+  property NonAuthorizing boolean
+
+entity DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptVerification id "gooo://gooo-jev/decision-confidence-evidence-ledger-receipt-integrity-review-receipt-verification"
+  property ReceiptDigest string
+  property Status string
+  property NonAuthorizing boolean
+
+activity VerifyDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceipt(DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceipt) -> DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptVerification
