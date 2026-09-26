@@ -1,0 +1,26 @@
+package jev.gooo.revision.application
+
+entity RevisionApplicationObservation {
+    field status string
+    field missing_stage string
+    field plan_observation_digest string
+    field plan_digest string
+    field application_digest string
+    field receipt_digest string
+    field source_digest string
+    field proposed_source_digest string
+    field input_ir_digest string
+    field proposed_ir_digest string
+    field candidate_digest string
+    field edit_digest string
+    field application_signal string
+    field application_observed boolean
+    invariant non_executing
+    invariant non_authorizing
+}
+
+activity observe_revision_application {
+    input revision_candidate_plan_observation
+    input revision_application_receipt
+    output revision_application_observation
+}
