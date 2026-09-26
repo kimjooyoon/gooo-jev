@@ -1,0 +1,19 @@
+package jevexecutionenvelopeoutcomemetriccomparison
+namespace jevexecutionenvelopeoutcomemetriccomparison
+
+entity ExecutionEnvelopeOutcomeMetric id "gooo://gooo-jev/execution-envelope-outcome-metric-comparison-input"
+  property OutcomeDigest string
+  property AcceptedCount integer
+  property RejectedCount integer
+  property HoldCount integer
+  property Status string
+  property MissingStage string
+  property NonAuthorizing boolean
+
+entity ExecutionEnvelopeOutcomeMetricComparison id "gooo://gooo-jev/execution-envelope-outcome-metric-comparison"
+  property PreviousOutcomeDigest string
+  property CurrentOutcomeDigest string
+  property Delta string
+  property NonAuthorizing boolean
+
+activity CompareExecutionEnvelopeOutcomeMetric(ExecutionEnvelopeOutcomeMetric, ExecutionEnvelopeOutcomeMetric) -> ExecutionEnvelopeOutcomeMetricComparison
