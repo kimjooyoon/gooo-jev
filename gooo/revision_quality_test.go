@@ -2,7 +2,7 @@ package gooo
 
 import "testing"
 
-func TestEvaluateRevisionMetricsClassifiesLocalizedChange(t *testing.T) {
+func TestEvaluateRevisionMetricsClassifiesStructuralChange(t *testing.T) {
 	metrics, err := MeasureRevision(validContract, metricsRevisionApplication(t))
 	if err != nil {
 		t.Fatalf("MeasureRevision() error = %v", err)
@@ -11,10 +11,10 @@ func TestEvaluateRevisionMetricsClassifiesLocalizedChange(t *testing.T) {
 	if err != nil {
 		t.Fatalf("EvaluateRevisionMetrics() error = %v", err)
 	}
-	if quality.Status != "BOUND" || quality.ChangeClass != "localized" || quality.ReviewSignal != "observe" {
+	if quality.Status != "BOUND" || quality.ChangeClass != "structural" || quality.ReviewSignal != "inspect" {
 		t.Fatalf("unexpected quality signal: %#v", quality)
 	}
-	if quality.SourceDigest != metrics.SourceDigest || quality.MetricsDigest != metrics.MetricsDigest {
+	if !quality.IRChanged || quality.SourceDigest != metrics.SourceDigest || quality.MetricsDigest != metrics.MetricsDigest {
 		t.Fatalf("quality provenance mismatch: %#v", quality)
 	}
 	if err := quality.Validate(); err != nil {
