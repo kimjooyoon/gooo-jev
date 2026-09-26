@@ -1,0 +1,4 @@
+package jevchangeplanfeedbackdispositionlsp
+namespace jevchangeplanfeedbackdispositionlsp
+entity DecisionConfidenceChangePlanFeedbackDispositionLSPDiagnostic id "gooo://gooo-jev/decision-confidence-change-plan-feedback-disposition-lsp"
+activity ProjectDecisionConfidenceChangePlanFeedbackDispositionLSP(DecisionConfidenceChangePlanFeedbackDisposition) -> DecisionConfidenceChangePlanFeedbackDispositionLSPDiagnostic
