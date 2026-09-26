@@ -244,3 +244,80 @@ func ValidateExecutionEnvelopeProvenanceChainBinding(binding ExecutionEnvelopePr
 		NonAuthorizing: binding.NonAuthorizing,
 	}
 }
+
+// ExecutionEnvelopeProvenanceChainMetric reports exact evidence coverage for
+// the five-stage declaration-to-metric chain without inferring readiness.
+type ExecutionEnvelopeProvenanceChainMetric struct {
+	Status              string
+	ObservedStageCount  int
+	ExpectedStageCount  int
+	MissingStage        string
+	CompletenessDigest  string
+	NonExecuting        bool
+	NonAuthorizing      bool
+}
+
+// MeasureExecutionEnvelopeProvenanceChainMetric counts only present stages;
+// partial or unverifiable chains remain UNKNOWN.
+func MeasureExecutionEnvelopeProvenanceChainMetric(binding ExecutionEnvelopeProvenanceChainBinding) ExecutionEnvelopeProvenanceChainMetric {
+	output := ExecutionEnvelopeProvenanceChainMetric{
+		Status:             "UNKNOWN",
+		ExpectedStageCount: 5,
+		NonExecuting:       binding.NonExecuting,
+		NonAuthorizing:     binding.NonAuthorizing,
+	}
+	if !binding.NonExecuting || !binding.NonAuthorizing {
+		output.MissingStage = "authorization-boundary"
+		return output
+	}
+	if binding.Status == "UNKNOWN" && (binding.MissingStage == "declaration-ir-generation" || binding.MissingStage == "provenance-validation") {
+		output.MissingStage = binding.MissingStage
+		return output
+	}
+	if err := binding.Validate(); err != nil {
+		output.MissingStage = "provenance-validation"
+		return output
+	}
+
+	stages := []struct {
+		name  string
+		value string
+	}{
+		{name: "declaration", value: binding.DeclarationDigest},
+		{name: "ir", value: binding.IRDigest},
+		{name: "generation", value: binding.GenerationDigest},
+		{name: "reverse_observation", value: binding.ReverseObservationDigest},
+		{name: "metric", value: binding.MetricDigest},
+	}
+	for _, stage := range stages {
+		if strings.TrimSpace(stage.value) != "" {
+			output.ObservedStageCount++
+		} else if output.MissingStage == "" {
+			output.MissingStage = stage.name
+		}
+	}
+	if output.ObservedStageCount == output.ExpectedStageCount {
+		output.Status = "complete"
+		output.MissingStage = ""
+	}
+	digest, err := Digest(struct {
+		Status             string
+		ObservedStageCount int
+		ExpectedStageCount int
+		MissingStage       string
+		EvidenceDigest     string
+	}{
+		Status:             output.Status,
+		ObservedStageCount: output.ObservedStageCount,
+		ExpectedStageCount: output.ExpectedStageCount,
+		MissingStage:       output.MissingStage,
+		EvidenceDigest:     binding.EvidenceDigest,
+	})
+	if err != nil {
+		output.Status = "UNKNOWN"
+		output.MissingStage = "metric-evidence"
+		return output
+	}
+	output.CompletenessDigest = digest
+	return output
+}
