@@ -7,9 +7,9 @@ import (
     "strings"
 )
 
-const jevExternalApplyCapabilityReviewRevisionCandidateGenerationRequestCandidateGenerationFeedbackLSPOProjectionBound = "generation-request-candidate-generation-feedback-lsp-bound"
+const jevExternalApplyCapabilityReviewRevisionCandidateGenerationRequestCandidateGenerationFeedbackLSPProjectionBound = "generation-request-candidate-generation-feedback-lsp-bound"
 
-type JEVExternalApplyCapabilityReviewRevisionCandidateGenerationRequestCandidateGenerationFeedbackLSPOProjection struct {
+type JEVExternalApplyCapabilityReviewRevisionCandidateGenerationRequestCandidateGenerationFeedbackLSPProjection struct {
     Severity                         string
     Code                             string
     Message                          string
@@ -31,7 +31,7 @@ type JEVExternalApplyCapabilityReviewRevisionCandidateGenerationRequestCandidate
     NonAuthorizing                   bool
 }
 
-func (d JEVExternalApplyCapabilityReviewRevisionCandidateGenerationRequestCandidateGenerationFeedbackLSPOProjection) Validate() error {
+func (d JEVExternalApplyCapabilityReviewRevisionCandidateGenerationRequestCandidateGenerationFeedbackLSPProjection) Validate() error {
     if d.Severity == "" || d.Code == "" || d.Message == "" || d.Status == "" {
         return fmt.Errorf("incomplete JEV generation request candidate feedback LSP projection")
     }
@@ -58,7 +58,7 @@ func (d JEVExternalApplyCapabilityReviewRevisionCandidateGenerationRequestCandid
     if d.Feedback.BridgeDigest != d.FeedbackBridgeDigest || !d.Feedback.Publishable {
         return fmt.Errorf("candidate generation feedback projection digest is inconsistent")
     }
-    expected := digestJEVExternalApplyCapabilityReviewRevisionCandidateGenerationRequestCandidateGenerationFeedbackLSPOProjection(
+    expected := digestJEVExternalApplyCapabilityReviewRevisionCandidateGenerationRequestCandidateGenerationFeedbackLSPProjection(
         d.Status, d.GenerationRequestBridgeDigest, d.FeedbackBridgeDigest,
         d.BridgeDigest, d.ProposalDecision,
     )
@@ -84,14 +84,14 @@ func (d JEVExternalApplyCapabilityReviewRevisionCandidateGenerationRequestCandid
     return nil
 }
 
-func ProjectJEVExternalApplyCapabilityReviewRevisionCandidateGenerationRequestCandidateGenerationFeedbackLSPOProjection(
+func ProjectJEVExternalApplyCapabilityReviewRevisionCandidateGenerationRequestCandidateGenerationFeedbackLSPProjection(
     input JEVExternalApplyCapabilityReviewRevisionCandidateGenerationRequestCandidateGenerationFeedbackBridge,
-) JEVExternalApplyCapabilityReviewRevisionCandidateGenerationRequestCandidateGenerationFeedbackLSPOProjection {
-    unknown := func(stage string) JEVExternalApplyCapabilityReviewRevisionCandidateGenerationRequestCandidateGenerationFeedbackLSPOProjection {
+) JEVExternalApplyCapabilityReviewRevisionCandidateGenerationRequestCandidateGenerationFeedbackLSPProjection {
+    unknown := func(stage string) JEVExternalApplyCapabilityReviewRevisionCandidateGenerationRequestCandidateGenerationFeedbackLSPProjection {
         if stage == "" {
             stage = "generation-request-candidate-generation-feedback-lsp"
         }
-        return JEVExternalApplyCapabilityReviewRevisionCandidateGenerationRequestCandidateGenerationFeedbackLSPOProjection{
+        return JEVExternalApplyCapabilityReviewRevisionCandidateGenerationRequestCandidateGenerationFeedbackLSPProjection{
             Severity:       "error",
             Code:           "jev.provenance.unknown",
             Message:        "Generation request candidate feedback is UNKNOWN; evidence must be resolved",
@@ -108,7 +108,7 @@ func ProjectJEVExternalApplyCapabilityReviewRevisionCandidateGenerationRequestCa
         return unknown("generation-request-candidate-generation-feedback")
     }
     feedback := ProjectJEVExternalApplyCapabilityReviewRevisionCandidateGenerationFeedbackLSP(input.Feedback)
-    output := JEVExternalApplyCapabilityReviewRevisionCandidateGenerationRequestCandidateGenerationFeedbackLSPOProjection{
+    output := JEVExternalApplyCapabilityReviewRevisionCandidateGenerationRequestCandidateGenerationFeedbackLSPProjection{
         Status:                        input.Status,
         GenerationRequestStatus:       input.GenerationRequestStatus,
         GenerationRequestDigest:       input.GenerationRequestDigest,
@@ -140,7 +140,7 @@ func ProjectJEVExternalApplyCapabilityReviewRevisionCandidateGenerationRequestCa
         output.Code = "jev.external-apply.generation-request-candidate-rejected"
         output.Message = "Generation request is rejected and projected without execution or authorization"
     }
-    output.ProjectionDigest = digestJEVExternalApplyCapabilityReviewRevisionCandidateGenerationRequestCandidateGenerationFeedbackLSPOProjection(
+    output.ProjectionDigest = digestJEVExternalApplyCapabilityReviewRevisionCandidateGenerationRequestCandidateGenerationFeedbackLSPProjection(
         output.Status, output.GenerationRequestBridgeDigest, output.FeedbackBridgeDigest,
         output.BridgeDigest, output.ProposalDecision,
     )
@@ -150,7 +150,7 @@ func ProjectJEVExternalApplyCapabilityReviewRevisionCandidateGenerationRequestCa
     return output
 }
 
-func digestJEVExternalApplyCapabilityReviewRevisionCandidateGenerationRequestCandidateGenerationFeedbackLSPOProjection(
+func digestJEVExternalApplyCapabilityReviewRevisionCandidateGenerationRequestCandidateGenerationFeedbackLSPProjection(
     status, generationRequestBridgeDigest, feedbackBridgeDigest, bridgeDigest, proposalDecision string,
 ) string {
     sum := sha256.Sum256([]byte(strings.Join([]string{
