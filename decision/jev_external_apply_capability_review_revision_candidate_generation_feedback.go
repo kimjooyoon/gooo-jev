@@ -49,14 +49,6 @@ func (f JEVExternalApplyCapabilityReviewRevisionCandidateGenerationFeedback) Val
     if f.DirectionStatus != jevExternalApplyCapabilityReviewRevisionCandidateObservationMetricDirectionBridgeBound {
         return fmt.Errorf("invalid JEV candidate direction status")
     }
-    expectedDirection := digestJEVExternalApplyCapabilityReviewImprovementDirection(
-        jevExternalApplyCapabilityReviewImprovementDirectionBound,
-        f.Direction,
-        f.Target,
-        f.Target,
-        f.FeedbackDigest,
-    )
-    _ = expectedDirection
     switch f.Direction {
     case jevExternalApplyCapabilityReviewImprovementDirectionGenerate:
         if f.GeneratedCandidateStatus != jevExternalApplyCapabilityReviewRevisionCandidateGenerationFeedbackGenerated ||
