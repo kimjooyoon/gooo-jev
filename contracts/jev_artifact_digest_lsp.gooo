@@ -1,0 +1,20 @@
+package jevartifactdigestlsp
+namespace jevartifactdigestlsp
+
+entity ExecutionEnvelopeArtifactDigestLSPInput id "gooo://gooo-jev/artifact-digest-lsp-input"
+property Artifact ExecutionEnvelopeArtifactDigest
+property NonAuthorizing boolean
+
+entity ExecutionEnvelopeArtifactDigestLSPProjection id "gooo://gooo-jev/artifact-digest-lsp-projection"
+property Status string
+property Code string
+property Severity string
+property Message string
+property ArtifactKind string
+property ArtifactDigest string
+property EvidenceDigest string
+property MissingStage string
+property NonExecuting boolean
+property NonAuthorizing boolean
+
+activity ProjectExecutionEnvelopeArtifactDigestLSP(ExecutionEnvelopeArtifactDigestLSPInput) -> ExecutionEnvelopeArtifactDigestLSPProjection
