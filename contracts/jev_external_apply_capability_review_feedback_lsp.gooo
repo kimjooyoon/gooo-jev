@@ -1,0 +1,4 @@
+package jevexternalapplycapabilityreviewfeedbacklsp
+namespace jevexternalapplycapabilityreviewfeedbacklsp
+entity JEVExternalApplyCapabilityReviewFeedbackLSPDiagnostic id "gooo://gooo-jev/decision-external-apply-capability-review-feedback-lsp"
+activity ProjectJEVExternalApplyCapabilityReviewFeedbackLSP(JEVExternalApplyCapabilityReviewFeedbackBridge) -> JEVExternalApplyCapabilityReviewFeedbackLSPDiagnostic
