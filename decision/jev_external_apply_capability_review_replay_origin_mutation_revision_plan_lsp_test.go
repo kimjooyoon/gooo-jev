@@ -9,7 +9,7 @@ func TestProjectJEVExternalApplyCapabilityReviewReplayOriginMutationRevisionPlan
         ProposalDigest:  "proposal-digest",
         PlanSource:      "revision-plan-source",
         IntentDigest:    "revision-intent-digest",
-        PlanDigest:      "plan-digest",
+        PlanDigest:      digestJEVExternalApplyCapabilityReviewReplayOriginMutationRevisionPlan(jevExternalApplyCapabilityReviewReplayOriginMutationRevisionPlanReady, jevExternalApplyCapabilityReviewReplayOriginMutationRevisionProposalReady, "proposal-digest", "revision-plan-source", "revision-intent-digest"),
         NonExecuting:    true,
         NonAuthorizing:  true,
     }
