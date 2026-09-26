@@ -111,7 +111,7 @@ func (r RevisionEvidenceSymbolResult) Validate() error {
 }
 
 func digestRevisionEvidenceSymbolResult(result RevisionEvidenceSymbolResult) string {
-	return digestString(fmt.Sprintf("%s|%s|%s|%s|%s|%s|%s|%s|%s|%d|%t|%t|%t|%t|%t|%s",
+	return digestString(fmt.Sprintf("%s|%s|%s|%s|%s|%s|%s|%s|%s|%d|%t|%t|%t|%t|%t",
 		result.Status,
 		result.MissingStage,
 		result.SourceDigest,
@@ -121,12 +121,12 @@ func digestRevisionEvidenceSymbolResult(result RevisionEvidenceSymbolResult) str
 		result.SymbolDigest,
 		result.SummaryDigest,
 		result.ChainDigest,
+		result.GenerationBindingDigest,
 		result.EvidenceStageCount,
 		result.ExactSourceMatch,
 		result.StructureMatch,
 		result.ReverseObserved,
 		result.NonExecuting,
 		result.NonAuthorizing,
-		result.ResultDigest,
 	))
 }
