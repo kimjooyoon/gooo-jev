@@ -19,14 +19,14 @@ func TestBindJEVExternalApplyCapabilityReviewObservationMetricDirectionCandidate
         NonAuthorizing:    true,
     }
     bridge.DirectionDigest = digestJEVExternalApplyCapabilityReviewImprovementDirection(
-        bridge.Status,
+        jevExternalApplyCapabilityReviewImprovementDirectionBound,
         bridge.Direction,
         bridge.Target,
         bridge.CandidateSource,
         bridge.FeedbackDigest,
     )
     bridge.BridgeDigest = digestJEVExternalApplyCapabilityReviewObservationMetricDirectionBridge(
-        bridge.Status,
+        jevExternalApplyCapabilityReviewImprovementDirectionBound,
         bridge.ObservationStatus,
         bridge.ObservationDigest,
         bridge.MetricName,
@@ -72,14 +72,14 @@ func TestBindJEVExternalApplyCapabilityReviewObservationMetricDirectionCandidate
         NonAuthorizing:    true,
     }
     bridge.DirectionDigest = digestJEVExternalApplyCapabilityReviewImprovementDirection(
-        bridge.Status,
+        jevExternalApplyCapabilityReviewImprovementDirectionBound,
         bridge.Direction,
         bridge.Target,
         bridge.CandidateSource,
         bridge.FeedbackDigest,
     )
     bridge.BridgeDigest = digestJEVExternalApplyCapabilityReviewObservationMetricDirectionBridge(
-        bridge.Status,
+        jevExternalApplyCapabilityReviewImprovementDirectionBound,
         bridge.ObservationStatus,
         bridge.ObservationDigest,
         bridge.MetricName,
