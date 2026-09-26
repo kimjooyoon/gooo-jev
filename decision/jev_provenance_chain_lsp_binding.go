@@ -24,6 +24,18 @@ type ExecutionEnvelopeProvenanceChainLSPBinding struct {
 	NonAuthorizing      bool
 }
 
+// ProvenanceChainMissingStageIndex derives the zero-based stage location
+// from the chain itself instead of trusting an editor-supplied index.
+func ProvenanceChainMissingStageIndex(stage string) (int, bool) {
+	stages := []string{"declaration", "ir", "generation", "reverse_observation", "metric"}
+	for index, candidate := range stages {
+		if stage == candidate {
+			return index, true
+		}
+	}
+	return -1, false
+}
+
 // ProjectExecutionEnvelopeProvenanceChainLSP binds a chain result to LSP only
 // when the stage index and evidence prefix make the diagnostic auditable.
 func ProjectExecutionEnvelopeProvenanceChainLSP(input ExecutionEnvelopeProvenanceChainLSPBindingInput) ExecutionEnvelopeProvenanceChainLSPBinding {
@@ -60,12 +72,17 @@ func ProjectExecutionEnvelopeProvenanceChainLSP(input ExecutionEnvelopeProvenanc
 		output.Code = "lsp-diagnostic-evidence"
 		return output
 	}
+	missingStageIndex, ok := ProvenanceChainMissingStageIndex(input.Chain.MissingStage)
+	if !ok {
+		output.Code = "lsp-diagnostic-location"
+		return output
+	}
 	projected := ProjectExecutionEnvelopeLSPDiagnostic(ExecutionEnvelopeLSPDiagnosticInput{
 		Status:              "diagnostic",
 		Severity:            "error",
 		Code:                "provenance-chain",
 		MissingStage:        input.Chain.MissingStage,
-		MissingStageIndex:   input.MissingStageIndex,
+		MissingStageIndex:   missingStageIndex,
 		EvidencePrefixDigest: input.EvidencePrefixDigest,
 		NonAuthorizing:      true,
 	})

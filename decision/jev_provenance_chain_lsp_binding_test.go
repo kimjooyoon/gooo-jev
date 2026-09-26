@@ -29,7 +29,7 @@ func TestProjectExecutionEnvelopeProvenanceChainLSPProjectsReadyAndMissingStages
 	})
 	output = ProjectExecutionEnvelopeProvenanceChainLSP(ExecutionEnvelopeProvenanceChainLSPBindingInput{
 		Chain:                missing,
-		MissingStageIndex:    3,
+		MissingStageIndex:    99,
 		EvidencePrefixDigest: "prefix-digest",
 		NonAuthorizing:       true,
 	})
@@ -87,5 +87,24 @@ func TestProjectExecutionEnvelopeProvenanceChainLSPRejectsTamperedChain(t *testi
 	})
 	if output.Status != "UNKNOWN" || output.Publishable || output.Code != "chain-integrity" || output.ChainBindingDigest != "" {
 		t.Fatalf("tampered chain was projected: %+v", output)
+	}
+}
+
+func TestProvenanceChainMissingStageIndexDerivesCanonicalOrder(t *testing.T) {
+	cases := map[string]int{
+		"declaration":         0,
+		"ir":                  1,
+		"generation":          2,
+		"reverse_observation": 3,
+		"metric":              4,
+	}
+	for stage, want := range cases {
+		got, ok := ProvenanceChainMissingStageIndex(stage)
+		if !ok || got != want {
+			t.Fatalf("stage %q index = (%d, %v), want (%d, true)", stage, got, ok, want)
+		}
+	}
+	if got, ok := ProvenanceChainMissingStageIndex("provenance-validation"); ok || got != -1 {
+		t.Fatalf("unsupported stage index = (%d, %v), want (-1, false)", got, ok)
 	}
 }
