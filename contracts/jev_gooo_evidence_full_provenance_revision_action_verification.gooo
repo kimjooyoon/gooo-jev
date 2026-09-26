@@ -3,7 +3,7 @@ namespace jevgoooevidencefullprovenancerevisionactionverification
 
 entity ExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionVerificationInput id "gooo://gooo-jev/gooo-evidence-full-provenance-revision-action-verification-input"
 property Guard GoooEvidenceFullProvenanceRevisionActionGuardBinding
-property ReverseObservation ReverseObservationOutput
+property ReverseObservation ExecutionEnvelopeReverseObservationOutput
 property NonAuthorizing boolean
 
 entity ExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionVerificationBinding id "gooo://gooo-jev/gooo-evidence-full-provenance-revision-action-verification"
