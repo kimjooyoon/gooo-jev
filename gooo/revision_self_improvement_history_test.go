@@ -2,6 +2,24 @@ package gooo
 
 import "testing"
 
+func selfImprovementHistoryInputs(t *testing.T) ([]RevisionSelfImprovementWindow, []RevisionSelfImprovementFeedback) {
+	t.Helper()
+	windows := []RevisionSelfImprovementWindow{
+		selfImprovementFeedbackWindow(t, 4, 4, false),
+		selfImprovementFeedbackWindow(t, 8, 2, false),
+		selfImprovementFeedbackWindow(t, 2, 8, false),
+	}
+	feedback := make([]RevisionSelfImprovementFeedback, 0, len(windows))
+	for _, window := range windows {
+		current, err := ObserveRevisionSelfImprovementFeedback(window)
+		if err != nil {
+			t.Fatalf("ObserveRevisionSelfImprovementFeedback() error = %v", err)
+		}
+		feedback = append(feedback, current)
+	}
+	return windows, feedback
+}
+
 func TestObserveRevisionSelfImprovementHistoryBindsOrderedSignals(t *testing.T) {
 	windows, feedback := selfImprovementHistoryInputs(t)
 	history, err := ObserveRevisionSelfImprovementHistory(windows, feedback)
