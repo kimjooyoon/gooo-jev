@@ -1,0 +1,33 @@
+package jevcandidatematerializationadmissionevaluationoutcomefeedback
+
+namespace jevcandidatematerializationadmissionevaluationoutcomefeedback
+
+entity CandidateMaterializationAdmissionEvaluationOutcomeFeedbackBridgeInput {
+  field feedback_direction string
+  field feedback_target string
+  field feedback_digest string
+  field feedback_source string
+  field feedback_evidence_digest string
+  field non_authorizing bool
+}
+
+entity CandidateMaterializationAdmissionEvaluationOutcomeFeedbackBridge {
+  field feedback_direction string
+  field feedback_target string
+  field feedback_digest string
+  field feedback_source string
+  field feedback_evidence_digest string
+  field feedback_status string
+  field bridge_digest string
+  field non_executing bool
+  field non_authorizing bool
+}
+
+activity BindCandidateMaterializationAdmissionEvaluationOutcomeFeedbackBridge {
+  input CandidateMaterializationAdmissionEvaluationOutcomeFeedbackBridgeInput
+  output CandidateMaterializationAdmissionEvaluationOutcomeFeedbackBridge
+  effect provenance-only
+  effect execution none
+  effect authorization none
+}
+
