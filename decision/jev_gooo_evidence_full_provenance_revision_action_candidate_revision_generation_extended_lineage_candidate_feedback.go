@@ -201,7 +201,6 @@ func BindExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionCandidateRevis
 		RevisionCandidateDigest:         input.Metric.RevisionCandidateDigest,
 		RevisionCandidateEvidenceDigest: input.Metric.RevisionCandidateEvidenceDigest,
 		CandidateStatus:                 input.Metric.CandidateStatus,
-		CandidateDigest:                 input.Metric.CandidateDigest,
 		CandidateEvidenceDigest:         input.Metric.CandidateEvidenceDigest,
 		RevisionSource:                  input.Metric.RevisionSource,
 		BoundRevisionChangeDigest:       input.Metric.BoundRevisionChangeDigest,
