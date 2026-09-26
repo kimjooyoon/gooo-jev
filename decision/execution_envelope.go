@@ -151,7 +151,7 @@ func NewWorkloadIdentityObservation(spiffeID, evidenceDigest string, status Work
 	}
 	observation.ObservationDigest = digest
 	if err := observation.Validate(); err != nil {
-		return ReverseObservation{}, err
+		return WorkloadIdentityObservation{}, err
 	}
 	return observation, nil
 }
