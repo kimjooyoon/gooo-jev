@@ -1,0 +1,28 @@
+package jevgoooevidencefullprovenancelsp
+namespace jevgoooevidencefullprovenancelsp
+
+entity ExecutionEnvelopeGoooEvidenceFullProvenanceLSPInput id "gooo://gooo-jev/gooo-evidence-full-provenance-lsp-input"
+property Binding GoooEvidenceFullProvenanceBinding
+property NonAuthorizing boolean
+
+entity ExecutionEnvelopeGoooEvidenceFullProvenanceLSPProjection id "gooo://gooo-jev/gooo-evidence-full-provenance-lsp-projection"
+property Status string
+property DiagnosticCode string
+property MissingStage string
+property MissingStageIndex integer
+property DeclarationDigest string
+property IRDigest string
+property GenerationDigest string
+property BaseBindingDigest string
+property EvidenceDeclarationDigest string
+property EvidenceBindingDigest string
+property ReverseObservationDigest string
+property MetricDigest string
+property ProvenanceEvidenceDigest string
+property CompletenessDigest string
+property EvidenceDigest string
+property EvidencePrefixDigest string
+property NonExecuting boolean
+property NonAuthorizing boolean
+
+activity ProjectExecutionEnvelopeGoooEvidenceFullProvenanceToLSP(ExecutionEnvelopeGoooEvidenceFullProvenanceLSPInput) -> ExecutionEnvelopeGoooEvidenceFullProvenanceLSPProjection
