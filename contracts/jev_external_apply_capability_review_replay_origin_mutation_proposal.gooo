@@ -1,0 +1,4 @@
+package jevreplayoriginmutationproposal
+namespace jevreplayoriginmutationproposal
+entity JEVExternalApplyCapabilityReviewReplayOriginMutationProposal id "gooo://gooo-jev/decision-external-apply-capability-review-replay-origin-mutation-proposal"
+activity ProposeJEVExternalApplyCapabilityReviewReplayOriginMutation(JEVExternalApplyCapabilityReviewReplayOriginMutationProposalInput) -> JEVExternalApplyCapabilityReviewReplayOriginMutationProposal
