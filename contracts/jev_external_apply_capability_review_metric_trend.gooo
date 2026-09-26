@@ -1,0 +1,4 @@
+package jevexternalapplycapabilityreviewmetrictrend
+namespace jevexternalapplycapabilityreviewmetrictrend
+entity JEVExternalApplyCapabilityReviewMetricTrend id "gooo://gooo-jev/decision-external-apply-capability-review-metric-trend"
+activity AggregateJEVExternalApplyCapabilityReviewMetricTrend(JEVExternalApplyCapabilityReviewMetricTrendInput) -> JEVExternalApplyCapabilityReviewMetricTrend
