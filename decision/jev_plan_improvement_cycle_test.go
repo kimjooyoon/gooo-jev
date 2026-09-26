@@ -20,7 +20,7 @@ func TestBindExecutionEnvelopeJEVPlanToImprovementCycle(t *testing.T) {
 	}
 	planLifecycle := ExecutionEnvelopeJEVExecutionPlanLifecycleBinding{
 		Status: "bound", PlanID: "triage-plan", PlanDigest: "plan-digest",
-		LifecycleBindingDigest: "lifecycle-binding-digest",
+		BindingDigest: "lifecycle-binding-digest",
 		NonExecuting: true, NonAuthorizing: true,
 	}
 	binding := BindExecutionEnvelopeJEVPlanToImprovementCycle(ExecutionEnvelopeJEVPlanImprovementCycleInput{
