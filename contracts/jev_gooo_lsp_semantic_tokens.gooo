@@ -1,0 +1,7 @@
+package jev.gooo.lsp.semantic_tokens
+namespace jev.gooo.lsp.semantic_tokens
+
+entity SemanticTokenRequest id "urn:jev:gooo:lsp-semantic-token-request"
+entity SemanticTokenResult id "urn:jev:gooo:lsp-semantic-token-result"
+
+activity SemanticTokens(SemanticTokenRequest) -> SemanticTokenResult
