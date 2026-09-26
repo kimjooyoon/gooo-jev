@@ -1,0 +1,17 @@
+package jevexecutionenvelopeevidenceledgercounterexample
+namespace jevexecutionenvelopeevidenceledgercounterexample
+
+entity ExecutionEnvelopeEvidenceLedgerCounterexampleInput id "gooo://gooo-jev/execution-envelope-evidence-ledger-counterexample-input"
+  property Status string
+  property FirstMismatch string
+  property LedgerDigest string
+  property NonAuthorizing boolean
+
+entity ExecutionEnvelopeEvidenceLedgerCounterexample id "gooo://gooo-jev/execution-envelope-evidence-ledger-counterexample"
+  property Status string
+  property ReviewRequired boolean
+  property LedgerDigest string
+  property MismatchStage string
+  property NonAuthorizing boolean
+
+activity ClassifyExecutionEnvelopeEvidenceLedgerCounterexample(ExecutionEnvelopeEvidenceLedgerCounterexampleInput) -> ExecutionEnvelopeEvidenceLedgerCounterexample
