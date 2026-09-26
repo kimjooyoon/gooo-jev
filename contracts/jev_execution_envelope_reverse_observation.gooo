@@ -17,3 +17,12 @@ entity ExecutionEnvelopeReverseObservationOutput id "gooo://gooo-jev/execution-e
   property NonAuthorizing boolean
 
 activity ObserveExecutionEnvelopeProvenanceReverse(ExecutionEnvelopeReverseObservationInput) -> ExecutionEnvelopeReverseObservationOutput
+
+entity ExecutionEnvelopeReverseObservationBinding id "gooo://gooo-jev/execution-envelope-reverse-observation-binding"
+  property Status string
+  property FirstMismatch string
+  property ObservedEvidenceDigest string
+  property ObservationDigest string
+  property NonAuthorizing boolean
+
+activity BindExecutionEnvelopeReverseObservation(ExecutionEnvelopeReverseObservationOutput) -> ExecutionEnvelopeReverseObservationBinding
