@@ -20,9 +20,9 @@ type ExecutionScope struct {
 	Schema                  string
 	TaskDigest              string
 	WorkspaceDigest         string
-	GatewayDigest            string
-	ModelDigest              string
-	NetworkPolicyDigest      string
+	GatewayDigest           string
+	ModelDigest             string
+	NetworkPolicyDigest     string
 	FilesystemPolicyDigest  string
 	Status                  ExecutionScopeStatus
 	MissingStage             string
