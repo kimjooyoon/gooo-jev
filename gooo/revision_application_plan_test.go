@@ -45,8 +45,7 @@ func TestPlanRevisionApplicationBindsSourceAndIR(t *testing.T) {
 
 func TestPlanRevisionApplicationRetainsSourcePrecondition(t *testing.T) {
 	binding, edit := boundApplicationPlanInputs(t)
-	plan, err := PlanRevisionApplication(validContract+"
-", binding, edit)
+	plan, err := PlanRevisionApplication(validContract+"\n", binding, edit)
 	if err == nil {
 		t.Fatal("PlanRevisionApplication() error = nil, want source precondition failure")
 	}
