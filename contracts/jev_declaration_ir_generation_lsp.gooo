@@ -1,0 +1,24 @@
+package jevdeclarationirgenerationlsp
+namespace jevdeclarationirgenerationlsp
+
+entity ExecutionEnvelopeDeclarationIRGenerationLSPInput id "gooo://gooo-jev/declaration-ir-generation-lsp-input"
+property Binding ExecutionEnvelopeDeclarationIRGenerationBinding
+property NonAuthorizing boolean
+
+entity ExecutionEnvelopeDeclarationIRGenerationLSPProjection id "gooo://gooo-jev/declaration-ir-generation-lsp-projection"
+property Status string
+property Code string
+property Severity string
+property Message string
+property DeclarationID string
+property ContractID string
+property DeclarationDigest string
+property IRDigest string
+property GenerationDigest string
+property BindingDigest string
+property EvidenceDigest string
+property MissingStage string
+property NonExecuting boolean
+property NonAuthorizing boolean
+
+activity ProjectExecutionEnvelopeDeclarationIRGenerationLSP(ExecutionEnvelopeDeclarationIRGenerationLSPInput) -> ExecutionEnvelopeDeclarationIRGenerationLSPProjection
