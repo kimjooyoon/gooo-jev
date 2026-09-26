@@ -26,7 +26,7 @@ type SelfImprovementHistorySymbolResult struct {
 	LastCandidateGeneratedIRDigest    string
 	StableCount                       int
 	NarrowerCount                     int
-	WiderCount                       int
+	WiderCount                        int
 	MixedCount                        int
 	ObserveCount                      int
 	RemeasureCount                    int
@@ -148,7 +148,7 @@ func digestLSPSelfImprovementHistory(result SelfImprovementHistorySymbolResult) 
 		result.SourceDigest,
 		result.IRDigest,
 		result.SymbolName,
-		result.SymbolKind,
+		fmt.Sprint(result.SymbolKind),
 		result.SymbolDigest,
 		strconv.Itoa(result.ObservationCount),
 		result.FirstWindowDigest,
