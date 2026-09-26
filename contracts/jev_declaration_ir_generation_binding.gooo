@@ -103,3 +103,28 @@ entity ExecutionEnvelopeDeclarationIRGenerationSourceInput id "gooo://gooo-jev/d
   property NonAuthorizing boolean
 
 activity BindExecutionEnvelopeDeclarationIRGenerationFromSource(ExecutionEnvelopeDeclarationIRGenerationSourceInput) -> ExecutionEnvelopeDeclarationIRGenerationBinding
+
+entity ExecutionEnvelopeArtifactDigestInput id "gooo://gooo-jev/artifact-digest-input"
+  property ArtifactKind string
+  property ArtifactText string
+  property NonAuthorizing boolean
+
+entity ExecutionEnvelopeArtifactDigest id "gooo://gooo-jev/artifact-digest"
+  property Status string
+  property ArtifactKind string
+  property ArtifactDigest string
+  property MissingStage string
+  property NonExecuting boolean
+  property NonAuthorizing boolean
+
+activity ComputeExecutionEnvelopeArtifactDigest(ExecutionEnvelopeArtifactDigestInput) -> ExecutionEnvelopeArtifactDigest
+
+entity ExecutionEnvelopeDeclarationIRGenerationArtifactSourceInput id "gooo://gooo-jev/declaration-ir-generation-artifact-source-input"
+  property DeclarationID string
+  property ContractID string
+  property DeclarationSource string
+  property IRSource string
+  property GenerationSource string
+  property NonAuthorizing boolean
+
+activity BindExecutionEnvelopeDeclarationIRGenerationFromSources(ExecutionEnvelopeDeclarationIRGenerationArtifactSourceInput) -> ExecutionEnvelopeDeclarationIRGenerationBinding
