@@ -1,0 +1,29 @@
+package jevrevisionselfimprovementwindow
+namespace jevrevisionselfimprovementwindow
+
+entity RevisionSelfImprovementReceipt id "gooo://gooo-jev/revision-self-improvement-receipt"
+property ReceiptDigest string
+property SourceDigest string
+property ProposedSourceDigest string
+property GeneratedIRDigest string
+property StructureDigest string
+property ChangedByteCount integer
+property ChangedLineCount integer
+property IRChanged boolean
+property ExactSourceMatch boolean
+property StructureMatch boolean
+property NonExecuting boolean
+property NonAuthorizing boolean
+
+entity RevisionSelfImprovementWindow id "gooo://gooo-jev/revision-self-improvement-window"
+property Status string
+property BaselineReceiptDigest string
+property CandidateReceiptDigest string
+property ByteDelta integer
+property LineDelta integer
+property ComparisonSignal string
+property WindowDigest string
+property NonExecuting boolean
+property NonAuthorizing boolean
+
+activity CompareRevisionSelfImprovementReceipts(RevisionSelfImprovementReceipt, RevisionSelfImprovementReceipt) -> RevisionSelfImprovementWindow
