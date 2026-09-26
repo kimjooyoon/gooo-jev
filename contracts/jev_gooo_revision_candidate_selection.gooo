@@ -1,0 +1,7 @@
+package jev.gooo.revision.selection
+namespace jev.gooo.revision.selection
+
+entity RevisionCandidateSelectionRequest id "urn:jev:gooo:revision-candidate-selection-request"
+entity RevisionCandidateSelectionObservation id "urn:jev:gooo:revision-candidate-selection-observation"
+
+activity ObserveRevisionCandidateSelection(RevisionCandidateSelectionRequest) -> RevisionCandidateSelectionObservation
