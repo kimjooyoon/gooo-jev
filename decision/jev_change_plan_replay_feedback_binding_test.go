@@ -49,7 +49,7 @@ func TestBindDecisionConfidenceChangePlanReplayFeedbackKeepsReview(t *testing.T)
 		FeedbackHistory: makeReplayFeedbackHistory(t, unknown),
 		NonAuthorizing:  true,
 	})
-	binding := BindDecisionConfidenceChangePlanReplayFeedback(DecisionConfidenceChangePlanReplayFeedbackInput{
+	binding := BindDecisionConfidenceChangePlanReplayFeedback(DecisionConfidenceChangePlanReplayFeedbackBindingInput{
 		PlanProvenance:         plan,
 		FeedbackReconciliation: reconciliation,
 		NonAuthorizing:         true,
@@ -68,7 +68,7 @@ func TestBindDecisionConfidenceChangePlanReplayFeedbackFailsClosed(t *testing.T)
 
 	binding = validChangePlanReplayFeedbackBinding(t, FeedbackConfirmed)
 	binding.NonAuthorizing = false
-	output := BindDecisionConfidenceChangePlanReplayFeedback(DecisionConfidenceChangePlanReplayFeedbackInput{
+	output := BindDecisionConfidenceChangePlanReplayFeedback(DecisionConfidenceChangePlanReplayFeedbackBindingInput{
 		PlanProvenance:         BindDecisionConfidenceChangePlanProvenance(DecisionConfidenceChangePlanProvenanceBindingInput{
 			ChangePlan:              validChangePlanForProvenance(t),
 			DeclarationIRGeneration: validDeclarationIRGenerationBinding(),
@@ -98,7 +98,7 @@ func TestBindDecisionConfidenceChangePlanReplayFeedbackRejectsTamperedFeedbackAn
 		NonAuthorizing:  true,
 	})
 	reconciliation.EvidenceDigest = "tampered"
-	output := BindDecisionConfidenceChangePlanReplayFeedback(DecisionConfidenceChangePlanReplayFeedbackInput{
+	output := BindDecisionConfidenceChangePlanReplayFeedback(DecisionConfidenceChangePlanReplayFeedbackBindingInput{
 		PlanProvenance:         plan,
 		FeedbackReconciliation: reconciliation,
 		NonAuthorizing:         true,
@@ -107,7 +107,7 @@ func TestBindDecisionConfidenceChangePlanReplayFeedbackRejectsTamperedFeedbackAn
 		t.Fatalf("unexpected tampered feedback output: %+v", output)
 	}
 
-	output = BindDecisionConfidenceChangePlanReplayFeedback(DecisionConfidenceChangePlanReplayFeedbackInput{
+	output = BindDecisionConfidenceChangePlanReplayFeedback(DecisionConfidenceChangePlanReplayFeedbackBindingInput{
 		PlanProvenance:         plan,
 		FeedbackReconciliation: ReconcileImprovementReplayFeedback(ImprovementReplayFeedbackReconciliationInput{
 			ReplayFeedback:  makeReplayFeedbackBinding(t, FeedbackConfirmed),
