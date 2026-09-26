@@ -2,42 +2,27 @@ package decision
 
 import "testing"
 
-func TestDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonPreservesDirection(t *testing.T) {
-	previous := DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetric{
-		FeedbackDigest:     "previous",
-		RejectedCount:      1,
-		NonAuthorizing:     true,
+func TestObserveDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricPreservesOneHotState(t *testing.T) {
+	feedback := DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedback{
+		OutcomeDigest: "analysis",
+		Status:        "analysis-ready",
 	}
-	current := DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetric{
-		FeedbackDigest:     "current",
-		AnalysisReadyCount: 1,
-		NonAuthorizing:     true,
-	}
-	comparison := CompareDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetric(previous, current)
-	if comparison.Delta != "increased" || !comparison.NonAuthorizing {
-		t.Fatalf("review readiness increase was not preserved: %#v", comparison)
+	metric := ObserveDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetric(feedback)
+	if metric.FeedbackDigest != "analysis" || metric.AnalysisReadyCount != 1 || metric.Status != "analysis-ready" || !metric.NonAuthorizing {
+		t.Fatalf("analysis-ready metric was not preserved: %#v", metric)
 	}
 
-	current.AnalysisReadyCount = 0
-	current.RejectedCount = 1
-	comparison = CompareDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetric(previous, current)
-	if comparison.Delta != "unchanged" || !comparison.NonAuthorizing {
-		t.Fatalf("unchanged review state was not preserved: %#v", comparison)
+	feedback.OutcomeDigest = "rejected"
+	feedback.Status = "rejected"
+	metric = ObserveDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetric(feedback)
+	if metric.RejectedCount != 1 || metric.AnalysisReadyCount != 0 || metric.Status != "rejected" || !metric.NonAuthorizing {
+		t.Fatalf("rejected metric was not preserved: %#v", metric)
 	}
 
-	previous.AnalysisReadyCount = 1
-	previous.RejectedCount = 0
-	current.AnalysisReadyCount = 0
-	current.RejectedCount = 0
-	current.HoldCount = 1
-	comparison = CompareDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetric(previous, current)
-	if comparison.Delta != "declined" || !comparison.NonAuthorizing {
-		t.Fatalf("review readiness decline was not preserved: %#v", comparison)
-	}
-
-	current.HoldCount = 2
-	comparison = CompareDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetric(previous, current)
-	if comparison.Delta != "inconclusive" || !comparison.NonAuthorizing {
-		t.Fatalf("invalid one-hot state escaped inconclusive: %#v", comparison)
+	feedback.OutcomeDigest = "hold"
+	feedback.Status = "unknown"
+	metric = ObserveDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetric(feedback)
+	if metric.HoldCount != 1 || metric.AnalysisReadyCount != 0 || metric.RejectedCount != 0 || metric.Status != "hold" || !metric.NonAuthorizing {
+		t.Fatalf("unknown metric did not remain hold: %#v", metric)
 	}
 }

@@ -2,15 +2,17 @@ package decision
 
 import "testing"
 
-func TestDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonPreservesDirection(t *testing.T) {
-	previous := DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetric{
-		FeedbackDigest:     "previous",
-		RejectedCount:      1,
-		NonAuthorizing:     true,
+func TestCompareDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonPreservesDirection(t *testing.T) {
+	previous := DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetric{
+		FeedbackDigest: "previous",
+		RejectedCount:  1,
+		Status:         "rejected",
+		NonAuthorizing: true,
 	}
-	current := DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetric{
+	current := DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetric{
 		FeedbackDigest:     "current",
 		AnalysisReadyCount: 1,
+		Status:             "analysis-ready",
 		NonAuthorizing:     true,
 	}
 	comparison := CompareDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetric(previous, current)
@@ -20,6 +22,7 @@ func TestDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricRevi
 
 	current.AnalysisReadyCount = 0
 	current.RejectedCount = 1
+	current.Status = "rejected"
 	comparison = CompareDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetric(previous, current)
 	if comparison.Delta != "unchanged" || !comparison.NonAuthorizing {
 		t.Fatalf("unchanged review state was not preserved: %#v", comparison)
@@ -27,9 +30,11 @@ func TestDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricRevi
 
 	previous.AnalysisReadyCount = 1
 	previous.RejectedCount = 0
+	previous.Status = "analysis-ready"
 	current.AnalysisReadyCount = 0
 	current.RejectedCount = 0
 	current.HoldCount = 1
+	current.Status = "hold"
 	comparison = CompareDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetric(previous, current)
 	if comparison.Delta != "declined" || !comparison.NonAuthorizing {
 		t.Fatalf("review readiness decline was not preserved: %#v", comparison)
