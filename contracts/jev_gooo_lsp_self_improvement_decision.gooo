@@ -1,0 +1,33 @@
+package jev.gooo.lsp.decision
+
+entity SelfImprovementDecisionSymbolResult {
+    field status string
+    field missing_stage string
+    field source_digest string
+    field ir_digest string
+    field symbol_name string
+    field symbol_kind string
+    field symbol_digest string
+    field iteration_digest string
+    field outcome_digest string
+    field feedback_digest string
+    field history_digest string
+    field comparison_signal string
+    field feedback_signal string
+    field decision_signal string
+    field decision_reason string
+    field requires_observation boolean
+    field requires_review boolean
+    field requires_inspection boolean
+    field requires_measurement boolean
+    field result_digest string
+    invariant non_executing
+    invariant non_authorizing
+}
+
+activity explain_self_improvement_decision {
+    input source
+    input symbol_name
+    input revision_self_improvement_decision_observation
+    output self_improvement_decision_symbol_result
+}
