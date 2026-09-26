@@ -1,0 +1,29 @@
+package jevrevisionselfimprovementiteration
+namespace jevrevisionselfimprovementiteration
+
+entity RevisionSelfImprovementIterationInput id "gooo://gooo-jev/revision-self-improvement-iteration-input"
+property SourceText string
+property History RevisionSelfImprovementHistory
+property Feedback RevisionSelfImprovementFeedback
+property NonAuthorizing boolean
+
+entity RevisionSelfImprovementIteration id "gooo://gooo-jev/revision-self-improvement-iteration"
+property Status string
+property StageCount integer
+property SourceDigest string
+property IRDigest string
+property HistoryDigest string
+property WindowDigest string
+property FeedbackDigest string
+property CandidateSourceDigest string
+property CandidateProposedSourceDigest string
+property CandidateGeneratedIRDigest string
+property HistorySignal string
+property FeedbackSignal string
+property ObservationCount integer
+property IterationDigest string
+property MissingStage string
+property NonExecuting boolean
+property NonAuthorizing boolean
+
+activity ObserveRevisionSelfImprovementIteration(RevisionSelfImprovementIterationInput) -> RevisionSelfImprovementIteration
