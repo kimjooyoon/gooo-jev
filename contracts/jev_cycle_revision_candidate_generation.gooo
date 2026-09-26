@@ -1,0 +1,5 @@
+package jevcyclerevisioncandidategeneration
+namespace jevcyclerevisioncandidategeneration
+entity ExecutionEnvelopeJEVCycleRevisionCandidateGenerationInput id "gooo://gooo-jev/cycle-revision-candidate-generation-input"
+entity ExecutionEnvelopeJEVCycleRevisionCandidateGenerationBinding id "gooo://gooo-jev/cycle-revision-candidate-generation-binding"
+activity GenerateExecutionEnvelopeJEVRevisionCandidateFromCycle(ExecutionEnvelopeJEVCycleRevisionCandidateGenerationInput) -> ExecutionEnvelopeJEVCycleRevisionCandidateGenerationBinding
