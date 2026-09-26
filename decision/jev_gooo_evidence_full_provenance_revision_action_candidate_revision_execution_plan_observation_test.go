@@ -69,7 +69,7 @@ func TestObserveExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionCandida
 		ReverseObservationDigest: "reverse-observation-tampered",
 		NonAuthorizing:            true,
 	})
-	if output.Status != "UNKNOWN" || output.MissingStage != "revision-action-candidate-generation-extended-lineage-candidate-revision-execution-plan-validation" {
+	if output.Status != "UNKNOWN" || output.MissingStage != "revision-action-candidate-generation-extended-lineage-candidate-execution-plan-validation" {
 		t.Fatalf("output = %#v, want plan validation UNKNOWN", output)
 	}
 }
