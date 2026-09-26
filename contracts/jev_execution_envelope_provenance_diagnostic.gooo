@@ -1,0 +1,20 @@
+package jevexecutionenvelopeprovenancediagnostic
+namespace jevexecutionenvelopeprovenancediagnostic
+
+entity ExecutionEnvelopeProvenanceDiagnosticInput id "gooo://gooo-jev/execution-provenance-diagnostic-input"
+  property Status string
+  property MissingStage string
+  property MissingStageIndex integer
+  property EvidencePrefixDigest string
+  property NonAuthorizing boolean
+
+entity ExecutionEnvelopeProvenanceDiagnostic id "gooo://gooo-jev/execution-provenance-diagnostic"
+  property Status string
+  property Severity string
+  property Code string
+  property MissingStage string
+  property MissingStageIndex integer
+  property EvidencePrefixDigest string
+  property NonAuthorizing boolean
+
+activity DiagnoseExecutionEnvelopeProvenance(ExecutionEnvelopeProvenanceDiagnosticInput) -> ExecutionEnvelopeProvenanceDiagnostic
