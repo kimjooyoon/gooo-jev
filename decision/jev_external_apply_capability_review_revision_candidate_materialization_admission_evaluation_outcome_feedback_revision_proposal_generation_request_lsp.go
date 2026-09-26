@@ -116,6 +116,8 @@ func ProjectJEVExternalApplyCapabilityReviewRevisionCandidateMaterializationAdmi
 		output.GeneratorIdentity, output.GenerationRequestBridgeDigest, output.Publishable,
 	)
 	if err := output.Validate(); err != nil {
+		output.Status =
+			jevExternalApplyCapabilityReviewRevisionCandidateMaterializationAdmissionEvaluationBridgeUnknown
 		output.JEVExternalApplyCapabilityReviewRevisionCandidateMaterializationAdmissionEvaluationOutcomeFeedbackRevisionProposalBridgeLSPDiagnostic.Status =
 			jevExternalApplyCapabilityReviewRevisionCandidateMaterializationAdmissionEvaluationBridgeUnknown
 		output.Severity = "warning"
