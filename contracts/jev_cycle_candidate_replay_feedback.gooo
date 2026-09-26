@@ -1,0 +1,11 @@
+package jevcyclecandidatereplayfeedback
+namespace jevcyclecandidatereplayfeedback
+
+entity ExecutionEnvelopeJEVCycleCandidateReplayFeedbackInput id "gooo://gooo-jev/cycle-candidate-replay-feedback-input"
+property Cycle JEVImprovementCycleObservation
+property Candidate ExecutionEnvelopeJEVCycleRevisionCandidateGenerationBinding
+property ReverseBinding ExecutionEnvelopeReverseObservationBinding
+property MetricDigest string
+property NonAuthorizing boolean
+
+activity DeriveJEVImprovementReplayFeedbackFromCycleCandidateReverseObservation(ExecutionEnvelopeJEVCycleCandidateReplayFeedbackInput) -> JEVImprovementReplayFeedback
