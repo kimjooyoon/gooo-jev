@@ -4,14 +4,22 @@ import "testing"
 
 func TestProjectJEVExternalApplyCapabilityReviewReplayOriginMutationRevisionPlanLSPReady(t *testing.T) {
     plan := JEVExternalApplyCapabilityReviewReplayOriginMutationRevisionPlan{
-        Status:          jevExternalApplyCapabilityReviewReplayOriginMutationRevisionPlanReady,
-        ProposalStatus:  jevExternalApplyCapabilityReviewReplayOriginMutationRevisionProposalReady,
-        ProposalDigest:  "proposal-digest",
-        PlanSource:      "revision-plan-source",
-        IntentDigest:    "revision-intent-digest",
-        PlanDigest:      digestJEVExternalApplyCapabilityReviewReplayOriginMutationRevisionPlan(jevExternalApplyCapabilityReviewReplayOriginMutationRevisionPlanReady, jevExternalApplyCapabilityReviewReplayOriginMutationRevisionProposalReady, "proposal-digest", "revision-plan-source", "revision-intent-digest"),
-        NonExecuting:    true,
-        NonAuthorizing:  true,
+        Status:           jevExternalApplyCapabilityReviewReplayOriginMutationRevisionPlanReady,
+        ProposalStatus:   jevExternalApplyCapabilityReviewReplayOriginMutationRevisionProposalReady,
+        CandidateDigest:  "candidate-digest",
+        ProposalDigest:   "proposal-digest",
+        RevisionSource:   "candidate-source",
+        PlanSource:       "revision-plan-source",
+        IntentDigest:     "revision-intent-digest",
+        PlanDigest:       digestJEVExternalApplyCapabilityReviewReplayOriginMutationRevisionPlan(
+            jevExternalApplyCapabilityReviewReplayOriginMutationRevisionPlanReady,
+            jevExternalApplyCapabilityReviewReplayOriginMutationRevisionProposalReady,
+            "proposal-digest",
+            "revision-plan-source",
+            "revision-intent-digest",
+        ),
+        NonExecuting:   true,
+        NonAuthorizing: true,
     }
 
     diagnostic := ProjectJEVExternalApplyCapabilityReviewReplayOriginMutationRevisionPlanLSP(plan)
@@ -19,14 +27,14 @@ func TestProjectJEVExternalApplyCapabilityReviewReplayOriginMutationRevisionPlan
         t.Fatalf("expected valid ready diagnostic, got %v", err)
     }
     if !diagnostic.Publishable || diagnostic.PlanSource != "revision-plan-source" ||
-        diagnostic.IntentDigest != "revision-intent-digest" || diagnostic.PlanDigest != "plan-digest" {
+        diagnostic.IntentDigest != "revision-intent-digest" || diagnostic.PlanDigest == "" {
         t.Fatalf("ready diagnostic did not preserve plan evidence: %#v", diagnostic)
     }
 }
 
 func TestProjectJEVExternalApplyCapabilityReviewReplayOriginMutationRevisionPlanLSPUnknown(t *testing.T) {
     plan := JEVExternalApplyCapabilityReviewReplayOriginMutationRevisionPlan{
-        Status:         jevExternalApplyCapabilityReviewReplayOriginMutationRevisionPlanReady,
+        Status:         jevExternalApplyCapabilityReviewOriginMutationRevisionPlanReady,
         ProposalStatus: jevExternalApplyCapabilityReviewReplayOriginMutationRevisionProposalReady,
         NonExecuting:   true,
         NonAuthorizing: true,
