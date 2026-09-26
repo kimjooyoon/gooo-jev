@@ -1,0 +1,4 @@
+package jevimprovementreplayfeedback
+namespace jevimprovementreplayfeedback
+entity JEVImprovementReplayFeedback id "gooo://gooo-jev/improvement-replay-feedback"
+activity DeriveJEVImprovementReplayFeedback(JEVImprovementReplayFeedbackInput) -> JEVImprovementReplayFeedback
