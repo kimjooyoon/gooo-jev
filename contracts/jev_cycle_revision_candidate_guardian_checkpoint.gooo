@@ -1,0 +1,7 @@
+package jevcyclerevisioncandidateguardian
+namespace jevcyclerevisioncandidateguardian
+
+entity ExecutionEnvelopeJEVCycleRevisionCandidateGuardianCheckpointInput id "gooo://gooo-jev/cycle-revision-candidate-guardian-checkpoint-input"
+entity ExecutionEnvelopeJEVCycleRevisionCandidateGuardianCheckpointBinding id "gooo://gooo-jev/cycle-revision-candidate-guardian-checkpoint-binding"
+
+activity EvaluateExecutionEnvelopeJEVRevisionCandidateGuardianCheckpoint(ExecutionEnvelopeJEVCycleRevisionCandidateGuardianCheckpointInput) -> ExecutionEnvelopeJEVCycleRevisionCandidateGuardianCheckpointBinding
