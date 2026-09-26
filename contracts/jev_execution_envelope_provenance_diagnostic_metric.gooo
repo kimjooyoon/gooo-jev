@@ -1,0 +1,18 @@
+package jevexecutionenvelopeprovenancediagnosticmetric
+namespace jevexecutionenvelopeprovenancediagnosticmetric
+
+entity ExecutionEnvelopeProvenanceDiagnosticMetricInput id "gooo://gooo-jev/execution-provenance-diagnostic-metric-input"
+  property ClearCount integer
+  property DiagnosticCount integer
+  property UnknownCount integer
+  property NonAuthorizing boolean
+
+entity ExecutionEnvelopeProvenanceDiagnosticMetric id "gooo://gooo-jev/execution-provenance-diagnostic-metric"
+  property Status string
+  property Total integer
+  property ClearCount integer
+  property DiagnosticCount integer
+  property UnknownCount integer
+  property NonAuthorizing boolean
+
+activity MeasureExecutionEnvelopeProvenanceDiagnosticMetric(ExecutionEnvelopeProvenanceDiagnosticMetricInput) -> ExecutionEnvelopeProvenanceDiagnosticMetric
