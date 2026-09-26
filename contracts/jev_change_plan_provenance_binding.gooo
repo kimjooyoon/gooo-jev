@@ -1,0 +1,34 @@
+package jevchangeplanprovenancebinding
+namespace jevchangeplanprovenancebinding
+
+entity DecisionConfidenceChangePlanProvenanceBindingInput id "gooo://gooo-jev/change-plan-provenance-binding-input"
+  property ProposalDigest string
+  property ChangePlanDigest string
+  property SourceReference string
+  property WriteSetDigest string
+  property DeclarationID string
+  property ContractID string
+  property DeclarationDigest string
+  property IRDigest string
+  property GenerationDigest string
+  property DeclarationBindingDigest string
+  property NonAuthorizing boolean
+
+entity DecisionConfidenceChangePlanProvenanceBinding id "gooo://gooo-jev/change-plan-provenance-binding"
+  property Status string
+  property MissingStage string
+  property ProposalDigest string
+  property ChangePlanDigest string
+  property SourceReference string
+  property WriteSetDigest string
+  property DeclarationID string
+  property ContractID string
+  property DeclarationDigest string
+  property IRDigest string
+  property GenerationDigest string
+  property DeclarationBindingDigest string
+  property EvidenceDigest string
+  property NonExecuting boolean
+  property NonAuthorizing boolean
+
+activity BindDecisionConfidenceChangePlanProvenance(DecisionConfidenceChangePlanProvenanceBindingInput) -> DecisionConfidenceChangePlanProvenanceBinding
