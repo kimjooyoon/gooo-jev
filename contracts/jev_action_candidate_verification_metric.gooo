@@ -1,0 +1,27 @@
+package jevactioncandidateverificationmetric
+namespace jevactioncandidateverificationmetric
+
+entity JEVActionCandidateVerificationMetricInput id "gooo://gooo-jev/jev-action-candidate-verification-metric-input"
+  property MetricName string
+  property VerifiedCount integer
+  property ReviewCount integer
+  property CounterexampleCount integer
+  property UnknownCount integer
+  property EvidenceSourceDigest string
+  property NonAuthorizing boolean
+
+entity JEVActionCandidateVerificationMetric id "gooo://gooo-jev/jev-action-candidate-verification-metric"
+  property Status string
+  property MetricName string
+  property Total integer
+  property VerifiedCount integer
+  property ReviewCount integer
+  property CounterexampleCount integer
+  property UnknownCount integer
+  property EvidenceSourceDigest string
+  property EvidenceDigest string
+  property MissingStage string
+  property NonExecuting boolean
+  property NonAuthorizing boolean
+
+activity MeasureJEVActionCandidateVerificationMetric(JEVActionCandidateVerificationMetricInput) -> JEVActionCandidateVerificationMetric
