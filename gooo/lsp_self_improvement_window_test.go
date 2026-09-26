@@ -54,8 +54,7 @@ func TestExplainSelfImprovementWindowRetainsWindowFailure(t *testing.T) {
 
 func TestExplainSelfImprovementWindowRetainsSourceLinkFailure(t *testing.T) {
 	source, symbolName, window := lspSelfImprovementWindowInputs(t)
-	result, err := ExplainSelfImprovementWindow(source+"
-", symbolName, window)
+	result, err := ExplainSelfImprovementWindow(source+"\n", symbolName, window)
 	if err == nil {
 		t.Fatal("ExplainSelfImprovementWindow() error = nil, want source link failure")
 	}
