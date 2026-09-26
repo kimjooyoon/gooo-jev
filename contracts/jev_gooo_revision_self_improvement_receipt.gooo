@@ -1,0 +1,37 @@
+package jev.gooo.revision.lifecycle
+
+entity RevisionSelfImprovementReceipt {
+    field status string
+    field missing_stage string
+    field application_observation_digest string
+    field metrics_binding_digest string
+    field application_assessment_digest string
+    field generation_assessment_digest string
+    field source_digest string
+    field proposed_source_digest string
+    field input_ir_digest string
+    field proposed_ir_digest string
+    field application_digest string
+    field candidate_digest string
+    field edit_digest string
+    field metrics_digest string
+    field generated_source_digest string
+    field generated_ir_digest string
+    field structure_digest string
+    field changed_byte_count integer
+    field changed_line_count integer
+    field ir_changed boolean
+    field exact_source_match boolean
+    field structure_match boolean
+    field stage_count integer
+    invariant non_executing
+    invariant non_authorizing
+}
+
+activity observe_revision_self_improvement_receipt {
+    input revision_application_observation
+    input revision_metrics_binding
+    input revision_application_assessment
+    input revision_generation_assessment
+    output revision_self_improvement_receipt
+}
