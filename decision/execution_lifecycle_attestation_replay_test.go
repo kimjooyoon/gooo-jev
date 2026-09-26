@@ -62,7 +62,7 @@ func TestReplayExecutionLifecycleAttestationPreservesMismatch(t *testing.T) {
 		t.Fatalf("ReplayExecutionLifecycleAttestation() error = %v", err)
 	}
 	if replayed.Status != ExecutionLifecycleAttestationReplayUnknown ||
-		replayed.MissingStage != "attestation" {
+		replayed.MissingStage != "attestation:authorization" {
 		t.Fatalf("unknown replay = %#v", replayed)
 	}
 	if err := replayed.Validate(); err != nil {
