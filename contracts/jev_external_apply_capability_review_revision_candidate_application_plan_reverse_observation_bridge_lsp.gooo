@@ -1,0 +1,37 @@
+package jevapplicationplanreverseobservationlsp
+
+namespace jevapplicationplanreverseobservationlsp
+
+entity CandidateApplicationPlanReverseObservationBridgeLSPDiagnostic {
+  field severity string
+  field code string
+  field message string
+  field status string
+  field missing_stage string
+  field application_plan_status string
+  field plan_digest string
+  field plan_source string
+  field plan_evidence_digest string
+  field application_plan_bridge_digest string
+  field reverse_observation_status string
+  field observation_digest string
+  field observation_source string
+  field observation_evidence_digest string
+  field observation_metric_status string
+  field observation_metric_digest string
+  field observation_metric_source string
+  field observation_metric_evidence_digest string
+  field bridge_digest string
+  field projection_digest string
+  field publishable bool
+  field non_executing bool
+  field non_authorizing bool
+}
+
+activity ProjectCandidateApplicationPlanReverseObservationBridgeLSP {
+  input CandidateApplicationPlanReverseObservationBridgeLSPDiagnostic
+  output CandidateApplicationPlanReverseObservationBridgeLSPDiagnostic
+  effect provenance-only
+  effect execution none
+  effect authorization none
+}
