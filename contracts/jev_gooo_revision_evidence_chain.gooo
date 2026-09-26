@@ -1,0 +1,7 @@
+package jev.gooo.revision.chain
+namespace jev.gooo.revision.chain
+
+entity RevisionEvidenceChainRequest id "urn:jev:gooo:revision-evidence-chain-request"
+entity RevisionEvidenceChain id "urn:jev:gooo:revision-evidence-chain"
+
+activity ObserveRevisionEvidenceChain(RevisionEvidenceChainRequest) -> RevisionEvidenceChain
