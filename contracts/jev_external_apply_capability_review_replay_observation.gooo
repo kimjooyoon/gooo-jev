@@ -1,0 +1,4 @@
+package jevreplayobservation
+namespace jevreplayobservation
+entity JEVExternalApplyCapabilityReviewReplayObservation id "gooo://gooo-jev/decision-external-apply-capability-review-replay-observation"
+activity ObserveJEVExternalApplyCapabilityReviewReplay(JEVExternalApplyCapabilityReviewReplayObservationInput) -> JEVExternalApplyCapabilityReviewReplayObservation
