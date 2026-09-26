@@ -34,6 +34,7 @@ type ExecutionEnvelopeGoooEvidenceFullProvenanceBinding struct {
 	IRDigest                  string
 	GenerationDigest          string
 	BaseBindingDigest         string
+	EvidenceBindingDigest     string
 	EvidenceDeclarationDigest string
 	ReverseObservationDigest  string
 	MetricDigest              string
@@ -52,6 +53,7 @@ func (b ExecutionEnvelopeGoooEvidenceFullProvenanceBinding) Validate() error {
 		b.IRDigest == "" ||
 		b.GenerationDigest == "" ||
 		b.BaseBindingDigest == "" ||
+		b.EvidenceBindingDigest == "" ||
 		b.EvidenceDeclarationDigest == "" ||
 		b.ReverseObservationDigest == "" ||
 		b.MetricDigest == "" ||
@@ -68,22 +70,24 @@ func (b ExecutionEnvelopeGoooEvidenceFullProvenanceBinding) Validate() error {
 	}
 	bindingDigest, err := Digest(struct {
 		BaseBindingDigest         string
+		EvidenceBindingDigest     string
 		EvidenceDeclarationDigest string
 		ProvenanceEvidenceDigest  string
 	}{
 		BaseBindingDigest:         b.BaseBindingDigest,
+		EvidenceBindingDigest:     b.EvidenceBindingDigest,
 		EvidenceDeclarationDigest: b.EvidenceDeclarationDigest,
 		ProvenanceEvidenceDigest:  b.ProvenanceEvidenceDigest,
 	})
-	if err != nil || b.BaseBindingDigest != b.BaseBindingDigest {
+	if err != nil || b.EvidenceBindingDigest != bindingDigest {
 		return fmt.Errorf("Gooo evidence full provenance base binding digest mismatch")
 	}
-	_ = bindingDigest
 	expectedEvidence, err := Digest(struct {
 		DeclarationDigest         string
 		IRDigest                  string
 		GenerationDigest          string
 		BaseBindingDigest         string
+		EvidenceBindingDigest     string
 		EvidenceDeclarationDigest string
 		ReverseObservationDigest  string
 		MetricDigest              string
@@ -194,12 +198,14 @@ func BindExecutionEnvelopeGoooEvidenceFullProvenance(input ExecutionEnvelopeGooo
 	output.MetricDigest = full.MetricDigest
 	output.ProvenanceEvidenceDigest = full.EvidenceDigest
 	output.CompletenessDigest = full.CompletenessDigest
-	bindingDigest, err := Digest(struct {
+	output.EvidenceBindingDigest, err = Digest(struct {
 		BaseBindingDigest         string
+		EvidenceBindingDigest     string
 		EvidenceDeclarationDigest string
 		ProvenanceEvidenceDigest  string
 	}{
 		BaseBindingDigest:         output.BaseBindingDigest,
+		EvidenceBindingDigest:     output.EvidenceBindingDigest,
 		EvidenceDeclarationDigest: output.EvidenceDeclarationDigest,
 		ProvenanceEvidenceDigest:  output.ProvenanceEvidenceDigest,
 	})
@@ -214,6 +220,7 @@ func BindExecutionEnvelopeGoooEvidenceFullProvenance(input ExecutionEnvelopeGooo
 		IRDigest                  string
 		GenerationDigest          string
 		BaseBindingDigest         string
+		EvidenceBindingDigest     string
 		EvidenceDeclarationDigest string
 		ReverseObservationDigest  string
 		MetricDigest              string
