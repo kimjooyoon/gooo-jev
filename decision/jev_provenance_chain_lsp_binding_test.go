@@ -11,11 +11,20 @@ func validProvenanceChainForLSP() ExecutionEnvelopeProvenanceChainBinding {
 	})
 }
 
+func evidencePrefixForLSP(t *testing.T, chain ExecutionEnvelopeProvenanceChainBinding, stageIndex int) string {
+	t.Helper()
+	digest, err := DeriveProvenanceChainEvidencePrefixDigest(chain, stageIndex)
+	if err != nil {
+		t.Fatalf("derive evidence prefix: %v", err)
+	}
+	return digest
+}
+
 func TestProjectExecutionEnvelopeProvenanceChainLSPProjectsReadyAndMissingStages(t *testing.T) {
 	ready := validProvenanceChainForLSP()
 	output := ProjectExecutionEnvelopeProvenanceChainLSP(ExecutionEnvelopeProvenanceChainLSPBindingInput{
 		Chain:                ready,
-		EvidencePrefixDigest: "prefix-digest",
+		EvidencePrefixDigest: evidencePrefixForLSP(t, ready, -1),
 		NonAuthorizing:       true,
 	})
 	if output.Status != "clear" || output.Publishable || output.Code != "provenance-complete" || output.ChainEvidenceDigest != ready.EvidenceDigest || output.ChainBindingDigest != ready.BindingDigest {
@@ -30,7 +39,7 @@ func TestProjectExecutionEnvelopeProvenanceChainLSPProjectsReadyAndMissingStages
 	output = ProjectExecutionEnvelopeProvenanceChainLSP(ExecutionEnvelopeProvenanceChainLSPBindingInput{
 		Chain:                missing,
 		MissingStageIndex:    99,
-		EvidencePrefixDigest: "prefix-digest",
+		EvidencePrefixDigest: evidencePrefixForLSP(t, missing, 3),
 		NonAuthorizing:       true,
 	})
 	if output.Status != "publishable" || !output.Publishable || output.Severity != "error" || output.MissingStage != "reverse_observation" || output.MissingStageIndex != 3 {
@@ -49,8 +58,8 @@ func TestProjectExecutionEnvelopeProvenanceChainLSPKeepsIncompleteEvidenceUnknow
 		MissingStageIndex: -1,
 		NonAuthorizing: true,
 	})
-	if output.Status != "UNKNOWN" || output.Publishable || output.Code != "lsp-diagnostic-evidence" {
-		t.Fatalf("unexpected incomplete projection: %+v", output)
+	if output.Status != "publishable" || !output.Publishable || output.Code != "provenance-chain" || output.MissingStage != "metric" || output.MissingStageIndex != 4 || output.EvidencePrefixDigest == "" {
+		t.Fatalf("unexpected derived-prefix projection: %+v", output)
 	}
 
 	missing.MissingStage = ""
@@ -106,5 +115,17 @@ func TestProvenanceChainMissingStageIndexDerivesCanonicalOrder(t *testing.T) {
 	}
 	if got, ok := ProvenanceChainMissingStageIndex("provenance-validation"); ok || got != -1 {
 		t.Fatalf("unsupported stage index = (%d, %v), want (-1, false)", got, ok)
+	}
+}
+
+func TestProjectExecutionEnvelopeProvenanceChainLSPRejectsWrongEvidencePrefix(t *testing.T) {
+	chain := validProvenanceChainForLSP()
+	output := ProjectExecutionEnvelopeProvenanceChainLSP(ExecutionEnvelopeProvenanceChainLSPBindingInput{
+		Chain:                chain,
+		EvidencePrefixDigest: "tampered-prefix",
+		NonAuthorizing:       true,
+	})
+	if output.Status != "UNKNOWN" || output.Publishable || output.Code != "lsp-diagnostic-prefix" {
+		t.Fatalf("wrong evidence prefix was accepted: %+v", output)
 	}
 }

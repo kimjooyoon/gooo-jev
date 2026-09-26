@@ -1,5 +1,7 @@
 package decision
 
+import "fmt"
+
 // ExecutionEnvelopeProvenanceChainLSPBindingInput adapts the complete
 // provenance chain to the existing editor diagnostic projection.
 type ExecutionEnvelopeProvenanceChainLSPBindingInput struct {
@@ -36,6 +38,49 @@ func ProvenanceChainMissingStageIndex(stage string) (int, bool) {
 	return -1, false
 }
 
+type provenanceChainEvidencePrefixStage struct {
+	Name  string
+	Value string
+}
+
+// DeriveProvenanceChainEvidencePrefixDigest computes the canonical evidence
+// prefix before the missing stage, or the complete chain when ready.
+func DeriveProvenanceChainEvidencePrefixDigest(chain ExecutionEnvelopeProvenanceChainBinding, missingStageIndex int) (string, error) {
+	if err := chain.Validate(); err != nil {
+		return "", fmt.Errorf("chain integrity: %w", err)
+	}
+	stages := []provenanceChainEvidencePrefixStage{
+		{Name: "declaration", Value: chain.DeclarationDigest},
+		{Name: "ir", Value: chain.IRDigest},
+		{Name: "generation", Value: chain.GenerationDigest},
+		{Name: "reverse_observation", Value: chain.ReverseObservationDigest},
+		{Name: "metric", Value: chain.MetricDigest},
+	}
+	limit := len(stages)
+	if chain.Status == "ready" {
+		if missingStageIndex != -1 {
+			return "", fmt.Errorf("ready chain must use complete prefix index")
+		}
+	} else {
+		derivedIndex, ok := ProvenanceChainMissingStageIndex(chain.MissingStage)
+		if !ok || derivedIndex != missingStageIndex {
+			return "", fmt.Errorf("missing stage index does not match chain")
+		}
+		limit = missingStageIndex
+	}
+	digest, err := Digest(struct {
+		MissingStageIndex int
+		Stages            []provenanceChainEvidencePrefixStage
+	}{
+		MissingStageIndex: missingStageIndex,
+		Stages:            stages[:limit],
+	})
+	if err != nil {
+		return "", err
+	}
+	return digest, nil
+}
+
 // ProjectExecutionEnvelopeProvenanceChainLSP binds a chain result to LSP only
 // when the stage index and evidence prefix make the diagnostic auditable.
 func ProjectExecutionEnvelopeProvenanceChainLSP(input ExecutionEnvelopeProvenanceChainLSPBindingInput) ExecutionEnvelopeProvenanceChainLSPBinding {
@@ -52,11 +97,33 @@ func ProjectExecutionEnvelopeProvenanceChainLSP(input ExecutionEnvelopeProvenanc
 		output.Code = "chain-integrity"
 		return output
 	}
+	missingStageIndex := -1
+	if input.Chain.Status != "ready" {
+		if input.Chain.MissingStage == "" {
+			output.Code = "lsp-diagnostic-evidence"
+			return output
+		}
+		var ok bool
+		missingStageIndex, ok = ProvenanceChainMissingStageIndex(input.Chain.MissingStage)
+		if !ok {
+			output.Code = "lsp-diagnostic-location"
+			return output
+		}
+	}
+	prefixDigest, err := DeriveProvenanceChainEvidencePrefixDigest(input.Chain, missingStageIndex)
+	if err != nil {
+		output.Code = "lsp-diagnostic-prefix"
+		return output
+	}
+	if input.EvidencePrefixDigest != "" && input.EvidencePrefixDigest != prefixDigest {
+		output.Code = "lsp-diagnostic-prefix"
+		return output
+	}
 	if input.Chain.Status == "ready" {
 		projected := ProjectExecutionEnvelopeLSPDiagnostic(ExecutionEnvelopeLSPDiagnosticInput{
 			Status:              "clear",
 			Code:                "provenance-complete",
-			EvidencePrefixDigest: input.EvidencePrefixDigest,
+			EvidencePrefixDigest: prefixDigest,
 			NonAuthorizing:      true,
 		})
 		output.Status = projected.Status
@@ -68,22 +135,13 @@ func ProjectExecutionEnvelopeProvenanceChainLSP(input ExecutionEnvelopeProvenanc
 		output.ChainBindingDigest = input.Chain.BindingDigest
 		return output
 	}
-	if input.Chain.MissingStage == "" {
-		output.Code = "lsp-diagnostic-evidence"
-		return output
-	}
-	missingStageIndex, ok := ProvenanceChainMissingStageIndex(input.Chain.MissingStage)
-	if !ok {
-		output.Code = "lsp-diagnostic-location"
-		return output
-	}
 	projected := ProjectExecutionEnvelopeLSPDiagnostic(ExecutionEnvelopeLSPDiagnosticInput{
 		Status:              "diagnostic",
 		Severity:            "error",
 		Code:                "provenance-chain",
 		MissingStage:        input.Chain.MissingStage,
 		MissingStageIndex:   missingStageIndex,
-		EvidencePrefixDigest: input.EvidencePrefixDigest,
+		EvidencePrefixDigest: prefixDigest,
 		NonAuthorizing:      true,
 	})
 	output.Status = projected.Status
