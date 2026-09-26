@@ -7,7 +7,7 @@ property RevisionSource string
 property RevisionChangeDigest string
 property NonAuthorizing boolean
 
-entity ExecutionEnvelopeGoooEvidenceFullProvenancerevisionactioncandidaterevisiongenerationextendedBinding id "gooo://gooo-jev/gooo-evidence-full-provenance-revision-action-candidate-revision-generation-extended"
+entity ExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionCandidateRevisionGenerationExtendedBinding id "gooo://gooo-jev/gooo-evidence-full-provenance-revision-action-candidate-revision-generation-extended"
 property Status string
 property MissingStage string
 property CandidateID string
