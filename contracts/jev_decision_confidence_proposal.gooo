@@ -1,0 +1,6 @@
+package jevdecisionconfidenceproposal
+namespace jevdecisionconfidenceproposal
+
+entity DecisionConfidenceImprovementProposal id "gooo://gooo-jev/decision-confidence-improvement-proposal"
+
+activity ProposeDecisionConfidenceImprovement(DecisionConfidenceImprovementCounterexample, ImprovementCandidate, ImprovementReviewReceipt) -> DecisionConfidenceImprovementProposal
