@@ -1,0 +1,59 @@
+package jevrevisionselfimprovementdecision
+namespace jevrevisionselfimprovementdecision
+
+entity RevisionSelfImprovementIteration id "gooo://gooo-jev/revision-self-improvement-iteration"
+property IterationDigest string
+property FeedbackDigest string
+property CandidateSourceDigest string
+property CandidateProposedSourceDigest string
+property CandidateGeneratedIRDigest string
+property HistoryDigest string
+property WindowDigest string
+property NonAuthorizing boolean
+
+entity RevisionSelfImprovementOutcomeObservation id "gooo://gooo-jev/revision-self-improvement-outcome-observation"
+property OutcomeDigest string
+property IterationDigest string
+property SourceDigest string
+property ProposedSourceDigest string
+property GeneratedIRDigest string
+property NonAuthorizing boolean
+
+entity RevisionSelfImprovementFeedback id "gooo://gooo-jev/revision-self-improvement-feedback"
+property FeedbackDigest string
+property WindowDigest string
+property ComparisonSignal string
+property FeedbackSignal string
+property FeedbackReason string
+property CandidateSourceDigest string
+property CandidateProposedSourceDigest string
+property CandidateGeneratedIRDigest string
+property RequiresObservation boolean
+property RequiresReview boolean
+property RequiresInspection boolean
+property RequiresMeasurement boolean
+property NonAuthorizing boolean
+
+entity RevisionSelfImprovementDecisionObservation id "gooo://gooo-jev/revision-self-improvement-decision-observation"
+property Status string
+property MissingStage string
+property IterationDigest string
+property OutcomeDigest string
+property FeedbackDigest string
+property HistoryDigest string
+property SourceDigest string
+property ProposedSourceDigest string
+property GeneratedIRDigest string
+property ComparisonSignal string
+property FeedbackSignal string
+property DecisionSignal string
+property DecisionReason string
+property RequiresObservation boolean
+property RequiresReview boolean
+property RequiresInspection boolean
+property RequiresMeasurement boolean
+property DecisionDigest string
+property NonExecuting boolean
+property NonAuthorizing boolean
+
+activity ObserveRevisionSelfImprovementDecision(RevisionSelfImprovementIteration, RevisionSelfImprovementOutcomeObservation, RevisionSelfImprovementFeedback) -> RevisionSelfImprovementDecisionObservation
