@@ -1,0 +1,4 @@
+package jevexternalapplyobservation
+namespace jevexternalapplyobservation
+entity JEVExternalApplyObservation id "gooo://gooo-jev/external-apply-observation"
+activity ObserveJEVExternalApply(JEVExternalApplyObservationInput) -> JEVExternalApplyObservation
