@@ -25,12 +25,20 @@ type JEVExternalApplyCapabilityReviewRevisionCandidateGenerationRequestObservati
     GeneratorIdentity string
     ProposalDecision string
     GenerationRequestReverseObservationBridgeDigest string
+    CandidateGateApplicationPlanBridgeDigest string
     ApplicationPlanStatus string
+    PlanDigest string
+    PlanSource string
+    PlanEvidenceDigest string
     ReverseObservationStatus string
+    ObservationDigest string
+    ObservationSource string
+    ObservationEvidenceDigest string
     ObservationMetricStatus string
     ObservationMetricDigest string
     ObservationMetricSource string
     ObservationMetricEvidenceDigest string
+    ApplicationPlanReverseObservationBridgeDigest string
     ObservationStatus string
     ObservationMetricDirectionDigest string
     ObservationMetricCandidateGateBridgeDigest string
@@ -59,7 +67,8 @@ func (b JEVExternalApplyCapabilityReviewRevisionCandidateGenerationRequestObserv
         b.ObservationMetricCandidateGateBridgeDigest == "" || b.GenerationRequestStatus == "" ||
         b.GenerationRequestDigest == "" || b.GenerationRequestSource == "" ||
         b.GenerationRequestEvidenceDigest == "" || b.GeneratorIdentity == "" ||
-        b.ProposalDecision == "" || b.ApplicationPlanStatus == "" ||
+        b.ProposalDecision == "" || b.CandidateGateApplicationPlanBridgeDigest == "" ||
+        b.ApplicationPlanStatus == "" || b.ApplicationPlanReverseObservationBridgeDigest == "" ||
         b.ReverseObservationStatus == "" || b.ObservationMetricStatus == "" ||
         b.ObservationStatus == "" || b.ObservationMetricDirectionDigest == "" ||
         b.CandidateGateStatus == "" || b.CandidateDecision == "" || b.GateDigest == "" {
@@ -148,12 +157,20 @@ func BindJEVExternalApplyCapabilityReviewRevisionCandidateGenerationRequestObser
         GeneratorIdentity: input.GenerationRequestReverseObservation.GeneratorIdentity,
         ProposalDecision: input.GenerationRequestReverseObservation.ProposalDecision,
         GenerationRequestReverseObservationBridgeDigest: input.GenerationRequestReverseObservation.BridgeDigest,
+        CandidateGateApplicationPlanBridgeDigest: input.GenerationRequestReverseObservation.CandidateGateApplicationPlanBridgeDigest,
         ApplicationPlanStatus: input.GenerationRequestReverseObservation.ApplicationPlanStatus,
+        PlanDigest: input.GenerationRequestReverseObservation.PlanDigest,
+        PlanSource: input.GenerationRequestReverseObservation.PlanSource,
+        PlanEvidenceDigest: input.GenerationRequestReverseObservation.PlanEvidenceDigest,
         ReverseObservationStatus: input.GenerationRequestReverseObservation.ReverseObservationStatus,
+        ObservationDigest: input.GenerationRequestReverseObservation.ObservationDigest,
+        ObservationSource: input.GenerationRequestReverseObservation.ObservationSource,
+        ObservationEvidenceDigest: input.GenerationRequestReverseObservation.ObservationEvidenceDigest,
         ObservationMetricStatus: input.GenerationRequestReverseObservation.ObservationMetricStatus,
         ObservationMetricDigest: input.GenerationRequestReverseObservation.ObservationMetricDigest,
         ObservationMetricSource: input.GenerationRequestReverseObservation.ObservationMetricSource,
         ObservationMetricEvidenceDigest: input.GenerationRequestReverseObservation.ObservationMetricEvidenceDigest,
+        ApplicationPlanReverseObservationBridgeDigest: input.GenerationRequestReverseObservation.BridgeDigest,
         ObservationStatus: input.ObservationMetricCandidateGate.ObservationStatus,
         ObservationMetricDirectionDigest: input.ObservationMetricCandidateGate.ObservationMetricDirectionDigest,
         ObservationMetricCandidateGateBridgeDigest: input.ObservationMetricCandidateGate.BridgeDigest,
