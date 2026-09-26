@@ -1,0 +1,20 @@
+package jevgoooevidencefullprovenancecandidategate
+namespace jevgoooevidencefullprovenancecandidategate
+
+entity ExecutionEnvelopeGoooEvidenceFullProvenanceCandidateGateInput id "gooo://gooo-jev/gooo-evidence-full-provenance-candidate-gate-input"
+property Metric GoooEvidenceFullProvenanceMetric
+property CandidateSource string
+property ProposedCandidateDigest string
+property NonAuthorizing boolean
+
+entity ExecutionEnvelopeGoooEvidenceFullProvenanceCandidateGate id "gooo://gooo-jev/gooo-evidence-full-provenance-candidate-gate"
+property Status string
+property MissingStage string
+property AdmissionStatus string
+property CandidateSourceDigest string
+property MetricEvidenceDigest string
+property EvidenceDigest string
+property NonExecuting boolean
+property NonAuthorizing boolean
+
+activity BindExecutionEnvelopeGoooEvidenceFullProvenanceCandidateGate(ExecutionEnvelopeGoooEvidenceFullProvenanceCandidateGateInput) -> ExecutionEnvelopeGoooEvidenceFullProvenanceCandidateGate
