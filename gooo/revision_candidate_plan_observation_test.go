@@ -69,8 +69,8 @@ func TestObserveRevisionCandidatePlanRetainsPlanFailure(t *testing.T) {
 
 func TestObserveRevisionCandidatePlanRetainsLinkFailure(t *testing.T) {
 	observation, plan := candidatePlanObservationInputs(t)
-	plan.CandidateDigest = digestString("other-candidate")
-	plan.PlanDigest = digestRevisionApplicationPlan(plan)
+	observation.CandidateDigest = digestString("other-candidate")
+	observation.ResultDigest = digestRevisionCandidateObservation(observation)
 	result, err := ObserveRevisionCandidatePlan(observation, plan)
 	if err == nil {
 		t.Fatal("ObserveRevisionCandidatePlan() error = nil, want link failure")
