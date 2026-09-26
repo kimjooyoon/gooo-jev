@@ -1,0 +1,5 @@
+package jevreviewledgermetricbindinglsp
+namespace jevreviewledgermetricbindinglsp
+entity ExecutionEnvelopeJEVReviewLedgerMetricBindingLSPInput id "gooo://gooo-jev/review-ledger-metric-binding-lsp-input"
+entity ExecutionEnvelopeJEVReviewLedgerMetricBindingLSPProjection id "gooo://gooo-jev/review-ledger-metric-binding-lsp-projection"
+activity ProjectExecutionEnvelopeJEVReviewLedgerMetricBindingLSP(ExecutionEnvelopeJEVReviewLedgerMetricBindingLSPInput) -> ExecutionEnvelopeJEVReviewLedgerMetricBindingLSPProjection
