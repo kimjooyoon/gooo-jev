@@ -200,3 +200,55 @@ func TestExecutionEnvelopeProvenanceChainMetricValidateReplaysDigest(t *testing.
 		t.Fatal("tampered evidence digest must fail metric validation")
 	}
 }
+
+func TestEvaluateExecutionEnvelopeProvenanceChainBindingFromReverseObservation(t *testing.T) {
+	declaration := validDeclarationIRGenerationBinding()
+	reproduced := BindExecutionEnvelopeReverseObservation(ObserveExecutionEnvelopeProvenanceReverse(ExecutionEnvelopeReverseObservationInput{
+		ObservedStatus:         "ready",
+		ExpectedStatus:         "ready",
+		ObservedEvidenceDigest: "digest",
+		ExpectedEvidenceDigest: "digest",
+		NonAuthorizing:         true,
+	}))
+	output := EvaluateExecutionEnvelopeProvenanceChainBindingFromReverseObservation(ExecutionEnvelopeProvenanceChainReverseObservationInput{
+		DeclarationIRGeneration: declaration,
+		ReverseObservation:      reproduced,
+		MetricDigest:             "metric-digest",
+		NonAuthorizing:           true,
+	})
+	if output.Status != "ready" || output.MissingStage != "" || output.ReverseObservationDigest != reproduced.ObservationDigest {
+		t.Fatalf("typed reverse bridge did not reach ready: %+v", output)
+	}
+	if err := output.Validate(); err != nil {
+		t.Fatalf("bridged chain should validate: %v", err)
+	}
+
+	counterexample := BindExecutionEnvelopeReverseObservation(ObserveExecutionEnvelopeProvenanceReverse(ExecutionEnvelopeReverseObservationInput{
+		ObservedStatus:         "ready",
+		ExpectedStatus:         "hold",
+		ObservedEvidenceDigest: "observed",
+		ExpectedEvidenceDigest: "expected",
+		NonAuthorizing:         true,
+	}))
+	output = EvaluateExecutionEnvelopeProvenanceChainBindingFromReverseObservation(ExecutionEnvelopeProvenanceChainReverseObservationInput{
+		DeclarationIRGeneration: declaration,
+		ReverseObservation:      counterexample,
+		MetricDigest:             "metric-digest",
+		NonAuthorizing:           true,
+	})
+	if output.Status != "UNKNOWN" || output.MissingStage != "reverse-observation" {
+		t.Fatalf("counterexample was admitted as ready: %+v", output)
+	}
+
+	tampered := reproduced
+	tampered.ObservationDigest = "tampered"
+	output = EvaluateExecutionEnvelopeProvenanceChainBindingFromReverseObservation(ExecutionEnvelopeProvenanceChainReverseObservationInput{
+		DeclarationIRGeneration: declaration,
+		ReverseObservation:      tampered,
+		MetricDigest:             "metric-digest",
+		NonAuthorizing:           true,
+	})
+	if output.Status != "UNKNOWN" || output.MissingStage != "reverse-observation-binding" {
+		t.Fatalf("tampered reverse binding was admitted: %+v", output)
+	}
+}

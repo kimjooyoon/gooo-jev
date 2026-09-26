@@ -365,3 +365,39 @@ func (metric ExecutionEnvelopeProvenanceChainMetric) Validate() error {
 	}
 	return nil
 }
+
+// ExecutionEnvelopeProvenanceChainReverseObservationInput replaces an opaque
+// reverse-observation string with the validated binding that produced it.
+type ExecutionEnvelopeProvenanceChainReverseObservationInput struct {
+	DeclarationIRGeneration ExecutionEnvelopeDeclarationIRGenerationBinding
+	ReverseObservation      ExecutionEnvelopeReverseObservationBinding
+	MetricDigest            string
+	NonAuthorizing          bool
+}
+
+// EvaluateExecutionEnvelopeProvenanceChainBindingFromReverseObservation
+// admits only reproduced reverse observations into the ready chain.
+func EvaluateExecutionEnvelopeProvenanceChainBindingFromReverseObservation(input ExecutionEnvelopeProvenanceChainReverseObservationInput) ExecutionEnvelopeProvenanceChainBinding {
+	output := ExecutionEnvelopeProvenanceChainBinding{
+		Status: "UNKNOWN", NonExecuting: true, NonAuthorizing: true,
+	}
+	if !input.NonAuthorizing {
+		output.NonAuthorizing = false
+		output.MissingStage = "authorization-boundary"
+		return output
+	}
+	if err := input.ReverseObservation.Validate(); err != nil {
+		output.MissingStage = "reverse-observation-binding"
+		return output
+	}
+	if input.ReverseObservation.Status != "reproduced" {
+		output.MissingStage = "reverse-observation"
+		return output
+	}
+	return EvaluateExecutionEnvelopeProvenanceChainBinding(ExecutionEnvelopeProvenanceChainBindingInput{
+		DeclarationIRGeneration:  input.DeclarationIRGeneration,
+		ReverseObservationDigest: input.ReverseObservation.ObservationDigest,
+		MetricDigest:              input.MetricDigest,
+		NonAuthorizing:            true,
+	})
+}
