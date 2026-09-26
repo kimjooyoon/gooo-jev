@@ -15,7 +15,7 @@ const jevExternalApplyCapabilityReviewReplayOriginMutationRevisionApplicationObs
 
 const jevExternalApplyCapabilityReviewReplayOriginMutationRevisionApplicationObservationObserved = "observed"
 const jevExternalApplyCapabilityReviewReplayOriginMutationRevisionApplicationObservationMismatched = "mismatch"
-const jevExternalApplyCapabilityReviewReplayOriginMutationRevisionApplicationObservationNotNeeded = "not-needed"
+const jevExternalApplyCapabilityReviewReplayOriginMutationRevisionApplicationObservationNotNeededStatus = "not-needed"
 const jevExternalApplyCapabilityReviewReplayOriginMutationRevisionApplicationObservationHoldStatus = "hold"
 const jevExternalApplyCapabilityReviewReplayOriginMutationRevisionApplicationObservationRejectedStatus = "rejected"
 
@@ -56,7 +56,7 @@ func (o JEVExternalApplyCapabilityReviewReplayOriginMutationRevisionApplicationO
     switch o.Status {
     case jevExternalApplyCapabilityReviewReplayOriginMutationRevisionApplicationObservationNotNeeded:
         if o.CandidateStatus != jevExternalApplyCapabilityReviewReplayOriginMutationRevisionApplicationCandidateNotNeeded ||
-            o.ObservationStatus != jevExternalApplyCapabilityReviewReplayOriginMutationRevisionApplicationObservationNotNeeded ||
+            o.ObservationStatus != jevExternalApplyCapabilityReviewReplayOriginMutationRevisionApplicationObservationNotNeededStatus ||
             o.ObservationSource != "" || o.ObservationEvidenceDigest != "" ||
             o.ReverseObservationDigest != "" {
             return fmt.Errorf("not-needed application observation has inconsistent evidence")
@@ -130,7 +130,7 @@ func ObserveJEVExternalApplyCapabilityReviewReplayOriginMutationRevisionApplicat
     switch input.Candidate.Status {
     case jevExternalApplyCapabilityReviewReplayOriginMutationRevisionApplicationCandidateNotNeeded:
         output.Status = jevExternalApplyCapabilityReviewReplayOriginMutationRevisionApplicationObservationNotNeeded
-        output.ObservationStatus = jevExternalApplyCapabilityReviewReplayOriginMutationRevisionApplicationObservationNotNeeded
+        output.ObservationStatus = jevExternalApplyCapabilityReviewReplayOriginMutationRevisionApplicationObservationNotNeededStatus
     case jevExternalApplyCapabilityReviewReplayOriginMutationRevisionApplicationCandidateReady:
         if input.ObservationStatus == "" {
             output.MissingStage = "application-observation-status"
