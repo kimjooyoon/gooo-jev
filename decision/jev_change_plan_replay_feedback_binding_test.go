@@ -80,7 +80,7 @@ func TestBindDecisionConfidenceChangePlanReplayFeedbackFailsClosed(t *testing.T)
 		},
 		NonAuthorizing: true,
 	})
-	if output.Status != "bound-confirmed" {
+	if output.Status != "UNKNOWN" || output.MissingStage != "feedback-reconciliation" {
 		t.Fatalf("unexpected valid output after local tamper fixture: %+v", output)
 	}
 }
@@ -115,6 +115,28 @@ func TestBindDecisionConfidenceChangePlanReplayFeedbackRejectsTamperedFeedbackAn
 			NonAuthorizing:  true,
 		}),
 		NonAuthorizing: false,
+	})
+	if output.Status != "UNKNOWN" || output.NonAuthorizing || output.MissingStage != "authorization-boundary" {
+		t.Fatalf("unexpected authorization output: %+v", output)
+	}
+}
+
+func TestBindDecisionConfidenceChangePlanReplayFeedbackRejectsAuthorization(t *testing.T) {
+	plan := BindDecisionConfidenceChangePlanProvenance(DecisionConfidenceChangePlanProvenanceBindingInput{
+		ChangePlan:              validChangePlanForProvenance(t),
+		DeclarationIRGeneration: validDeclarationIRGenerationBinding(),
+		NonAuthorizing:          true,
+	})
+	feedback := makeImprovementReplayFeedback(t, FeedbackConfirmed)
+	reconciliation := ReconcileImprovementReplayFeedback(ImprovementReplayFeedbackReconciliationInput{
+		ReplayFeedback:  makeReplayFeedbackBinding(t, FeedbackConfirmed),
+		FeedbackHistory: makeReplayFeedbackHistory(t, feedback),
+		NonAuthorizing:  true,
+	})
+	output := BindDecisionConfidenceChangePlanReplayFeedback(DecisionConfidenceChangePlanReplayFeedbackBindingInput{
+		PlanProvenance:         plan,
+		FeedbackReconciliation: reconciliation,
+		NonAuthorizing:         false,
 	})
 	if output.Status != "UNKNOWN" || output.NonAuthorizing || output.MissingStage != "authorization-boundary" {
 		t.Fatalf("unexpected authorization output: %+v", output)
