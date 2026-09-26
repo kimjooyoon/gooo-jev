@@ -1,0 +1,4 @@
+package jevimprovementcycleobservation
+namespace jevimprovementcycleobservation
+entity JEVImprovementCycleObservation id "gooo://gooo-jev/improvement-cycle-observation"
+activity ObserveJEVImprovementCycle(JEVImprovementCycleObservationInput) -> JEVImprovementCycleObservation
