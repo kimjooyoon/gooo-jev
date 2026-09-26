@@ -1,0 +1,20 @@
+entity ExecutionEnvelopeJEVImprovementCycleRevisionFeedbackInput id "gooo://gooo-jev/cycle-revision-feedback-input"
+ property CycleBinding ExecutionEnvelopeJEVPlanImprovementCycleBinding
+ property RevisionCandidate JEVImprovementRevisionCandidate
+ property Feedback JEVImprovementFeedbackAggregation
+ property NonAuthorizing boolean
+
+entity ExecutionEnvelopeJEVImprovementCycleRevisionFeedbackBinding id "gooo://gooo-jev/cycle-revision-feedback-binding"
+ property Status string
+ property PlanID string
+ property CycleBindingDigest string
+ property RevisionCandidateDigest string
+ property RevisionCandidateEvidenceDigest string
+ property FeedbackStatus string
+ property FeedbackEvidenceDigest string
+ property BindingDigest string
+ property MissingStage string
+ property NonExecuting boolean
+ property NonAuthorizing boolean
+
+activity BindExecutionEnvelopeJEVImprovementCycleToRevisionFeedback(ExecutionEnvelopeJEVImprovementCycleRevisionFeedbackInput) -> ExecutionEnvelopeJEVImprovementCycleRevisionFeedbackBinding
