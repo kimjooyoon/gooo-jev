@@ -39,6 +39,7 @@ func TestProjectJEVActionCandidateLSPKeepsIncompleteEvidenceUnknown(t *testing.T
 	}
 	output := ProjectJEVActionCandidateLSP(JEVActionCandidateLSPProjectionInput{
 		Verification:         review,
+		MissingStageIndex:    -1,
 		EvidencePrefixDigest: "prefix-digest",
 		NonAuthorizing:       true,
 	})
