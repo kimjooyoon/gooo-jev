@@ -1,0 +1,39 @@
+package jevfeedbackrevisionproposallsp
+
+namespace jevfeedbackrevisionproposallsp
+
+entity CandidateCapabilityScopeFeedbackRevisionProposalBridgeLSPDiagnostic {
+  field severity string
+  field code string
+  field message string
+  field status string
+  field missing_stage string
+  field candidate_digest string
+  field candidate_source string
+  field candidate_gate_digest string
+  field feedback_status string
+  field feedback_direction string
+  field feedback_digest string
+  field feedback_source string
+  field feedback_evidence_digest string
+  field feedback_bridge_digest string
+  field revision_proposal_status string
+  field proposal_decision string
+  field proposal_target string
+  field proposal_digest string
+  field proposal_source string
+  field proposal_evidence_digest string
+  field bridge_digest string
+  field projection_digest string
+  field publishable bool
+  field non_executing bool
+  field non_authorizing bool
+}
+
+activity ProjectCandidateCapabilityScopeFeedbackRevisionProposalBridgeLSP {
+  input CandidateCapabilityScopeFeedbackRevisionProposalBridgeLSPDiagnostic
+  output CandidateCapabilityScopeFeedbackRevisionProposalBridgeLSPDiagnostic
+  effect provenance-only
+  effect execution none
+  effect authorization none
+}
