@@ -1,0 +1,31 @@
+package jev.gooo.selfimprovement.reverse
+
+entity RevisionSelfImprovementReverseObservation {
+    field status string
+    field missing_stage string
+    field lifecycle_observation_digest string
+    field metrics_binding_digest string
+    field generation_assessment_digest string
+    field source_digest string
+    field proposed_source_digest string
+    field input_ir_digest string
+    field proposed_ir_digest string
+    field generated_source_digest string
+    field generated_ir_digest string
+    field structure_digest string
+    field observed_generated_source_digest string
+    field observed_generated_ir_digest string
+    field observed_structure_digest string
+    field exact_source_match boolean
+    field exact_ir_match boolean
+    field exact_structure_match boolean
+    field reverse_signal string
+    invariant non_executing
+    invariant non_authorizing
+}
+
+activity observe_self_improvement_reverse_generation {
+    input revision_self_improvement_lifecycle_observation
+    input generation_receipt
+    output revision_self_improvement_reverse_observation
+}
