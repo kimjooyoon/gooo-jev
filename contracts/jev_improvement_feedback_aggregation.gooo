@@ -1,0 +1,4 @@
+package jevimprovementfeedbackaggregation
+namespace jevimprovementfeedbackaggregation
+entity JEVImprovementFeedbackAggregation id "gooo://gooo-jev/improvement-feedback-aggregation"
+activity AggregateJEVImprovementFeedback(JEVImprovementFeedbackAggregationInput) -> JEVImprovementFeedbackAggregation
