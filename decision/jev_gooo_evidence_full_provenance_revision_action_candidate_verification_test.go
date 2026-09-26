@@ -1,6 +1,9 @@
 package decision
 
-import "testing"
+import (
+	"testing"
+	"time"
+)
 
 func validActionDerivedCandidateGuard(t *testing.T) ExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionCandidateGuardBinding {
 	t.Helper()
