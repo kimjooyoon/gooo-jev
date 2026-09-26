@@ -36,7 +36,7 @@ type JEVExternalApplyCapabilityReviewRevisionCandidateApplicationPlanReverseObse
 }
 
 func (d JEVExternalApplyCapabilityReviewRevisionCandidateApplicationPlanReverseObservationBridgeLSPDiagnostic) Validate() error {
-    if d.Severity == "" || d.Code == "" || d.Message == "" || d.Status == "" || d.BridgeDigest == "" {
+    if d.Severity == "" || d.Code == "" || d.Message == "" || d.Status == "" {
         return fmt.Errorf("incomplete JEV application plan reverse observation LSP diagnostic")
     }
     if !d.NonExecuting {
@@ -53,7 +53,7 @@ func (d JEVExternalApplyCapabilityReviewRevisionCandidateApplicationPlanReverseO
         }
     case jevExternalApplyCapabilityReviewRevisionCandidateApplicationPlanReverseObservationBridgeBound:
         if d.Severity != "info" || d.Code != jevExternalApplyCapabilityReviewRevisionCandidateApplicationPlanReverseObservationBridgeLSPBoundCode ||
-            !d.Publishable || d.ApplicationPlanStatus == "" || d.ApplicationPlanBridgeDigest == "" ||
+            !d.Publishable || d.BridgeDigest == "" || d.ApplicationPlanStatus == "" || d.ApplicationPlanBridgeDigest == "" ||
             d.ReverseObservationStatus == "" || d.ObservationMetricStatus == "" {
             return fmt.Errorf("bound application plan reverse observation LSP diagnostic is incomplete")
         }
