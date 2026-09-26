@@ -1,0 +1,4 @@
+package jevexternalapplycapabilityboundarylsp
+namespace jevexternalapplycapabilityboundarylsp
+entity JEVExternalApplyCapabilityBoundaryLSPDiagnostic id "gooo://gooo-jev/decision-external-apply-capability-boundary-lsp"
+activity ProjectJEVExternalApplyCapabilityBoundaryLSP(JEVExternalApplyCapabilityBoundary) -> JEVExternalApplyCapabilityBoundaryLSPDiagnostic
