@@ -1,0 +1,21 @@
+package jevdeclarationsourcelsp
+namespace jevdeclarationsourcelsp
+
+entity ExecutionEnvelopeDeclarationSourceLSPInput id "gooo://gooo-jev/declaration-source-lsp-input"
+property Source ExecutionEnvelopeDeclarationSourceDigest
+property NonAuthorizing boolean
+
+entity ExecutionEnvelopeDeclarationSourceLSPProjection id "gooo://gooo-jev/declaration-source-lsp-projection"
+property Status string
+property Code string
+property Severity string
+property Message string
+property DeclarationID string
+property ContractID string
+property DeclarationDigest string
+property EvidenceDigest string
+property MissingStage string
+property NonExecuting boolean
+property NonAuthorizing boolean
+
+activity ProjectExecutionEnvelopeDeclarationSourceLSP(ExecutionEnvelopeDeclarationSourceLSPInput) -> ExecutionEnvelopeDeclarationSourceLSPProjection
