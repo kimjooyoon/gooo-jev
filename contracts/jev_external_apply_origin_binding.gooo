@@ -1,0 +1,4 @@
+package jevexternalapplyoriginbinding
+namespace jevexternalapplyoriginbinding
+entity JEVExternalApplyOriginBinding id "gooo://gooo-jev/external-apply-origin-binding"
+activity BindJEVExternalApplyToOrigin(JEVExternalApplyOriginBindingInput) -> JEVExternalApplyOriginBinding
