@@ -1,0 +1,15 @@
+entity ExecutionEnvelopeFullProvenanceLSPInput id "gooo://gooo-jev/full-provenance-lsp-input"
+  property Binding ExecutionEnvelopeFullProvenanceSourceBinding
+  property NonAuthorizing boolean
+
+entity ExecutionEnvelopeFullProvenanceLSPBinding id "gooo://gooo-jev/full-provenance-lsp-binding"
+  property Status string
+  property DiagnosticCode string
+  property MissingStage string
+  property MissingStageIndex integer
+  property EvidenceDigest string
+  property EvidencePrefixDigest string
+  property NonExecuting boolean
+  property NonAuthorizing boolean
+
+activity ProjectExecutionEnvelopeFullProvenanceToLSP(ExecutionEnvelopeFullProvenanceLSPInput) -> ExecutionEnvelopeFullProvenanceLSPBinding
