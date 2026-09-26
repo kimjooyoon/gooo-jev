@@ -1,0 +1,6 @@
+package jevdecisionconfidencebinding
+namespace jevdecisionconfidencebinding
+
+entity DecisionConfidenceProposalAdmissionBinding id "gooo://gooo-jev/decision-confidence-proposal-admission-binding"
+
+activity BindDecisionConfidenceProposalAdmission(DecisionConfidenceImprovementProposal, DecisionConfidenceExecutionAdmissionEvidence, DecisionConfidenceWorkloadIdentityReference) -> DecisionConfidenceProposalAdmissionBinding
