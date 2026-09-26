@@ -1,0 +1,26 @@
+package jev.gooo.selfimprovement.history
+
+entity RevisionSelfImprovementProvenanceHistoryObservation {
+    field status string
+    field missing_stage string
+    field observation_count integer
+    field transition_digests string
+    field previous_lifecycle_observation_digests string
+    field current_lifecycle_observation_digests string
+    field first_transition_digest string
+    field last_transition_digest string
+    field first_previous_lifecycle_digest string
+    field last_current_lifecycle_digest string
+    field stable_count integer
+    field transitioned_count integer
+    field metrics_change_count integer
+    field generation_change_count integer
+    field history_signal string
+    invariant non_executing
+    invariant non_authorizing
+}
+
+activity observe_self_improvement_provenance_history {
+    input revision_self_improvement_provenance_transition_observation_list
+    output revision_self_improvement_provenance_history_observation
+}
