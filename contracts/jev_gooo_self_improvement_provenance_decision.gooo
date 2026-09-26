@@ -1,0 +1,25 @@
+package jev.gooo.selfimprovement.decision
+
+entity RevisionSelfImprovementProvenanceDecisionObservation {
+    field status string
+    field missing_stage string
+    field history_digest string
+    field observation_count integer
+    field stable_count integer
+    field transitioned_count integer
+    field metrics_change_count integer
+    field generation_change_count integer
+    field history_signal string
+    field decision_signal string
+    field decision_reason string
+    field requires_observation boolean
+    field requires_inspection boolean
+    field requires_measurement boolean
+    invariant non_executing
+    invariant non_authorizing
+}
+
+activity observe_self_improvement_provenance_decision {
+    input revision_self_improvement_provenance_history_observation
+    output revision_self_improvement_provenance_decision_observation
+}
