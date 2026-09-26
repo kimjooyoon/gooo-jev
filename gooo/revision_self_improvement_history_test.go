@@ -2,24 +2,6 @@ package gooo
 
 import "testing"
 
-func selfImprovementHistoryInputs(t *testing.T) ([]RevisionSelfImprovementWindow, []RevisionSelfImprovementFeedback) {
-	t.Helper()
-	windows := []RevisionSelfImprovementWindow{
-		selfImprovementFeedbackWindow(t, 4, 4, false),
-		selfImprovementFeedbackWindow(t, 8, 2, false),
-		selfImprovementFeedbackWindow(t, 2, 8, false),
-	}
-	feedback := make([]RevisionSelfImprovementFeedback, 0, len(windows))
-	for _, window := range windows {
-		current, err := ObserveRevisionSelfImprovementFeedback(window)
-		if err != nil {
-			t.Fatalf("ObserveRevisionSelfImprovementFeedback() error = %v", err)
-		}
-		feedback = append(feedback, current)
-	}
-	return windows, feedback
-}
-
 func TestObserveRevisionSelfImprovementHistoryBindsOrderedSignals(t *testing.T) {
 	windows, feedback := selfImprovementHistoryInputs(t)
 	history, err := ObserveRevisionSelfImprovementHistory(windows, feedback)
@@ -35,6 +17,16 @@ func TestObserveRevisionSelfImprovementHistoryBindsOrderedSignals(t *testing.T) 
 		history.FirstFeedbackDigest != feedback[0].FeedbackDigest ||
 		history.LastFeedbackDigest != feedback[2].FeedbackDigest {
 		t.Fatalf("history boundaries were not retained: %#v", history)
+	}
+	if history.FirstCandidateSourceDigest != windows[0].CandidateSourceDigest ||
+		history.LastCandidateSourceDigest != windows[2].CandidateSourceDigest ||
+		history.LastCandidateGeneratedIRDigest != windows[2].CandidateGeneratedIRDigest {
+		t.Fatalf("candidate provenance boundaries were not retained: %#v", history)
+	}
+	if len(history.CandidateSourceDigests) != history.ObservationCount ||
+		len(history.CandidateProposedSourceDigests) != history.ObservationCount ||
+		len(history.CandidateGeneratedIRDigests) != history.ObservationCount {
+		t.Fatalf("candidate provenance series was not retained: %#v", history)
 	}
 	if history.StableCount != 1 || history.NarrowerCount != 1 ||
 		history.WiderCount != 1 || history.ObserveCount != 1 ||
