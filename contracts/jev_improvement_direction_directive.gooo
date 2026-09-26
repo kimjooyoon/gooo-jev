@@ -1,0 +1,4 @@
+package jevimprovementdirectiondirective
+namespace jevimprovementdirectiondirective
+entity JEVImprovementDirectionDirective id "gooo://gooo-jev/improvement-direction-directive"
+activity DeriveJEVImprovementDirectionDirective(JEVImprovementDirectionDirectiveInput) -> JEVImprovementDirectionDirective
