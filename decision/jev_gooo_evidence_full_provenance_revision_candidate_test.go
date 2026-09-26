@@ -9,7 +9,7 @@ func evidenceFullProvenanceRevisionCandidateInput(t *testing.T) ExecutionEnvelop
 	directive := revisionCandidateDirective()
 	directive.InputEvidenceDigest = ledger.EvidenceDigest
 	return ExecutionEnvelopeGoooEvidenceFullProvenanceRevisionCandidateInput{
-		EvidenceBinding:      bridge.CandidateGateInputBindingForTest(t),
+		EvidenceBinding:      BindExecutionEnvelopeGoooEvidenceFullProvenance(evidenceFullProvenanceInput(t)),
 		Ledger:               ledger,
 		Directive:            directive,
 		RevisionSource:       "gooo://revision/source/extended-evidence",
