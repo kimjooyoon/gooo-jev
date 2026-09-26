@@ -33,7 +33,7 @@ type ExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionCandidateRevisionG
 	RevisionSource                  string
 	BoundRevisionChangeDigest       string
 	EvidenceDigest                  string
-	NonExecuting                   bool
+	NonExecuting                    bool
 	NonAuthorizing                 bool
 }
 
@@ -124,7 +124,7 @@ func GenerateExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionCandidateR
 		DirectionEvidenceDigest  string
 	}{
 		RevisionChangeDigest:       input.RevisionChangeDigest,
-		MetricEvidenceDigest:      input.Feedback.MetricEvidenceDigest,
+		MetricEvidenceDigest:       input.Feedback.MetricEvidenceDigest,
 		FeedbackDigest:             input.Feedback.FeedbackDigest,
 		AggregationEvidenceDigest:  input.Feedback.AggregationEvidenceDigest,
 		DirectionEvidenceDigest:    input.Direction.DirectionEvidenceDigest,
@@ -159,7 +159,7 @@ func GenerateExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionCandidateR
 		Status:                        "bound",
 		SourceCandidateID:             input.Feedback.CandidateID,
 		SourceRevisionCandidateDigest: input.Feedback.RevisionCandidateDigest,
-		SourceCandidateEvidenceDigest: input.Feedback.CandidateEvidenceDigest,
+		SourceCandidateEvidenceDigest: input.Feedback.RevisionCandidateEvidenceDigest,
 		MetricEvidenceDigest:          input.Feedback.MetricEvidenceDigest,
 		FeedbackDigest:                input.Feedback.FeedbackDigest,
 		AggregationEvidenceDigest:     input.Feedback.AggregationEvidenceDigest,
