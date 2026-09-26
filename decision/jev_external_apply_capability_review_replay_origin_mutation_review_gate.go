@@ -12,9 +12,9 @@ const jevExternalApplyCapabilityReviewReplayOriginMutationReviewHold = "origin-m
 const jevExternalApplyCapabilityReviewReplayOriginMutationReviewRejected = "origin-mutation-review-rejected"
 const jevExternalApplyCapabilityReviewReplayOriginMutationReviewUnknown = "UNKNOWN"
 
-const jevExternalApplyCapabilityReviewReplayOriginMutationReviewApprove = "approve"
-const jevExternalApplyCapabilityReviewReplayOriginMutationReviewHold = "hold"
-const jevExternalApplyCapabilityReviewReplayOriginMutationReviewReject = "reject"
+const jevExternalApplyCapabilityReviewReplayOriginMutationReviewDecisionApprove = "approve"
+const jevExternalApplyCapabilityReviewReplayOriginMutationReviewDecisionHold = "hold"
+const jevExternalApplyCapabilityReviewReplayOriginMutationReviewDecisionReject = "reject"
 
 type JEVExternalApplyCapabilityReviewReplayOriginMutationReviewGateInput struct {
     Proposal             JEVExternalApplyCapabilityReviewReplayOriginMutationProposal
@@ -57,23 +57,23 @@ func (g JEVExternalApplyCapabilityReviewReplayOriginMutationReviewGate) Validate
         }
     }
     if g.ProposalStatus == jevExternalApplyCapabilityReviewReplayOriginMutationProposed {
-        if g.ReviewDecision != jevExternalApplyCapabilityReviewReplayOriginMutationReviewApprove &&
-            g.ReviewDecision != jevExternalApplyCapabilityReviewReplayOriginMutationReviewHold &&
-            g.ReviewDecision != jevExternalApplyCapabilityReviewReplayOriginMutationReviewReject {
+        if g.ReviewDecision != jevExternalApplyCapabilityReviewReplayOriginMutationReviewDecisionApprove &&
+            g.ReviewDecision != jevExternalApplyCapabilityReviewReplayOriginMutationReviewDecisionHold &&
+            g.ReviewDecision != jevExternalApplyCapabilityReviewReplayOriginMutationReviewDecisionReject {
             return fmt.Errorf("invalid JEV external apply capability review decision")
         }
         if g.ReviewEvidenceDigest == "" {
             return fmt.Errorf("review decision requires review evidence digest")
         }
-        if g.ReviewDecision == jevExternalApplyCapabilityReviewReplayOriginMutationReviewApprove &&
+        if g.ReviewDecision == jevExternalApplyCapabilityReviewReplayOriginMutationReviewDecisionApprove &&
             g.Status != jevExternalApplyCapabilityReviewReplayOriginMutationReviewApproved {
             return fmt.Errorf("approve decision requires approved review status")
         }
-        if g.ReviewDecision == jevExternalApplyCapabilityReviewReplayOriginMutationReviewHold &&
+        if g.ReviewDecision == jevExternalApplyCapabilityReviewReplayOriginMutationReviewDecisionHold &&
             g.Status != jevExternalApplyCapabilityReviewReplayOriginMutationReviewHold {
             return fmt.Errorf("hold decision requires hold review status")
         }
-        if g.ReviewDecision == jevExternalApplyCapabilityReviewReplayOriginMutationReviewReject &&
+        if g.ReviewDecision == jevExternalApplyCapabilityReviewReplayOriginMutationReviewDecisionReject &&
             g.Status != jevExternalApplyCapabilityReviewReplayOriginMutationReviewRejected {
             return fmt.Errorf("reject decision requires rejected review status")
         }
@@ -121,9 +121,9 @@ func GateJEVExternalApplyCapabilityReviewReplayOriginMutation(input JEVExternalA
     case jevExternalApplyCapabilityReviewReplayOriginMutationNotNeeded:
         output.Status = jevExternalApplyCapabilityReviewReplayOriginMutationReviewNotNeeded
     case jevExternalApplyCapabilityReviewReplayOriginMutationProposed:
-        if input.ReviewDecision != jevExternalApplyCapabilityReviewReplayOriginMutationReviewApprove &&
-            input.ReviewDecision != jevExternalApplyCapabilityReviewReplayOriginMutationReviewHold &&
-            input.ReviewDecision != jevExternalApplyCapabilityReviewReplayOriginMutationReviewReject {
+        if input.ReviewDecision != jevExternalApplyCapabilityReviewReplayOriginMutationReviewDecisionApprove &&
+            input.ReviewDecision != jevExternalApplyCapabilityReviewReplayOriginMutationReviewDecisionHold &&
+            input.ReviewDecision != jevExternalApplyCapabilityReviewReplayOriginMutationReviewDecisionReject {
             output.MissingStage = "review-decision"
             return output
         }
@@ -134,11 +134,11 @@ func GateJEVExternalApplyCapabilityReviewReplayOriginMutation(input JEVExternalA
         output.ReviewDecision = input.ReviewDecision
         output.ReviewEvidenceDigest = input.ReviewEvidenceDigest
         switch input.ReviewDecision {
-        case jevExternalApplyCapabilityReviewReplayOriginMutationReviewApprove:
+        case jevExternalApplyCapabilityReviewReplayOriginMutationReviewDecisionApprove:
             output.Status = jevExternalApplyCapabilityReviewReplayOriginMutationReviewApproved
-        case jevExternalApplyCapabilityReviewReplayOriginMutationReviewHold:
+        case jevExternalApplyCapabilityReviewReplayOriginMutationReviewDecisionHold:
             output.Status = jevExternalApplyCapabilityReviewReplayOriginMutationReviewHold
-        case jevExternalApplyCapabilityReviewReplayOriginMutationReviewReject:
+        case jevExternalApplyCapabilityReviewReplayOriginMutationReviewDecisionReject:
             output.Status = jevExternalApplyCapabilityReviewReplayOriginMutationReviewRejected
         }
     default:
