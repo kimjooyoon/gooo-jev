@@ -1,0 +1,8 @@
+package jevgoooevidencedeclaration
+namespace jevgoooevidencedeclaration
+
+entity GoooEvidenceDeclarationIRGenerationInput id "gooo://gooo-jev/evidence-declaration-ir-generation-input"
+property SourceText string
+property NonAuthorizing boolean
+
+activity DeriveGoooEvidenceDeclarationIRGeneration(GoooEvidenceDeclarationIRGenerationInput) -> GoooEvidenceDeclarationIRGeneration
