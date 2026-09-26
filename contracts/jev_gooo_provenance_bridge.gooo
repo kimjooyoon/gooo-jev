@@ -1,0 +1,10 @@
+package jevgoooprovenancebridge
+namespace jevgoooprovenancebridge
+
+entity ExecutionEnvelopeGoooDeclarationProvenanceInput id "gooo://gooo-jev/gooo-provenance-bridge-input"
+property DeclarationID string
+property ContractID string
+property SourceText string
+property NonAuthorizing boolean
+
+activity BindExecutionEnvelopeDeclarationIRGenerationFromGooo(ExecutionEnvelopeGoooDeclarationProvenanceInput) -> ExecutionEnvelopeDeclarationIRGenerationBinding
