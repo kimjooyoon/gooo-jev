@@ -76,3 +76,36 @@ func TestBindExecutionEnvelopeDeclarationIRGenerationFailsClosed(t *testing.T) {
 		t.Fatalf("unexpected authorization output: %+v", output)
 	}
 }
+
+func TestExecutionEnvelopeProvenanceChainBindingValidateReplaysEvidence(t *testing.T) {
+	ready := EvaluateExecutionEnvelopeProvenanceChainBinding(ExecutionEnvelopeProvenanceChainBindingInput{
+		DeclarationIRGeneration:  validDeclarationIRGenerationBinding(),
+		ReverseObservationDigest: "reverse-observation-digest",
+		MetricDigest:              "metric-digest",
+		NonAuthorizing:            true,
+	})
+	if err := ready.Validate(); err != nil {
+		t.Fatalf("ready chain should validate: %v", err)
+	}
+
+	tamperedEvidence := ready
+	tamperedEvidence.EvidenceDigest = "tampered-evidence"
+	if err := tamperedEvidence.Validate(); err == nil {
+		t.Fatal("tampered evidence must fail validation")
+	}
+
+	unknown := EvaluateExecutionEnvelopeProvenanceChainBinding(ExecutionEnvelopeProvenanceChainBindingInput{
+		DeclarationIRGeneration:  validDeclarationIRGenerationBinding(),
+		MetricDigest:              "metric-digest",
+		NonAuthorizing:            true,
+	})
+	if err := unknown.Validate(); err != nil {
+		t.Fatalf("unknown chain should preserve a valid prefix: %v", err)
+	}
+
+	tamperedPrefix := unknown
+	tamperedPrefix.BindingDigest = "tampered-binding"
+	if err := tamperedPrefix.Validate(); err == nil {
+		t.Fatal("tampered prefix must fail validation")
+	}
+}
