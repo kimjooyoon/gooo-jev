@@ -7,10 +7,13 @@ import (
 
 // CompletionItem is a provenance-linked language completion candidate.
 type CompletionItem struct {
-	Label  string
-	Kind   SymbolKind
-	Detail string
-	Digest string
+	Label        string
+	Kind         SymbolKind
+	Detail       string
+	Position     Position
+	SymbolDigest string
+	Digest       string
+	ItemDigest   string
 }
 
 // CompletionResponse is a non-executing completion projection.
@@ -18,7 +21,10 @@ type CompletionResponse struct {
 	Status         string
 	MissingStage   string
 	SourceDigest   string
+	IRDigest       string
+	Prefix         string
 	Items          []CompletionItem
+	ItemsDigest    string
 	Diagnostics    []Diagnostic
 	NonExecuting   bool
 	NonAuthorizing bool
@@ -31,6 +37,8 @@ func Complete(source, prefix string) CompletionResponse {
 		Status:         snapshot.Status,
 		MissingStage:   snapshot.MissingStage,
 		SourceDigest:   snapshot.SourceDigest,
+		IRDigest:       snapshot.IRDigest,
+		Prefix:         prefix,
 		Diagnostics:    append([]Diagnostic(nil), snapshot.Diagnostics...),
 		NonExecuting:   true,
 		NonAuthorizing: true,
@@ -40,14 +48,19 @@ func Complete(source, prefix string) CompletionResponse {
 	}
 	for _, symbol := range snapshot.Symbols {
 		if strings.HasPrefix(symbol.Name, prefix) {
-			response.Items = append(response.Items, CompletionItem{
-				Label: symbol.Name,
-				Kind: symbol.Kind,
-				Detail: string(symbol.Kind),
-				Digest: symbol.Digest,
-			})
+			item := CompletionItem{
+				Label:        symbol.Name,
+				Kind:         symbol.Kind,
+				Detail:       string(symbol.Kind),
+				Position:     symbol.Position,
+				SymbolDigest: symbol.Digest,
+				Digest:       symbol.Digest,
+			}
+			item.ItemDigest = digestCompletionItem(item)
+			response.Items = append(response.Items, item)
 		}
 	}
+	response.ItemsDigest = digestCompletionItems(response)
 	return response
 }
 
@@ -56,16 +69,32 @@ func (r CompletionResponse) Validate() error {
 	if r.Status != "BOUND" && r.Status != "UNKNOWN" {
 		return fmt.Errorf("completion status %q is invalid", r.Status)
 	}
-	if r.SourceDigest == "" {
-		return fmt.Errorf("completion source digest is required")
+	if !validDigest(r.SourceDigest) {
+		return fmt.Errorf("completion source digest is invalid")
 	}
 	if !r.NonExecuting || !r.NonAuthorizing {
 		return fmt.Errorf("completion must remain non-executing and non-authorizing")
 	}
+	if r.Status == "UNKNOWN" {
+		if len(r.Diagnostics) == 0 || r.MissingStage == "" {
+			return fmt.Errorf("unknown completion must retain a missing stage and diagnostics")
+		}
+		return nil
+	}
+	if r.MissingStage != "" || !validDigest(r.IRDigest) || !validDigest(r.ItemsDigest) {
+		return fmt.Errorf("bound completion provenance is incomplete")
+	}
 	seen := map[string]struct{}{}
-	for _, item := range r.Items {
-		if item.Label == "" || item.Detail == "" || item.Digest == "" {
-			return fmt.Errorf("completion item is incomplete")
+	for index, item := range r.Items {
+		if item.Label == "" || item.Detail == "" || !validDigest(item.Digest) || !validDigest(item.SymbolDigest) ||
+			!validDigest(item.ItemDigest) {
+			return fmt.Errorf("completion item %d is incomplete", index)
+		}
+		if item.SymbolDigest != item.Digest {
+			return fmt.Errorf("completion item %q symbol digest is not retained", item.Label)
+		}
+		if item.Position.Line < 1 || item.Position.Column < 1 {
+			return fmt.Errorf("completion item %q position is invalid", item.Label)
 		}
 		if item.Kind != EntitySymbol && item.Kind != ActivitySymbol {
 			return fmt.Errorf("completion item kind is invalid")
@@ -73,8 +102,8 @@ func (r CompletionResponse) Validate() error {
 		if _, exists := seen[item.Label]; exists {
 			return fmt.Errorf("completion item %q is duplicated", item.Label)
 		}
-		if !validDigest(item.Digest) {
-			return fmt.Errorf("completion item %q digest is invalid", item.Label)
+		if digestCompletionItem(item) != item.ItemDigest {
+			return fmt.Errorf("completion item %q digest does not match its fields", item.Label)
 		}
 		seen[item.Label] = struct{}{}
 	}
@@ -83,11 +112,30 @@ func (r CompletionResponse) Validate() error {
 			return fmt.Errorf("completion diagnostic is not source-bound")
 		}
 	}
-	if r.Status == "BOUND" && len(r.Diagnostics) != 0 {
+	if len(r.Diagnostics) != 0 {
 		return fmt.Errorf("bound completion cannot have diagnostics")
 	}
-	if r.Status == "UNKNOWN" && len(r.Diagnostics) == 0 {
-		return fmt.Errorf("unknown completion must retain diagnostics")
+	if digestCompletionItems(r) != r.ItemsDigest {
+		return fmt.Errorf("completion items digest does not match its fields")
 	}
 	return nil
+}
+
+func digestCompletionItem(item CompletionItem) string {
+	return digestString(fmt.Sprintf("%s|%s|%s|%d|%d|%s",
+		item.Label,
+		item.Kind,
+		item.Detail,
+		item.Position.Line,
+		item.Position.Column,
+		item.SymbolDigest,
+	))
+}
+
+func digestCompletionItems(response CompletionResponse) string {
+	value := fmt.Sprintf("%s|%s|%s", response.SourceDigest, response.IRDigest, response.Prefix)
+	for _, item := range response.Items {
+		value += "|" + item.ItemDigest
+	}
+	return digestString(value)
 }
