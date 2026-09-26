@@ -1,0 +1,7 @@
+package jevdecisionconfidenceobservationreplay
+namespace jevdecisionconfidenceobservationreplay
+
+entity DecisionConfidenceObservation id "gooo://gooo-jev/decision-confidence-observation"
+entity DecisionConfidenceObservationReplay id "gooo://gooo-jev/decision-confidence-observation-replay"
+
+activity ReplayDecisionConfidenceObservation(DecisionConfidenceObservation) -> DecisionConfidenceObservationReplay
