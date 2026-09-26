@@ -1,0 +1,4 @@
+package jevreplayoriginmutationreviewgate
+namespace jevreplayoriginmutationreviewgate
+entity JEVExternalApplyCapabilityReviewReplayOriginMutationReviewGate id "gooo://gooo-jev/decision-external-apply-capability-review-replay-origin-mutation-review-gate"
+activity GateJEVExternalApplyCapabilityReviewReplayOriginMutation(JEVExternalApplyCapabilityReviewReplayOriginMutationReviewGateInput) -> JEVExternalApplyCapabilityReviewReplayOriginMutationReviewGate
