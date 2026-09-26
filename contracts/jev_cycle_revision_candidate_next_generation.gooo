@@ -1,0 +1,7 @@
+package jevcyclerevisioncandidatenextgeneration
+namespace jevcyclerevisioncandidatenextgeneration
+
+entity ExecutionEnvelopeJEVCycleRevisionCandidateNextGenerationInput id "gooo://gooo-jev/cycle-revision-candidate-next-generation-input"
+entity ExecutionEnvelopeJEVCycleRevisionCandidateNextGenerationBinding id "gooo://gooo-jev/cycle-revision-candidate-next-generation-binding"
+
+activity GenerateExecutionEnvelopeJEVRevisionCandidateNext(ExecutionEnvelopeJEVCycleRevisionCandidateNextGenerationInput) -> ExecutionEnvelopeJEVCycleRevisionCandidateNextGenerationBinding
