@@ -1,0 +1,6 @@
+package jevgeneration
+namespace jevgeneration
+entity GoooDecisionDocumentIR id "gooo://gooo-jev/decision-generation/document-ir"
+entity GoooDecisionGenerationReceipt id "gooo://gooo-jev/decision-generation/receipt"
+entity GoooDecisionReverseObservation id "gooo://gooo-jev/decision-generation/reverse-observation"
+activity GenerateGoooDecision(GoooDecisionDocumentIR) -> GoooDecisionGenerationReceipt
