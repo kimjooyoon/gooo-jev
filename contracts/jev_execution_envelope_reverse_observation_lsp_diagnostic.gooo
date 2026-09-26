@@ -1,0 +1,20 @@
+package jevexecutionenvelopereverseobservationlspdiagnostic
+namespace jevexecutionenvelopereverseobservationlspdiagnostic
+
+entity ExecutionEnvelopeReverseObservationLSPDiagnosticInput id "gooo://gooo-jev/reverse-observation-lsp-diagnostic-input"
+  property Status string
+  property MissingStage string
+  property MissingStageIndex integer
+  property EvidencePrefixDigest string
+  property NonAuthorizing boolean
+
+entity ExecutionEnvelopeReverseObservationLSPDiagnostic id "gooo://gooo-jev/reverse-observation-lsp-diagnostic"
+  property Status string
+  property Publishable boolean
+  property Severity string
+  property Code string
+  property MissingStageIndex integer
+  property EvidencePrefixDigest string
+  property NonAuthorizing boolean
+
+activity ProjectExecutionEnvelopeReverseObservationLSPDiagnostic(ExecutionEnvelopeReverseObservationLSPDiagnosticInput) -> ExecutionEnvelopeReverseObservationLSPDiagnostic
