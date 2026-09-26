@@ -154,9 +154,6 @@ func BindJEVExternalApplyCapabilityReviewRevisionCandidateGenerationRequestCandi
         NonExecuting: true,
         NonAuthorizing: true,
     }
-    if err := output.Validate(); err != nil {
-        return unknown("generation-request-candidate-feedback-application-plan-consistency")
-    }
     output.BridgeDigest = digestJEVExternalApplyCapabilityReviewRevisionCandidateGenerationRequestCandidateFeedbackApplicationPlanBridge(
         output.Status, output.FeedbackBridgeDigest, output.CandidateGateApplicationPlanBridgeDigest,
         output.ProposalDecision, output.ApplicationPlanStatus,
