@@ -12,10 +12,19 @@ func TestProjectJEVExternalApplyCapabilityReviewRevisionCandidateApplicationObse
         MetricName:                 "reverse-confidence",
         MetricValue:                0.92,
         MetricDigest:               "metric-digest",
-        BridgeDigest:               "bridge-digest",
         NonExecuting:               true,
         NonAuthorizing:             true,
     }
+    bridge.BridgeDigest = digestJEVExternalApplyCapabilityReviewRevisionCandidateApplicationObservationMetricBridge(
+        bridge.Status,
+        bridge.CandidateApplicationStatus,
+        bridge.CandidateApplicationDigest,
+        bridge.ObservationStatus,
+        bridge.ObservationDigest,
+        bridge.MetricName,
+        bridge.MetricValue,
+        bridge.MetricDigest,
+    )
     diagnostic := ProjectJEVExternalApplyCapabilityReviewRevisionCandidateApplicationObservationMetricBridgeLSP(bridge)
     if err := diagnostic.Validate(); err != nil {
         t.Fatalf("expected valid metric diagnostic, got %v", err)
