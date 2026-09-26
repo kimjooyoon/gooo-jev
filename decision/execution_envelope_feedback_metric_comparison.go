@@ -19,6 +19,7 @@ func CompareExecutionEnvelopeFeedbackMetric(previous, current ExecutionEnvelopeF
 		NonAuthorizing:         true,
 	}
 	if !previous.NonAuthorizing || !current.NonAuthorizing || previous.FeedbackDigest == "" || current.FeedbackDigest == "" {
+		comparison.NonAuthorizing = false
 		return comparison
 	}
 	previousTotal := previous.AnalysisReadyCount + previous.RejectedCount + previous.HoldCount + previous.ObservationOnlyCount
