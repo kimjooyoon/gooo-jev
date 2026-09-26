@@ -1,0 +1,4 @@
+package jevimprovementlifecycletransition
+namespace jevimprovementlifecycletransition
+entity JEVImprovementLifecycleTransition id "gooo://gooo-jev/improvement-lifecycle-transition"
+activity ValidateJEVImprovementLifecycleTransition(JEVImprovementLifecycleTransitionInput) -> JEVImprovementLifecycleTransition
