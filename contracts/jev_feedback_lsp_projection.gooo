@@ -1,0 +1,22 @@
+package jevfeedbacklspprojection
+namespace jevfeedbacklspprojection
+
+entity ExecutionEnvelopeJEVImprovementReplayFeedbackLSPInput id "gooo://gooo-jev/replay-feedback-lsp-input"
+property Feedback JEVImprovementReplayFeedback
+property NonAuthorizing boolean
+
+entity ExecutionEnvelopeJEVImprovementReplayFeedbackLSPProjection id "gooo://gooo-jev/replay-feedback-lsp-projection"
+property Status string
+property Code string
+property Severity string
+property Message string
+property CandidateDigest string
+property ReplayObservationDigest string
+property MetricDigest string
+property FeedbackEvidenceDigest string
+property EvidenceDigest string
+property MissingStage string
+property NonExecuting boolean
+property NonAuthorizing boolean
+
+activity ProjectExecutionEnvelopeJEVImprovementReplayFeedbackLSP(ExecutionEnvelopeJEVImprovementReplayFeedbackLSPInput) -> ExecutionEnvelopeJEVImprovementReplayFeedbackLSPProjection
