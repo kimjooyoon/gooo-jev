@@ -1,0 +1,4 @@
+package jevchangeplanfeedbackdisposition
+namespace jevchangeplanfeedbackdisposition
+entity DecisionConfidenceChangePlanFeedbackDisposition id "gooo://gooo-jev/decision-confidence-change-plan-feedback-disposition"
+activity DispositionDecisionConfidenceChangePlanWithFeedback(DecisionConfidenceChangePlanFeedbackDispositionInput) -> DecisionConfidenceChangePlanFeedbackDisposition
