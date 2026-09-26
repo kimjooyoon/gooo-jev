@@ -1,0 +1,25 @@
+package jevactioncandidatelspprojection
+namespace jevactioncandidatelspprojection
+
+entity JEVActionCandidateLSPProjectionInput id "gooo://gooo-jev/jev-action-candidate-lsp-projection-input"
+  property VerificationStatus string
+  property CandidateID string
+  property VerificationEvidenceDigest string
+  property MissingStage string
+  property FirstMismatch string
+  property MissingStageIndex integer
+  property EvidencePrefixDigest string
+  property NonAuthorizing boolean
+
+entity JEVActionCandidateLSPProjection id "gooo://gooo-jev/jev-action-candidate-lsp-projection"
+  property Status string
+  property Publishable boolean
+  property Severity string
+  property Code string
+  property CandidateID string
+  property FirstMismatch string
+  property MissingStageIndex integer
+  property EvidencePrefixDigest string
+  property NonAuthorizing boolean
+
+activity ProjectJEVActionCandidateLSP(JEVActionCandidateLSPProjectionInput) -> JEVActionCandidateLSPProjection
