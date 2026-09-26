@@ -1,0 +1,6 @@
+package jevdecisionconfidenceadmission
+namespace jevdecisionconfidenceadmission
+
+entity DecisionConfidenceExecutionAdmissionEvidence id "gooo://gooo-jev/decision-confidence-execution-admission-evidence"
+
+activity EvaluateDecisionConfidenceExecutionAdmission(DecisionConfidenceFallbackPromotionEvidence, DecisionConfidenceWorkloadIdentityReference) -> DecisionConfidenceExecutionAdmissionEvidence
