@@ -1,0 +1,7 @@
+package jevlifecycleattestationreplay
+namespace jevlifecycleattestationreplay
+
+entity ExecutionLifecycleAttestation id "gooo://gooo-jev/execution-lifecycle-attestation"
+entity ExecutionLifecycleAttestationReplay id "gooo://gooo-jev/execution-lifecycle-attestation-replay"
+
+activity ReplayExecutionLifecycleAttestation(ExecutionLifecycleAttestation) -> ExecutionLifecycleAttestationReplay
