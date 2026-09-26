@@ -2,9 +2,22 @@ package jevexecutionenvelopereverseobservationtransition
 namespace jevexecutionenvelopereverseobservationtransition
 
 entity ExecutionEnvelopeReverseObservationTransitionInput id "gooo://gooo-jev/reverse-observation-transition-input"
+  property PreviousSchema string
+  property CurrentSchema string
+  property PreviousExecutionReceiptDigest string
+  property CurrentExecutionReceiptDigest string
+  property PreviousObservedOutputDigest string
+  property CurrentObservedOutputDigest string
+  property PreviousVerifierDigest string
+  property CurrentVerifierDigest string
+  property PreviousStatus string
+  property CurrentStatus string
+  property PreviousMissingStage string
+  property CurrentMissingStage string
+  property PreviousObservedAt string
+  property CurrentObservedAt string
   property PreviousObservationDigest string
   property CurrentObservationDigest string
-  property NonAuthorizing boolean
 
 entity ExecutionEnvelopeReverseObservationTransition id "gooo://gooo-jev/reverse-observation-transition"
   property Status string
