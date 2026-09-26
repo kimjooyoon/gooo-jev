@@ -1,0 +1,8 @@
+package jevdecisionconfidenceassessment
+namespace jevdecisionconfidenceassessment
+
+entity DecisionReceipt id "gooo://gooo-jev/decision-receipt"
+entity DecisionResult id "gooo://gooo-jev/decision-result"
+entity DecisionConfidenceAssessment id "gooo://gooo-jev/decision-confidence-assessment"
+
+activity AssessDecisionConfidence(DecisionReceipt) -> DecisionConfidenceAssessment
