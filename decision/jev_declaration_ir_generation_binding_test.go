@@ -252,3 +252,58 @@ func TestEvaluateExecutionEnvelopeProvenanceChainBindingFromReverseObservation(t
 		t.Fatalf("tampered reverse binding was admitted: %+v", output)
 	}
 }
+
+func TestComputeExecutionEnvelopeDeclarationSourceDigestAndBind(t *testing.T) {
+	source := "package sample\nentity Example id \"gooo://sample/example\"\n"
+	derived := ComputeExecutionEnvelopeDeclarationSourceDigest(ExecutionEnvelopeDeclarationSourceDigestInput{
+		DeclarationID:  "gooo://gooo-jev/declaration/example",
+		ContractID:     "gooo://gooo-jev/contract/example",
+		SourceText:     source,
+		NonAuthorizing: true,
+	})
+	if derived.Status != "derived" || derived.DeclarationDigest == "" || derived.MissingStage != "" || !derived.NonExecuting || !derived.NonAuthorizing {
+		t.Fatalf("unexpected declaration source digest: %+v", derived)
+	}
+	changed := ComputeExecutionEnvelopeDeclarationSourceDigest(ExecutionEnvelopeDeclarationSourceDigestInput{
+		DeclarationID:  derived.DeclarationID,
+		ContractID:     derived.ContractID,
+		SourceText:     source + "property Changed string\n",
+		NonAuthorizing: true,
+	})
+	if changed.DeclarationDigest == derived.DeclarationDigest {
+		t.Fatal("declaration source change did not change its digest")
+	}
+
+	binding := BindExecutionEnvelopeDeclarationIRGenerationFromSource(ExecutionEnvelopeDeclarationIRGenerationSourceInput{
+		DeclarationID:    derived.DeclarationID,
+		ContractID:       derived.ContractID,
+		SourceText:       source,
+		IRDigest:         "ir-digest",
+		GenerationDigest: "generation-digest",
+		NonAuthorizing:   true,
+	})
+	if binding.Status != "bound" || binding.DeclarationDigest != derived.DeclarationDigest {
+		t.Fatalf("source binding lost declaration origin: %+v", binding)
+	}
+	if err := binding.Validate(); err != nil {
+		t.Fatalf("source binding should validate: %v", err)
+	}
+
+	missing := BindExecutionEnvelopeDeclarationIRGenerationFromSource(ExecutionEnvelopeDeclarationIRGenerationSourceInput{
+		DeclarationID:  derived.DeclarationID,
+		ContractID:     derived.ContractID,
+		IRDigest:       "ir-digest",
+		NonAuthorizing: true,
+	})
+	if missing.Status != "UNKNOWN" || missing.MissingStage != "declaration-source" {
+		t.Fatalf("missing source was not preserved: %+v", missing)
+	}
+
+	unsafe := ComputeExecutionEnvelopeDeclarationSourceDigest(ExecutionEnvelopeDeclarationSourceDigestInput{
+		DeclarationID: derived.DeclarationID, ContractID: derived.ContractID, SourceText: source,
+		NonAuthorizing: false,
+	})
+	if unsafe.Status != "UNKNOWN" || unsafe.MissingStage != "authorization-boundary" || unsafe.NonAuthorizing {
+		t.Fatalf("authorization boundary escaped source digest: %+v", unsafe)
+	}
+}

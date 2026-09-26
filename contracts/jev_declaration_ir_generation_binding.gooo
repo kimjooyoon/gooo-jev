@@ -76,3 +76,30 @@ entity ExecutionEnvelopeProvenanceChainReverseObservationInput id "gooo://gooo-j
   property NonAuthorizing boolean
 
 activity EvaluateExecutionEnvelopeProvenanceChainBindingFromReverseObservation(ExecutionEnvelopeProvenanceChainReverseObservationInput) -> ExecutionEnvelopeProvenanceChainBinding
+
+entity ExecutionEnvelopeDeclarationSourceDigestInput id "gooo://gooo-jev/declaration-source-digest-input"
+  property DeclarationID string
+  property ContractID string
+  property SourceText string
+  property NonAuthorizing boolean
+
+entity ExecutionEnvelopeDeclarationSourceDigest id "gooo://gooo-jev/declaration-source-digest"
+  property Status string
+  property DeclarationID string
+  property ContractID string
+  property DeclarationDigest string
+  property MissingStage string
+  property NonExecuting boolean
+  property NonAuthorizing boolean
+
+activity ComputeExecutionEnvelopeDeclarationSourceDigest(ExecutionEnvelopeDeclarationSourceDigestInput) -> ExecutionEnvelopeDeclarationSourceDigest
+
+entity ExecutionEnvelopeDeclarationIRGenerationSourceInput id "gooo://gooo-jev/declaration-ir-generation-source-input"
+  property DeclarationID string
+  property ContractID string
+  property SourceText string
+  property IRDigest string
+  property GenerationDigest string
+  property NonAuthorizing boolean
+
+activity BindExecutionEnvelopeDeclarationIRGenerationFromSource(ExecutionEnvelopeDeclarationIRGenerationSourceInput) -> ExecutionEnvelopeDeclarationIRGenerationBinding

@@ -5,6 +5,72 @@ import (
 	"strings"
 )
 
+// ExecutionEnvelopeDeclarationSourceDigestInput identifies the exact .gooo
+// declaration text whose provenance should be recorded without execution.
+type ExecutionEnvelopeDeclarationSourceDigestInput struct {
+	DeclarationID  string
+	ContractID     string
+	SourceText     string
+	NonAuthorizing bool
+}
+
+// ExecutionEnvelopeDeclarationSourceDigest is the content-addressed origin
+// of a declaration before IR and generation are attached.
+type ExecutionEnvelopeDeclarationSourceDigest struct {
+	Status            string
+	DeclarationID     string
+	ContractID        string
+	DeclarationDigest string
+	MissingStage      string
+	NonExecuting      bool
+	NonAuthorizing    bool
+}
+
+// ComputeExecutionEnvelopeDeclarationSourceDigest derives declaration origin
+// from the exact source text instead of accepting an opaque digest.
+func ComputeExecutionEnvelopeDeclarationSourceDigest(input ExecutionEnvelopeDeclarationSourceDigestInput) ExecutionEnvelopeDeclarationSourceDigest {
+	output := ExecutionEnvelopeDeclarationSourceDigest{
+		Status: "UNKNOWN", NonExecuting: true, NonAuthorizing: true,
+	}
+	if !input.NonAuthorizing {
+		output.NonAuthorizing = false
+		output.MissingStage = "authorization-boundary"
+		return output
+	}
+	stages := []struct {
+		name  string
+		value string
+	}{
+		{name: "declaration-id", value: input.DeclarationID},
+		{name: "contract-id", value: input.ContractID},
+		{name: "declaration-source", value: input.SourceText},
+	}
+	for _, stage := range stages {
+		if strings.TrimSpace(stage.value) == "" {
+			output.MissingStage = stage.name
+			return output
+		}
+	}
+	digest, err := Digest(struct {
+		DeclarationID string
+		ContractID    string
+		SourceText    string
+	}{
+		DeclarationID: input.DeclarationID,
+		ContractID:    input.ContractID,
+		SourceText:    input.SourceText,
+	})
+	if err != nil {
+		output.MissingStage = "declaration-source-digest"
+		return output
+	}
+	output.Status = "derived"
+	output.DeclarationID = input.DeclarationID
+	output.ContractID = input.ContractID
+	output.DeclarationDigest = digest
+	return output
+}
+
 // ExecutionEnvelopeDeclarationIRGenerationBinding binds a .gooo declaration
 // identity to the IR and generation artifacts derived from it.
 type ExecutionEnvelopeDeclarationIRGenerationBinding struct {
@@ -22,6 +88,43 @@ type ExecutionEnvelopeDeclarationIRGenerationBinding struct {
 
 // BindExecutionEnvelopeDeclarationIRGeneration creates a content-addressed
 // declaration-to-IR-to-generation boundary without executing the plan.
+// ExecutionEnvelopeDeclarationIRGenerationSourceInput connects exact
+// declaration text directly to the downstream IR and generation artifacts.
+type ExecutionEnvelopeDeclarationIRGenerationSourceInput struct {
+	DeclarationID    string
+	ContractID       string
+	SourceText       string
+	IRDigest         string
+	GenerationDigest string
+	NonAuthorizing   bool
+}
+
+// BindExecutionEnvelopeDeclarationIRGenerationFromSource computes the
+// declaration origin first, then reuses the existing content-addressed bind.
+func BindExecutionEnvelopeDeclarationIRGenerationFromSource(input ExecutionEnvelopeDeclarationIRGenerationSourceInput) ExecutionEnvelopeDeclarationIRGenerationBinding {
+	source := ComputeExecutionEnvelopeDeclarationSourceDigest(ExecutionEnvelopeDeclarationSourceDigestInput{
+		DeclarationID:  input.DeclarationID,
+		ContractID:     input.ContractID,
+		SourceText:     input.SourceText,
+		NonAuthorizing: input.NonAuthorizing,
+	})
+	if source.Status != "derived" {
+		return ExecutionEnvelopeDeclarationIRGenerationBinding{
+			Status:         "UNKNOWN",
+			MissingStage:   source.MissingStage,
+			NonExecuting:   source.NonExecuting,
+			NonAuthorizing: source.NonAuthorizing,
+		}
+	}
+	return BindExecutionEnvelopeDeclarationIRGeneration(
+		source.DeclarationID,
+		source.ContractID,
+		source.DeclarationDigest,
+		input.IRDigest,
+		input.GenerationDigest,
+	)
+}
+
 func BindExecutionEnvelopeDeclarationIRGeneration(
 	declarationID string,
 	contractID string,
