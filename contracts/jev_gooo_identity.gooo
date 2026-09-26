@@ -1,0 +1,6 @@
+package jevidentity
+namespace jevidentity
+entity GoooWorkloadIdentity id "gooo://gooo-jev/identity/workload"
+entity GoooIdentityEvidence id "gooo://gooo-jev/identity/evidence"
+entity GoooIdentityReceipt id "gooo://gooo-jev/identity/receipt"
+activity ParseGoooIdentity(GoooWorkloadIdentity) -> GoooIdentityReceipt
