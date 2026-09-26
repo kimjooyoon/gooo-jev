@@ -4,8 +4,8 @@ namespace jevdecision
 entity DecisionSpec id "gooo://jev/decision/spec"
 entity DecisionReceipt id "gooo://jev/decision/receipt"
 entity DecisionFreshness id "gooo://jev/decision/freshness"
-entity DecisionReplay id "gooo://jev/decision/replay"
 entity DecisionFeedback id "gooo://jev/decision/feedback"
+entity DecisionReplay id "gooo://jev/decision/replay"
 entity DecisionFeedbackSummary id "gooo://jev/decision/feedback-summary"
 entity DecisionFeedbackTrend id "gooo://jev/decision/feedback-trend"
 entity DecisionFeedbackHistory id "gooo://jev/decision/feedback-history"
@@ -18,6 +18,7 @@ entity DecisionProvenanceEnvelope id "gooo://jev/decision/provenance-envelope"
 entity DecisionMetricDelta id "gooo://jev/decision/metric-delta"
 entity DecisionMetricLedger id "gooo://jev/decision/metric-ledger"
 entity DecisionImprovementCycle id "gooo://jev/decision/improvement-cycle"
+entity DecisionImprovementCycleReplay id "gooo://jev/decision/improvement-cycle-replay"
 
 activity ObserveDecision(DecisionSpec) -> DecisionReceipt
 activity ObserveDecisionFreshness(DecisionReceipt) -> DecisionFreshness
@@ -35,3 +36,4 @@ activity BindDecisionProvenanceEnvelope(DecisionReceipt) -> DecisionProvenanceEn
 activity ObserveDecisionMetricDelta(DecisionProvenanceEnvelope) -> DecisionMetricDelta
 activity AppendDecisionMetricDelta(DecisionMetricLedger) -> DecisionMetricLedger
 activity RecordDecisionImprovementCycle(DecisionMetricLedger) -> DecisionImprovementCycle
+activity ReplayDecisionImprovementCycle(DecisionImprovementCycle) -> DecisionImprovementCycleReplay
