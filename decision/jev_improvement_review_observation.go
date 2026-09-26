@@ -67,7 +67,10 @@ func ObserveExecutionEnvelopeJEVImprovementReview(input ExecutionEnvelopeJEVImpr
 	switch input.GateDecision.Status {
 	case "review-eligible", "revision-required", "review-hold":
 	default:
-		output.MissingStage = "review-disposition"
+		output.MissingStage = input.GateDecision.MissingStage
+		if strings.TrimSpace(output.MissingStage) == "" {
+			output.MissingStage = "review-disposition"
+		}
 		return finalizeExecutionEnvelopeJEVImprovementReviewObservation(output)
 	}
 	switch input.ReviewOutcome {
