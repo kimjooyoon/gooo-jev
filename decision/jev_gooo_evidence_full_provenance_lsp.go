@@ -107,6 +107,7 @@ func ProjectExecutionEnvelopeGoooEvidenceFullProvenanceToLSP(input ExecutionEnve
 			output.MissingStage = "evidence-binding"
 			output.MissingStageIndex = 5
 			output.DiagnosticCode = "lsp-diagnostic-evidence-binding"
+			return output
 		} else {
 			for _, stage := range stages {
 				if strings.TrimSpace(stage.Value) == "" {
