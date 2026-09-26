@@ -72,7 +72,6 @@ func TestBindJEVExternalApplyCapabilityReviewRevisionCandidateGenerationRequestC
 				NonExecuting:   true,
 				NonAuthorizing: true,
 				BridgeDigest:   "request-bridge",
-				ProposalDecision: "revise",
 			},
 			Direction: JEVExternalApplyCapabilityReviewRevisionCandidateObservationMetricDirectionBridge{
 				Direction:     jevExternalApplyCapabilityReviewImprovementDirectionHold,
@@ -83,7 +82,7 @@ func TestBindJEVExternalApplyCapabilityReviewRevisionCandidateGenerationRequestC
 		},
 	)
 	if bridge.Status != jevExternalApplyCapabilityReviewRevisionCandidateMaterializationAdmissionEvaluationBridgeUnknown ||
-		bridge.MissingStage != "generation-request" {
+		bridge.MissingStage != "revision-proposal-bridge" {
 		t.Fatalf("invalid request provenance was not fail-closed: %#v", bridge)
 	}
 }
