@@ -2,9 +2,32 @@ package gooo
 
 import "testing"
 
+const lineageRevisionSource = "package jevdecision\n" +
+	"namespace jevdecision\n" +
+	"# lineage source\n" +
+	"entity DecisionSpec id \"gooo://jev/decision/spec\"\n" +
+	"entity DecisionReceipt id \"gooo://jev/decision/receipt\"\n" +
+	"decision ChooseReceipt kind choice id \"gooo://jev/decision/choose-receipt\"\n" +
+	"activity ObserveDecision(DecisionSpec) -> DecisionReceipt\n"
+
 func lineageRevisionInputs(t *testing.T) (LineageReceipt, RevisionCandidate) {
 	t.Helper()
-	document, assessment, candidate := lineageInputs(t)
+	document, err := ParseDecision(lineageRevisionSource)
+	if err != nil {
+		t.Fatalf("ParseDecision() error = %v", err)
+	}
+	assessment, err := AssessDecision(document, DecisionObservation{
+		DecisionName:   "ChooseReceipt",
+		ObservedValue:  "DecisionReceipt",
+		EvidenceDigest: digestString("lineage-revision-evidence"),
+	})
+	if err != nil {
+		t.Fatalf("AssessDecision() error = %v", err)
+	}
+	candidate, err := ProposeRevision(assessment, RepairRevision)
+	if err != nil {
+		t.Fatalf("ProposeRevision() error = %v", err)
+	}
 	lineage, err := ObserveLineage(document, assessment, candidate)
 	if err != nil {
 		t.Fatalf("ObserveLineage() error = %v", err)
@@ -14,9 +37,9 @@ func lineageRevisionInputs(t *testing.T) (LineageReceipt, RevisionCandidate) {
 
 func revisionCommentEdit() SourceEdit {
 	edit := SourceEdit{
-		Start:       Position{Line: 4, Column: 3},
-		End:         Position{Line: 4, Column: 11},
-		Replacement: "lineage",
+		Start:       Position{Line: 3, Column: 3},
+		End:         Position{Line: 3, Column: 10},
+		Replacement: "origin",
 	}
 	edit.Digest = digestSourceEdit(edit)
 	return edit
@@ -24,7 +47,7 @@ func revisionCommentEdit() SourceEdit {
 
 func TestApplyLineageRevisionBindsCompleteChain(t *testing.T) {
 	lineage, candidate := lineageRevisionInputs(t)
-	receipt, err := ApplyLineageRevision(validContract, lineage, candidate, revisionCommentEdit())
+	receipt, err := ApplyLineageRevision(lineageRevisionSource, lineage, candidate, revisionCommentEdit())
 	if err != nil {
 		t.Fatalf("ApplyLineageRevision() error = %v", err)
 	}
@@ -41,7 +64,7 @@ func TestApplyLineageRevisionBindsCompleteChain(t *testing.T) {
 
 func TestApplyLineageRevisionRejectsDifferentSource(t *testing.T) {
 	lineage, candidate := lineageRevisionInputs(t)
-	receipt, err := ApplyLineageRevision(validContract+"\n", lineage, candidate, revisionCommentEdit())
+	receipt, err := ApplyLineageRevision(lineageRevisionSource+"\n", lineage, candidate, revisionCommentEdit())
 	if err == nil {
 		t.Fatal("ApplyLineageRevision() error = nil, want source binding failure")
 	}
@@ -54,7 +77,7 @@ func TestApplyLineageRevisionRejectsDifferentCandidate(t *testing.T) {
 	lineage, candidate := lineageRevisionInputs(t)
 	candidate.DecisionName = "DifferentDecision"
 	candidate.CandidateDigest = digestRevisionCandidate(candidate)
-	receipt, err := ApplyLineageRevision(validContract, lineage, candidate, revisionCommentEdit())
+	receipt, err := ApplyLineageRevision(lineageRevisionSource, lineage, candidate, revisionCommentEdit())
 	if err == nil {
 		t.Fatal("ApplyLineageRevision() error = nil, want candidate binding failure")
 	}
@@ -66,7 +89,7 @@ func TestApplyLineageRevisionRejectsDifferentCandidate(t *testing.T) {
 func TestApplyLineageRevisionRetainsLineageTamperStage(t *testing.T) {
 	lineage, candidate := lineageRevisionInputs(t)
 	lineage.ChainDigest = digestString("tampered-lineage")
-	receipt, err := ApplyLineageRevision(validContract, lineage, candidate, revisionCommentEdit())
+	receipt, err := ApplyLineageRevision(lineageRevisionSource, lineage, candidate, revisionCommentEdit())
 	if err == nil {
 		t.Fatal("ApplyLineageRevision() error = nil, want lineage failure")
 	}
@@ -78,12 +101,12 @@ func TestApplyLineageRevisionRetainsLineageTamperStage(t *testing.T) {
 func TestApplyLineageRevisionRetainsProposedUnknownStage(t *testing.T) {
 	lineage, candidate := lineageRevisionInputs(t)
 	edit := SourceEdit{
-		Start:       Position{Line: 5, Column: 8},
-		End:         Position{Line: 5, Column: 20},
+		Start:       Position{Line: 4, Column: 8},
+		End:         Position{Line: 4, Column: 20},
 		Replacement: "MissingSpec",
 	}
 	edit.Digest = digestSourceEdit(edit)
-	receipt, err := ApplyLineageRevision(validContract, lineage, candidate, edit)
+	receipt, err := ApplyLineageRevision(lineageRevisionSource, lineage, candidate, edit)
 	if err == nil {
 		t.Fatal("ApplyLineageRevision() error = nil, want proposed source failure")
 	}
@@ -94,7 +117,7 @@ func TestApplyLineageRevisionRetainsProposedUnknownStage(t *testing.T) {
 
 func TestValidateRejectsTamperedLineageRevision(t *testing.T) {
 	lineage, candidate := lineageRevisionInputs(t)
-	receipt, err := ApplyLineageRevision(validContract, lineage, candidate, revisionCommentEdit())
+	receipt, err := ApplyLineageRevision(lineageRevisionSource, lineage, candidate, revisionCommentEdit())
 	if err != nil {
 		t.Fatalf("ApplyLineageRevision() error = %v", err)
 	}
@@ -106,11 +129,11 @@ func TestValidateRejectsTamperedLineageRevision(t *testing.T) {
 
 func TestApplyLineageRevisionIsDeterministic(t *testing.T) {
 	lineage, candidate := lineageRevisionInputs(t)
-	first, err := ApplyLineageRevision(validContract, lineage, candidate, revisionCommentEdit())
+	first, err := ApplyLineageRevision(lineageRevisionSource, lineage, candidate, revisionCommentEdit())
 	if err != nil {
 		t.Fatalf("first ApplyLineageRevision() error = %v", err)
 	}
-	second, err := ApplyLineageRevision(validContract, lineage, candidate, revisionCommentEdit())
+	second, err := ApplyLineageRevision(lineageRevisionSource, lineage, candidate, revisionCommentEdit())
 	if err != nil {
 		t.Fatalf("second ApplyLineageRevision() error = %v", err)
 	}
