@@ -1,0 +1,10 @@
+package jevimprovementreplayfeedbackledger
+namespace jevimprovementreplayfeedbackledger
+
+entity ExecutionEnvelopeJEVReplayFeedbackLedgerInput id "gooo://gooo-jev/replay-feedback-ledger-input"
+property Previous JEVImprovementReplayFeedbackLedger
+property Feedback JEVImprovementReplayFeedback
+property MetricDigest string
+property NonAuthorizing boolean
+
+activity AppendJEVImprovementReplayFeedbackLedger(ExecutionEnvelopeJEVReplayFeedbackLedgerInput) -> JEVImprovementReplayFeedbackLedger
