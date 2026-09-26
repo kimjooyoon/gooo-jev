@@ -1,0 +1,18 @@
+entity ExecutionEnvelopeJEVPlanImprovementCycleInput id "gooo://gooo-jev/plan-improvement-cycle-input"
+  property PlanLifecycle ExecutionEnvelopeJEVExecutionPlanLifecycleBinding
+  property Cycle JEVImprovementCycleObservation
+  property NonAuthorizing boolean
+
+entity ExecutionEnvelopeJEVPlanImprovementCycleBinding id "gooo://gooo-jev/plan-improvement-cycle-binding"
+  property Status string
+  property PlanID string
+  property PlanDigest string
+  property LifecycleBindingDigest string
+  property CycleStatus string
+  property CycleEvidenceDigest string
+  property BindingDigest string
+  property MissingStage string
+  property NonExecuting boolean
+  property NonAuthorizing boolean
+
+activity BindExecutionEnvelopeJEVPlanToImprovementCycle(ExecutionEnvelopeJEVPlanImprovementCycleInput) -> ExecutionEnvelopeJEVPlanImprovementCycleBinding
