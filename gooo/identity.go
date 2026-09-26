@@ -22,7 +22,7 @@ type WorkloadIdentity struct {
 	NonAuthorizing bool
 }
 
-var trustDomainPattern = regexp.MustCompile("^[a-z0-9](?:[a-z0-9.-]*[a-z0-9])?$")
+var trustDomainPattern = regexp.MustCompile("^[a-z0-9]([a-z0-9.-]*[a-z0-9])?$")
 
 // ParseWorkloadIdentity validates a SPIFFE-shaped identity and its external evidence.
 func ParseWorkloadIdentity(raw, evidenceDigest string) (WorkloadIdentity, error) {
