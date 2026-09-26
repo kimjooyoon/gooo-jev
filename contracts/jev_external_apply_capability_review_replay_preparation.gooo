@@ -1,0 +1,4 @@
+package jevreplaypreparation
+namespace jevreplaypreparation
+entity JEVExternalApplyCapabilityReviewReplayPreparation id "gooo://gooo-jev/decision-external-apply-capability-review-replay-preparation"
+activity PrepareJEVExternalApplyCapabilityReviewReplay(JEVExternalApplyCapabilityReviewReplayPreparationInput) -> JEVExternalApplyCapabilityReviewReplayPreparation
