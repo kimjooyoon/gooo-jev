@@ -45,6 +45,10 @@ func ReconcileImprovementReplayFeedback(input ImprovementReplayFeedbackReconcili
 		output.MissingStage = "replay-feedback"
 		return output
 	}
+	if input.ReplayFeedback.FeedbackKind != FeedbackConfirmed && input.ReplayFeedback.FeedbackKind != FeedbackRefuted {
+		output.MissingStage = "replay-feedback-kind"
+		return output
+	}
 	if input.ReplayFeedback.MetricName == "" ||
 		input.ReplayFeedback.FeedbackDigest == "" ||
 		input.ReplayFeedback.EvidenceDigest == "" {

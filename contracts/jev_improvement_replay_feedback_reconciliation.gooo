@@ -4,6 +4,7 @@ namespace jevimprovementreplayfeedbackreconciliation
 entity ImprovementReplayFeedbackReconciliationInput id "gooo://gooo-jev/improvement-replay-feedback-reconciliation-input"
   property ReplayFeedbackStatus string
   property ReplayFeedbackMetricName string
+  property ReplayFeedbackKind string
   property ReplayFeedbackEvidenceDigest string
   property HistoryDigest string
   property MetricName string
