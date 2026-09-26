@@ -1,0 +1,26 @@
+package jevimprovementcycleevidencebinding
+namespace jevimprovementcycleevidencebinding
+
+entity ImprovementCycleEvidenceBindingInput id "gooo://gooo-jev/improvement-cycle-evidence-binding-input"
+  property ObservationAdmissionStatus string
+  property CandidateDigest string
+  property AdmissionDigest string
+  property BaselineLedgerDigest string
+  property ResultLedgerDigest string
+  property CandidateReference string
+  property SourceReference string
+  property Outcome string
+  property NonAuthorizing boolean
+
+entity ImprovementCycleEvidenceBinding id "gooo://gooo-jev/improvement-cycle-evidence-binding"
+  property Status string
+  property Outcome string
+  property CycleDigest string
+  property CandidateDigest string
+  property AdmissionDigest string
+  property EvidenceDigest string
+  property MissingStage string
+  property NonExecuting boolean
+  property NonAuthorizing boolean
+
+activity BindImprovementCycleEvidence(ImprovementCycleEvidenceBindingInput) -> ImprovementCycleEvidenceBinding
