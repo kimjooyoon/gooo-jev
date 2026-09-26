@@ -1,0 +1,6 @@
+package jevlsp
+namespace jevlsp
+entity GoooLanguageSnapshot id "gooo://gooo-jev/lsp/language-snapshot"
+entity GoooSymbol id "gooo://gooo-jev/lsp/symbol"
+entity GoooDiagnostic id "gooo://gooo-jev/lsp/diagnostic"
+activity AnalyzeGoooDocument(GoooLanguageSnapshot) -> GoooLanguageSnapshot
