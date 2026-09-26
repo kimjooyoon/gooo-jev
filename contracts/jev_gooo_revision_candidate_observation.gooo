@@ -1,0 +1,26 @@
+package jev.gooo.revision.candidate
+
+entity RevisionCandidateObservation {
+    field status string
+    field missing_stage string
+    field observation_digest string
+    field materialization_digest string
+    field source_digest string
+    field candidate_digest string
+    field feedback_digest string
+    field direction_digest string
+    field assessment_digest string
+    field evidence_digest string
+    field observation_class string
+    field review_signal string
+    field materialization_signal string
+    field candidate_available boolean
+    invariant non_executing
+    invariant non_authorizing
+}
+
+activity observe_revision_candidate_for_improvement {
+    input revision_improvement_observation
+    input revision_candidate_materialization
+    output revision_candidate_observation
+}
