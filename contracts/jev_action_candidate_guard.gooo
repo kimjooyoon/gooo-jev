@@ -1,0 +1,27 @@
+package jevactioncandidateguard
+namespace jevactioncandidateguard
+
+entity JEVActionCandidateGuardInput id "gooo://gooo-jev/jev-action-candidate-guard-input"
+  property CandidateID string
+  property ObservationDigest string
+  property ObservationAt string
+  property Now string
+  property MaxAge string
+  property RequestedPath string
+  property AllowedPathPrefix string
+  property WriteRequested boolean
+  property WriteAllowed boolean
+  property ConfirmationRequired boolean
+  property ConfirmationPresent boolean
+  property NonAuthorizing boolean
+
+entity JEVActionCandidateGuard id "gooo://gooo-jev/jev-action-candidate-guard"
+  property Status string
+  property CandidateID string
+  property ObservationDigest string
+  property EvidenceDigest string
+  property MissingStage string
+  property NonExecuting boolean
+  property NonAuthorizing boolean
+
+activity GuardJEVActionCandidate(JEVActionCandidateGuardInput) -> JEVActionCandidateGuard
