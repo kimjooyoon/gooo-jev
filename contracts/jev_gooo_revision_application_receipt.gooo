@@ -1,0 +1,7 @@
+package jev.gooo.revision.application.receipt
+namespace jev.gooo.revision.application.receipt
+
+entity RevisionApplicationReceiptRequest id "urn:jev:gooo:revision-application-receipt-request"
+entity RevisionApplicationReceipt id "urn:jev:gooo:revision-application-receipt"
+
+activity ObserveRevisionApplicationReceipt(RevisionApplicationReceiptRequest) -> RevisionApplicationReceipt
