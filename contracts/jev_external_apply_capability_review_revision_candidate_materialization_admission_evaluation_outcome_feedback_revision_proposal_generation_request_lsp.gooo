@@ -1,0 +1,26 @@
+package jevcandidatematerializationadmissionevaluationoutcomefeedbackrevisionproposalgenerationrequestlsp
+
+namespace jevcandidatematerializationadmissionevaluationoutcomefeedbackrevisionproposalgenerationrequestlsp
+
+entity CandidateMaterializationAdmissionEvaluationOutcomeFeedbackRevisionProposalGenerationRequestBridgeLSPDiagnostic {
+  field revision_proposal_projection_digest string
+  field generation_request_status string
+  field generation_request_digest string
+  field generation_request_source string
+  field generation_request_evidence_digest string
+  field generator_identity string
+  field generation_request_bridge_digest string
+  field projection_digest string
+  field publishable bool
+  field non_executing bool
+  field non_authorizing bool
+}
+
+activity ProjectCandidateMaterializationAdmissionEvaluationOutcomeFeedbackRevisionProposalGenerationRequestBridgeLSP {
+  input CandidateMaterializationAdmissionEvaluationOutcomeFeedbackRevisionProposalGenerationRequestBridgeLSPDiagnostic
+  output CandidateMaterializationAdmissionEvaluationOutcomeFeedbackRevisionProposalGenerationRequestBridgeLSPDiagnostic
+  effect provenance-only
+  effect execution none
+  effect authorization none
+}
+
