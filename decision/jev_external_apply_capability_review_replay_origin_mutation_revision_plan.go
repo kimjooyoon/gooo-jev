@@ -87,7 +87,7 @@ func (p JEVExternalApplyCapabilityReviewReplayOriginMutationRevisionPlan) Valida
 
 func PlanJEVExternalApplyCapabilityReviewReplayOriginMutationRevision(input JEVExternalApplyCapabilityReviewReplayOriginMutationRevisionPlanInput) JEVExternalApplyCapabilityReviewReplayOriginMutationRevisionPlan {
     output := JEVExternalApplyCapabilityReviewReplayOriginMutationRevisionPlan{
-        Status:         jevExternalApplyCapabilityReviewReplayOriginMutationRevisionPlanUnknown
+        Status:         jevExternalApplyCapabilityReviewReplayOriginMutationRevisionPlanUnknown,
         ProposalStatus: input.Proposal.Status,
         ProposalDigest: input.Proposal.ProposalDigest,
         NonExecuting:   true,
