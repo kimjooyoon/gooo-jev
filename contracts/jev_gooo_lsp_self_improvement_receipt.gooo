@@ -1,0 +1,30 @@
+package jev.gooo.lsp.lifecycle
+
+entity SelfImprovementReceiptSymbolResult {
+    field status string
+    field missing_stage string
+    field source_digest string
+    field ir_digest string
+    field symbol_name string
+    field symbol_kind string
+    field symbol_digest string
+    field receipt_digest string
+    field application_digest string
+    field candidate_digest string
+    field metrics_digest string
+    field generated_ir_digest string
+    field structure_digest string
+    field stage_count integer
+    field ir_changed boolean
+    field exact_source_match boolean
+    field structure_match boolean
+    invariant non_executing
+    invariant non_authorizing
+}
+
+activity explain_self_improvement {
+    input source
+    input symbol_name
+    input revision_self_improvement_receipt
+    output self_improvement_receipt_symbol_result
+}
