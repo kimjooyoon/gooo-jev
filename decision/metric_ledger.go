@@ -36,9 +36,13 @@ func (ledger MetricLedger) Append(delta MetricDelta) (MetricLedger, error) {
     }
 
     entries := append([]MetricLedgerEntry(nil), ledger.Entries...)
+    previousDigest := ""
+    if len(entries) > 0 {
+        previousDigest = entries[len(entries)-1].EntryDigest
+    }
     entry := MetricLedgerEntry{
         Index:          len(entries),
-        PreviousDigest: ledger.LedgerDigest,
+        PreviousDigest: previousDigest,
         Delta:          delta,
     }
     entryDigest, err := digestMetricLedgerEntry(entry)
