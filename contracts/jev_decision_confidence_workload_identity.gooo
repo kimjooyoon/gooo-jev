@@ -1,0 +1,6 @@
+package jevdecisionconfidenceworkloadidentity
+namespace jevdecisionconfidenceworkloadidentity
+
+entity DecisionConfidenceWorkloadIdentityReference id "gooo://gooo-jev/decision-confidence-workload-identity-reference"
+
+activity BindDecisionConfidencePromotionToWorkloadIdentity(DecisionConfidenceFallbackPromotionEvidence) -> DecisionConfidenceWorkloadIdentityReference
