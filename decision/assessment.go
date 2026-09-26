@@ -2,7 +2,6 @@ package decision
 
 import (
 	"errors"
-	"fmt"
 	"strings"
 	"time"
 )
@@ -67,7 +66,7 @@ func AssessDecision(spec Spec, result Result, evaluatedAt time.Time, maxAge time
 		assessment.CausalReason = "DECISION_CONFIDENCE_NOT_OBSERVED"
 	} else if spec.Threshold != nil && *result.Confidence < *spec.Threshold {
 		assessment.Status = AssessmentReview
-		assessment.CausalReason = fmt.Sprintf("DECISION_CONFIDENCE_BELOW_THRESHOLD")
+		assessment.CausalReason = "DECISION_CONFIDENCE_BELOW_THRESHOLD"
 	}
 	assessment.AssessmentDigest, err = Digest(assessment)
 	if err != nil {
