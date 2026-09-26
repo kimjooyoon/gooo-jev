@@ -1,0 +1,25 @@
+package jevgoooevidencefullprovenancerevisioncandidatelsp
+namespace jevgoooevidencefullprovenancerevisioncandidatelsp
+
+entity ExecutionEnvelopeGoooEvidenceFullProvenanceRevisionCandidateLSPInput id "gooo://gooo-jev/gooo-evidence-full-provenance-revision-candidate-lsp-input"
+property Binding GoooEvidenceFullProvenanceRevisionCandidateBinding
+property NonAuthorizing boolean
+
+entity ExecutionEnvelopeGoooEvidenceFullProvenanceRevisionCandidateLSPProjection id "gooo://gooo-jev/gooo-evidence-full-provenance-revision-candidate-lsp-projection"
+property Status string
+property DiagnosticCode string
+property MissingStage string
+property MissingStageIndex integer
+property EvidenceBindingDigest string
+property ProvenanceEvidenceDigest string
+property LedgerEvidenceDigest string
+property LedgerEntryDigest string
+property CandidateDigest string
+property CandidateEvidenceDigest string
+property BoundRevisionChangeDigest string
+property BindingDigest string
+property EvidencePrefixDigest string
+property NonExecuting boolean
+property NonAuthorizing boolean
+
+activity ProjectExecutionEnvelopeGoooEvidenceFullProvenanceRevisionCandidateToLSP(ExecutionEnvelopeGoooEvidenceFullProvenanceRevisionCandidateLSPInput) -> ExecutionEnvelopeGoooEvidenceFullProvenanceRevisionCandidateLSPProjection
