@@ -1,0 +1,4 @@
+package jevexternalapplyoriginbindinglsp
+namespace jevexternalapplyoriginbindinglsp
+entity JEVExternalApplyOriginBindingLSPDiagnostic id "gooo://gooo-jev/decision-external-apply-origin-binding-lsp"
+activity ProjectJEVExternalApplyOriginBindingLSP(JEVExternalApplyOriginBinding) -> JEVExternalApplyOriginBindingLSPDiagnostic
