@@ -1,0 +1,18 @@
+entity ExecutionEnvelopeJEVImprovementReviewLedgerInput id "gooo://gooo-jev/improvement-review-ledger-input"
+ property Observation ExecutionEnvelopeJEVImprovementReviewObservation
+ property PreviousLedgerDigest string
+ property EntryIndex integer
+ property NonAuthorizing boolean
+
+entity ExecutionEnvelopeJEVImprovementReviewLedgerEntry id "gooo://gooo-jev/improvement-review-ledger-entry"
+ property Status string
+ property ReviewOutcome string
+ property EntryIndex integer
+ property PreviousLedgerDigest string
+ property ObservationDigest string
+ property LedgerEntryDigest string
+ property MissingStage string
+ property NonExecuting boolean
+ property NonAuthorizing boolean
+
+activity AppendExecutionEnvelopeJEVImprovementReviewLedger(ExecutionEnvelopeJEVImprovementReviewLedgerInput) -> ExecutionEnvelopeJEVImprovementReviewLedgerEntry
