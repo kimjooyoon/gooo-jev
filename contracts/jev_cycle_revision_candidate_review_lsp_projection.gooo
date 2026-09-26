@@ -1,0 +1,7 @@
+package jevcyclerevisioncandidatereviewlsp
+namespace jevcyclerevisioncandidatereviewlsp
+
+entity ExecutionEnvelopeJEVCycleRevisionCandidateReviewLSPInput id "gooo://gooo-jev/cycle-revision-candidate-review-lsp-input"
+entity ExecutionEnvelopeJEVCycleRevisionCandidateReviewLSPBinding id "gooo://gooo-jev/cycle-revision-candidate-review-lsp-binding"
+
+activity ProjectExecutionEnvelopeJEVRevisionCandidateReviewLSP(ExecutionEnvelopeJEVCycleRevisionCandidateReviewLSPInput) -> ExecutionEnvelopeJEVCycleRevisionCandidateReviewLSPBinding
