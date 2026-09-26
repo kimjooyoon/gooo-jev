@@ -85,7 +85,7 @@ func (o CandidateGenerationObservation) Validate() error {
 }
 
 func digestCandidateGenerationObservation(observation CandidateGenerationObservation) string {
-	return digestString(fmt.Sprintf("%s|%s|%s|%s|%s|%s|%s|%t|%t|%t|%t",
+	return digestString(fmt.Sprintf("%s|%s|%s|%s|%s|%s|%s|%t|%t|%t|%t|%t",
 		observation.Status,
 		observation.MissingStage,
 		observation.SourceDigest,
@@ -97,5 +97,6 @@ func digestCandidateGenerationObservation(observation CandidateGenerationObserva
 		observation.StructureMatch,
 		observation.ReverseObserved,
 		observation.NonExecuting,
+		observation.NonAuthorizing,
 	))
 }
