@@ -1,0 +1,7 @@
+package jev.gooo.revision.metrics
+namespace jev.gooo.revision.metrics
+
+entity RevisionMetricsBindingRequest id "urn:jev:gooo:revision-metrics-binding-request"
+entity RevisionMetricsBinding id "urn:jev:gooo:revision-metrics-binding"
+
+activity ObserveRevisionMetricsBinding(RevisionMetricsBindingRequest) -> RevisionMetricsBinding
