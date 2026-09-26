@@ -1,0 +1,25 @@
+package jevcapabilityboundarylsp
+namespace jevcapabilityboundarylsp
+
+entity ExecutionEnvelopeCapabilityBoundaryLSPInput id "gooo://gooo-jev/capability-boundary-lsp-input"
+property Boundary ExecutionEnvelopeCapabilityBoundary
+property Policy ExecutionEnvelopeCapabilityBoundaryInput
+property NonAuthorizing boolean
+
+entity ExecutionEnvelopeCapabilityBoundaryLSPProjection id "gooo://gooo-jev/capability-boundary-lsp-projection"
+property Status string
+property Code string
+property Severity string
+property Message string
+property SandboxProfile string
+property ModelIdentity string
+property SPIFFEIdentity string
+property WorkspaceDigest string
+property GatewayPolicyDigest string
+property NetworkAllowlistDigest string
+property BoundaryDigest string
+property EvidenceDigest string
+property MissingCapability string
+property NonAuthorizing boolean
+
+activity ProjectExecutionEnvelopeCapabilityBoundaryLSP(ExecutionEnvelopeCapabilityBoundaryLSPInput) -> ExecutionEnvelopeCapabilityBoundaryLSPProjection
