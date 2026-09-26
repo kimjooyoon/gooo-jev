@@ -1,0 +1,17 @@
+entity ExecutionEnvelopeJEVImprovementReviewObservationInput id "gooo://gooo-jev/improvement-review-observation-input"
+ property GateDecision ExecutionEnvelopeJEVImprovementReviewGateDecision
+ property ReviewOutcome string
+ property ReviewEvidenceDigest string
+ property NonAuthorizing boolean
+
+entity ExecutionEnvelopeJEVImprovementReviewObservation id "gooo://gooo-jev/improvement-review-observation"
+ property Status string
+ property ReviewOutcome string
+ property GateDecisionDigest string
+ property ReviewEvidenceDigest string
+ property ObservationDigest string
+ property MissingStage string
+ property NonExecuting boolean
+ property NonAuthorizing boolean
+
+activity ObserveExecutionEnvelopeJEVImprovementReview(ExecutionEnvelopeJEVImprovementReviewObservationInput) -> ExecutionEnvelopeJEVImprovementReviewObservation
