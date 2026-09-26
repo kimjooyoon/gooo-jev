@@ -90,7 +90,7 @@ func validRevisionDirection(direction RevisionDirection) bool {
 }
 
 func digestRevisionCandidate(candidate RevisionCandidate) string {
-	return digestString(fmt.Sprintf("%s|%s|%s|%s|%s|%s",
+	return digestString(fmt.Sprintf("%s|%s|%s|%s|%s|%t",
 		candidate.Direction,
 		candidate.DecisionName,
 		candidate.DecisionID,
