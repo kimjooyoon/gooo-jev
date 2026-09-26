@@ -1,0 +1,7 @@
+package jev.gooo.revision.generation
+namespace jev.gooo.revision.generation
+
+entity RevisionCandidateMaterialization id "urn:jev:gooo:revision-candidate-materialization"
+entity CandidateGenerationObservation id "urn:jev:gooo:candidate-generation-observation"
+
+activity ObserveCandidateGeneration(RevisionCandidateMaterialization) -> CandidateGenerationObservation
