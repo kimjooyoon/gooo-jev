@@ -1,0 +1,7 @@
+package jevcyclerevisioncandidateexecutionplan
+namespace jevcyclerevisioncandidateexecutionplan
+
+entity ExecutionEnvelopeJEVCycleRevisionCandidateExecutionPlanInput id "gooo://gooo-jev/cycle-revision-candidate-execution-plan-input"
+entity ExecutionEnvelopeJEVCycleRevisionCandidateExecutionPlanBinding id "gooo://gooo-jev/cycle-revision-candidate-execution-plan-binding"
+
+activity PlanExecutionEnvelopeJEVRevisionCandidateExecutionPlan(ExecutionEnvelopeJEVCycleRevisionCandidateExecutionPlanInput) -> ExecutionEnvelopeJEVCycleRevisionCandidateExecutionPlanBinding
