@@ -1,0 +1,6 @@
+package jevdecisionconfidencefallback
+namespace jevdecisionconfidencefallback
+
+entity DecisionConfidenceFallbackPlan id "gooo://gooo-jev/decision-confidence-fallback-plan"
+
+activity PlanDecisionConfidenceFallback(DecisionConfidenceImprovementSignal) -> DecisionConfidenceFallbackPlan
