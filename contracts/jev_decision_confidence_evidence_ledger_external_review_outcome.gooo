@@ -1,0 +1,13 @@
+package jevdecisionconfidenceledgerexternalreviewoutcome
+namespace jevdecisionconfidenceledgerexternalreviewoutcome
+
+entity DecisionConfidenceEvidenceLedgerReplayReviewHandoff id "gooo://gooo-jev/decision-confidence-evidence-ledger-replay-review-handoff"
+  property Status string
+
+entity DecisionConfidenceEvidenceLedgerExternalReviewOutcome id "gooo://gooo-jev/decision-confidence-evidence-ledger-external-review-outcome"
+  property HandoffDigest string
+  property Decision string
+  property Status string
+  property NonAuthorizing boolean
+
+activity ObserveDecisionConfidenceEvidenceLedgerExternalReviewOutcome(DecisionConfidenceEvidenceLedgerReplayReviewHandoff) -> DecisionConfidenceEvidenceLedgerExternalReviewOutcome
