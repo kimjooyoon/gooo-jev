@@ -19,6 +19,9 @@ const jevExternalApplyCapabilityReviewRevisionCandidateCapabilityScopeFeedbackRo
 type JEVExternalApplyCapabilityReviewRevisionCandidateCapabilityScopeFeedbackBridgeInput struct {
     CapabilityScope     JEVExternalApplyCapabilityReviewRevisionCandidateApplicationPlanCapabilityScopeBridge
     ReverseObservation  JEVExternalApplyCapabilityReviewRevisionCandidateApplicationPlanReverseObservationBridge
+    CandidateDigest     string
+    CandidateSource     string
+    CandidateGateDigest string
     FeedbackDirection   string
     FeedbackDigest      string
     FeedbackSource      string
@@ -187,9 +190,9 @@ func BindJEVExternalApplyCapabilityReviewRevisionCandidateCapabilityScopeFeedbac
     }
 
     output.Status = jevExternalApplyCapabilityReviewRevisionCandidateCapabilityScopeFeedbackBridgeBound
-    output.CandidateDigest = input.CapabilityScope.ApplicationPlan.CandidateDigest
-    output.CandidateSource = input.CapabilityScope.ApplicationPlan.CandidateSource
-    output.CandidateGateDigest = input.CapabilityScope.ApplicationPlan.CandidateGateDigest
+    output.CandidateDigest = input.CandidateDigest
+    output.CandidateSource = input.CandidateSource
+    output.CandidateGateDigest = input.CandidateGateDigest
     output.ApplicationPlanStatus = input.CapabilityScope.ApplicationPlanStatus
     output.PlanDigest = input.CapabilityScope.PlanDigest
     output.PlanSource = input.CapabilityScope.PlanSource
@@ -214,6 +217,21 @@ func BindJEVExternalApplyCapabilityReviewRevisionCandidateCapabilityScopeFeedbac
 
     switch input.CapabilityScope.ApplicationPlanStatus {
     case jevExternalApplyCapabilityReviewRevisionCandidateGateApplicationPlanReady:
+        if input.CandidateDigest == "" {
+            output.MissingStage = "candidate-digest"
+            output.Status = jevExternalApplyCapabilityReviewRevisionCandidateCapabilityScopeFeedbackBridgeUnknown
+            return output
+        }
+        if input.CandidateSource == "" {
+            output.MissingStage = "candidate-source"
+            output.Status = jevExternalApplyCapabilityReviewRevisionCandidateCapabilityScopeFeedbackBridgeUnknown
+            return output
+        }
+        if input.CandidateGateDigest == "" {
+            output.MissingStage = "candidate-gate"
+            output.Status = jevExternalApplyCapabilityReviewRevisionCandidateCapabilityScopeFeedbackBridgeUnknown
+            return output
+        }
         if !validJEVExternalApplyCapabilityReviewRevisionCandidateCapabilityScopeFeedbackDirection(input.FeedbackDirection) {
             output.MissingStage = "feedback-direction"
             output.Status = jevExternalApplyCapabilityReviewRevisionCandidateCapabilityScopeFeedbackBridgeUnknown
