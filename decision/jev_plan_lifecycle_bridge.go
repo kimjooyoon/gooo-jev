@@ -51,7 +51,10 @@ func BindExecutionEnvelopeJEVExecutionPlanToLifecycle(input ExecutionEnvelopeJEV
 		return output
 	}
 	if input.Replay.Status != ExecutionLifecycleReplayObserved {
-		output.MissingStage = "replay-status"
+		output.MissingStage = input.Replay.MissingStage
+		if strings.TrimSpace(output.MissingStage) == "" {
+			output.MissingStage = "replay-status"
+		}
 		return output
 	}
 	if err := input.Authorization.Validate(); err != nil {
