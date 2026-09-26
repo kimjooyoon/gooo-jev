@@ -6,7 +6,7 @@ func TestProjectExecutionEnvelopeDeclarationSourceLSP(t *testing.T) {
 	source := ComputeExecutionEnvelopeDeclarationSourceDigest(ExecutionEnvelopeDeclarationSourceDigestInput{
 		DeclarationID:  "gooo://gooo-jev/declaration/example",
 		ContractID:     "gooo://gooo-jev/contract/example",
-		SourceText:     "entity Example id "gooo://example"",
+		SourceText:     "entity Example",
 		NonAuthorizing: true,
 	})
 	got := ProjectExecutionEnvelopeDeclarationSourceLSP(ExecutionEnvelopeDeclarationSourceLSPInput{
