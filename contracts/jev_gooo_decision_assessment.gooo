@@ -1,0 +1,6 @@
+package jevassessment
+namespace jevassessment
+entity GoooDecisionObservation id "gooo://gooo-jev/decision/observation"
+entity GoooDecisionAssessment id "gooo://gooo-jev/decision/assessment"
+entity GoooDecisionEvidence id "gooo://gooo-jev/decision/evidence"
+activity AssessGoooDecision(GoooDecisionObservation) -> GoooDecisionAssessment
