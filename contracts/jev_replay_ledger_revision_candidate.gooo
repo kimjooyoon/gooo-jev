@@ -1,0 +1,11 @@
+package jevreplayledgerrevisioncandidate
+namespace jevreplayledgerrevisioncandidate
+
+entity ExecutionEnvelopeJEVReplayLedgerRevisionCandidateInput id "gooo://gooo-jev/replay-ledger-revision-candidate-input"
+property Cycle JEVReplayLedgerCycleObservation
+property Directive JEVImprovementDirectionDirective
+property RevisionSource string
+property RevisionChangeDigest string
+property NonAuthorizing boolean
+
+activity GenerateJEVReplayLedgerRevisionCandidateFromCycle(ExecutionEnvelopeJEVReplayLedgerRevisionCandidateInput) -> JEVReplayLedgerRevisionCandidateBinding
