@@ -1,0 +1,7 @@
+package jevdecisionconfidenceimprovementreview
+namespace jevdecisionconfidenceimprovementreview
+
+entity DecisionConfidenceImprovementSignal id "gooo://gooo-jev/decision-confidence-improvement-signal"
+entity DecisionConfidenceImprovementReviewReceipt id "gooo://gooo-jev/decision-confidence-improvement-review"
+
+activity ReviewDecisionConfidenceImprovementSignal(DecisionConfidenceImprovementSignal) -> DecisionConfidenceImprovementReviewReceipt
