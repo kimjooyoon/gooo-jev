@@ -9,13 +9,13 @@ import (
 // ExecutionEnvelopeReviewFeedbackInput binds a counterexample disposition to
 // an explicit external review outcome without treating review as authorization.
 type ExecutionEnvelopeReviewFeedbackInput struct {
-	DispositionStatus       string `json:"disposition_status"`
-	ReviewRequired          bool   `json:"review_required"`
-	MismatchStage           string `json:"mismatch_stage"`
-	EvidenceDigest          string `json:"evidence_digest"`
-	ReviewStatus            string `json:"review_status"`
-	ReviewerEvidenceDigest  string `json:"reviewer_evidence_digest"`
-	NonAuthorizing          bool   `json:"non_authorizing"`
+	DispositionStatus      string `json:"disposition_status"`
+	ReviewRequired         bool   `json:"review_required"`
+	MismatchStage          string `json:"mismatch_stage"`
+	EvidenceDigest         string `json:"evidence_digest"`
+	ReviewStatus           string `json:"review_status"`
+	ReviewerEvidenceDigest string `json:"reviewer_evidence_digest"`
+	NonAuthorizing         bool   `json:"non_authorizing"`
 }
 
 // ExecutionEnvelopeReviewFeedback records an explicit review result or a
@@ -51,6 +51,7 @@ func RecordExecutionEnvelopeReviewFeedback(input ExecutionEnvelopeReviewFeedback
 		output.MissingStage = "counterexample-disposition"
 		return output
 	}
+	output.ReviewRequired = true
 	if input.MismatchStage == "" || input.EvidenceDigest == "" || input.ReviewerEvidenceDigest == "" || input.ReviewStatus == "" {
 		output.MissingStage = "review-outcome"
 		return output

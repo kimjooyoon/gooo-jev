@@ -12,7 +12,7 @@ func TestRecordExecutionEnvelopeReviewFeedbackBindsAcceptedReview(t *testing.T) 
 		ReviewerEvidenceDigest: "reviewer",
 		NonAuthorizing:         true,
 	})
-	if result.Status != "reviewed" || result.FeedbackDigest == "" || result.MissingStage != "" || !result.NonAuthorizing {
+	if result.Status != "reviewed" || result.FeedbackDigest == "" || result.MissingStage != "" || !result.ReviewRequired || !result.NonAuthorizing {
 		t.Fatalf("accepted review was not bound: %#v", result)
 	}
 }
@@ -27,7 +27,7 @@ func TestRecordExecutionEnvelopeReviewFeedbackPreservesRejectedReview(t *testing
 		ReviewerEvidenceDigest: "reviewer",
 		NonAuthorizing:         true,
 	})
-	if result.Status != "review-rejected" || result.FeedbackDigest == "" || !result.NonAuthorizing {
+	if result.Status != "review-rejected" || result.FeedbackDigest == "" || !result.ReviewRequired || !result.NonAuthorizing {
 		t.Fatalf("rejected review was not preserved: %#v", result)
 	}
 }
@@ -40,7 +40,7 @@ func TestRecordExecutionEnvelopeReviewFeedbackHoldsMissingOutcome(t *testing.T) 
 		EvidenceDigest:    "observed",
 		NonAuthorizing:    true,
 	})
-	if result.Status != "UNKNOWN" || result.MissingStage != "review-outcome" || !result.NonAuthorizing {
+	if result.Status != "UNKNOWN" || result.MissingStage != "review-outcome" || !result.ReviewRequired || !result.NonAuthorizing {
 		t.Fatalf("missing review outcome escaped UNKNOWN: %#v", result)
 	}
 }
