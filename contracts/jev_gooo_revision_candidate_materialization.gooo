@@ -4,6 +4,7 @@ namespace jev.gooo.revision.materialization
 entity RevisionFeedback id "urn:jev:gooo:revision-feedback"
 entity RevisionDirectionProposal id "urn:jev:gooo:revision-direction-proposal"
 entity DecisionAssessment id "urn:jev:gooo:decision-assessment"
+entity RevisionMaterializationRequest id "urn:jev:gooo:revision-materialization-request"
 entity RevisionCandidateMaterialization id "urn:jev:gooo:revision-candidate-materialization"
 
-activity MaterializeRevisionCandidate(RevisionFeedback, RevisionDirectionProposal) -> RevisionCandidateMaterialization
+activity MaterializeRevisionCandidate(RevisionMaterializationRequest) -> RevisionCandidateMaterialization
