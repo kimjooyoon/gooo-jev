@@ -61,3 +61,18 @@ entity ExecutionEnvelopeProvenanceChainMetric id "gooo://gooo-jev/provenance-cha
   property NonAuthorizing boolean
 
 activity MeasureExecutionEnvelopeProvenanceChainMetric(ExecutionEnvelopeProvenanceChainBinding) -> ExecutionEnvelopeProvenanceChainMetric
+
+entity ExecutionEnvelopeProvenanceChainReverseObservationInput id "gooo://gooo-jev/provenance-chain-reverse-observation-input"
+  property DeclarationID string
+  property ContractID string
+  property DeclarationDigest string
+  property IRDigest string
+  property GenerationDigest string
+  property BindingDigest string
+  property ReverseObservationStatus string
+  property ReverseObservationFirstMismatch string
+  property ReverseObservationDigest string
+  property MetricDigest string
+  property NonAuthorizing boolean
+
+activity EvaluateExecutionEnvelopeProvenanceChainBindingFromReverseObservation(ExecutionEnvelopeProvenanceChainReverseObservationInput) -> ExecutionEnvelopeProvenanceChainBinding
