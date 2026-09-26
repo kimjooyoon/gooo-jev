@@ -1,0 +1,4 @@
+package jevrevisioncandidatereviewbridge
+namespace jevrevisioncandidatereviewbridge
+entity JEVRevisionCandidateReviewBridge id "gooo://gooo-jev/revision-candidate-review-bridge"
+activity BridgeJEVImprovementRevisionCandidateForReview(JEVRevisionCandidateReviewBridgeInput) -> JEVRevisionCandidateReviewBridge
