@@ -1,0 +1,6 @@
+package jevgoooir
+namespace jevgoooir
+entity GoooContractSource id "gooo://gooo-jev/contract/source"
+entity GoooContractDocumentIR id "gooo://gooo-jev/contract/document-ir"
+entity GoooContractParseError id "gooo://gooo-jev/contract/parse-error"
+activity ParseGoooContract(GoooContractSource) -> GoooContractDocumentIR
