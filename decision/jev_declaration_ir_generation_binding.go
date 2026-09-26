@@ -173,3 +173,59 @@ func EvaluateExecutionEnvelopeProvenanceChainBinding(input ExecutionEnvelopeProv
 	output.EvidenceDigest = gate.EvidenceDigest
 	return output
 }
+
+// Validate replays the full provenance gate so a stored result cannot be
+// treated as ready after any declaration, binding, observation, metric, or
+// evidence field has been changed.
+func (binding ExecutionEnvelopeProvenanceChainBinding) Validate() error {
+	if !binding.NonExecuting || !binding.NonAuthorizing {
+		return fmt.Errorf("provenance chain binding crosses an execution or authorization boundary")
+	}
+	if strings.TrimSpace(binding.EvidenceDigest) != "" && binding.Status != "ready" {
+		return fmt.Errorf("unknown provenance chain cannot carry evidence digest")
+	}
+	if binding.Status == "UNKNOWN" {
+		if strings.TrimSpace(binding.MissingStage) == "" {
+			return fmt.Errorf("unknown provenance chain is missing its first unresolved stage")
+		}
+		if binding.MissingStage == "authorization-boundary" || binding.MissingStage == "declaration-ir-generation" {
+			if strings.TrimSpace(binding.DeclarationID) != "" || strings.TrimSpace(binding.ContractID) != "" ||
+				strings.TrimSpace(binding.DeclarationDigest) != "" || strings.TrimSpace(binding.IRDigest) != "" ||
+				strings.TrimSpace(binding.GenerationDigest) != "" || strings.TrimSpace(binding.BindingDigest) != "" ||
+				strings.TrimSpace(binding.ReverseObservationDigest) != "" || strings.TrimSpace(binding.MetricDigest) != "" {
+				return fmt.Errorf("pre-binding unknown provenance chain contains evidence fields")
+			}
+			return nil
+		}
+	} else if binding.Status != "ready" {
+		return fmt.Errorf("unsupported provenance chain status %q", binding.Status)
+	}
+
+	declaration := ExecutionEnvelopeDeclarationIRGenerationBinding{
+		Status:            "bound",
+		DeclarationID:     binding.DeclarationID,
+		ContractID:        binding.ContractID,
+		DeclarationDigest: binding.DeclarationDigest,
+		IRDigest:          binding.IRDigest,
+		GenerationDigest:  binding.GenerationDigest,
+		BindingDigest:     binding.BindingDigest,
+		NonExecuting:      true,
+		NonAuthorizing:    true,
+	}
+	if err := declaration.Validate(); err != nil {
+		return fmt.Errorf("declaration-to-generation prefix is invalid: %w", err)
+	}
+
+	gate := EvaluateExecutionEnvelopeProvenanceGate(ExecutionEnvelopeProvenanceGateInput{
+		DeclarationDigest:        binding.DeclarationDigest,
+		IRDigest:                 binding.IRDigest,
+		GenerationDigest:         binding.GenerationDigest,
+		ReverseObservationDigest: binding.ReverseObservationDigest,
+		MetricDigest:             binding.MetricDigest,
+		NonAuthorizing:           true,
+	})
+	if gate.Status != binding.Status || gate.MissingStage != binding.MissingStage || gate.EvidenceDigest != binding.EvidenceDigest {
+		return fmt.Errorf("provenance gate replay mismatch")
+	}
+	return nil
+}
