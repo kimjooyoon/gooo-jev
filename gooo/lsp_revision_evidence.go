@@ -111,7 +111,7 @@ func (r RevisionEvidenceSymbolResult) Validate() error {
 }
 
 func digestRevisionEvidenceSymbolResult(result RevisionEvidenceSymbolResult) string {
-	return digestString(fmt.Sprintf("%s|%s|%s|%s|%s|%s|%s|%s|%s|%d|%t|%t|%t|%t|%t",
+	return digestString(fmt.Sprintf("%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%d|%t|%t|%t|%t|%t",
 		result.Status,
 		result.MissingStage,
 		result.SourceDigest,
