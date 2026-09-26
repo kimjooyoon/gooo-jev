@@ -1,0 +1,58 @@
+package jevrevisionselfimprovementexecutionplan
+namespace jevrevisionselfimprovementexecutionplan
+
+entity RevisionSelfImprovementDecisionObservation id "gooo://gooo-jev/revision-self-improvement-decision-observation"
+property DecisionDigest string
+property DecisionSignal string
+property DecisionReason string
+property SourceDigest string
+property ProposedSourceDigest string
+property NonAuthorizing boolean
+
+entity RevisionCandidatePlanObservation id "gooo://gooo-jev/revision-candidate-plan-observation"
+property ObservationDigest string
+property CandidateDigest string
+property SourceDigest string
+property MaterializationDigest string
+property PlanDigest string
+property BindingDigest string
+property EditDigest string
+property PlanSignal string
+property PlanObserved boolean
+property NonAuthorizing boolean
+
+entity RevisionApplicationPlan id "gooo://gooo-jev/revision-application-plan"
+property PlanDigest string
+property SourceDigest string
+property InputIRDigest string
+property BindingDigest string
+property CandidateDigest string
+property EditDigest string
+property NonAuthorizing boolean
+
+entity RevisionSelfImprovementExecutionPlanObservation id "gooo://gooo-jev/revision-self-improvement-execution-plan-observation"
+property Status string
+property MissingStage string
+property DecisionDigest string
+property PlanObservationDigest string
+property MaterializationDigest string
+property PlanDigest string
+property BindingDigest string
+property SourceDigest string
+property InputIRDigest string
+property CandidateDigest string
+property EditDigest string
+property DecisionSignal string
+property DecisionReason string
+property PlanSignal string
+property PlanningSignal string
+property PlanObserved boolean
+property RequiresObservation boolean
+property RequiresReview boolean
+property RequiresInspection boolean
+property RequiresMeasurement boolean
+property ObservationDigest string
+property NonExecuting boolean
+property NonAuthorizing boolean
+
+activity ObserveRevisionSelfImprovementExecutionPlan(RevisionSelfImprovementDecisionObservation, RevisionCandidatePlanObservation, RevisionApplicationPlan) -> RevisionSelfImprovementExecutionPlanObservation
