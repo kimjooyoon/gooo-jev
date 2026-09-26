@@ -1,0 +1,8 @@
+package jevreplayledgercyclelsp
+namespace jevreplayledgercyclelsp
+
+entity ExecutionEnvelopeJEVReplayLedgerCycleLSPInput id "gooo://gooo-jev/replay-ledger-cycle-lsp-input"
+property Observation JEVReplayLedgerCycleObservation
+property NonAuthorizing boolean
+
+activity ProjectJEVReplayLedgerCycleToLSP(ExecutionEnvelopeJEVReplayLedgerCycleLSPInput) -> ExecutionEnvelopeJEVReplayLedgerCycleLSPBinding
