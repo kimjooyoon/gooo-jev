@@ -28,12 +28,13 @@ func TestObserveExecutionEnvelopeJEVImprovementReview(t *testing.T) {
 }
 
 func TestObserveExecutionEnvelopeJEVImprovementReviewPreservesUnknownStage(t *testing.T) {
+	decision := reviewObservationDecision("UNKNOWN")
+	decision.MissingStage = "feedback-aggregation"
 	got := ObserveExecutionEnvelopeJEVImprovementReview(ExecutionEnvelopeJEVImprovementReviewObservationInput{
-		GateDecision: reviewObservationDecision("UNKNOWN"),
+		GateDecision: decision,
 		NonAuthorizing: true,
 	})
-	got.GateDecision.MissingStage = "feedback-aggregation"
-	if got.Status != "UNKNOWN" || got.MissingStage != "review-disposition" || got.ObservationDigest == "" {
+	if got.Status != "UNKNOWN" || got.MissingStage != "feedback-aggregation" || got.ObservationDigest == "" {
 		t.Fatalf("got %+v", got)
 	}
 }
