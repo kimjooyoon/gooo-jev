@@ -1,0 +1,10 @@
+package jevgoooevidencefullprovenancefeedback
+namespace jevgoooevidencefullprovenancefeedback
+
+entity ExecutionEnvelopeGoooEvidenceFullProvenanceFeedbackBridgeInput id "gooo://gooo-jev/gooo-evidence-full-provenance-feedback-bridge-input"
+property Previous JEVImprovementReplayFeedbackLedger
+property CandidateGate GoooEvidenceFullProvenanceCandidateGate
+property ReplayObservationDigest string
+property NonAuthorizing boolean
+
+activity AppendExecutionEnvelopeGoooEvidenceFullProvenanceFeedbackBridge(ExecutionEnvelopeGoooEvidenceFullProvenanceFeedbackBridgeInput) -> JEVImprovementReplayFeedbackLedger
