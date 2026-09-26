@@ -1,0 +1,5 @@
+package jevselfimprovementcandidateevidencegate
+namespace jevselfimprovementcandidateevidencegate
+entity ExecutionEnvelopeJEVSelfImprovementCandidateEvidenceGateInput id "gooo://gooo-jev/self-improvement-candidate-evidence-gate-input"
+entity ExecutionEnvelopeJEVSelfImprovementCandidateEvidenceGateBinding id "gooo://gooo-jev/self-improvement-candidate-evidence-gate-binding"
+activity BindExecutionEnvelopeJEVSelfImprovementSummaryToCandidate(ExecutionEnvelopeJEVSelfImprovementCandidateEvidenceGateInput) -> ExecutionEnvelopeJEVSelfImprovementCandidateEvidenceGateBinding
