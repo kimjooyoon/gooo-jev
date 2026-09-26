@@ -130,14 +130,14 @@ func ProjectJEVExternalApplyCapabilityReviewRevisionCandidateGenerationRequestOb
         JEVExternalApplyCapabilityReviewRevisionCandidateApplicationPlanReverseObservationBridge{
             Status: input.ApplicationPlanReverseObservationBridgeStatus(),
             ApplicationPlanStatus: input.ApplicationPlanStatus,
-            PlanDigest: input.PlanDigestFromGenerationRequest(),
-            PlanSource: input.PlanSourceFromGenerationRequest(),
-            PlanEvidenceDigest: input.PlanEvidenceFromGenerationRequest(),
-            ApplicationPlanBridgeDigest: input.GenerationRequestApplicationPlanBridgeDigest(),
+            PlanDigest: input.PlanDigest,
+            PlanSource: input.PlanSource,
+            PlanEvidenceDigest: input.PlanEvidenceDigest,
+            ApplicationPlanBridgeDigest: input.CandidateGateApplicationPlanBridgeDigest,
             ReverseObservationStatus: input.ReverseObservationStatus,
-            ObservationDigest: input.ObservationDigestFromGenerationRequest(),
-            ObservationSource: input.ObservationSourceFromGenerationRequest(),
-            ObservationEvidenceDigest: input.ObservationEvidenceFromGenerationRequest(),
+            ObservationDigest: input.ObservationDigest,
+            ObservationSource: input.ObservationSource,
+            ObservationEvidenceDigest: input.ObservationEvidenceDigest,
             ObservationMetricStatus: input.ObservationMetricStatus,
             ObservationMetricDigest: input.ObservationMetricDigest,
             ObservationMetricSource: input.ObservationMetricSource,
@@ -207,13 +207,6 @@ func (b JEVExternalApplyCapabilityReviewRevisionCandidateGenerationRequestObserv
     return jevExternalApplyCapabilityReviewRevisionCandidateApplicationPlanReverseObservationBridgeBound
 }
 
-func (b JEVExternalApplyCapabilityReviewRevisionCandidateGenerationRequestObservationMetricCandidateGateBridge) PlanDigestFromGenerationRequest() string { return "" }
-func (b JEVExternalApplyCapabilityReviewRevisionCandidateGenerationRequestObservationMetricCandidateGateBridge) PlanSourceFromGenerationRequest() string { return "" }
-func (b JEVExternalApplyCapabilityReviewRevisionCandidateGenerationRequestObservationMetricCandidateGateBridge) PlanEvidenceFromGenerationRequest() string { return "" }
-func (b JEVExternalApplyCapabilityReviewRevisionCandidateGenerationRequestObservationMetricCandidateGateBridge) GenerationRequestApplicationPlanBridgeDigest() string { return "" }
-func (b JEVExternalApplyCapabilityReviewRevisionCandidateGenerationRequestObservationMetricCandidateGateBridge) ObservationDigestFromGenerationRequest() string { return "" }
-func (b JEVExternalApplyCapabilityReviewRevisionCandidateGenerationRequestObservationMetricCandidateGateBridge) ObservationSourceFromGenerationRequest() string { return "" }
-func (b JEVExternalApplyCapabilityReviewRevisionCandidateGenerationRequestObservationMetricCandidateGateBridge) ObservationEvidenceFromGenerationRequest() string { return "" }
 
 func digestJEVExternalApplyCapabilityReviewRevisionCandidateGenerationRequestObservationMetricCandidateGateLSPProjection(status, generationRequestReverseObservationBridgeDigest, observationMetricCandidateGateBridgeDigest, applicationPlanReverseObservationBridgeDigest, bridgeDigest, proposalDecision, candidateDecision string) string {
     sum := sha256.Sum256([]byte(strings.Join([]string{status, generationRequestReverseObservationBridgeDigest, observationMetricCandidateGateBridgeDigest, applicationPlanReverseObservationBridgeDigest, bridgeDigest, proposalDecision, candidateDecision}, "|")))
