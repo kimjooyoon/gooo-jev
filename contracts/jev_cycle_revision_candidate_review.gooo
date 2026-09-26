@@ -1,0 +1,7 @@
+package jevcyclerevisioncandidatereview
+namespace jevcyclerevisioncandidatereview
+
+entity ExecutionEnvelopeJEVCycleRevisionCandidateReviewInput id "gooo://gooo-jev/cycle-revision-candidate-review-input"
+entity ExecutionEnvelopeJEVCycleRevisionCandidateReviewBinding id "gooo://gooo-jev/cycle-revision-candidate-review-binding"
+
+activity ClassifyExecutionEnvelopeJEVRevisionCandidateReview(ExecutionEnvelopeJEVCycleRevisionCandidateReviewInput) -> ExecutionEnvelopeJEVCycleRevisionCandidateReviewBinding
