@@ -1,0 +1,4 @@
+package jevexternalapplycapabilityreviewmetric
+namespace jevexternalapplycapabilityreviewmetric
+entity JEVExternalApplyCapabilityReviewMetric id "gooo://gooo-jev/decision-external-apply-capability-review-metric"
+activity MeasureJEVExternalApplyCapabilityReview(JEVExternalApplyCapabilityReviewMetricInput) -> JEVExternalApplyCapabilityReviewMetric
