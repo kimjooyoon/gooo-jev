@@ -1,0 +1,6 @@
+package jevlsp
+namespace jevlsp
+entity GoooCompletionRequest id "gooo://gooo-jev/lsp/completion/request"
+entity GoooCompletionResponse id "gooo://gooo-jev/lsp/completion/response"
+entity GoooCompletionItem id "gooo://gooo-jev/lsp/completion/item"
+activity CompleteGoooDocument(GoooCompletionRequest) -> GoooCompletionResponse
