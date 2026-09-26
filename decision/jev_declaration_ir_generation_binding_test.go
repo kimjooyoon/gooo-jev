@@ -167,3 +167,36 @@ func TestMeasureExecutionEnvelopeProvenanceChainMetricReportsExactCoverage(t *te
 		t.Fatalf("unexpected invalid metric: %+v", metric)
 	}
 }
+
+func TestExecutionEnvelopeProvenanceChainMetricValidateReplaysDigest(t *testing.T) {
+	ready := EvaluateExecutionEnvelopeProvenanceChainBinding(ExecutionEnvelopeProvenanceChainBindingInput{
+		DeclarationIRGeneration:  validDeclarationIRGenerationBinding(),
+		ReverseObservationDigest: "reverse-observation-digest",
+		MetricDigest:              "metric-digest",
+		NonAuthorizing:            true,
+	})
+	metric := MeasureExecutionEnvelopeProvenanceChainMetric(ready)
+	if err := metric.Validate(); err != nil {
+		t.Fatalf("complete metric should validate: %v", err)
+	}
+
+	partial := MeasureExecutionEnvelopeProvenanceChainMetric(EvaluateExecutionEnvelopeProvenanceChainBinding(ExecutionEnvelopeProvenanceChainBindingInput{
+		DeclarationIRGeneration: validDeclarationIRGenerationBinding(),
+		MetricDigest:             "metric-digest",
+		NonAuthorizing:           true,
+	}))
+	if err := partial.Validate(); err != nil {
+		t.Fatalf("partial metric should validate its UNKNOWN evidence: %v", err)
+	}
+
+	tampered := metric
+	tampered.ObservedStageCount = 4
+	if err := tampered.Validate(); err == nil {
+		t.Fatal("tampered stage count must fail metric validation")
+	}
+	tampered = metric
+	tampered.EvidenceDigest = "tampered-evidence"
+	if err := tampered.Validate(); err == nil {
+		t.Fatal("tampered evidence digest must fail metric validation")
+	}
+}
