@@ -1,14 +1,37 @@
-package jevdecisionconfidenceledgerreceiptintegrityreviewreceiptmetricreviewfeedbackmetriccomparisonfeedbackreviewoutcomefeedbackmetriccomparisonfeedbackcounterexample
-namespace jevdecisionconfidenceledgerreceiptintegrityreviewreceiptmetricreviewfeedbackmetriccomparisonfeedbackreviewoutcomefeedbackmetriccomparisonfeedbackcounterexample
+package decision
 
-entity DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedback id "gooo://gooo-jev/decision-confidence-evidence-ledger-receipt-integrity-review-receipt-metric-review-feedback-metric-comparison-feedback-review-outcome-feedback-metric-comparison-feedback"
-  property Delta string
-  property Status string
+import "testing"
 
-entity DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackCounterexample id "gooo://gooo-jev/decision-confidence-evidence-ledger-receipt-integrity-review-receipt-metric-review-feedback-metric-comparison-feedback-review-outcome-feedback-metric-comparison-feedback-counterexample"
-  property FeedbackDigest string
-  property Delta string
-  property Status string
-  property NonAuthorizing boolean
+func TestDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackCounterexamplePreservesBoundary(t *testing.T) {
+	feedback := DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedback{
+		ComparisonDigest: "comparison",
+		Delta:            "declined",
+		Status:           "review-required",
+		NonAuthorizing:   true,
+	}
+	counterexample, err := ObserveDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackCounterexample(feedback)
+	if err != nil {
+		t.Fatalf("observe review-required counterexample: %v", err)
+	}
+	if counterexample.Status != "counterexample" || counterexample.FeedbackDigest == "" || !counterexample.NonAuthorizing {
+		t.Fatalf("unexpected review-required counterexample: %#v", counterexample)
+	}
 
-activity ObserveDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackCounterexample(DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedback) -> DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackCounterexample
+	feedback.Status = "observation-only"
+	counterexample, err = ObserveDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackCounterexample(feedback)
+	if err != nil {
+		t.Fatalf("observe observation-only counterexample: %v", err)
+	}
+	if counterexample.Status != "no-counterexample" || !counterexample.NonAuthorizing {
+		t.Fatalf("unexpected observation-only counterexample: %#v", counterexample)
+	}
+
+	feedback.Status = "hold"
+	counterexample, err = ObserveDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackCounterexample(feedback)
+	if err != nil {
+		t.Fatalf("observe held counterexample: %v", err)
+	}
+	if counterexample.Status != "unknown" || !counterexample.NonAuthorizing {
+		t.Fatalf("held feedback escaped unknown: %#v", counterexample)
+	}
+}
