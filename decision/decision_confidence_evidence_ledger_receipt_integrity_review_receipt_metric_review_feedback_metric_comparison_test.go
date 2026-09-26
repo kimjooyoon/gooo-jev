@@ -29,6 +29,7 @@ func TestDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricRevi
 	previous.AnalysisReadyCount = 1
 	previous.RejectedCount = 0
 	current.AnalysisReadyCount = 0
+	current.RejectedCount = 0
 	current.HoldCount = 1
 	comparison = CompareDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetric(previous, current)
 	if comparison.Delta != "declined" || !comparison.NonAuthorizing {
