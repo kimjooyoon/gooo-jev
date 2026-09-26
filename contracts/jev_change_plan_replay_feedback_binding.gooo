@@ -1,0 +1,33 @@
+package jevchangeplanreplayfeedbackbinding
+namespace jevchangeplanreplayfeedbackbinding
+
+entity DecisionConfidenceChangePlanReplayFeedbackBindingInput id "gooo://gooo-jev/change-plan-replay-feedback-binding-input"
+  property PlanStatus string
+  property ProposalDigest string
+  property ChangePlanDigest string
+  property SourceReference string
+  property PlanEvidenceDigest string
+  property FeedbackStatus string
+  property MetricName string
+  property HistoryDigest string
+  property ReplayEvidenceDigest string
+  property FeedbackEvidenceDigest string
+  property NonAuthorizing boolean
+
+entity DecisionConfidenceChangePlanReplayFeedbackBinding id "gooo://gooo-jev/change-plan-replay-feedback-binding"
+  property Status string
+  property FeedbackStatus string
+  property MissingStage string
+  property ProposalDigest string
+  property ChangePlanDigest string
+  property SourceReference string
+  property PlanEvidenceDigest string
+  property MetricName string
+  property HistoryDigest string
+  property ReplayEvidenceDigest string
+  property FeedbackEvidenceDigest string
+  property EvidenceDigest string
+  property NonExecuting boolean
+  property NonAuthorizing boolean
+
+activity BindDecisionConfidenceChangePlanReplayFeedback(DecisionConfidenceChangePlanReplayFeedbackBindingInput) -> DecisionConfidenceChangePlanReplayFeedbackBinding
