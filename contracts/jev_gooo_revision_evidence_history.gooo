@@ -1,0 +1,7 @@
+package jev.gooo.revision.history
+namespace jev.gooo.revision.history
+
+entity RevisionEvidenceHistoryRequest id "urn:jev:gooo:revision-evidence-history-request"
+entity RevisionEvidenceHistory id "urn:jev:gooo:revision-evidence-history"
+
+activity ObserveRevisionEvidenceHistory(RevisionEvidenceHistoryRequest) -> RevisionEvidenceHistory
