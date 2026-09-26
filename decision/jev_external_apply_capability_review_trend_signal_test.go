@@ -1,6 +1,9 @@
 package decision
 
-import "testing"
+import (
+    "math"
+    "testing"
+)
 
 func validExternalApplyCapabilityReviewMetricTrendForSignal() JEVExternalApplyCapabilityReviewMetricTrend {
     trend := JEVExternalApplyCapabilityReviewMetricTrend{
@@ -64,12 +67,13 @@ func TestDeriveJEVExternalApplyCapabilityReviewTrendSignalHoldsTie(t *testing.T)
     }
 }
 
-func TestDeriveJEVExternalApplyCapabilityReviewTrendSignalPreservesUnknownThreshold(t *testing.T) {
+func TestDeriveJEVExternalApplyCapabilityReviewTrendSignalRejectsUnknownThreshold(t *testing.T) {
     got := DeriveJEVExternalApplyCapabilityReviewTrendSignal(JEVExternalApplyCapabilityReviewTrendSignalInput{
         Trend:          validExternalApplyCapabilityReviewMetricTrendForSignal(),
+        Threshold:      math.NaN(),
         NonAuthorizing: true,
     })
-    if got.Status != jevExternalApplyCapabilityReviewTrendSignalRecorded || got.Signal == "" {
+    if got.Status != jevExternalApplyCapabilityReviewTrendSignalUnknown || got.MissingStage != "signal-threshold" {
         t.Fatalf("got %+v", got)
     }
 }
