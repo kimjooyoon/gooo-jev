@@ -20,6 +20,7 @@ entity DecisionMetricLedger id "gooo://jev/decision/metric-ledger"
 entity DecisionImprovementCycle id "gooo://jev/decision/improvement-cycle"
 entity DecisionImprovementCycleReplay id "gooo://jev/decision/improvement-cycle-replay"
 entity DecisionImprovementCandidate id "gooo://jev/decision/improvement-candidate"
+entity DecisionImprovementReviewReceipt id "gooo://jev/decision/improvement-review-receipt"
 
 activity ObserveDecision(DecisionSpec) -> DecisionReceipt
 activity ObserveDecisionFreshness(DecisionReceipt) -> DecisionFreshness
@@ -39,3 +40,4 @@ activity AppendDecisionMetricDelta(DecisionMetricLedger) -> DecisionMetricLedger
 activity RecordDecisionImprovementCycle(DecisionMetricLedger) -> DecisionImprovementCycle
 activity ReplayDecisionImprovementCycle(DecisionImprovementCycle) -> DecisionImprovementCycleReplay
 activity ProposeDecisionImprovementCandidate(DecisionImprovementCycleReplay) -> DecisionImprovementCandidate
+activity ReviewDecisionImprovementCandidate(DecisionImprovementCandidate) -> DecisionImprovementReviewReceipt
