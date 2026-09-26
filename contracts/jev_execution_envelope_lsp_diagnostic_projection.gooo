@@ -1,0 +1,22 @@
+package jevexecutionenvelopelspprojection
+namespace jevexecutionenvelopelspprojection
+
+entity ExecutionEnvelopeLSPDiagnosticInput id "gooo://gooo-jev/lsp-diagnostic-projection-input"
+  property Status string
+  property Severity string
+  property Code string
+  property MissingStage string
+  property MissingStageIndex integer
+  property EvidencePrefixDigest string
+  property NonAuthorizing boolean
+
+entity ExecutionEnvelopeLSPDiagnostic id "gooo://gooo-jev/lsp-diagnostic-projection"
+  property Status string
+  property Publishable boolean
+  property Severity string
+  property Code string
+  property MissingStageIndex integer
+  property EvidencePrefixDigest string
+  property NonAuthorizing boolean
+
+activity ProjectExecutionEnvelopeLSPDiagnostic(ExecutionEnvelopeLSPDiagnosticInput) -> ExecutionEnvelopeLSPDiagnostic
