@@ -1,0 +1,30 @@
+package jevapplicationplancapabilityscopebridge
+
+namespace jevapplicationplancapabilityscopebridge
+
+entity CandidateApplicationPlanCapabilityScopeBridge {
+  field status string
+  field missing_stage string
+  field application_plan_status string
+  field plan_digest string
+  field plan_source string
+  field plan_evidence_digest string
+  field application_plan_bridge_digest string
+  field spiffe_id string
+  field audience string
+  field sandbox_policy_digest string
+  field network_allowlist_digest string
+  field scope_evidence_digest string
+  field scope_status string
+  field bridge_digest string
+  field non_executing bool
+  field non_authorizing bool
+}
+
+activity BindCandidateApplicationPlanCapabilityScopeBridge {
+  input CandidateApplicationPlanCapabilityScopeBridge
+  output CandidateApplicationPlanCapabilityScopeBridge
+  effect provenance-only
+  effect execution none
+  effect authorization none
+}
