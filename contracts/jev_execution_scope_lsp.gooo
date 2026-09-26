@@ -1,0 +1,27 @@
+package jevexecutionscopelsp
+namespace jevexecutionscopelsp
+
+entity ExecutionScopeLSPInput id "gooo://gooo-jev/execution-scope-lsp-input"
+property Scope ExecutionScope
+property NonAuthorizing boolean
+
+entity ExecutionScopeLSPProjection id "gooo://gooo-jev/execution-scope-lsp-projection"
+property Status string
+property Code string
+property Severity string
+property Message string
+property Schema string
+property TaskDigest string
+property WorkspaceDigest string
+property GatewayDigest string
+property ModelDigest string
+property NetworkPolicyDigest string
+property FilesystemPolicyDigest string
+property ScopeDigest string
+property BoundAt string
+property EvidenceDigest string
+property MissingStage string
+property NonExecuting boolean
+property NonAuthorizing boolean
+
+activity ProjectExecutionScopeLSP(ExecutionScopeLSPInput) -> ExecutionScopeLSPProjection
