@@ -49,7 +49,7 @@ func TestBindImprovementReplayEvidence(t *testing.T) {
 		t.Fatalf("unexpected replayed binding: %#v", output)
 	}
 
-	output = BindImprovementReplayEvidence(makeImprovementReplayEvidenceBindingInput(t, ImprovementDiverged))
+	output = BindImprovementReplayEvidence(makeImprovementReplayEvidenceInput(t, ImprovementDiverged))
 	if output.Status != "diverged" || output.ReplayStatus != ImprovementDiverged {
 		t.Fatalf("unexpected diverged binding: %#v", output)
 	}
@@ -75,6 +75,19 @@ func TestBindImprovementReplayEvidence(t *testing.T) {
 
 	input = makeImprovementReplayEvidenceBindingInput(t, ImprovementReplayed)
 	input.ReplayCycleDigest = "other-cycle"
+	replay := ImprovementCycleReplay{
+		CycleDigest:                  input.ReplayCycleDigest,
+		RecordedResultLedgerDigest:   input.ReplayRecordedResultLedgerDigest,
+		RecomputedResultLedgerDigest: input.ReplayRecomputedResultLedgerDigest,
+		EvidenceDigest:               input.ReplayEvidenceDigest,
+		Status:                       input.ReplayStatus,
+		NonAuthorizing:               true,
+	}
+	replayDigest, err := Digest(replay)
+	if err != nil {
+		t.Fatalf("Digest() error = %v", err)
+	}
+	input.ReplayDigest = replayDigest
 	output = BindImprovementReplayEvidence(input)
 	if output.Status != "UNKNOWN" || output.MissingStage != "cycle-replay-binding" {
 		t.Fatalf("unexpected cycle mismatch: %#v", output)
