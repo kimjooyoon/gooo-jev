@@ -1,0 +1,4 @@
+package jevreplaypreparationlsp
+namespace jevreplaypreparationlsp
+entity JEVExternalApplyCapabilityReviewReplayPreparationLSPDiagnostic id "gooo://gooo-jev/decision-external-apply-capability-review-replay-preparation-lsp"
+activity ProjectJEVExternalApplyCapabilityReviewReplayPreparationLSP(JEVExternalApplyCapabilityReviewReplayPreparation) -> JEVExternalApplyCapabilityReviewReplayPreparationLSPDiagnostic
