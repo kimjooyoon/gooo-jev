@@ -34,7 +34,7 @@ func TestClassifyExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionCandid
 	}
 }
 
-func TestClassifyExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionCandidateRevisionReviewAbstain(t *testing.T) {
+func TestClassifyExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionCandidateRevisionGenerationExtendedLineageCandidateRevisionReviewAbstain(t *testing.T) {
 	candidate := nextRevisionCandidateForReview(t)
 	output := ClassifyExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionCandidateRevisionGenerationExtendedLineageCandidateRevisionReview(ExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionCandidateRevisionGenerationExtendedLineageCandidateRevisionReviewInput{
 		Candidate:                candidate,
@@ -49,7 +49,7 @@ func TestClassifyExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionCandid
 	}
 }
 
-func TestClassifyExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionCandidateRevisionReviewRejectsChoice(t *testing.T) {
+func TestClassifyExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionCandidateRevisionGenerationExtendedLineageCandidateRevisionReviewRejectsChoice(t *testing.T) {
 	output := ClassifyExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionCandidateRevisionGenerationExtendedLineageCandidateRevisionReview(ExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionCandidateRevisionGenerationExtendedLineageCandidateRevisionReviewInput{
 		Candidate:                nextRevisionCandidateForReview(t),
 		ReviewChoice:             "maybe",
@@ -62,8 +62,8 @@ func TestClassifyExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionCandid
 	}
 }
 
-func TestClassifyExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionCandidateRevisionReviewRequiresEvidence(t *testing.T) {
-	output := ClassifyExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionCandidateRevisionReview(ExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionCandidateRevisionGenerationExtendedLineageCandidateRevisionReviewInput{
+func TestClassifyExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionCandidateRevisionGenerationExtendedLineageCandidateRevisionReviewRequiresEvidence(t *testing.T) {
+	output := ClassifyExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionCandidateRevisionGenerationExtendedLineageCandidateRevisionReview(ExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionCandidateRevisionGenerationExtendedLineageCandidateRevisionReviewInput{
 		Candidate:                nextRevisionCandidateForReview(t),
 		ReviewChoice:             "reject",
 		ReviewEvidenceDigest:     "review-evidence-reject",
@@ -74,10 +74,10 @@ func TestClassifyExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionCandid
 	}
 }
 
-func TestClassifyExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionCandidateRevisionReviewRejectsCandidateTampering(t *testing.T) {
+func TestClassifyExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionCandidateRevisionGenerationExtendedLineageCandidateRevisionReviewRejectsCandidateTampering(t *testing.T) {
 	candidate := nextRevisionCandidateForReview(t)
 	candidate.CandidateEvidenceDigest = "tampered"
-	output := ClassifyExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionCandidateRevisionReview(ExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionCandidateRevisionReviewInput{
+	output := ClassifyExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionCandidateRevisionGenerationExtendedLineageCandidateRevisionReview(ExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionCandidateRevisionGenerationExtendedLineageCandidateRevisionReviewInput{
 		Candidate:                candidate,
 		ReviewChoice:             "reject",
 		ConfidenceEvidenceDigest: "confidence-band-review-tampered",
