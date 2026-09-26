@@ -1,0 +1,31 @@
+package jev.gooo.revision.improvement
+
+entity RevisionImprovementObservation {
+    field status string
+    field missing_stage string
+    field baseline_summary_digest string
+    field candidate_summary_digest string
+    field baseline_source_digest string
+    field candidate_source_digest string
+    field baseline_proposed_ir_digest string
+    field candidate_proposed_ir_digest string
+    field baseline_generated_ir_digest string
+    field candidate_generated_ir_digest string
+    field baseline_stage_count integer
+    field candidate_stage_count integer
+    field stage_count_delta integer
+    field source_stable boolean
+    field proposed_ir_changed boolean
+    field generated_ir_changed boolean
+    field structure_stable boolean
+    field observation_class string
+    field review_signal string
+    invariant non_executing
+    invariant non_authorizing
+}
+
+activity observe_revision_improvement {
+    input baseline_revision_evidence_summary
+    input candidate_revision_evidence_summary
+    output revision_improvement_observation
+}
