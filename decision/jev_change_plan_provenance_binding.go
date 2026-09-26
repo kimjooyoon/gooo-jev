@@ -102,10 +102,40 @@ func (binding DecisionConfidenceChangePlanProvenanceBinding) Validate() error {
 		strings.TrimSpace(binding.SourceReference) == "" ||
 		strings.TrimSpace(binding.WriteSetDigest) == "" ||
 		strings.TrimSpace(binding.DeclarationID) == "" ||
+		strings.TrimSpace(binding.ContractID) == "" ||
+		strings.TrimSpace(binding.DeclarationDigest) == "" ||
+		strings.TrimSpace(binding.IRDigest) == "" ||
+		strings.TrimSpace(binding.GenerationDigest) == "" ||
+		binding.SourceReference != binding.DeclarationID ||
 		strings.TrimSpace(binding.DeclarationBindingDigest) == "" ||
 		strings.TrimSpace(binding.EvidenceDigest) == "" ||
 		strings.TrimSpace(binding.MissingStage) != "" {
 		return fmt.Errorf("change plan provenance binding is incomplete")
+	}
+	expected, err := Digest(struct {
+		ProposalDigest           string
+		ChangePlanDigest         string
+		SourceReference          string
+		WriteSetDigest           string
+		DeclarationBindingDigest string
+		DeclarationDigest        string
+		IRDigest                 string
+		GenerationDigest         string
+	}{
+		ProposalDigest:           binding.ProposalDigest,
+		ChangePlanDigest:         binding.ChangePlanDigest,
+		SourceReference:          binding.SourceReference,
+		WriteSetDigest:           binding.WriteSetDigest,
+		DeclarationBindingDigest: binding.DeclarationBindingDigest,
+		DeclarationDigest:        binding.DeclarationDigest,
+		IRDigest:                 binding.IRDigest,
+		GenerationDigest:         binding.GenerationDigest,
+	})
+	if err != nil {
+		return fmt.Errorf("digest change plan provenance binding: %w", err)
+	}
+	if expected != binding.EvidenceDigest {
+		return fmt.Errorf("change plan provenance binding evidence digest mismatch")
 	}
 	return nil
 }

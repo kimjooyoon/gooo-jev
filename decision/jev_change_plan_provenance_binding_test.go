@@ -42,6 +42,12 @@ func TestBindDecisionConfidenceChangePlanProvenanceBindsSourceAndGeneration(t *t
 func TestBindDecisionConfidenceChangePlanProvenanceReviewsSourceMismatch(t *testing.T) {
 	plan := validChangePlanForProvenance(t)
 	plan.SourceReference = "gooo://gooo-jev/declaration/other"
+	plan.ChangePlanDigest = ""
+	digest, err := Digest(plan)
+	if err != nil {
+		t.Fatalf("digest mismatched source plan: %v", err)
+	}
+	plan.ChangePlanDigest = digest
 	binding := BindDecisionConfidenceChangePlanProvenance(DecisionConfidenceChangePlanProvenanceBindingInput{
 		ChangePlan:              plan,
 		DeclarationIRGeneration: validDeclarationIRGenerationBinding(),
