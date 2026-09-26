@@ -1,0 +1,30 @@
+package jevimprovementreplayevidencebinding
+namespace jevimprovementreplayevidencebinding
+
+entity ImprovementReplayEvidenceBindingInput id "gooo://gooo-jev/improvement-replay-evidence-binding-input"
+  property CycleBindingStatus string
+  property CycleDigest string
+  property CycleEvidenceDigest string
+  property CandidateDigest string
+  property AdmissionDigest string
+  property ReplayCycleDigest string
+  property ReplayRecordedResultLedgerDigest string
+  property ReplayRecomputedResultLedgerDigest string
+  property ReplayEvidenceDigest string
+  property ReplayStatus string
+  property ReplayDigest string
+  property NonAuthorizing boolean
+
+entity ImprovementReplayEvidenceBinding id "gooo://gooo-jev/improvement-replay-evidence-binding"
+  property Status string
+  property ReplayStatus string
+  property CycleDigest string
+  property ReplayDigest string
+  property CandidateDigest string
+  property AdmissionDigest string
+  property EvidenceDigest string
+  property MissingStage string
+  property NonExecuting boolean
+  property NonAuthorizing boolean
+
+activity BindImprovementReplayEvidence(ImprovementReplayEvidenceBindingInput) -> ImprovementReplayEvidenceBinding
