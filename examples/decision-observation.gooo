@@ -9,6 +9,7 @@ entity DecisionFeedback id "gooo://jev/decision/feedback"
 entity DecisionFeedbackSummary id "gooo://jev/decision/feedback-summary"
 entity DecisionFeedbackTrend id "gooo://jev/decision/feedback-trend"
 entity DecisionFeedbackHistory id "gooo://jev/decision/feedback-history"
+entity DecisionAssessment id "gooo://jev/decision/assessment"
 
 activity ObserveDecision(DecisionSpec) -> DecisionReceipt
 activity ObserveDecisionFreshness(DecisionReceipt) -> DecisionFreshness
@@ -17,3 +18,4 @@ activity RecordDecisionFeedback(DecisionReplay) -> DecisionFeedback
 activity SummarizeDecisionFeedback(DecisionFeedback) -> DecisionFeedbackSummary
 activity CompareDecisionFeedback(DecisionFeedbackSummary) -> DecisionFeedbackTrend
 activity BuildDecisionFeedbackHistory(DecisionFeedbackTrend) -> DecisionFeedbackHistory
+activity AssessDecisionReceipt(DecisionReceipt) -> DecisionAssessment
