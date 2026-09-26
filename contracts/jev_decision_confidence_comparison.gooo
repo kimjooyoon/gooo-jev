@@ -1,0 +1,6 @@
+package jevdecisionconfidencecomparison
+namespace jevdecisionconfidencecomparison
+
+entity DecisionConfidenceMetricComparison id "gooo://gooo-jev/decision-confidence-metric-comparison"
+
+activity CompareDecisionConfidenceAdmissionMetrics(DecisionConfidenceAdmissionMetricObservation, DecisionConfidenceAdmissionMetricObservation) -> DecisionConfidenceMetricComparison
