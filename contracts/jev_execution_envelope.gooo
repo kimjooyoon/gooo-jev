@@ -6,9 +6,11 @@ entity CapabilityGrant id "gooo://gooo-jev/capability-grant"
 entity WorkloadIdentityObservation id "gooo://gooo-jev/workload-identity-observation"
 entity ExecutionReceipt id "gooo://gooo-jev/execution-receipt"
 entity ReverseObservation id "gooo://gooo-jev/reverse-observation"
+entity ExecutionLifecycleReceipt id "gooo://gooo-jev/execution-lifecycle-receipt"
 
 activity GrantCapability(CapabilityRequest) -> CapabilityGrant
 activity ObserveWorkloadIdentity(CapabilityRequest) -> WorkloadIdentityObservation
 activity ExecuteCapability(CapabilityGrant) -> ExecutionReceipt
+activity SuspendExecution(CapabilityGrant) -> ExecutionLifecycleReceipt
+activity ResumeExecution(ExecutionLifecycleReceipt) -> ExecutionLifecycleReceipt
 activity ReverseObserveExecution(ExecutionReceipt) -> ReverseObservation
-
