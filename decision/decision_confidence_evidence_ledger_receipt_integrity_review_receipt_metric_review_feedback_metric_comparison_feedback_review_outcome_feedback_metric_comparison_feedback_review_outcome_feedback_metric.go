@@ -1,16 +1,31 @@
-package jevdecisionconfidenceledgerreceiptintegrityreviewreceiptmetricreviewfeedbackmetriccomparisonfeedbackreviewoutcomefeedbackmetriccomparisonfeedbackreviewoutcomefeedbackmetric
-namespace jevdecisionconfidenceledgerreceiptintegrityreviewreceiptmetricreviewfeedbackmetriccomparisonfeedbackreviewoutcomefeedbackmetriccomparisonfeedbackreviewoutcomefeedbackmetric
+package decision
 
-entity DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewOutcomeFeedback id "gooo://gooo-jev/decision-confidence-evidence-ledger-receipt-integrity-review-receipt-metric-review-feedback-metric-comparison-feedback-review-outcome-feedback-metric-comparison-feedback-review-outcome-feedback"
-  property OutcomeDigest string
-  property Status string
+// DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetric
+// records review outcome feedback as a one-hot observation without measuring improvement.
+type DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetric struct {
+	FeedbackDigest     string `json:"feedback_digest"`
+	AnalysisReadyCount uint64 `json:"analysis_ready_count"`
+	RejectedCount      uint64 `json:"rejected_count"`
+	HoldCount          uint64 `json:"hold_count"`
+	Status             string `json:"status"`
+	NonAuthorizing     bool   `json:"non_authorizing"`
+}
 
-entity DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetric id "gooo://gooo-jev/decision-confidence-evidence-ledger-receipt-integrity-review-receipt-metric-review-feedback-metric-comparison-feedback-review-outcome-feedback-metric-comparison-feedback-review-outcome-feedback-metric"
-  property FeedbackDigest string
-  property AnalysisReadyCount integer
-  property RejectedCount integer
-  property HoldCount integer
-  property Status string
-  property NonAuthorizing boolean
-
-activity ObserveDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetric(DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewOutcomeFeedback) -> DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetric
+func ObserveDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetric(feedback DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewOutcomeFeedback) DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetric {
+	metric := DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetric{
+		FeedbackDigest: feedback.OutcomeDigest,
+		Status:         "hold",
+		NonAuthorizing: true,
+	}
+	switch feedback.Status {
+	case "analysis-ready":
+		metric.AnalysisReadyCount = 1
+		metric.Status = "analysis-ready"
+	case "rejected":
+		metric.RejectedCount = 1
+		metric.Status = "rejected"
+	default:
+		metric.HoldCount = 1
+	}
+	return metric
+}
