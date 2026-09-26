@@ -23,8 +23,12 @@ func PlanDecisionConfidenceFallback(signal DecisionConfidenceImprovementSignal) 
 		return DecisionConfidenceFallbackPlan{}, fmt.Errorf("validate confidence improvement signal: %w", err)
 	}
 
+	signalDigest, err := Digest(signal)
+	if err != nil {
+		return DecisionConfidenceFallbackPlan{}, fmt.Errorf("digest confidence improvement signal: %w", err)
+	}
 	plan := DecisionConfidenceFallbackPlan{
-		SignalDigest:   Digest(signal),
+		SignalDigest:   signalDigest,
 		NonAuthorizing: true,
 	}
 	switch string(signal.Status) {
@@ -56,7 +60,11 @@ func (p DecisionConfidenceFallbackPlan) Validate() error {
 	}
 	withoutDigest := p
 	withoutDigest.PlanDigest = ""
-	if Digest(withoutDigest) != p.PlanDigest {
+	withoutDigestDigest, err := Digest(withoutDigest)
+	if err != nil {
+		return fmt.Errorf("digest fallback plan: %w", err)
+	}
+	if withoutDigestDigest != p.PlanDigest {
 		return fmt.Errorf("plan digest mismatch")
 	}
 	return nil
