@@ -47,7 +47,7 @@ func TestObserveExecutionLifecycleAttestationWindowPreservesOutOfWindow(t *testi
 		Schema:              ExecutionLifecycleAttestationSchemaV1,
 		AuthorizationDigest: "authorization-digest",
 		ObservationDigest:   "reverse-observation-digest",
-		Status:              ExecutionLifecycleAttestationAttested,
+		Status:              ExecutionLifecycleAttested,
 		ObservedAt:          now,
 		AttestationDigest:   "attestation-digest",
 	}
@@ -102,7 +102,7 @@ func TestObserveExecutionLifecycleAttestationWindowRejectsTampering(t *testing.T
 			Schema:              ExecutionLifecycleAttestationSchemaV1,
 			AuthorizationDigest: "authorization-digest",
 			ObservationDigest:   "reverse-observation-digest",
-			Status:              ExecutionLifecycleAttestationAttested,
+			Status:              ExecutionLifecycleAttested,
 			ObservedAt:          now,
 			AttestationDigest:   "attestation-digest",
 		},
