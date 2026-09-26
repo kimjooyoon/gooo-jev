@@ -26,13 +26,14 @@ func TestPlanRevisionApplicationBindsSourceAndIR(t *testing.T) {
 	}
 	if plan.Status != "BOUND" || plan.InputIRDigest == "" ||
 		plan.SourceDigest != binding.SourceDigest ||
-		plan.CandidateDigest != binding.CandidateDigest {
+		plan.CandidateDigest != binding.CandidateDigest ||
+		plan.Candidate.CandidateDigest != plan.CandidateDigest {
 		t.Fatalf("unexpected application plan: %#v", plan)
 	}
 	if err := plan.Validate(); err != nil {
 		t.Fatalf("Validate() error = %v", err)
 	}
-	application, err := ApplyRevision(validContract, binding.Candidate, plan.Edit)
+	application, err := ApplyRevision(validContract, plan.SourceDigest, plan.Candidate, plan.Edit)
 	if err != nil {
 		t.Fatalf("ApplyRevision() error = %v", err)
 	}
