@@ -36,7 +36,7 @@ func ExplainSelfImprovementWindow(source, symbolName string, window RevisionSelf
 		Status:                "UNKNOWN",
 		MissingStage:          "lsp-self-improvement-window",
 		SourceDigest:          digestString(source),
-		BaselineReceiptDigest:  window.BaselineReceiptDigest,
+		BaselineReceiptDigest: window.BaselineReceiptDigest,
 		CandidateReceiptDigest: window.CandidateReceiptDigest,
 		ByteDelta:             window.ByteDelta,
 		LineDelta:             window.LineDelta,
@@ -123,7 +123,7 @@ func (r SelfImprovementWindowSymbolResult) Validate() error {
 }
 
 func digestLSPSelfImprovementWindow(result SelfImprovementWindowSymbolResult) string {
-	return digestString(fmt.Sprintf("%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%d|%d|%t|%t|%t|%t|%t|%t|%s|%t|%t",
+	return digestString(fmt.Sprintf("%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%d|%d|%t|%t|%t|%t|%t|%t|%t|%t",
 		result.Status,
 		result.MissingStage,
 		result.SourceDigest,
