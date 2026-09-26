@@ -5,6 +5,10 @@ import "testing"
 func revisionApplicationObservationInputs(t *testing.T) (RevisionCandidatePlanObservation, RevisionApplicationReceipt) {
 	t.Helper()
 	candidateObservation, plan := candidatePlanObservationInputs(t)
+	planObservation, err := ObserveRevisionCandidatePlan(candidateObservation, plan)
+	if err != nil {
+		t.Fatalf("ObserveRevisionCandidatePlan() error = %v", err)
+	}
 	application, err := ApplyRevision(validContract, plan.SourceDigest, plan.Candidate, plan.Edit)
 	if err != nil {
 		t.Fatalf("ApplyRevision() error = %v", err)
@@ -13,7 +17,7 @@ func revisionApplicationObservationInputs(t *testing.T) (RevisionCandidatePlanOb
 	if err != nil {
 		t.Fatalf("ObserveRevisionApplicationReceipt() error = %v", err)
 	}
-	return candidateObservation, receipt
+	return planObservation, receipt
 }
 
 func TestObserveRevisionApplicationBindsReceipt(t *testing.T) {
