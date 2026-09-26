@@ -32,6 +32,9 @@ func TestBindJEVExternalApplyCapabilityReviewRevisionCandidateCapabilityScopeFee
     bridge := BindJEVExternalApplyCapabilityReviewRevisionCandidateCapabilityScopeFeedbackBridge(JEVExternalApplyCapabilityReviewRevisionCandidateCapabilityScopeFeedbackBridgeInput{
         CapabilityScope:        scope,
         ReverseObservation:     observation,
+        CandidateDigest:         "candidate-digest",
+        CandidateSource:         "candidate-source",
+        CandidateGateDigest:     "candidate-gate-digest",
         FeedbackDirection:      jevExternalApplyCapabilityReviewRevisionCandidateCapabilityScopeFeedbackImprove,
         FeedbackDigest:         "feedback-digest",
         FeedbackSource:         "feedback-engine",
@@ -78,6 +81,9 @@ func TestBindJEVExternalApplyCapabilityReviewRevisionCandidateCapabilityScopeFee
     bridge := BindJEVExternalApplyCapabilityReviewRevisionCandidateCapabilityScopeFeedbackBridge(JEVExternalApplyCapabilityReviewRevisionCandidateCapabilityScopeFeedbackBridgeInput{
         CapabilityScope:      scope,
         ReverseObservation:   observation,
+        CandidateDigest:       "candidate-digest",
+        CandidateSource:       "candidate-source",
+        CandidateGateDigest:   "candidate-gate-digest",
         FeedbackDirection:    jevExternalApplyCapabilityReviewRevisionCandidateCapabilityScopeFeedbackImprove,
         FeedbackSource:       "feedback-engine",
         FeedbackEvidenceDigest: "feedback-evidence",
