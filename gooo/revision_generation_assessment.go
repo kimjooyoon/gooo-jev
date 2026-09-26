@@ -119,7 +119,7 @@ func (a RevisionGenerationAssessment) Validate() error {
 }
 
 func digestRevisionGenerationAssessment(assessment RevisionGenerationAssessment) string {
-	return digestString(fmt.Sprintf("%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%t|%t|%s|%t|%t|%t|%t",
+	return digestString(fmt.Sprintf("%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%t|%t|%t|%t",
 		assessment.Status,
 		assessment.MissingStage,
 		assessment.SourceDigest,
@@ -131,12 +131,7 @@ func digestRevisionGenerationAssessment(assessment RevisionGenerationAssessment)
 		assessment.GeneratedIRDigest,
 		assessment.StructureDigest,
 		assessment.SourceMatchClass,
-		assessment.StructureMatch,
-		assessment.ExactSourceMatch,
-		assessment.GenerationDigest,
 		assessment.NonExecuting,
 		assessment.NonAuthorizing,
-		assessment.StructureMatch,
-		assessment.ExactSourceMatch,
 	))
 }
