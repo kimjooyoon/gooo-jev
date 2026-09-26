@@ -1,0 +1,25 @@
+package jevactioncandidateverification
+namespace jevactioncandidateverification
+
+entity JEVActionCandidateVerificationInput id "gooo://gooo-jev/jev-action-candidate-verification-input"
+  property GuardStatus string
+  property CandidateID string
+  property GuardEvidenceDigest string
+  property ReverseStatus string
+  property ReverseEvidenceDigest string
+  property ReverseFirstMismatch string
+  property NonAuthorizing boolean
+
+entity JEVActionCandidateVerification id "gooo://gooo-jev/jev-action-candidate-verification"
+  property Status string
+  property CandidateID string
+  property GuardEvidenceDigest string
+  property ReverseStatus string
+  property ReverseEvidenceDigest string
+  property FirstMismatch string
+  property EvidenceDigest string
+  property MissingStage string
+  property NonExecuting boolean
+  property NonAuthorizing boolean
+
+activity VerifyJEVActionCandidate(JEVActionCandidateVerificationInput) -> JEVActionCandidateVerification
