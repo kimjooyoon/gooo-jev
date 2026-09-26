@@ -47,8 +47,8 @@ func (d JEVExternalApplyCapabilityReviewRevisionCandidateMaterializationAdmissio
 			!d.Publishable || d.OutcomeBridgeDigest == "" || d.OutcomeStatus == "" {
 			return fmt.Errorf("bound JEV candidate evaluation outcome LSP diagnostic is incomplete")
 		}
-		if err := d.JEVExternalApplyCapabilityReviewRevisionCandidateMaterializationAdmissionEvaluationBridgeLSPDiagnostic.Validate(); err != nil {
-			return fmt.Errorf("invalid evaluation LSP diagnostic: %w", err)
+		if d.JEVExternalApplyCapabilityReviewRevisionCandidateMaterializationAdmissionEvaluationBridgeLSPDiagnostic.ProjectionDigest == "" || d.JEVExternalApplyCapabilityReviewRevisionCandidateMaterializationAdmissionEvaluationBridgeLSPDiagnostic.BridgeDigest == "" || !d.JEVExternalApplyCapabilityReviewRevisionCandidateMaterializationAdmissionEvaluationBridgeLSPDiagnostic.Publishable {
+			return fmt.Errorf("incomplete prior evaluation LSP diagnostic")
 		}
 		switch d.AdmissionDecision {
 		case "admit":
