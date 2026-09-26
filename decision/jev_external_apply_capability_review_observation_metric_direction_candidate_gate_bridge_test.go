@@ -26,7 +26,7 @@ func TestBindJEVExternalApplyCapabilityReviewObservationMetricDirectionCandidate
         bridge.FeedbackDigest,
     )
     bridge.BridgeDigest = digestJEVExternalApplyCapabilityReviewObservationMetricDirectionBridge(
-        jevExternalApplyCapabilityReviewImprovementDirectionBound,
+        bridge.Status,
         bridge.ObservationStatus,
         bridge.ObservationDigest,
         bridge.MetricName,
@@ -79,7 +79,7 @@ func TestBindJEVExternalApplyCapabilityReviewObservationMetricDirectionCandidate
         bridge.FeedbackDigest,
     )
     bridge.BridgeDigest = digestJEVExternalApplyCapabilityReviewObservationMetricDirectionBridge(
-        jevExternalApplyCapabilityReviewImprovementDirectionBound,
+        bridge.Status,
         bridge.ObservationStatus,
         bridge.ObservationDigest,
         bridge.MetricName,
@@ -92,7 +92,7 @@ func TestBindJEVExternalApplyCapabilityReviewObservationMetricDirectionCandidate
         bridge.DirectionDigest,
     )
 
-    gateBridge := BindJEVExternalApplyCapabilityReviewObservationMetricDirectionCandidateGate(JEVExternalApplyCapabilityReviewObservationMetricDirectionCandidateGateBridgeInput{
+    gateBridge := BindJEVExternalApplyCapabilityReviewObservationMetricDirectionCandidateGate(JEVExternalApplyCapabilityReviewObservationMetricDirectionCandidateGateInput{
         ObservationMetricDirection: bridge,
         CandidateDigest:             "candidate-digest",
         RevisionSource:              "revision-source",
