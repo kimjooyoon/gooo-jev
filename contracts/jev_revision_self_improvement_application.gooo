@@ -1,0 +1,56 @@
+package jevrevisionselfimprovementapplication
+namespace jevrevisionselfimprovementapplication
+
+entity RevisionSelfImprovementIteration id "gooo://gooo-jev/revision-self-improvement-iteration"
+property IterationDigest string
+property CandidateSourceDigest string
+property FeedbackSignal string
+property NonAuthorizing boolean
+
+entity RevisionCandidatePlanObservation id "gooo://gooo-jev/revision-candidate-plan-observation"
+property ObservationDigest string
+property PlanDigest string
+property SourceDigest string
+property CandidateDigest string
+property EditDigest string
+property NonAuthorizing boolean
+
+entity RevisionApplicationObservation id "gooo://gooo-jev/revision-application-observation"
+property ObservationDigest string
+property PlanObservationDigest string
+property PlanDigest string
+property ApplicationDigest string
+property ReceiptDigest string
+property SourceDigest string
+property ProposedSourceDigest string
+property InputIRDigest string
+property ProposedIRDigest string
+property CandidateDigest string
+property EditDigest string
+property ApplicationSignal string
+property ApplicationObserved boolean
+property NonAuthorizing boolean
+
+entity RevisionSelfImprovementApplicationObservation id "gooo://gooo-jev/revision-self-improvement-application-observation"
+property Status string
+property IterationDigest string
+property PlanObservationDigest string
+property ApplicationObservationDigest string
+property PlanDigest string
+property ApplicationDigest string
+property ReceiptDigest string
+property SourceDigest string
+property ProposedSourceDigest string
+property InputIRDigest string
+property ProposedIRDigest string
+property CandidateDigest string
+property EditDigest string
+property FeedbackSignal string
+property ApplicationSignal string
+property ApplicationObserved boolean
+property ObservationDigest string
+property MissingStage string
+property NonExecuting boolean
+property NonAuthorizing boolean
+
+activity ObserveRevisionSelfImprovementApplication(RevisionSelfImprovementIteration, RevisionCandidatePlanObservation, RevisionApplicationObservation) -> RevisionSelfImprovementApplicationObservation
