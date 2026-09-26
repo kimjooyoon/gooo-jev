@@ -150,7 +150,7 @@ func BindExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionCandidateRevis
 		feedback.MetricDigest,
 		feedback.FeedbackKind,
 	)
-	feedback.EvidenceDigest = digestJEVImprovementFeedback(
+	feedback.EvidenceDigest = digestJEVImprovementReplayFeedback(
 		feedback.Status,
 		feedback.FeedbackKind,
 		feedback.CandidateDigest,
