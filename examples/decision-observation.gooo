@@ -5,7 +5,9 @@ entity DecisionSpec id "gooo://jev/decision/spec"
 entity DecisionReceipt id "gooo://jev/decision/receipt"
 entity DecisionFreshness id "gooo://jev/decision/freshness"
 entity DecisionReplay id "gooo://jev/decision/replay"
+entity DecisionFeedback id "gooo://jev/decision/feedback"
 
 activity ObserveDecision(DecisionSpec) -> DecisionReceipt
 activity ObserveDecisionFreshness(DecisionReceipt) -> DecisionFreshness
 activity ReplayDecisionReceipt(DecisionReceipt) -> DecisionReplay
+activity RecordDecisionFeedback(DecisionReplay) -> DecisionFeedback
