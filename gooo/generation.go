@@ -73,10 +73,10 @@ func structureDigest(document DocumentIR) string {
 	var builder strings.Builder
 	fmt.Fprintf(&builder, "package=%s\nnamespace=%s\n", document.Package, document.Namespace)
 	for _, entity := range document.Entities {
-		fmt.Fprintf(&builder, "entity=%s|%s|%s\n", entity.Name, entity.ID, entity.Digest)
+		fmt.Fprintf(&builder, "entity=%s|%s\n", entity.Name, entity.ID)
 	}
 	for _, activity := range document.Activities {
-		fmt.Fprintf(&builder, "activity=%s|%s|%s|%s\n", activity.Name, activity.Input, activity.Output, activity.Digest)
+		fmt.Fprintf(&builder, "activity=%s|%s|%s\n", activity.Name, activity.Input, activity.Output)
 	}
 	return digestString(builder.String())
 }
