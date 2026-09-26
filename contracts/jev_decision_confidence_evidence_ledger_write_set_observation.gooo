@@ -1,0 +1,14 @@
+package jevdecisionconfidenceledgerwritesetobservation
+namespace jevdecisionconfidenceledgerwritesetobservation
+
+entity DecisionConfidenceEvidenceLedgerChangePlanReviewSignal id "gooo://gooo-jev/decision-confidence-evidence-ledger-change-plan-review-signal"
+  property FeedbackDigest string
+  property Status string
+
+entity DecisionConfidenceEvidenceLedgerWriteSetObservation id "gooo://gooo-jev/decision-confidence-evidence-ledger-write-set-observation"
+  property ReviewSignalDigest string
+  property WriteSetDigest string
+  property Status string
+  property NonAuthorizing boolean
+
+activity ObserveDecisionConfidenceEvidenceLedgerWriteSet(DecisionConfidenceEvidenceLedgerChangePlanReviewSignal) -> DecisionConfidenceEvidenceLedgerWriteSetObservation
