@@ -214,7 +214,6 @@ func BindExecutionEnvelopeGoooEvidenceFullProvenance(input ExecutionEnvelopeGooo
 		output.MissingStage = "evidence-binding"
 		return output
 	}
-	_ = bindingDigest
 	output.EvidenceDigest, err = Digest(struct {
 		DeclarationDigest         string
 		IRDigest                  string
