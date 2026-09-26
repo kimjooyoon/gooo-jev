@@ -1,0 +1,23 @@
+package jevprovenancechainlspprojection
+namespace jevprovenancechainlspprojection
+
+entity ExecutionEnvelopeProvenanceChainLSPBindingInput id "gooo://gooo-jev/provenance-chain-lsp-binding-input"
+  property ChainStatus string
+  property ChainMissingStage string
+  property ChainEvidenceDigest string
+  property MissingStageIndex integer
+  property EvidencePrefixDigest string
+  property NonAuthorizing boolean
+
+entity ExecutionEnvelopeProvenanceChainLSPBinding id "gooo://gooo-jev/provenance-chain-lsp-binding"
+  property Status string
+  property Publishable boolean
+  property Severity string
+  property Code string
+  property MissingStage string
+  property MissingStageIndex integer
+  property EvidencePrefixDigest string
+  property ChainEvidenceDigest string
+  property NonAuthorizing boolean
+
+activity ProjectExecutionEnvelopeProvenanceChainLSP(ExecutionEnvelopeProvenanceChainLSPBindingInput) -> ExecutionEnvelopeProvenanceChainLSPBinding
