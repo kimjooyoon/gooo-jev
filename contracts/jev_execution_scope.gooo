@@ -7,6 +7,8 @@ entity Gateway id "gooo://gooo-jev/gateway"
 entity Model id "gooo://gooo-jev/model"
 entity ExecutionScope id "gooo://gooo-jev/execution-scope"
 entity ExecutionScopeGrant id "gooo://gooo-jev/execution-scope-grant"
+entity ExecutionScopeReceipt id "gooo://gooo-jev/execution-scope-receipt"
 
 activity BindExecutionScope(Task) -> ExecutionScope
 activity GrantExecutionScope(ExecutionScope) -> ExecutionScopeGrant
+activity RecordScopedExecution(ExecutionScopeGrant) -> ExecutionScopeReceipt
