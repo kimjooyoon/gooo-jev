@@ -1,0 +1,14 @@
+package jevdecisionconfidenceledgerchangeoutcomecounterexample
+namespace jevdecisionconfidenceledgerchangeoutcomecounterexample
+
+entity DecisionConfidenceEvidenceLedgerChangeOutcomeFeedback id "gooo://gooo-jev/decision-confidence-evidence-ledger-change-outcome-feedback"
+  property Delta string
+  property Status string
+
+entity DecisionConfidenceEvidenceLedgerChangeOutcomeCounterexample id "gooo://gooo-jev/decision-confidence-evidence-ledger-change-outcome-counterexample"
+  property FeedbackDigest string
+  property Delta string
+  property Status string
+  property NonAuthorizing boolean
+
+activity ObserveDecisionConfidenceEvidenceLedgerChangeOutcomeCounterexample(DecisionConfidenceEvidenceLedgerChangeOutcomeFeedback) -> DecisionConfidenceEvidenceLedgerChangeOutcomeCounterexample
