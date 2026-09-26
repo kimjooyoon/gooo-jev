@@ -2,19 +2,27 @@ package decision
 
 import "testing"
 
+func goooRevisionDirective(feedback JEVImprovementFeedbackAggregation) JEVImprovementDirectionDirective {
+	directive := JEVImprovementDirectionDirective{
+		Status:              jevImprovementDirectiveRevision,
+		Directive:            jevImprovementDirectiveRevision,
+		CandidateDigest:     "candidate-digest",
+		CandidateSource:     "gooo://candidate/one",
+		InputEvidenceDigest: feedback.EvidenceDigest,
+		NonExecuting:        true,
+		NonAuthorizing:      true,
+	}
+	directive.EvidenceDigest = digestJEVImprovementDirectionDirective(directive.Status, directive.Directive, directive.CandidateDigest, directive.CandidateSource, directive.InputEvidenceDigest)
+	return directive
+}
+
 func goooRevisionCandidateInput(status string) ExecutionEnvelopeGoooRevisionCandidateInput {
 	feedback := feedbackCycleAggregation(status)
-	directive := DeriveJEVImprovementDirectionDirective(JEVImprovementDirectionDirectiveInput{
-		Aggregation:     feedback,
-		CandidateDigest: "candidate-digest",
-		CandidateSource: "gooo://candidate/one",
-		NonAuthorizing:  true,
-	})
 	return ExecutionEnvelopeGoooRevisionCandidateInput{
 		Provenance:           fullProvenanceCycleBinding(),
 		ChangePlanDigest:     "change-plan-digest",
 		Feedback:             feedback,
-		Directive:            directive,
+		Directive:            goooRevisionDirective(feedback),
 		RevisionSource:       "gooo://revision/one",
 		RevisionChangeDigest: "revision-change-digest",
 		NonAuthorizing:       true,
@@ -42,6 +50,7 @@ func TestGenerateExecutionEnvelopeJEVRevisionCandidateFromGoooFullProvenanceHold
 func TestGenerateExecutionEnvelopeJEVRevisionCandidateFromGoooFullProvenanceRejectsMixedDirective(t *testing.T) {
 	input := goooRevisionCandidateInput("stable-for-review")
 	input.Directive.InputEvidenceDigest = "other-feedback"
+	input.Directive.EvidenceDigest = digestJEVImprovementDirectionDirective(input.Directive.Status, input.Directive.Directive, input.Directive.CandidateDigest, input.Directive.CandidateSource, input.Directive.InputEvidenceDigest)
 	got := GenerateExecutionEnvelopeJEVRevisionCandidateFromGoooFullProvenance(input)
 	if got.Status != "UNKNOWN" || got.MissingStage != "feedback-direction-binding" || got.BindingDigest != "" {
 		t.Fatalf("got %+v", got)
