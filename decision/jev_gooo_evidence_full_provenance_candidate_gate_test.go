@@ -33,7 +33,9 @@ func TestBindExecutionEnvelopeGoooEvidenceFullProvenanceCandidateGateAdmitsConfi
 
 func TestBindExecutionEnvelopeGoooEvidenceFullProvenanceCandidateGateHoldsRefuted(t *testing.T) {
 	input := evidenceFullProvenanceCandidateGateInput(t)
-	input.Metric.Classification = "REFUTED"
+	metricInput := evidenceFullProvenanceMetricInput(t)
+	metricInput.ObservedEvidenceDigest = "different-observation"
+	input.Metric = BindExecutionEnvelopeGoooEvidenceFullProvenanceMetric(metricInput)
 	gate := BindExecutionEnvelopeGoooEvidenceFullProvenanceCandidateGate(input)
 	if gate.Status != "ready" || gate.AdmissionStatus != "HOLD" {
 		t.Fatalf("gate = %#v, want refuted HOLD", gate)
