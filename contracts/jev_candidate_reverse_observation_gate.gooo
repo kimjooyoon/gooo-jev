@@ -1,0 +1,5 @@
+package jevcandidatereverseobservationgate
+namespace jevcandidatereverseobservationgate
+entity ExecutionEnvelopeJEVCandidateReverseObservationGateInput id "gooo://gooo-jev/candidate-reverse-observation-gate-input"
+entity ExecutionEnvelopeJEVCandidateReverseObservationGateBinding id "gooo://gooo-jev/candidate-reverse-observation-gate-binding"
+activity BindExecutionEnvelopeJEVCandidateToReverseObservation(ExecutionEnvelopeJEVCandidateReverseObservationGateInput) -> ExecutionEnvelopeJEVCandidateReverseObservationGateBinding
