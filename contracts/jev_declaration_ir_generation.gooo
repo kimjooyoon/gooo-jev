@@ -1,0 +1,39 @@
+package jevdeclarationirgeneration
+namespace jevdeclarationirgeneration
+
+entity GoooDeclarationIRGenerationInput id "gooo://gooo-jev/declaration-ir-generation-input"
+property SourceText string
+property NonAuthorizing boolean
+
+entity GoooPropertyIR id "gooo://gooo-jev/declaration-property-ir"
+property Name string
+property Type string
+
+entity GoooEntityIR id "gooo://gooo-jev/declaration-entity-ir"
+property Name string
+property ID string
+
+entity GoooActivityParameterIR id "gooo://gooo-jev/declaration-activity-parameter-ir"
+property Name string
+property Type string
+
+entity GoooActivityIR id "gooo://gooo-jev/declaration-activity-ir"
+property Name string
+property ReturnType string
+
+entity GoooDeclarationIR id "gooo://gooo-jev/declaration-ir"
+property Package string
+property Namespace string
+
+entity GoooDeclarationIRGeneration id "gooo://gooo-jev/declaration-ir-generation"
+property Status string
+property IR GoooDeclarationIR
+property SourceDigest string
+property IRDigest string
+property GeneratedSource string
+property GenerationDigest string
+property MissingStage string
+property NonExecuting boolean
+property NonAuthorizing boolean
+
+activity DeriveGoooDeclarationIRGeneration(GoooDeclarationIRGenerationInput) -> GoooDeclarationIRGeneration
