@@ -1,0 +1,10 @@
+package jevexecutionscope
+namespace jevexecutionscope
+
+entity Task id "gooo://gooo-jev/task"
+entity Workspace id "gooo://gooo-jev/workspace"
+entity Gateway id "gooo://gooo-jev/gateway"
+entity Model id "gooo://gooo-jev/model"
+entity ExecutionScope id "gooo://gooo-jev/execution-scope"
+
+activity BindExecutionScope(Task) -> ExecutionScope
