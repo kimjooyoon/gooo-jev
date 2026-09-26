@@ -1,0 +1,34 @@
+namespace jevgoooevidencefullprovenancerevisionactioncandidaterevisionfeedback
+
+entity ExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionCandidateRevisionFeedbackInput id "gooo://gooo-jev/gooo-evidence-full-provenance-revision-action-candidate-revision-feedback-input"
+property Metric GoooEvidenceFullProvenanceRevisionActionCandidateRevisionMetricBinding
+property CandidateDigest string
+property ReplayObservationDigest string
+property NonAuthorizing boolean
+
+entity ExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionCandidateRevisionFeedbackBinding id "gooo://gooo-jev/gooo-evidence-full-provenance-revision-action-candidate-revision-feedback"
+property Status string
+property MissingStage string
+property CandidateID string
+property SourceCandidateID string
+property SourceRevisionCandidateDigest string
+property SourceCandidateEvidenceDigest string
+property RevisionCandidateDigest string
+property RevisionCandidateEvidenceDigest string
+property MetricEvidenceDigest string
+property FeedbackStatus string
+property CandidateDigest string
+property ReplayObservationDigest string
+property FeedbackEvidenceDigest string
+property FeedbackDigest string
+property AggregationStatus string
+property Total integer
+property Confirmed integer
+property Refuted integer
+property Unknown integer
+property AggregationEvidenceDigest string
+property EvidenceDigest string
+property NonExecuting boolean
+property NonAuthorizing boolean
+
+activity BindExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionCandidateRevisionFeedback(ExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionCandidateRevisionFeedbackInput) -> ExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionCandidateRevisionFeedbackBinding
