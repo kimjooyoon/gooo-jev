@@ -133,7 +133,7 @@ func ProjectJEVExternalApplyCapabilityReviewRevisionCandidateGenerationRequestCa
     }
     applicationPlan := ProjectJEVExternalApplyCapabilityReviewRevisionCandidateGateApplicationPlanBridgeLSP(
         JEVExternalApplyCapabilityReviewRevisionCandidateGateApplicationPlanBridge{
-            Status: input.CandidateGateApplicationPlanStatus,
+            Status: input.ApplicationPlanStatus,
             CandidateGateStatus: input.CandidateGateStatus,
             CandidateDecision: input.CandidateDecision,
             CandidateDigest: input.CandidateDigest,
