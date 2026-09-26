@@ -1,0 +1,4 @@
+package jevexternalapplycapabilityreview
+namespace jevexternalapplycapabilityreview
+entity JEVExternalApplyCapabilityReview id "gooo://gooo-jev/decision-external-apply-capability-review"
+activity ObserveJEVExternalApplyCapabilityReview(JEVExternalApplyCapabilityReviewInput) -> JEVExternalApplyCapabilityReview
