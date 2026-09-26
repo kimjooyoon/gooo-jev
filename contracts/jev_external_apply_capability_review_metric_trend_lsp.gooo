@@ -1,0 +1,4 @@
+package jevexternalapplycapabilityreviewmetrictrendlsp
+namespace jevexternalapplycapabilityreviewmetrictrendlsp
+entity JEVExternalApplyCapabilityReviewMetricTrendLSPDiagnostic id "gooo://gooo-jev/decision-external-apply-capability-review-metric-trend-lsp"
+activity ProjectJEVExternalApplyCapabilityReviewMetricTrendLSP(JEVExternalApplyCapabilityReviewMetricTrend) -> JEVExternalApplyCapabilityReviewMetricTrendLSPDiagnostic
