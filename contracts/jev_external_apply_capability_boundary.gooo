@@ -1,0 +1,4 @@
+package jevexternalapplycapabilityboundary
+namespace jevexternalapplycapabilityboundary
+entity JEVExternalApplyCapabilityBoundary id "gooo://gooo-jev/decision-external-apply-capability-boundary"
+activity DescribeJEVExternalApplyCapabilityBoundary(JEVExternalApplyCapabilityBoundaryInput) -> JEVExternalApplyCapabilityBoundary
