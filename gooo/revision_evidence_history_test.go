@@ -23,7 +23,9 @@ func TestObserveRevisionEvidenceHistoryBindsOrderedChains(t *testing.T) {
 		history.LastChainDigest != thirdChain.ChainDigest {
 		t.Fatalf("chain boundaries were not retained: %#v", history)
 	}
-	if history.SourceChangeCount != 2 || history.ReverseObservedCount != 3 {
+	if history.SourceChangeCount != 0 ||
+		history.ProposedSourceChangeCount != 2 ||
+		history.ReverseObservedCount != 3 {
 		t.Fatalf("unexpected history counts: %#v", history)
 	}
 	if err := history.Validate(); err != nil {
