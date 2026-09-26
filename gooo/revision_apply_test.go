@@ -7,7 +7,11 @@ import (
 
 func revisionCandidateForApplication(t *testing.T) RevisionCandidate {
 	t.Helper()
-	return ProposeRevision(choiceAssessmentForRevision(t), ClarifyRevision)
+	candidate, err := ProposeRevision(choiceAssessmentForRevision(t), ClarifyRevision)
+	if err != nil {
+		t.Fatalf("ProposeRevision() error = %v", err)
+	}
+	return candidate
 }
 
 func TestApplyRevisionBindsSourceEditAndReverseIR(t *testing.T) {
