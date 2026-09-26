@@ -1,0 +1,28 @@
+package jevgoooevidencefullprovenanceevaluationfeedback
+namespace jevgoooevidencefullprovenanceevaluationfeedback
+
+entity ExecutionEnvelopeGoooEvidenceFullProvenanceEvaluationFeedbackInput id "gooo://gooo-jev/gooo-evidence-full-provenance-evaluation-feedback-input"
+property Evaluation GoooEvidenceFullProvenanceMaterializationAdmissionEvaluationBinding
+property CandidateDigest string
+property ReplayObservationDigest string
+property NonAuthorizing boolean
+
+entity ExecutionEnvelopeGoooEvidenceFullProvenanceEvaluationFeedbackBinding id "gooo://gooo-jev/gooo-evidence-full-provenance-evaluation-feedback-binding"
+property Status string
+property MissingStage string
+property FeedbackStatus string
+property CandidateDigest string
+property ReplayObservationDigest string
+property MetricDigest string
+property FeedbackEvidenceDigest string
+property AggregationStatus string
+property Total integer
+property Confirmed integer
+property Refuted integer
+property Unknown integer
+property AggregationEvidenceDigest string
+property EvidenceDigest string
+property NonExecuting boolean
+property NonAuthorizing boolean
+
+activity BindExecutionEnvelopeGoooEvidenceFullProvenanceEvaluationFeedback(ExecutionEnvelopeGoooEvidenceFullProvenanceEvaluationFeedbackInput) -> ExecutionEnvelopeGoooEvidenceFullProvenanceEvaluationFeedbackBinding
