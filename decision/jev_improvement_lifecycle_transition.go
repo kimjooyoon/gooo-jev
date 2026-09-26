@@ -12,21 +12,21 @@ const (
 )
 
 type JEVImprovementLifecycleTransitionInput struct {
-    FromStatus       string
-    ToStatus         string
+    FromStatus          string
+    ToStatus            string
     InputEvidenceDigest string
-    NonAuthorizing   bool
+    NonAuthorizing      bool
 }
 
 type JEVImprovementLifecycleTransition struct {
-    Status             string
-    MissingStage       string
-    FromStatus         string
-    ToStatus           string
+    Status              string
+    MissingStage        string
+    FromStatus          string
+    ToStatus            string
     InputEvidenceDigest string
-    EvidenceDigest     string
-    NonExecuting       bool
-    NonAuthorizing     bool
+    EvidenceDigest      string
+    NonExecuting        bool
+    NonAuthorizing      bool
 }
 
 func (t JEVImprovementLifecycleTransition) Validate() error {
@@ -114,8 +114,6 @@ func allowedJEVImprovementLifecycleTransition(fromStatus, toStatus string) bool 
         return toStatus == jevReplayFeedbackConfirmed
     case jevImprovementReplayCounterexample:
         return toStatus == jevReplayFeedbackRefuted
-    case jevImprovementReplayObservationUnknown:
-        return toStatus == jevReplayFeedbackUnknown
     case jevReplayFeedbackConfirmed, jevReplayFeedbackRefuted, jevReplayFeedbackUnknown:
         return toStatus == jevImprovementFeedbackStableForReview || toStatus == jevImprovementFeedbackNeedsRevision || toStatus == jevImprovementFeedbackHold
     default:
