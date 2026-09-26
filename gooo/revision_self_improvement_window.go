@@ -5,14 +5,14 @@ import "fmt"
 // RevisionSelfImprovementWindow compares two bound self-improvement receipts
 // without claiming that either observation is an improvement.
 type RevisionSelfImprovementWindow struct {
-	Status                 string
-	MissingStage           string
-	BaselineReceiptDigest  string
-	CandidateReceiptDigest string
-	BaselineSourceDigest   string
-	CandidateSourceDigest  string
+	Status                         string
+	MissingStage                   string
+	BaselineReceiptDigest          string
+	CandidateReceiptDigest         string
+	BaselineSourceDigest           string
+	CandidateSourceDigest          string
 	BaselineProposedSourceDigest  string
-	CandidateProposedSourceDigest string
+	CandidateProposedSourceDigest  string
 	BaselineApplicationDigest      string
 	CandidateApplicationDigest     string
 	BaselineMetricsDigest          string
@@ -25,46 +25,46 @@ type RevisionSelfImprovementWindow struct {
 	CandidateChangedByteCount      int
 	BaselineChangedLineCount       int
 	CandidateChangedLineCount      int
-	ByteDelta              int
-	LineDelta              int
-	SourceStable           bool
-	CandidateStable        bool
-	IRChangeStable         bool
-	StructureStable        bool
-	ExactSourceStable      bool
-	GeneratedIRStable      bool
-	ComparisonSignal       string
-	WindowDigest           string
-	NonExecuting           bool
-	NonAuthorizing         bool
+	ByteDelta                      int
+	LineDelta                      int
+	SourceStable                   bool
+	CandidateStable                bool
+	IRChangeStable                 bool
+	StructureStable                bool
+	ExactSourceStable              bool
+	GeneratedIRStable              bool
+	ComparisonSignal               string
+	WindowDigest                   string
+	NonExecuting                   bool
+	NonAuthorizing                 bool
 }
 
 // ObserveRevisionSelfImprovementWindow compares bounded evidence from two
 // observations. It never executes, authorizes, persists, or labels improvement.
 func ObserveRevisionSelfImprovementWindow(baseline RevisionSelfImprovementReceipt, candidate RevisionSelfImprovementReceipt) (RevisionSelfImprovementWindow, error) {
 	window := RevisionSelfImprovementWindow{
-		Status:                         "UNKNOWN",
-		MissingStage:                   "revision-self-improvement-window",
-		BaselineReceiptDigest:          baseline.ReceiptDigest,
-		CandidateReceiptDigest:         candidate.ReceiptDigest,
-		BaselineSourceDigest:           baseline.SourceDigest,
-		CandidateSourceDigest:          candidate.SourceDigest,
-		BaselineProposedSourceDigest:   baseline.ProposedSourceDigest,
-		CandidateProposedSourceDigest:  candidate.ProposedSourceDigest,
-		BaselineApplicationDigest:      baseline.ApplicationDigest,
-		CandidateApplicationDigest:     candidate.ApplicationDigest,
-		BaselineMetricsDigest:          baseline.MetricsDigest,
-		CandidateMetricsDigest:          candidate.MetricsDigest,
-		BaselineGeneratedIRDigest:      baseline.GeneratedIRDigest,
-		CandidateGeneratedIRDigest:     candidate.GeneratedIRDigest,
-		BaselineStructureDigest:        baseline.StructureDigest,
-		CandidateStructureDigest:        candidate.StructureDigest,
-		BaselineChangedByteCount:       baseline.ChangedByteCount,
-		CandidateChangedByteCount:      candidate.ChangedByteCount,
-		BaselineChangedLineCount:       baseline.ChangedLineCount,
-		CandidateChangedLineCount:      candidate.ChangedLineCount,
-		NonExecuting:                   true,
-		NonAuthorizing:                 true,
+		Status:                        "UNKNOWN",
+		MissingStage:                  "revision-self-improvement-window",
+		BaselineReceiptDigest:         baseline.ReceiptDigest,
+		CandidateReceiptDigest:        candidate.ReceiptDigest,
+		BaselineSourceDigest:          baseline.SourceDigest,
+		CandidateSourceDigest:         candidate.SourceDigest,
+		BaselineProposedSourceDigest:  baseline.ProposedSourceDigest,
+		CandidateProposedSourceDigest: candidate.ProposedSourceDigest,
+		BaselineApplicationDigest:     baseline.ApplicationDigest,
+		CandidateApplicationDigest:    candidate.ApplicationDigest,
+		BaselineMetricsDigest:         baseline.MetricsDigest,
+		CandidateMetricsDigest:         candidate.MetricsDigest,
+		BaselineGeneratedIRDigest:     baseline.GeneratedIRDigest,
+		CandidateGeneratedIRDigest:    candidate.GeneratedIRDigest,
+		BaselineStructureDigest:       baseline.StructureDigest,
+		CandidateStructureDigest:      candidate.StructureDigest,
+		BaselineChangedByteCount:      baseline.ChangedByteCount,
+		CandidateChangedByteCount:     candidate.ChangedByteCount,
+		BaselineChangedLineCount:      baseline.ChangedLineCount,
+		CandidateChangedLineCount:     candidate.ChangedLineCount,
+		NonExecuting:                  true,
+		NonAuthorizing:                true,
 	}
 	setWindowDigest := func() {
 		window.WindowDigest = digestRevisionSelfImprovementWindow(window)
@@ -163,7 +163,7 @@ func (w RevisionSelfImprovementWindow) Validate() error {
 }
 
 func digestRevisionSelfImprovementWindow(window RevisionSelfImprovementWindow) string {
-	return digestString(fmt.Sprintf("%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%d|%d|%d|%d|%d|%d|%t|%t|%t|%t|%t|%t|%s|%t|%t",
+	return digestString(fmt.Sprintf("%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%d|%d|%d|%d|%d|%d|%t|%t|%t|%t|%t|%t|%s|%t|%t",
 		window.Status,
 		window.MissingStage,
 		window.BaselineReceiptDigest,
