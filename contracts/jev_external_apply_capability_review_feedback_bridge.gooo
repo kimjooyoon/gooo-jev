@@ -1,0 +1,4 @@
+package jevexternalapplycapabilityreviewfeedback
+namespace jevexternalapplycapabilityreviewfeedback
+entity JEVExternalApplyCapabilityReviewFeedbackBridge id "gooo://gooo-jev/decision-external-apply-capability-review-feedback"
+activity BindJEVExternalApplyCapabilityReviewFeedback(JEVExternalApplyCapabilityReviewFeedbackBridgeInput) -> JEVExternalApplyCapabilityReviewFeedbackBridge
