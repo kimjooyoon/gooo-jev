@@ -1,0 +1,4 @@
+package jevexternalapplycapabilityreviewtrendsignal
+namespace jevexternalapplycapabilityreviewtrendsignal
+entity JEVExternalApplyCapabilityReviewTrendSignal id "gooo://gooo-jev/decision-external-apply-capability-review-trend-signal"
+activity DeriveJEVExternalApplyCapabilityReviewTrendSignal(JEVExternalApplyCapabilityReviewTrendSignalInput) -> JEVExternalApplyCapabilityReviewTrendSignal
