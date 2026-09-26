@@ -49,7 +49,7 @@ func TestBindImprovementReplayEvidence(t *testing.T) {
 		t.Fatalf("unexpected replayed binding: %#v", output)
 	}
 
-	output = BindImprovementReplayEvidence(makeImprovementReplayEvidenceInput(t, ImprovementDiverged))
+	output = BindImprovementReplayEvidence(makeImprovementReplayEvidenceBindingInput(t, ImprovementDiverged))
 	if output.Status != "diverged" || output.ReplayStatus != ImprovementDiverged {
 		t.Fatalf("unexpected diverged binding: %#v", output)
 	}
