@@ -14,6 +14,7 @@ entity DecisionCounterexample id "gooo://jev/decision/counterexample"
 entity DecisionCounterexampleSet id "gooo://jev/decision/counterexample-set"
 entity DecisionCausalReview id "gooo://jev/decision/causal-review"
 entity DecisionCapabilityBoundary id "gooo://jev/decision/capability-boundary"
+entity DecisionProvenanceEnvelope id "gooo://jev/decision/provenance-envelope"
 
 activity ObserveDecision(DecisionSpec) -> DecisionReceipt
 activity ObserveDecisionFreshness(DecisionReceipt) -> DecisionFreshness
@@ -27,3 +28,4 @@ activity RecordDecisionCounterexample(DecisionAssessment) -> DecisionCounterexam
 activity BuildDecisionCounterexampleSet(DecisionAssessment) -> DecisionCounterexampleSet
 activity BuildDecisionCausalReview(DecisionAssessment) -> DecisionCausalReview
 activity ObserveDecisionCapabilityBoundary(DecisionAssessment) -> DecisionCapabilityBoundary
+activity BindDecisionProvenanceEnvelope(DecisionReceipt) -> DecisionProvenanceEnvelope
