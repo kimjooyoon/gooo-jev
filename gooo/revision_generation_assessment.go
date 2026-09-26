@@ -131,6 +131,8 @@ func digestRevisionGenerationAssessment(assessment RevisionGenerationAssessment)
 		assessment.GeneratedIRDigest,
 		assessment.StructureDigest,
 		assessment.SourceMatchClass,
+		assessment.StructureMatch,
+		assessment.ExactSourceMatch,
 		assessment.NonExecuting,
 		assessment.NonAuthorizing,
 	))
