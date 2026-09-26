@@ -63,8 +63,7 @@ func TestExplainSelfImprovementOutcomeRetainsMetricsFailure(t *testing.T) {
 
 func TestExplainSelfImprovementOutcomeRetainsSourceLinkFailure(t *testing.T) {
 	source, symbolName, application, metrics, generation := lspSelfImprovementOutcomeInputs(t)
-	result, err := ExplainSelfImprovementOutcome(source+"
-", symbolName, application, metrics, generation)
+	result, err := ExplainSelfImprovementOutcome(source+"\n", symbolName, application, metrics, generation)
 	if err == nil {
 		t.Fatal("ExplainSelfImprovementOutcome() error = nil, want source-link failure")
 	}
