@@ -1,0 +1,4 @@
+package jevcyclecandidatefeedbackadapter
+namespace jevcyclecandidatefeedbackadapter
+entity ExecutionEnvelopeJEVCycleCandidateFeedbackAdapterInput id "gooo://gooo-jev/cycle-candidate-feedback-adapter-input"
+activity DeriveJEVImprovementReplayFeedbackFromCycleRevisionCandidate(ExecutionEnvelopeJEVCycleCandidateFeedbackAdapterInput) -> JEVImprovementReplayFeedback
