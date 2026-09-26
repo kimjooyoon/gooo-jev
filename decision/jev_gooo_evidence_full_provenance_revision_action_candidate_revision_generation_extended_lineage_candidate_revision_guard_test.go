@@ -17,7 +17,7 @@ func extendedLineageCandidateRevisionForRevisionGuard(t *testing.T) ExecutionEnv
 	})
 }
 
-func validExtendedLineageCandidateRevisionGuardInput(t *testing.T) ExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionCandidateRevisionGenerationExtendedLineageCandidateRevisionGuardInput {
+func validExtendedLineageCandidateRevisionCandidateGuardInput(t *testing.T) ExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionCandidateRevisionGenerationExtendedLineageCandidateRevisionGuardInput {
 	t.Helper()
 	observationAt := time.Unix(1_800_000_910, 0).UTC()
 	return ExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionCandidateRevisionGenerationExtendedLineageCandidateRevisionGuardInput{
@@ -38,7 +38,7 @@ func validExtendedLineageCandidateRevisionGuardInput(t *testing.T) ExecutionEnve
 }
 
 func TestGuardExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionCandidateRevisionGenerationExtendedLineageCandidateRevision(t *testing.T) {
-	output := GuardExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionCandidateRevisionGenerationExtendedLineageCandidateRevision(validExtendedLineageCandidateRevisionGuardInput(t))
+	output := GuardExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionCandidateRevisionGenerationExtendedLineageCandidateRevision(validExtendedLineageCandidateRevisionCandidateGuardInput(t))
 	if output.Status != "admitted" || output.SourceCandidateID == "" ||
 		output.ParentCandidateDigest == "" || output.CandidateDigest == "" ||
 		output.GuardEvidenceDigest == "" {
@@ -50,7 +50,7 @@ func TestGuardExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionCandidate
 }
 
 func TestGuardExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionCandidateRevisionGenerationExtendedLineageCandidateRevisionKeepsStaleReviewable(t *testing.T) {
-	input := validExtendedLineageCandidateRevisionGuardInput(t)
+	input := validExtendedLineageCandidateRevisionCandidateGuardInput(t)
 	input.Now = input.ObservationAt.Add(2 * time.Minute)
 	output := GuardExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionCandidateRevisionGenerationExtendedLineageCandidateRevision(input)
 	if output.Status != "review" || output.MissingStage != "observation-stale" {
@@ -62,7 +62,7 @@ func TestGuardExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionCandidate
 }
 
 func TestGuardExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionCandidateRevisionGenerationExtendedLineageCandidateRevisionRejectsTampering(t *testing.T) {
-	input := validExtendedLineageCandidateRevisionGuardInput(t)
+	input := validExtendedLineageCandidateRevisionCandidateGuardInput(t)
 	input.Candidate.CandidateEvidenceDigest = "tampered"
 	output := GuardExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionCandidateRevisionGenerationExtendedLineageCandidateRevision(input)
 	if output.Status != "UNKNOWN" || output.MissingStage != "revision-action-candidate-generation-extended-lineage-candidate-revision-validation" {
@@ -71,7 +71,7 @@ func TestGuardExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionCandidate
 }
 
 func TestGuardExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionCandidateRevisionGenerationExtendedLineageCandidateRevisionFailsClosedForPath(t *testing.T) {
-	input := validExtendedLineageCandidateRevisionGuardInput(t)
+	input := validExtendedLineageCandidateRevisionCandidateGuardInput(t)
 	input.RequestedPath = "/workspace/project/../secret.go"
 	output := GuardExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionCandidateRevisionGenerationExtendedLineageCandidateRevision(input)
 	if output.Status != "UNKNOWN" || output.MissingStage != "path-scope" {
