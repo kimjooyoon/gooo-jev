@@ -19,7 +19,7 @@ type RevisionSelfImprovementExecutionPlanObservation struct {
 	DecisionSignal             string
 	DecisionReason             string
 	PlanSignal                string
-	PlanningSignal             string
+	PlanningSignal            string
 	PlanObserved               bool
 	RequiresObservation        bool
 	RequiresReview             bool
@@ -77,10 +77,11 @@ func ObserveRevisionSelfImprovementExecutionPlan(decision RevisionSelfImprovemen
 		setObservationDigest()
 		return result, fmt.Errorf("revision application plan is not valid: %w", err)
 	}
-	if planObservation.SourceDigest != plan.SourceDigest {
+	if decision.SourceDigest != planObservation.SourceDigest ||
+		planObservation.SourceDigest != plan.SourceDigest {
 		result.MissingStage = "revision-self-improvement-execution-plan-source-link"
 		setObservationDigest()
-		return result, fmt.Errorf("candidate plan observation and application plan source are not linked")
+		return result, fmt.Errorf("decision, candidate plan observation, and application plan sources are not linked")
 	}
 	if planObservation.CandidateDigest != plan.CandidateDigest ||
 		planObservation.PlanDigest != plan.PlanDigest ||
@@ -160,7 +161,7 @@ func (o RevisionSelfImprovementExecutionPlanObservation) Validate() error {
 	case "review":
 		if o.RequiresMeasurement || o.RequiresInspection || !o.RequiresReview {
 			return fmt.Errorf("review execution plan has incompatible requirements")
-	}
+		}
 	case "inspect":
 		if o.RequiresReview || !o.RequiresMeasurement || !o.RequiresInspection {
 			return fmt.Errorf("inspect execution plan has incompatible requirements")
