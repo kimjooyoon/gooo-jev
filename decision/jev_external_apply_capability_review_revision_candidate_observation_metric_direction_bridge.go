@@ -186,6 +186,6 @@ func DeriveJEVExternalApplyCapabilityReviewRevisionCandidateObservationMetricDir
 }
 
 func digestJEVExternalApplyCapabilityReviewRevisionCandidateObservationMetricDirectionBridge(status, candidateApplicationStatus, candidateApplicationDigest, observationStatus, observationDigest, metricName string, metricValue float64, metricDigest, direction, target, candidateSource, feedbackDigest, directionDigest string) string {
-    sum := sha256.Sum256([]byte(fmt.Sprintf("%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s", status, candidateApplicationStatus, candidateApplicationDigest, observationStatus, observationDigest, metricName, metricValue, metricDigest, direction, target, candidateSource, feedbackDigest, directionDigest)))
+    sum := sha256.Sum256([]byte(fmt.Sprintf("%s|%s|%s|%s|%s|%s|%0.17g|%s|%s|%s|%s|%s|%s", status, candidateApplicationStatus, candidateApplicationDigest, observationStatus, observationDigest, metricName, metricValue, metricDigest, direction, target, candidateSource, feedbackDigest, directionDigest)))
     return hex.EncodeToString(sum[:])
 }
