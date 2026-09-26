@@ -1,0 +1,30 @@
+package jevrevisionselfimprovementfeedback
+namespace jevrevisionselfimprovementfeedback
+
+entity RevisionSelfImprovementWindow id "gooo://gooo-jev/revision-self-improvement-window"
+property Status string
+property WindowDigest string
+property ComparisonSignal string
+property CandidateSourceDigest string
+property CandidateProposedSourceDigest string
+property CandidateGeneratedIRDigest string
+property NonExecuting boolean
+property NonAuthorizing boolean
+
+entity RevisionSelfImprovementFeedback id "gooo://gooo-jev/revision-self-improvement-feedback"
+property Status string
+property WindowDigest string
+property BaselineReceiptDigest string
+property CandidateReceiptDigest string
+property ComparisonSignal string
+property FeedbackSignal string
+property FeedbackReason string
+property RequiresObservation boolean
+property RequiresReview boolean
+property RequiresInspection boolean
+property RequiresMeasurement boolean
+property FeedbackDigest string
+property NonExecuting boolean
+property NonAuthorizing boolean
+
+activity ObserveRevisionSelfImprovementFeedback(RevisionSelfImprovementWindow) -> RevisionSelfImprovementFeedback
