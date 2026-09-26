@@ -1,0 +1,19 @@
+package jevexecutionenvelopeevidenceledgertransition
+namespace jevexecutionenvelopeevidenceledgertransition
+
+entity ExecutionEnvelopeEvidenceLedgerTransitionInput id "gooo://gooo-jev/execution-envelope-evidence-ledger-transition-input"
+  property PreviousStatus string
+  property CurrentStatus string
+  property PreviousLedgerDigest string
+  property CurrentLedgerDigest string
+  property NonAuthorizing boolean
+
+entity ExecutionEnvelopeEvidenceLedgerTransition id "gooo://gooo-jev/execution-envelope-evidence-ledger-transition"
+  property Status string
+  property Changed boolean
+  property Direction string
+  property FirstMismatch string
+  property LedgerDigest string
+  property NonAuthorizing boolean
+
+activity CompareExecutionEnvelopeEvidenceLedgerTransition(ExecutionEnvelopeEvidenceLedgerTransitionInput) -> ExecutionEnvelopeEvidenceLedgerTransition
