@@ -1,0 +1,4 @@
+package jevexternalapplyrequest
+namespace jevexternalapplyrequest
+entity JEVExternalApplyRequest id "gooo://gooo-jev/external-apply-request"
+activity CreateJEVExternalApplyRequest(JEVExternalApplyRequestInput) -> JEVExternalApplyRequest
