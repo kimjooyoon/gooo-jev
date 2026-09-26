@@ -1,0 +1,20 @@
+package jevgoooevidencefullprovenancedirection
+namespace jevgoooevidencefullprovenancedirection
+
+entity ExecutionEnvelopeGoooEvidenceFullProvenanceDirectionInput id "gooo://gooo-jev/gooo-evidence-full-provenance-direction-input"
+property Feedback GoooEvidenceFullProvenanceEvaluationFeedbackBinding
+property CandidateSource string
+property NonAuthorizing boolean
+
+entity JEVImprovementDirectionDirective id "gooo://gooo-jev/gooo-evidence-full-provenance-direction"
+property Status string
+property Directive string
+property MissingStage string
+property CandidateDigest string
+property CandidateSource string
+property InputEvidenceDigest string
+property EvidenceDigest string
+property NonExecuting boolean
+property NonAuthorizing boolean
+
+activity DeriveExecutionEnvelopeGoooEvidenceFullProvenanceDirection(ExecutionEnvelopeGoooEvidenceFullProvenanceDirectionInput) -> JEVImprovementDirectionDirective
