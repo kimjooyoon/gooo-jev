@@ -25,13 +25,13 @@ type SelfImprovementOutcomeSymbolResult struct {
 	ExactSourceMatch              bool
 	StructureMatch                bool
 	ResultDigest                 string
-	NonExecuting                  bool
-	NonAuthorizing                bool
+	NonExecuting                 bool
+	NonAuthorizing               bool
 }
 
 // ExplainSelfImprovementOutcome resolves one declaration against bound
 // application, metrics, and generation evidence without executing it.
-func ExplainSelfImprovementOutcome(source, symbolName string, application SelfImprovementApplicationObservation, metrics RevisionMetricsBinding, generation RevisionGenerationAssessment) (SelfImprovementOutcomeSymbolResult, error) {
+func ExplainSelfImprovementOutcome(source, symbolName string, application RevisionSelfImprovementApplicationObservation, metrics RevisionMetricsBinding, generation RevisionGenerationAssessment) (SelfImprovementOutcomeSymbolResult, error) {
 	result := SelfImprovementOutcomeSymbolResult{
 		Status:                       "UNKNOWN",
 		MissingStage:                 "lsp-self-improvement-outcome",
