@@ -60,7 +60,7 @@ func (d JEVExternalApplyCapabilityReviewReplayOriginMutationRevisionApplicationO
             return fmt.Errorf("held application observation LSP diagnostic is incomplete")
         }
     case jevExternalApplyCapabilityReviewReplayOriginMutationRevisionApplicationObservationRejected:
-        if d.CandidateStatus != jevExternalApplyCapabilityReviewOriginMutationRevisionApplicationCandidateRejected ||
+        if d.CandidateStatus != jevExternalApplyCapabilityReviewReplayOriginMutationRevisionApplicationCandidateRejected ||
             d.ObservationStatus != jevExternalApplyCapabilityReviewReplayOriginMutationRevisionApplicationObservationRejectedStatus ||
             d.CandidateDigest == "" || d.ObservationDigest == "" {
             return fmt.Errorf("rejected application observation LSP diagnostic is incomplete")
