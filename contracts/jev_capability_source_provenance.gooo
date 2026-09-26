@@ -1,0 +1,24 @@
+entity ExecutionEnvelopeCapabilityBoundarySourceInput id "gooo://gooo-jev/execution-capability-boundary-source-input"
+  property DeclarationID string
+  property ContractID string
+  property DeclarationSource string
+  property SandboxProfile string
+  property WorkspaceSource string
+  property GatewayPolicySource string
+  property ModelIdentity string
+  property SPIFFEIdentity string
+  property NetworkAllowlistSource string
+  property NonAuthorizing boolean
+
+entity ExecutionEnvelopeCapabilityBoundarySourceBinding id "gooo://gooo-jev/execution-capability-boundary-source-binding"
+  property Status string
+  property DeclarationDigest string
+  property BoundaryDigest string
+  property WorkspaceDigest string
+  property GatewayPolicyDigest string
+  property NetworkAllowlistDigest string
+  property MissingCapability string
+  property NonExecuting boolean
+  property NonAuthorizing boolean
+
+activity SealExecutionEnvelopeCapabilityBoundaryFromSource(ExecutionEnvelopeCapabilityBoundarySourceInput) -> ExecutionEnvelopeCapabilityBoundarySourceBinding
