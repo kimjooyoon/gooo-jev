@@ -64,6 +64,10 @@ func BindDecisionConfidenceChangePlanReplayFeedback(input DecisionConfidenceChan
 		return output
 	}
 	feedback := input.FeedbackReconciliation
+	if err := validateImprovementReplayFeedbackReconciliation(feedback); err != nil {
+		output.MissingStage = "feedback-reconciliation"
+		return output
+	}
 	if strings.TrimSpace(feedback.MetricName) == "" ||
 		strings.TrimSpace(feedback.HistoryDigest) == "" ||
 		strings.TrimSpace(feedback.LatestSummaryDigest) == "" ||
@@ -145,6 +149,37 @@ func (binding DecisionConfidenceChangePlanReplayFeedbackBinding) Validate() erro
 	}
 	if expected != binding.EvidenceDigest {
 		return fmt.Errorf("change plan replay feedback binding evidence digest mismatch")
+	}
+	return nil
+}
+
+func validateImprovementReplayFeedbackReconciliation(feedback ImprovementReplayFeedbackReconciliation) error {
+	if (feedback.Status != "confirmed" && feedback.Status != "refuted") ||
+		!feedback.NonExecuting || !feedback.NonAuthorizing ||
+		strings.TrimSpace(feedback.MetricName) == "" ||
+		strings.TrimSpace(feedback.HistoryDigest) == "" ||
+		strings.TrimSpace(feedback.LatestSummaryDigest) == "" ||
+		strings.TrimSpace(feedback.ReplayEvidenceDigest) == "" ||
+		strings.TrimSpace(feedback.EvidenceDigest) == "" ||
+		strings.TrimSpace(feedback.MissingStage) != "" {
+		return fmt.Errorf("feedback reconciliation is incomplete")
+	}
+	expected, err := Digest(struct {
+		HistoryDigest        string
+		ReplayEvidenceDigest string
+		LatestSummaryDigest  string
+		MetricName           string
+	}{
+		HistoryDigest:        feedback.HistoryDigest,
+		ReplayEvidenceDigest: feedback.ReplayEvidenceDigest,
+		LatestSummaryDigest:  feedback.LatestSummaryDigest,
+		MetricName:           feedback.MetricName,
+	})
+	if err != nil {
+		return err
+	}
+	if expected != feedback.EvidenceDigest {
+		return fmt.Errorf("feedback reconciliation evidence digest mismatch")
 	}
 	return nil
 }
