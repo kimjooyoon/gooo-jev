@@ -88,7 +88,8 @@ func ExplainSelfImprovementReverseObservation(
 		setResultDigest()
 		return result, fmt.Errorf("self-improvement reverse observation is not valid: %w", err)
 	}
-	if reverse.LifecycleObservationDigest != lifecycle.ObservationDigest ||
+	if snapshot.SourceDigest != lifecycle.SourceDigest ||
+		reverse.LifecycleObservationDigest != lifecycle.ObservationDigest ||
 		reverse.SourceDigest != lifecycle.SourceDigest {
 		result.MissingStage = "lsp-self-improvement-reverse-link"
 		setResultDigest()
