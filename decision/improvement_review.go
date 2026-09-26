@@ -14,13 +14,13 @@ const (
     ReviewUnknown  ImprovementReviewDecision = "unknown"
 )
 
-type ImprovementReview struct {
-    CandidateDigest       string
-    ReviewerReference     string
-    ReviewEvidenceDigest  string
-    Decision              ImprovementReviewDecision
-    ExecutionGranted      bool
-    ReviewDigest          string
+type ImprovementReviewReceipt struct {
+    CandidateDigest      string
+    ReviewerReference    string
+    ReviewEvidenceDigest string
+    Decision             ImprovementReviewDecision
+    ExecutionGranted     bool
+    ReviewDigest         string
 }
 
 func ReviewImprovementCandidate(
@@ -28,11 +28,11 @@ func ReviewImprovementCandidate(
     reviewerReference,
     reviewEvidenceDigest string,
     decision ImprovementReviewDecision,
-) (ImprovementReview, error) {
+) (ImprovementReviewReceipt, error) {
     if err := candidate.Validate(); err != nil {
-        return ImprovementReview{}, err
+        return ImprovementReviewReceipt{}, err
     }
-    review := ImprovementReview{
+    review := ImprovementReviewReceipt{
         CandidateDigest:      candidate.CandidateDigest,
         ReviewerReference:    reviewerReference,
         ReviewEvidenceDigest: reviewEvidenceDigest,
@@ -40,17 +40,17 @@ func ReviewImprovementCandidate(
         ExecutionGranted:     false,
     }
     if err := review.validateShape(); err != nil {
-        return ImprovementReview{}, err
+        return ImprovementReviewReceipt{}, err
     }
     digest, err := Digest(review)
     if err != nil {
-        return ImprovementReview{}, err
+        return ImprovementReviewReceipt{}, err
     }
     review.ReviewDigest = digest
     return review, nil
 }
 
-func (review ImprovementReview) Validate() error {
+func (review ImprovementReviewReceipt) Validate() error {
     if err := review.validateShape(); err != nil {
         return err
     }
@@ -69,7 +69,7 @@ func (review ImprovementReview) Validate() error {
     return nil
 }
 
-func (review ImprovementReview) validateShape() error {
+func (review ImprovementReviewReceipt) validateShape() error {
     if strings.TrimSpace(review.CandidateDigest) == "" ||
         strings.TrimSpace(review.ReviewerReference) == "" ||
         strings.TrimSpace(review.ReviewEvidenceDigest) == "" {
