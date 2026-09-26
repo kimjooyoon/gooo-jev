@@ -1,0 +1,7 @@
+package jev.gooo.revision.binding
+namespace jev.gooo.revision.binding
+
+entity RevisionCandidateBindingRequest id "urn:jev:gooo:revision-candidate-binding-request"
+entity RevisionCandidateBinding id "urn:jev:gooo:revision-candidate-binding"
+
+activity BindRevisionCandidateSelection(RevisionCandidateBindingRequest) -> RevisionCandidateBinding
