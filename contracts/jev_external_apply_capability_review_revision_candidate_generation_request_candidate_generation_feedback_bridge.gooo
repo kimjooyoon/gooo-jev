@@ -1,0 +1,34 @@
+package jevgenerationrequestcandidategenerationfeedback
+
+namespace jevgenerationrequestcandidategenerationfeedback
+
+entity GenerationRequestCandidateGenerationFeedbackBridgeInput {
+  field candidate_digest string
+  field generation_source string
+  field generation_evidence_digest string
+  field non_authorizing bool
+}
+
+entity GenerationRequestCandidateGenerationFeedbackBridge {
+  field status string
+  field missing_stage string
+  field generation_request_status string
+  field generation_request_digest string
+  field generation_request_source string
+  field generation_request_evidence_digest string
+  field generator_identity string
+  field proposal_decision string
+  field feedback_bridge_digest string
+  field bridge_digest string
+  field non_executing bool
+  field non_authorizing bool
+}
+
+activity BindGenerationRequestCandidateGenerationFeedbackBridge {
+  input GenerationRequestCandidateGenerationFeedbackBridgeInput
+  output GenerationRequestCandidateGenerationFeedbackBridge
+  effect provenance-only
+  effect execution none
+  effect authorization none
+}
+
