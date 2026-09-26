@@ -1,0 +1,83 @@
+package jevrevisionselfimprovementlifecycle
+namespace jevrevisionselfimprovementlifecycle
+
+entity RevisionSelfImprovementExecutionApplicationObservation id "gooo://gooo-jev/revision-self-improvement-execution-application-observation"
+property ObservationDigest string
+property ApplicationObservationDigest string
+property PlanObservationDigest string
+property PlanDigest string
+property ApplicationDigest string
+property ReceiptDigest string
+property SourceDigest string
+property ProposedSourceDigest string
+property InputIRDigest string
+property ProposedIRDigest string
+property CandidateDigest string
+property EditDigest string
+property DecisionSignal string
+property FeedbackSignal string
+property ApplicationSignal string
+property PlanObserved boolean
+property ApplicationObserved boolean
+property NonAuthorizing boolean
+
+entity RevisionSelfImprovementOutcomeObservation id "gooo://gooo-jev/revision-self-improvement-outcome-observation"
+property OutcomeDigest string
+property ApplicationObservationDigest string
+property MetricsBindingDigest string
+property GenerationAssessmentDigest string
+property SourceDigest string
+property ProposedSourceDigest string
+property InputIRDigest string
+property ProposedIRDigest string
+property CandidateDigest string
+property EditDigest string
+property ApplicationDigest string
+property MetricsDigest string
+property GeneratedSourceDigest string
+property GeneratedIRDigest string
+property StructureDigest string
+property ChangedByteCount int
+property ChangedLineCount int
+property IRChanged boolean
+property ExactSourceMatch boolean
+property StructureMatch boolean
+property NonAuthorizing boolean
+
+entity RevisionSelfImprovementLifecycleObservation id "gooo://gooo-jev/revision-self-improvement-lifecycle-observation"
+property Status string
+property MissingStage string
+property ExecutionApplicationObservationDigest string
+property OutcomeObservationDigest string
+property ApplicationObservationDigest string
+property MetricsBindingDigest string
+property GenerationAssessmentDigest string
+property PlanObservationDigest string
+property PlanDigest string
+property ApplicationDigest string
+property ReceiptDigest string
+property SourceDigest string
+property ProposedSourceDigest string
+property InputIRDigest string
+property ProposedIRDigest string
+property CandidateDigest string
+property EditDigest string
+property ChangedByteCount int
+property ChangedLineCount int
+property IRChanged boolean
+property GeneratedSourceDigest string
+property GeneratedIRDigest string
+property StructureDigest string
+property ExactSourceMatch boolean
+property StructureMatch boolean
+property DecisionSignal string
+property FeedbackSignal string
+property ApplicationSignal string
+property PlanObserved boolean
+property ApplicationObserved boolean
+property LifecycleSignal string
+property ObservationDigest string
+property NonExecuting boolean
+property NonAuthorizing boolean
+
+activity ObserveRevisionSelfImprovementLifecycle(RevisionSelfImprovementExecutionApplicationObservation, RevisionSelfImprovementOutcomeObservation) -> RevisionSelfImprovementLifecycleObservation
