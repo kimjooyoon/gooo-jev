@@ -1,0 +1,4 @@
+package jevfeedbackcycleobservationbridge
+namespace jevfeedbackcycleobservationbridge
+entity ExecutionEnvelopeJEVImprovementFeedbackCycleInput id "gooo://gooo-jev/improvement-feedback-cycle-input"
+activity ObserveJEVImprovementFeedbackCycle(ExecutionEnvelopeJEVImprovementFeedbackCycleInput) -> JEVImprovementCycleObservation
