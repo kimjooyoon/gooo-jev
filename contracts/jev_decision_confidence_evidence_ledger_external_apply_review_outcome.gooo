@@ -1,0 +1,13 @@
+package jevdecisionconfidenceledgerexternalapplyreviewoutcome
+namespace jevdecisionconfidenceledgerexternalapplyreviewoutcome
+
+entity DecisionConfidenceEvidenceLedgerWriteSetDisposition id "gooo://gooo-jev/decision-confidence-evidence-ledger-write-set-disposition"
+  property Status string
+
+entity DecisionConfidenceEvidenceLedgerExternalApplyReviewOutcome id "gooo://gooo-jev/decision-confidence-evidence-ledger-external-apply-review-outcome"
+  property DispositionDigest string
+  property Decision string
+  property Status string
+  property NonAuthorizing boolean
+
+activity ObserveDecisionConfidenceEvidenceLedgerExternalApplyReviewOutcome(DecisionConfidenceEvidenceLedgerWriteSetDisposition) -> DecisionConfidenceEvidenceLedgerExternalApplyReviewOutcome
