@@ -150,6 +150,9 @@ func NewWorkloadIdentityObservation(spiffeID, evidenceDigest string, status Work
 		return WorkloadIdentityObservation{}, fmt.Errorf("digest workload identity: %w", err)
 	}
 	observation.ObservationDigest = digest
+	if err := observation.Validate(); err != nil {
+		return ReverseObservation{}, err
+	}
 	return observation, nil
 }
 
@@ -256,15 +259,14 @@ func NewExecutionReceipt(grant CapabilityGrant, boundary CapabilityBoundary, ide
 	} else if status != ExecutionCompleted {
 		receipt.Status = ExecutionUnknown
 		receipt.UnknownReason = "execution-not-terminal"
-	}
-	if err := receipt.validateShape(); err != nil {
-		return ExecutionReceipt{}, err
-	}
-	digest, err := receipt.computeDigest()
+	}	digest, err := receipt.computeDigest()
 	if err != nil {
 		return ExecutionReceipt{}, fmt.Errorf("digest execution receipt: %w", err)
 	}
 	receipt.ReceiptDigest = digest
+	if err := receipt.Validate(); err != nil {
+		return ExecutionReceipt{}, err
+	}
 	return receipt, nil
 }
 
@@ -357,11 +359,7 @@ func NewReverseObservation(receipt ExecutionReceipt, observedOutputDigest, verif
 	} else if strings.TrimSpace(verifierDigest) == "" {
 		observation.Status = ProvenanceUnknown
 		observation.MissingStage = "reverse-verifier"
-	}
-	if err := observation.validateShape(); err != nil {
-		return ReverseObservation{}, err
-	}
-	digest, err := observation.computeDigest()
+	}	digest, err := observation.computeDigest()
 	if err != nil {
 		return ReverseObservation{}, fmt.Errorf("digest reverse observation: %w", err)
 	}
