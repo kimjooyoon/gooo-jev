@@ -1,0 +1,31 @@
+package jevcandidatematerializationadmissionevaluationoutcomefeedbackrevisionproposalgenerationrequest
+
+namespace jevcandidatematerializationadmissionevaluationoutcomefeedbackrevisionproposalgenerationrequest
+
+entity CandidateMaterializationAdmissionEvaluationOutcomeFeedbackRevisionProposalGenerationRequestBridgeInput {
+  field generation_request_digest string
+  field generation_request_source string
+  field generation_request_evidence_digest string
+  field generator_identity string
+  field non_authorizing bool
+}
+
+entity CandidateMaterializationAdmissionEvaluationOutcomeFeedbackRevisionProposalGenerationRequestBridge {
+  field generation_request_status string
+  field generation_request_digest string
+  field generation_request_source string
+  field generation_request_evidence_digest string
+  field generator_identity string
+  field bridge_digest string
+  field non_executing bool
+  field non_authorizing bool
+}
+
+activity BindCandidateMaterializationAdmissionEvaluationOutcomeFeedbackRevisionProposalGenerationRequestBridge {
+  input CandidateMaterializationAdmissionEvaluationOutcomeFeedbackRevisionProposalGenerationRequestBridgeInput
+  output CandidateMaterializationAdmissionEvaluationOutcomeFeedbackRevisionProposalGenerationRequestBridge
+  effect provenance-only
+  effect execution none
+  effect authorization none
+}
+
