@@ -17,6 +17,7 @@ entity DecisionCapabilityBoundary id "gooo://jev/decision/capability-boundary"
 entity DecisionProvenanceEnvelope id "gooo://jev/decision/provenance-envelope"
 entity DecisionMetricDelta id "gooo://jev/decision/metric-delta"
 entity DecisionMetricLedger id "gooo://jev/decision/metric-ledger"
+entity DecisionImprovementCycle id "gooo://jev/decision/improvement-cycle"
 
 activity ObserveDecision(DecisionSpec) -> DecisionReceipt
 activity ObserveDecisionFreshness(DecisionReceipt) -> DecisionFreshness
@@ -33,3 +34,4 @@ activity ObserveDecisionCapabilityBoundary(DecisionAssessment) -> DecisionCapabi
 activity BindDecisionProvenanceEnvelope(DecisionReceipt) -> DecisionProvenanceEnvelope
 activity ObserveDecisionMetricDelta(DecisionProvenanceEnvelope) -> DecisionMetricDelta
 activity AppendDecisionMetricDelta(DecisionMetricLedger) -> DecisionMetricLedger
+activity RecordDecisionImprovementCycle(DecisionMetricLedger) -> DecisionImprovementCycle
