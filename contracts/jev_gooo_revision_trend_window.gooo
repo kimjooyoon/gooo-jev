@@ -1,0 +1,7 @@
+package jev.gooo.revision.trend.window
+namespace jev.gooo.revision.trend.window
+
+entity RevisionTrendWindowRequest id "urn:jev:gooo:revision-trend-window-request"
+entity RevisionTrendWindow id "urn:jev:gooo:revision-trend-window"
+
+activity ObserveRevisionTrendWindow(RevisionTrendWindowRequest) -> RevisionTrendWindow
