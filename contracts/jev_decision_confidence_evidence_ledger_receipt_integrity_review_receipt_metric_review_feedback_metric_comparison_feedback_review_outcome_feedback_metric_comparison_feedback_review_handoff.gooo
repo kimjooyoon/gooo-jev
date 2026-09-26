@@ -1,37 +1,12 @@
-package decision
+package jevdecisionconfidenceledgerreceiptintegrityreviewreceiptmetricreviewfeedbackmetriccomparisonfeedbackreviewoutcomefeedbackmetriccomparisonfeedbackreviewhandoff
+namespace jevdecisionconfidenceledgerreceiptintegrityreviewreceiptmetricreviewfeedbackmetriccomparisonfeedbackreviewoutcomefeedbackmetriccomparisonfeedbackreviewhandoff
 
-import "testing"
+entity DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackCounterexample id "gooo://gooo-jev/decision-confidence-evidence-ledger-receipt-integrity-review-receipt-metric-review-feedback-metric-comparison-feedback-review-outcome-feedback-metric-comparison-feedback-counterexample"
+  property Status string
 
-func TestDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewHandoffIsNonExecuting(t *testing.T) {
-	counterexample := DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackCounterexample{
-		FeedbackDigest: "feedback",
-		Delta:          "declined",
-		Status:         "counterexample",
-		NonAuthorizing: true,
-	}
-	handoff, err := DeriveDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewHandoff(counterexample)
-	if err != nil {
-		t.Fatalf("derive counterexample handoff: %v", err)
-	}
-	if handoff.Status != "ready-for-external-review" || handoff.CounterexampleDigest == "" || !handoff.NonAuthorizing {
-		t.Fatalf("unexpected counterexample handoff: %#v", handoff)
-	}
+entity DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewHandoff id "gooo://gooo-jev/decision-confidence-evidence-ledger-receipt-integrity-review-receipt-metric-review-feedback-metric-comparison-feedback-review-outcome-feedback-metric-comparison-feedback-review-handoff"
+  property CounterexampleDigest string
+  property Status string
+  property NonAuthorizing boolean
 
-	counterexample.Status = "no-counterexample"
-	handoff, err = DeriveDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewHandoff(counterexample)
-	if err != nil {
-		t.Fatalf("derive observation handoff: %v", err)
-	}
-	if handoff.Status != "observation-only" || !handoff.NonAuthorizing {
-		t.Fatalf("unexpected observation handoff: %#v", handoff)
-	}
-
-	counterexample.Status = "unknown"
-	handoff, err = DeriveDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewHandoff(counterexample)
-	if err != nil {
-		t.Fatalf("derive held handoff: %v", err)
-	}
-	if handoff.Status != "hold" || !handoff.NonAuthorizing {
-		t.Fatalf("unknown counterexample escaped hold: %#v", handoff)
-	}
-}
+activity DeriveDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewHandoff(DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackCounterexample) -> DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewHandoff

@@ -1,28 +1,37 @@
 package decision
 
-// DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewHandoff
-// carries counterexamples to external review without executing them.
-type DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewHandoff struct {
-	CounterexampleDigest string `json:"counterexample_digest"`
-	Status              string `json:"status"`
-	NonAuthorizing      bool   `json:"non_authorizing"`
-}
+import "testing"
 
-func DeriveDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewHandoff(counterexample DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackCounterexample) (DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewHandoff, error) {
-	digest, err := Digest(counterexample)
+func TestDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewHandoffIsNonExecuting(t *testing.T) {
+	counterexample := DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackCounterexample{
+		FeedbackDigest: "feedback",
+		Delta:          "declined",
+		Status:         "counterexample",
+		NonAuthorizing: true,
+	}
+	handoff, err := DeriveDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewHandoff(counterexample)
 	if err != nil {
-		return DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewHandoff{}, err
+		t.Fatalf("derive counterexample handoff: %v", err)
 	}
-	handoff := DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewHandoff{
-		CounterexampleDigest: digest,
-		Status:              "hold",
-		NonAuthorizing:      true,
+	if handoff.Status != "ready-for-external-review" || handoff.CounterexampleDigest == "" || !handoff.NonAuthorizing {
+		t.Fatalf("unexpected counterexample handoff: %#v", handoff)
 	}
-	switch counterexample.Status {
-	case "counterexample":
-		handoff.Status = "ready-for-external-review"
-	case "no-counterexample":
-		handoff.Status = "observation-only"
+
+	counterexample.Status = "no-counterexample"
+	handoff, err = DeriveDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewHandoff(counterexample)
+	if err != nil {
+		t.Fatalf("derive observation handoff: %v", err)
 	}
-	return handoff, nil
+	if handoff.Status != "observation-only" || !handoff.NonAuthorizing {
+		t.Fatalf("unexpected observation handoff: %#v", handoff)
+	}
+
+	counterexample.Status = "unknown"
+	handoff, err = DeriveDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewHandoff(counterexample)
+	if err != nil {
+		t.Fatalf("derive held handoff: %v", err)
+	}
+	if handoff.Status != "hold" || !handoff.NonAuthorizing {
+		t.Fatalf("unknown counterexample escaped hold: %#v", handoff)
+	}
 }
