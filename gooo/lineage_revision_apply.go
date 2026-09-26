@@ -97,7 +97,7 @@ func (r LineageRevisionReceipt) Validate() error {
 }
 
 func digestLineageRevision(receipt LineageRevisionReceipt) string {
-	return digestString(fmt.Sprintf("%s|%s|%s|%s|%s|%s|%s",
+	return digestString(fmt.Sprintf("%s|%s|%s|%s|%s|%s|%t",
 		receipt.SourceDigest,
 		receipt.LineageDigest,
 		receipt.CandidateDigest,
