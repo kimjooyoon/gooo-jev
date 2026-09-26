@@ -1,0 +1,4 @@
+package jevpostapplycycledirective
+namespace jevpostapplycycledirective
+entity JEVPostApplyCycleDirective id "gooo://gooo-jev/post-apply-cycle-directive"
+activity DeriveJEVPostApplyCycleDirective(JEVPostApplyCycleDirectiveInput) -> JEVPostApplyCycleDirective
