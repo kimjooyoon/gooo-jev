@@ -1,0 +1,10 @@
+package jevfullprovenancecycle
+namespace jevfullprovenancecycle
+
+entity ExecutionEnvelopeJEVFullProvenanceCycleInput id "gooo://gooo-jev/full-provenance-cycle-input"
+property Provenance ExecutionEnvelopeFullProvenanceSourceBinding
+property ChangePlanDigest string
+property Feedback JEVImprovementFeedbackAggregation
+property NonAuthorizing boolean
+
+activity ObserveJEVImprovementCycleFromFullProvenance(ExecutionEnvelopeJEVFullProvenanceCycleInput) -> JEVImprovementCycleObservation
