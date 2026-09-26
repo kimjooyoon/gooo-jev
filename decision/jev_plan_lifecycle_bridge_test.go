@@ -51,8 +51,8 @@ func TestBindExecutionEnvelopeJEVExecutionPlanToLifecycle(t *testing.T) {
 	unknown := BindExecutionEnvelopeJEVExecutionPlanToLifecycle(ExecutionEnvelopeJEVExecutionPlanLifecycleInput{
 		PlanBinding: plan, Replay: unknownReplay, Authorization: authorization, NonAuthorizing: true,
 	})
-	if unknown.Status != "UNKNOWN" || unknown.MissingStage != "replay" {
-		t.Fatalf("unknown replay bridge = %#v, want UNKNOWN at replay", unknown)
+	if unknown.Status != "UNKNOWN" || unknown.MissingStage != "suspension" {
+		t.Fatalf("unknown replay bridge = %#v, want UNKNOWN at suspension", unknown)
 	}
 	unauthorized := BindExecutionEnvelopeJEVExecutionPlanToLifecycle(ExecutionEnvelopeJEVExecutionPlanLifecycleInput{
 		PlanBinding: plan, Replay: replay, Authorization: authorization, NonAuthorizing: false,
