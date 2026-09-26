@@ -1,0 +1,33 @@
+package jevcandidatematerializationadmissionevaluationoutcome
+
+namespace jevcandidatematerializationadmissionevaluationoutcome
+
+entity CandidateMaterializationAdmissionEvaluationOutcomeBridgeInput {
+  field outcome string
+  field baseline_metric_digest string
+  field observed_metric_digest string
+  field outcome_source string
+  field outcome_evidence_digest string
+  field non_authorizing bool
+}
+
+entity CandidateMaterializationAdmissionEvaluationOutcomeBridge {
+  field outcome string
+  field baseline_metric_digest string
+  field observed_metric_digest string
+  field outcome_source string
+  field outcome_evidence_digest string
+  field outcome_status string
+  field bridge_digest string
+  field non_executing bool
+  field non_authorizing bool
+}
+
+activity BindCandidateMaterializationAdmissionEvaluationOutcomeBridge {
+  input CandidateMaterializationAdmissionEvaluationOutcomeBridgeInput
+  output CandidateMaterializationAdmissionEvaluationOutcomeBridge
+  effect provenance-only
+  effect execution none
+  effect authorization none
+}
+
