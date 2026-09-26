@@ -46,7 +46,7 @@ func (b JEVExternalApplyCapabilityReviewRevisionCandidateMaterializationAdmissio
 		}
 		return nil
 	}
-	if b.Status != jevExternalApplyCapabilityReviewRevisionCandidateMaterializationAdmissionEvaluationOutcomeBridgeBound ||
+	if b.Status != jevExternalApplyCapabilityReviewRevisionCandidateMaterializationAdmissionEvaluationBridgeBound ||
 		b.BridgeDigest == "" {
 		return fmt.Errorf("incomplete JEV candidate evaluation feedback bridge")
 	}
