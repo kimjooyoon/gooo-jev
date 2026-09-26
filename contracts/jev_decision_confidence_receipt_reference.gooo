@@ -1,0 +1,6 @@
+package jevdecisionconfidencereceiptreference
+namespace jevdecisionconfidencereceiptreference
+
+entity DecisionConfidenceExecutionReceiptReference id "gooo://gooo-jev/decision-confidence-execution-receipt-reference"
+
+activity ReferenceDecisionConfidenceExecutionReceipt(DecisionConfidenceChangePlanDispositionObservation, ExecutionReceipt) -> DecisionConfidenceExecutionReceiptReference
