@@ -1,1 +1,99 @@
-cGFja2FnZSBkZWNpc2lvbgoKLy8gSW1wcm92ZW1lbnRSZXBsYXlGZWVkYmFja0JpbmRpbmdJbnB1dCBjb25uZWN0cyBhIHJlcGxheSByZXN1bHQgdG8gYQovLyB2YWxpZGF0ZWQsIG5vbi1hdXRob3JpemluZyBmZWVkYmFjayBvYnNlcnZhdGlvbi4KdHlwZSBJbXByb3ZlbWVudFJlcGxheUZlZWRiYWNrQmluZGluZ0lucHV0IHN0cnVjdCB7CglSZXBsYXlCaW5kaW5nU3RhdHVzIHN0cmluZwoJQ3ljbGVEaWdlc3QgICAgICAgICBzdHJpbmcKCVJlcGxheURpZ2VzdCAgICAgICAgc3RyaW5nCglDYW5kaWRhdGVEaWdlc3QgICAgIHN0cmluZwoJRmVlZGJhY2sgICAgICAgICAgICBGZWVkYmFja09ic2VydmF0aW9uCglOb25BdXRob3JpemluZyAgICAgIGJvb2wKfQoKLy8gSW1wcm92ZW1lbnRSZXBsYXlGZWVkYmFja0JpbmRpbmcgcHJlc2VydmVzIHJlcGxheSBwcm92ZW5hbmNlIGFuZCBmZWVkYmFjawovLyBjbGFzc2lmaWNhdGlvbiB3aXRob3V0IGdyYW50aW5nIGV4ZWN1dGlvbiBvciBhdXRob3JpemF0aW9uLgp0eXBlIEltcHJvdmVtZW50UmVwbGF5RmVlZGJhY2tCaW5kaW5nIHN0cnVjdCB7CglTdGF0dXMgICAgICAgICAgc3RyaW5nCglGZWVkYmFja0tpbmQgICAgRmVlZGJhY2tLaW5kCglNZXRyaWNOYW1lICAgICAgc3RyaW5nCglGZWVkYmFja0RpZ2VzdCAgc3RyaW5nCglDeWNsZURpZ2VzdCAgICAgc3RyaW5nCglSZXBsYXlEaWdlc3QgICAgc3RyaW5nCglDYW5kaWRhdGVEaWdlc3Qgc3RyaW5nCglFdmlkZW5jZURpZ2VzdCAgc3RyaW5nCglNaXNzaW5nU3RhZ2UgICAgc3RyaW5nCglOb25FeGVjdXRpbmcgICAgYm9vbAoJTm9uQXV0aG9yaXppbmcgIGJvb2wKfQoKLy8gQmluZEltcHJvdmVtZW50UmVwbGF5RmVlZGJhY2sgcmVxdWlyZXMgcmVjb3JkZWQgcmVwbGF5IGV2aWRlbmNlIGFuZCB2YWxpZAovLyBmZWVkYmFjayBiZWZvcmUgcmVjb3JkaW5nIGNvbmZpcm1lZCBvciByZWZ1dGVkIGZlZWRiYWNrLgpmdW5jIEJpbmRJbXByb3ZlbWVudFJlcGxheUZlZWRiYWNrKGlucHV0IEltcHJvdmVtZW50UmVwbGF5RmVlZGJhY2tCaW5kaW5nSW5wdXQpIEltcHJvdmVtZW50UmVwbGF5RmVlZGJhY2tCaW5kaW5nIHsKCW91dHB1dCA6PSBJbXByb3ZlbWVudFJlcGxheUZlZWRiYWNrQmluZGluZ3sKCQlTdGF0dXM6ICAgICAgICAgIlVOS05PV04iLAoJCUZlZWRiYWNrS2luZDogICBGZWVkYmFja1Vua25vd24sCgkJTm9uRXhlY3V0aW5nOiAgIHRydWUsCgkJTm9uQXV0aG9yaXppbmc6IHRydWUsCgl9CglpZiAhaW5wdXQuTm9uQXV0aG9yaXppbmcgewoJCW91dHB1dC5Ob25BdXRob3JpemluZyA9IGZhbHNlCgkJb3V0cHV0Lk1pc3NpbmdTdGFnZSA9ICJhdXRob3JpemF0aW9uLWJvdW5kYXJ5IgoJCXJldHVybiBvdXRwdXQKCX0KCWlmIGlucHV0LlJlcGxheUJpbmRpbmdTdGF0dXMgPT0gImRpdmVyZ2VkIiB7CgkJb3V0cHV0LlN0YXR1cyA9ICJyZXZpZXciCgkJb3V0cHV0Lk1pc3NpbmdTdGFnZSA9ICJyZXBsYXktZGl2ZXJnZWQiCgkJcmV0dXJuIG91dHB1dAoJfQoJaWYgaW5wdXQuUmVwbGF5QmluZGluZ1N0YXR1cyA9PSAicmV2aWV3IiB7CgkJb3V0cHV0LlN0YXR1cyA9ICJyZXZpZXciCgkJb3V0cHV0Lk1pc3NpbmdTdGFnZSA9ICJyZXBsYXktZXZpZGVuY2UiCgkJcmV0dXJuIG91dHB1dAoJfQoJaWYgaW5wdXQuUmVwbGF5QmluZGluZ1N0YXR1cyAhPSAicmVwbGF5ZWQiIHsKCQlvdXRwdXQuTWlzc2luZ1N0YWdlID0gInJlcGxheS1iaW5kaW5nIgoJCXJldHVybiBvdXRwdXQKCX0KCWlmIGlucHV0LkN5Y2xlRGlnZXN0ID09ICIiIHx8IGlucHV0LlJlcGxheURpZ2VzdCA9PSAiIiB8fCBpbnB1dC5DYW5kaWRhdGVEaWdlc3QgPT0gIiIgewoJCW91dHB1dC5NaXNzaW5nU3RhZ2UgPSAicmVwbGF5LWV2aWRlbmNlIgoJCXJldHVybiBvdXRwdXQKCX0KCWlmIGVyciA6PSBpbnB1dC5GZWVkYmFjay5WYWxpZGF0ZSgpOyBlcnIgIT0gbmlsIHsKCQlvdXRwdXQuTWlzc2luZ1N0YWdlID0gImZlZWRiYWNrLW9ic2VydmF0aW9uIgoJCXJldHVybiBvdXRwdXQKCX0KCWV2aWRlbmNlRGlnZXN0LCBlcnIgOj0gRGlnZXN0KHN0cnVjdCB7CgkJQ3ljbGVEaWdlc3QgICAgIHN0cmluZwoJCVJlcGxheURpZ2VzdCAgICBzdHJpbmcKCQlDYW5kaWRhdGVEaWdlc3Qgc3RyaW5nCgkJRmVlZGJhY2tEaWdlc3QgIHN0cmluZwoJfXsKCQlDeWNsZURpZ2VzdDogICAgIGlucHV0LkN5Y2xlRGlnZXN0LAoJCVJlcGxheURpZ2VzdDogICAgaW5wdXQuUmVwbGF5RGlnZXN0LAoJCUNhbmRpZGF0ZURpZ2VzdDogaW5wdXQuQ2FuZGlkYXRlRGlnZXN0LAoJCUZlZWRiYWNrRGlnZXN0OiAgaW5wdXQuRmVlZGJhY2suRmVlZGJhY2tEaWdlc3QsCgl9KQoJaWYgZXJyICE9IG5pbCB7CgkJb3V0cHV0Lk1pc3NpbmdTdGFnZSA9ICJmZWVkYmFjay1ldmlkZW5jZSIKCQlyZXR1cm4gb3V0cHV0Cgl9CglvdXRwdXQuRmVlZGJhY2tLaW5kID0gaW5wdXQuRmVlZGJhY2suS2luZAoJb3V0cHV0Lk1ldHJpY05hbWUgPSBpbnB1dC5GZWVkYmFjay5NZXRyaWNOYW1lCglvdXRwdXQuRmVlZGJhY2tEaWdlc3QgPSBpbnB1dC5GZWVkYmFjay5GZWVkYmFja0RpZ2VzdAoJb3V0cHV0LkN5Y2xlRGlnZXN0ID0gaW5wdXQuQ3ljbGVEaWdlc3QKCW91dHB1dC5SZXBsYXlEaWdlc3QgPSBpbnB1dC5SZXBsYXlEaWdlc3QKCW91dHB1dC5DYW5kaWRhdGVEaWdlc3QgPSBpbnB1dC5DYW5kaWRhdGVEaWdlc3QKCW91dHB1dC5FdmlkZW5jZURpZ2VzdCA9IGV2aWRlbmNlRGlnZXN0Cglzd2l0Y2ggaW5wdXQuRmVlZGJhY2suS2luZCB7CgljYXNlIEZlZWRiYWNrQ29uZmlybWVkLCBGZWVkYmFja1JlZnV0ZWQ6CgkJb3V0cHV0LlN0YXR1cyA9ICJmZWVkYmFjay1yZWNvcmRlZCIKCWNhc2UgRmVlZGJhY2tVbmtub3duOgoJCW91dHB1dC5TdGF0dXMgPSAicmV2aWV3IgoJCW91dHB1dC5NaXNzaW5nU3RhZ2UgPSAiZmVlZGJhY2stdW5rbm93biIKCWRlZmF1bHQ6CgkJb3V0cHV0LlN0YXR1cyA9ICJVTktOT1dOIgoJCW91dHB1dC5NaXNzaW5nU3RhZ2UgPSAiZmVlZGJhY2sta2luZCIKCX0KCXJldHVybiBvdXRwdXQKfQo=
+package decision
+
+// ImprovementReplayFeedbackBindingInput connects a replay result to a
+// validated, non-authorizing feedback observation.
+type ImprovementReplayFeedbackBindingInput struct {
+	ReplayBindingStatus string
+	CycleDigest         string
+	ReplayDigest        string
+	CandidateDigest     string
+	Feedback            FeedbackObservation
+	NonAuthorizing      bool
+}
+
+// ImprovementReplayFeedbackBinding preserves replay provenance and feedback
+// classification without granting execution or authorization.
+type ImprovementReplayFeedbackBinding struct {
+	Status          string
+	FeedbackKind    FeedbackKind
+	MetricName      string
+	FeedbackDigest  string
+	CycleDigest     string
+	ReplayDigest    string
+	CandidateDigest string
+	EvidenceDigest  string
+	MissingStage    string
+	NonExecuting    bool
+	NonAuthorizing  bool
+}
+
+// BindImprovementReplayFeedback requires recorded replay evidence and valid
+// feedback before recording confirmed or refuted feedback.
+func BindImprovementReplayFeedback(input ImprovementReplayFeedbackBindingInput) ImprovementReplayFeedbackBinding {
+	output := ImprovementReplayFeedbackBinding{
+		Status:         "UNKNOWN",
+		FeedbackKind:   FeedbackUnknown,
+		NonExecuting:   true,
+		NonAuthorizing: true,
+	}
+	if !input.NonAuthorizing {
+		output.NonAuthorizing = false
+		output.MissingStage = "authorization-boundary"
+		return output
+	}
+	if input.ReplayBindingStatus == "diverged" {
+		output.Status = "review"
+		output.MissingStage = "replay-diverged"
+		return output
+	}
+	if input.ReplayBindingStatus == "review" {
+		output.Status = "review"
+		output.MissingStage = "replay-evidence"
+		return output
+	}
+	if input.ReplayBindingStatus != "replayed" {
+		output.MissingStage = "replay-binding"
+		return output
+	}
+	if input.CycleDigest == "" || input.ReplayDigest == "" || input.CandidateDigest == "" {
+		output.MissingStage = "replay-evidence"
+		return output
+	}
+	if err := input.Feedback.Validate(); err != nil {
+		output.MissingStage = "feedback-observation"
+		return output
+	}
+	evidenceDigest, err := Digest(struct {
+		CycleDigest     string
+		ReplayDigest    string
+		CandidateDigest string
+		FeedbackDigest  string
+	}{
+		CycleDigest:     input.CycleDigest,
+		ReplayDigest:    input.ReplayDigest,
+		CandidateDigest: input.CandidateDigest,
+		FeedbackDigest:  input.Feedback.FeedbackDigest,
+	})
+	if err != nil {
+		output.MissingStage = "feedback-evidence"
+		return output
+	}
+	output.FeedbackKind = input.Feedback.Kind
+	output.MetricName = input.Feedback.MetricName
+	output.FeedbackDigest = input.Feedback.FeedbackDigest
+	output.CycleDigest = input.CycleDigest
+	output.ReplayDigest = input.ReplayDigest
+	output.CandidateDigest = input.CandidateDigest
+	output.EvidenceDigest = evidenceDigest
+	switch input.Feedback.Kind {
+	case FeedbackConfirmed, FeedbackRefuted:
+		output.Status = "feedback-recorded"
+	case FeedbackUnknown:
+		output.Status = "review"
+		output.MissingStage = "feedback-unknown"
+	default:
+		output.Status = "UNKNOWN"
+		output.MissingStage = "feedback-kind"
+	}
+	return output
+}
