@@ -253,6 +253,9 @@ func NewExecutionReceipt(grant CapabilityGrant, boundary CapabilityBoundary, ide
 	} else if err := identity.Validate(); err != nil || identity.Status != WorkloadIdentityObserved {
 		receipt.Status = ExecutionUnknown
 		receipt.UnknownReason = "missing-or-invalid-workload-identity"
+	} else if grant.CapabilityBoundaryDigest != boundary.BoundaryDigest || grant.WorkloadIdentityDigest != identity.ObservationDigest {
+		receipt.Status = ExecutionUnknown
+		receipt.UnknownReason = "grant-binding-mismatch"
 	} else if err := decisionReceipt.Validate(); err != nil {
 		receipt.Status = ExecutionUnknown
 		receipt.UnknownReason = "missing-or-invalid-decision-receipt"
