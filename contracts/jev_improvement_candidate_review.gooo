@@ -1,0 +1,4 @@
+package jevimprovementcandidatereview
+namespace jevimprovementcandidatereview
+entity JEVImprovementCandidateReview id "gooo://gooo-jev/improvement-candidate-review"
+activity ReviewJEVImprovementCandidate(JEVImprovementCandidateReviewInput) -> JEVImprovementCandidateReview
