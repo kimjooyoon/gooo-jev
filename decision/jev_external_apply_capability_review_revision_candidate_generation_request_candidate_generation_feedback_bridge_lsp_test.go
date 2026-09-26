@@ -2,8 +2,8 @@ package decision
 
 import "testing"
 
-func TestProjectJEVExternalApplyCapabilityReviewRevisionCandidateGenerationRequestCandidateGenerationFeedbackLSPOProjectionUnknown(t *testing.T) {
-    output := ProjectJEVExternalApplyCapabilityReviewRevisionCandidateGenerationRequestCandidateGenerationFeedbackLSPOProjection(
+func TestProjectJEVExternalApplyCapabilityReviewRevisionCandidateGenerationRequestCandidateGenerationFeedbackLSPProjectionUnknown(t *testing.T) {
+    output := ProjectJEVExternalApplyCapabilityReviewRevisionCandidateGenerationRequestCandidateGenerationFeedbackLSPProjection(
         JEVExternalApplyCapabilityReviewRevisionCandidateGenerationRequestCandidateGenerationFeedbackBridge{
             Status:         jevExternalApplyCapabilityReviewRevisionCandidateMaterializationAdmissionEvaluationBridgeUnknown,
             MissingStage:   "generation-request",
@@ -21,8 +21,8 @@ func TestProjectJEVExternalApplyCapabilityReviewRevisionCandidateGenerationReque
     }
 }
 
-func TestProjectJEVExternalApplyCapabilityReviewRevisionCandidateGenerationRequestCandidateGenerationFeedbackLSPOProjectionRejectsInvalidBridge(t *testing.T) {
-    output := ProjectJEVExternalApplyCapabilityReviewRevisionCandidateGenerationRequestCandidateGenerationFeedbackLSPOProjection(
+func TestProjectJEVExternalApplyCapabilityReviewRevisionCandidateGenerationRequestCandidateGenerationFeedbackLSPProjectionRejectsInvalidBridge(t *testing.T) {
+    output := ProjectJEVExternalApplyCapabilityReviewRevisionCandidateGenerationRequestCandidateGenerationFeedbackLSPProjection(
         JEVExternalApplyCapabilityReviewRevisionCandidateGenerationRequestCandidateGenerationFeedbackBridge{
             Status:         jevExternalApplyCapabilityReviewRevisionCandidateGenerationRequestCandidateGenerationFeedbackBridgeBound,
             NonExecuting:   true,
