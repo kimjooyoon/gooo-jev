@@ -5,6 +5,7 @@ entity ExecutionEnvelopeProvenanceChainLSPBindingInput id "gooo://gooo-jev/prove
   property ChainStatus string
   property ChainMissingStage string
   property ChainEvidenceDigest string
+  property ChainBindingDigest string
   property MissingStageIndex integer
   property EvidencePrefixDigest string
   property NonAuthorizing boolean
@@ -18,6 +19,7 @@ entity ExecutionEnvelopeProvenanceChainLSPBinding id "gooo://gooo-jev/provenance
   property MissingStageIndex integer
   property EvidencePrefixDigest string
   property ChainEvidenceDigest string
+  property ChainBindingDigest string
   property NonAuthorizing boolean
 
 activity ProjectExecutionEnvelopeProvenanceChainLSP(ExecutionEnvelopeProvenanceChainLSPBindingInput) -> ExecutionEnvelopeProvenanceChainLSPBinding
