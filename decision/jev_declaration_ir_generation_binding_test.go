@@ -307,3 +307,57 @@ func TestComputeExecutionEnvelopeDeclarationSourceDigestAndBind(t *testing.T) {
 		t.Fatalf("authorization boundary escaped source digest: %+v", unsafe)
 	}
 }
+
+func TestComputeExecutionEnvelopeArtifactDigestAndSourceBinding(t *testing.T) {
+	ir := ComputeExecutionEnvelopeArtifactDigest(ExecutionEnvelopeArtifactDigestInput{
+		ArtifactKind: "ir", ArtifactText: "ir { declaration: example }", NonAuthorizing: true,
+	})
+	if ir.Status != "derived" || ir.ArtifactKind != "ir" || ir.ArtifactDigest == "" || ir.MissingStage != "" {
+		t.Fatalf("unexpected IR artifact digest: %+v", ir)
+	}
+	generation := ComputeExecutionEnvelopeArtifactDigest(ExecutionEnvelopeArtifactDigestInput{
+		ArtifactKind: "generation", ArtifactText: "generated { example }", NonAuthorizing: true,
+	})
+	if generation.Status != "derived" || generation.ArtifactKind != "generation" || generation.ArtifactDigest == "" || generation.ArtifactDigest == ir.ArtifactDigest {
+		t.Fatalf("unexpected generation artifact digest: %+v", generation)
+	}
+	changed := ComputeExecutionEnvelopeArtifactDigest(ExecutionEnvelopeArtifactDigestInput{
+		ArtifactKind: "ir", ArtifactText: "ir { changed: example }", NonAuthorizing: true,
+	})
+	if changed.ArtifactDigest == ir.ArtifactDigest {
+		t.Fatal("IR artifact change did not change its digest")
+	}
+
+	binding := BindExecutionEnvelopeDeclarationIRGenerationFromSources(ExecutionEnvelopeDeclarationIRGenerationArtifactSourceInput{
+		DeclarationID:     "gooo://gooo-jev/declaration/example",
+		ContractID:        "gooo://gooo-jev/contract/example",
+		DeclarationSource: "entity Example id \"gooo://example\"",
+		IRSource:          "ir { declaration: example }",
+		GenerationSource:  "generated { example }",
+		NonAuthorizing:    true,
+	})
+	if binding.Status != "bound" || binding.DeclarationDigest == "" || binding.IRDigest != ir.ArtifactDigest || binding.GenerationDigest != generation.ArtifactDigest {
+		t.Fatalf("source artifacts were not bound: %+v", binding)
+	}
+	if err := binding.Validate(); err != nil {
+		t.Fatalf("artifact source binding should validate: %v", err)
+	}
+
+	missing := BindExecutionEnvelopeDeclarationIRGenerationFromSources(ExecutionEnvelopeDeclarationIRGenerationArtifactSourceInput{
+		DeclarationID:     "gooo://gooo-jev/declaration/example",
+		ContractID:        "gooo://gooo-jev/contract/example",
+		DeclarationSource: "entity Example",
+		GenerationSource:  "generated { example }",
+		NonAuthorizing:    true,
+	})
+	if missing.Status != "UNKNOWN" || missing.MissingStage != "ir-source" {
+		t.Fatalf("missing IR source was not preserved: %+v", missing)
+	}
+
+	invalidKind := ComputeExecutionEnvelopeArtifactDigest(ExecutionEnvelopeArtifactDigestInput{
+		ArtifactKind: "unknown", ArtifactText: "artifact", NonAuthorizing: true,
+	})
+	if invalidKind.Status != "UNKNOWN" || invalidKind.MissingStage != "artifact-kind" {
+		t.Fatalf("invalid artifact kind was not rejected: %+v", invalidKind)
+	}
+}
