@@ -56,6 +56,7 @@ entity ExecutionEnvelopeProvenanceChainMetric id "gooo://gooo-jev/provenance-cha
   property ExpectedStageCount integer
   property MissingStage string
   property CompletenessDigest string
+  property EvidenceDigest string
   property NonExecuting boolean
   property NonAuthorizing boolean
 
