@@ -1,0 +1,6 @@
+package jevrevision
+namespace jevrevision
+entity GoooDecisionAssessment id "gooo://gooo-jev/revision/assessment"
+entity GoooRevisionCandidate id "gooo://gooo-jev/revision/candidate"
+entity GoooRevisionEvidence id "gooo://gooo-jev/revision/evidence"
+activity ProposeGoooRevision(GoooDecisionAssessment) -> GoooRevisionCandidate
