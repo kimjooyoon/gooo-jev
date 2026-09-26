@@ -1,0 +1,7 @@
+package jev.gooo.revision.feedback
+namespace jev.gooo.revision.feedback
+
+entity RevisionQuality id "urn:jev:gooo:revision-quality"
+entity RevisionFeedback id "urn:jev:gooo:revision-feedback"
+
+activity DeriveRevisionFeedback(RevisionQuality) -> RevisionFeedback
