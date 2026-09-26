@@ -1,0 +1,17 @@
+entity ExecutionEnvelopeProvenanceChainMetricSourceInput id "gooo://gooo-jev/provenance-chain-metric-source-input"
+  property Binding ExecutionEnvelopeProvenanceChainBinding
+  property SourceText string
+  property NonAuthorizing boolean
+
+entity ExecutionEnvelopeProvenanceChainMetricSourceBinding id "gooo://gooo-jev/provenance-chain-metric-source-binding"
+  property Status string
+  property ObservedStageCount integer
+  property ExpectedStageCount integer
+  property MissingStage string
+  property CompletenessDigest string
+  property EvidenceDigest string
+  property SourceDigest string
+  property NonExecuting boolean
+  property NonAuthorizing boolean
+
+activity MeasureExecutionEnvelopeProvenanceChainMetricFromSource(ExecutionEnvelopeProvenanceChainMetricSourceInput) -> ExecutionEnvelopeProvenanceChainMetricSourceBinding
