@@ -9,19 +9,19 @@ import (
 type CapabilityBoundaryStatus string
 
 const (
-    CapabilityBoundaryActive   CapabilityBoundaryStatus = "active"
-    CapabilityBoundaryExpired   CapabilityBoundaryStatus = "expired"
-    CapabilityBoundaryNotYet    CapabilityBoundaryStatus = "not-yet-active"
-    CapabilityBoundaryUnknown   CapabilityBoundaryStatus = "unknown"
+    CapabilityBoundaryActive CapabilityBoundaryStatus = "active"
+    CapabilityBoundaryExpired CapabilityBoundaryStatus = "expired"
+    CapabilityBoundaryNotYet CapabilityBoundaryStatus = "not-yet-active"
+    CapabilityBoundaryUnknown CapabilityBoundaryStatus = "unknown"
 )
 
 type CapabilityBoundary struct {
-    Subject       string
-    Audience      string
-    Capability    string
+    Subject        string
+    Audience       string
+    Capability     string
     EvidenceDigest string
-    IssuedAt      time.Time
-    ExpiresAt     time.Time
+    IssuedAt       time.Time
+    ExpiresAt      time.Time
     BoundaryDigest string
 }
 
@@ -42,7 +42,7 @@ func NewCapabilityBoundary(subject, audience, capability, evidenceDigest string,
         return CapabilityBoundary{}, err
     }
     boundary.BoundaryDigest = digest
-\n    return boundary, nil
+    return boundary, nil
 }
 
 func (boundary CapabilityBoundary) StatusAt(now time.Time) CapabilityBoundaryStatus {
@@ -55,7 +55,7 @@ func (boundary CapabilityBoundary) StatusAt(now time.Time) CapabilityBoundarySta
     if !now.Before(boundary.ExpiresAt) {
         return CapabilityBoundaryExpired
     }
-\n    return CapabilityBoundaryActive
+    return CapabilityBoundaryActive
 }
 
 func (boundary CapabilityBoundary) Validate() error {
@@ -81,7 +81,7 @@ func (boundary CapabilityBoundary) validateShape() error {
     if strings.TrimSpace(boundary.Subject) == "" ||
         strings.TrimSpace(boundary.Audience) == "" ||
         strings.TrimSpace(boundary.Capability) == "" ||
-\n        strings.TrimSpace(boundary.EvidenceDigest) == "" {
+        strings.TrimSpace(boundary.EvidenceDigest) == "" {
         return errors.New("capability boundary is incomplete")
     }
     if boundary.IssuedAt.IsZero() || boundary.ExpiresAt.IsZero() {
