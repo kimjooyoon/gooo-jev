@@ -1,0 +1,9 @@
+package jevfullprovenancereplaymetric
+namespace jevfullprovenancereplaymetric
+
+entity ExecutionEnvelopeJEVFullProvenanceReplayMetricInput id "gooo://gooo-jev/full-provenance-replay-metric-input"
+property Provenance ExecutionEnvelopeFullProvenanceSourceBinding
+property ReplayMetric JEVReplayLedgerMetric
+property NonAuthorizing boolean
+
+activity BindJEVFullProvenanceReplayMetric(ExecutionEnvelopeJEVFullProvenanceReplayMetricInput) -> JEVFullProvenanceReplayMetricBinding
