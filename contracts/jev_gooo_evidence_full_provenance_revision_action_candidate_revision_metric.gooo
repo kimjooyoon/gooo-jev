@@ -1,0 +1,32 @@
+namespace jevgoooevidencefullprovenancerevisionactioncandidaterevisionmetric
+
+entity ExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionCandidateRevisionMetricInput id "gooo://gooo-jev/gooo-evidence-full-provenance-revision-action-candidate-revision-metric-input"
+property Projection GoooEvidenceFullProvenanceRevisionActionCandidateRevisionLSPBinding
+property MetricName string
+property AdditionalUnknownCount integer
+property NonAuthorizing boolean
+
+entity ExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionCandidateRevisionMetricBinding id "gooo://gooo-jev/gooo-evidence-full-provenance-revision-action-candidate-revision-metric"
+property Status string
+property MissingStage string
+property CandidateID string
+property SourceCandidateID string
+property SourceRevisionCandidateDigest string
+property SourceCandidateEvidenceDigest string
+property RevisionCandidateDigest string
+property RevisionCandidateEvidenceDigest string
+property VerificationEvidenceDigest string
+property EvidencePrefixDigest string
+property MetricName string
+property Total integer
+property VerifiedCount integer
+property ReviewCount integer
+property CounterexampleCount integer
+property UnknownCount integer
+property ProjectionEvidenceDigest string
+property MetricEvidenceDigest string
+property EvidenceDigest string
+property NonExecuting boolean
+property NonAuthorizing boolean
+
+activity MeasureExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionCandidateRevisionMetric(ExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionCandidateRevisionMetricInput) -> ExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionCandidateRevisionMetricBinding
