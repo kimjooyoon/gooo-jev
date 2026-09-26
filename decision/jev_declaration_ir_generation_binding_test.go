@@ -135,3 +135,35 @@ func TestValidateExecutionEnvelopeProvenanceChainBindingFailsClosed(t *testing.T
 		t.Fatalf("validator erased authorization violation: %+v", unknown)
 	}
 }
+
+func TestMeasureExecutionEnvelopeProvenanceChainMetricReportsExactCoverage(t *testing.T) {
+	ready := EvaluateExecutionEnvelopeProvenanceChainBinding(ExecutionEnvelopeProvenanceChainBindingInput{
+		DeclarationIRGeneration:  validDeclarationIRGenerationBinding(),
+		ReverseObservationDigest: "reverse-observation-digest",
+		MetricDigest:              "metric-digest",
+		NonAuthorizing:            true,
+	})
+	metric := MeasureExecutionEnvelopeProvenanceChainMetric(ready)
+	if metric.Status != "complete" || metric.ObservedStageCount != 5 || metric.ExpectedStageCount != 5 ||
+		metric.MissingStage != "" || metric.CompletenessDigest == "" || !metric.NonExecuting || !metric.NonAuthorizing {
+		t.Fatalf("unexpected complete metric: %+v", metric)
+	}
+
+	partial := EvaluateExecutionEnvelopeProvenanceChainBinding(ExecutionEnvelopeProvenanceChainBindingInput{
+		DeclarationIRGeneration: validDeclarationIRGenerationBinding(),
+		MetricDigest:             "metric-digest",
+		NonAuthorizing:           true,
+	})
+	metric = MeasureExecutionEnvelopeProvenanceChainMetric(partial)
+	if metric.Status != "UNKNOWN" || metric.ObservedStageCount != 4 || metric.ExpectedStageCount != 5 ||
+		metric.MissingStage != "reverse_observation" || metric.CompletenessDigest == "" {
+		t.Fatalf("unexpected partial metric: %+v", metric)
+	}
+
+	invalid := ready
+	invalid.EvidenceDigest = "tampered-evidence"
+	metric = MeasureExecutionEnvelopeProvenanceChainMetric(invalid)
+	if metric.Status != "UNKNOWN" || metric.ObservedStageCount != 0 || metric.MissingStage != "provenance-validation" || metric.CompletenessDigest != "" {
+		t.Fatalf("unexpected invalid metric: %+v", metric)
+	}
+}
