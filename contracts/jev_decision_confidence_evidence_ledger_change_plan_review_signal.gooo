@@ -1,0 +1,12 @@
+package jevdecisionconfidenceledgerchangeplanreviewsignal
+namespace jevdecisionconfidenceledgerchangeplanreviewsignal
+
+entity DecisionConfidenceEvidenceLedgerFeedbackSignal id "gooo://gooo-jev/decision-confidence-evidence-ledger-feedback-signal"
+  property Status string
+
+entity DecisionConfidenceEvidenceLedgerChangePlanReviewSignal id "gooo://gooo-jev/decision-confidence-evidence-ledger-change-plan-review-signal"
+  property FeedbackDigest string
+  property Status string
+  property NonAuthorizing boolean
+
+activity DeriveDecisionConfidenceEvidenceLedgerChangePlanReviewSignal(DecisionConfidenceEvidenceLedgerFeedbackSignal) -> DecisionConfidenceEvidenceLedgerChangePlanReviewSignal
