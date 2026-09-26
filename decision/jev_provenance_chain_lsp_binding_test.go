@@ -18,7 +18,7 @@ func TestProjectExecutionEnvelopeProvenanceChainLSPProjectsReadyAndMissingStages
 		EvidencePrefixDigest: "prefix-digest",
 		NonAuthorizing:       true,
 	})
-	if output.Status != "clear" || output.Publishable || output.Code != "provenance-complete" || output.ChainEvidenceDigest != "chain-evidence" {
+	if output.Status != "clear" || output.Publishable || output.Code != "provenance-complete" || output.ChainEvidenceDigest != ready.EvidenceDigest || output.ChainBindingDigest != ready.BindingDigest {
 		t.Fatalf("unexpected ready projection: %+v", output)
 	}
 
@@ -61,7 +61,7 @@ func TestProjectExecutionEnvelopeProvenanceChainLSPKeepsIncompleteEvidenceUnknow
 		EvidencePrefixDigest: "prefix-digest",
 		NonAuthorizing:       true,
 	})
-	if output.Status != "UNKNOWN" || output.Publishable || output.Code != "lsp-diagnostic-evidence" {
+	if output.Status != "UNKNOWN" || output.Publishable || output.Code != "chain-integrity" {
 		t.Fatalf("unexpected stage-less projection: %+v", output)
 	}
 }
