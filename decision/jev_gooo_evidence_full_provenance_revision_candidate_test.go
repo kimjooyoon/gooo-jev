@@ -6,8 +6,16 @@ func evidenceFullProvenanceRevisionCandidateInput(t *testing.T) ExecutionEnvelop
 	t.Helper()
 	bridge := evidenceFullProvenanceFeedbackBridgeInput(t)
 	ledger := AppendExecutionEnvelopeGoooEvidenceFullProvenanceFeedbackBridge(bridge)
-	directive := revisionCandidateDirective()
-	directive.InputEvidenceDigest = ledger.EvidenceDigest
+	directive := JEVImprovementDirectionDirective{
+		Status:              jevImprovementDirectiveRevision,
+		Directive:           jevImprovementDirectiveRevision,
+		CandidateDigest:     "candidate-digest",
+		CandidateSource:     "gooo://candidate/evidence",
+		InputEvidenceDigest: ledger.EvidenceDigest,
+		NonExecuting:        true,
+		NonAuthorizing:      true,
+	}
+	directive.EvidenceDigest = digestJEVImprovementDirectionDirective(directive.Status, directive.Directive, directive.CandidateDigest, directive.CandidateSource, directive.InputEvidenceDigest)
 	return ExecutionEnvelopeGoooEvidenceFullProvenanceRevisionCandidateInput{
 		EvidenceBinding:      BindExecutionEnvelopeGoooEvidenceFullProvenance(evidenceFullProvenanceInput(t)),
 		Ledger:               ledger,
