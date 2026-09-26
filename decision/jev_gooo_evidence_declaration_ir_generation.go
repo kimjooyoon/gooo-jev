@@ -21,17 +21,17 @@ type GoooEvidenceDeclarationIRGenerationInput struct {
 // GoooEvidenceDeclarationIRGeneration preserves legacy IR plus evidence
 // declarations in a separate, deterministic generation path.
 type GoooEvidenceDeclarationIRGeneration struct {
-	Status             string
-	BaseIR             GoooDeclarationIR
-	Evidence           []GoooEvidenceDeclarationIR
-	SourceDigest       string
-	BaseIRDigest       string
-	EvidenceDigest     string
-	GeneratedSource    string
-	GenerationDigest   string
-	MissingStage       string
-	NonExecuting       bool
-	NonAuthorizing     bool
+	Status           string
+	BaseIR           GoooDeclarationIR
+	Evidence         []GoooEvidenceDeclarationIR
+	SourceDigest     string
+	BaseIRDigest     string
+	EvidenceDigest   string
+	GeneratedSource  string
+	GenerationDigest string
+	MissingStage     string
+	NonExecuting     bool
+	NonAuthorizing   bool
 }
 
 // DeriveGoooEvidenceDeclarationIRGeneration parses evidence declarations,
@@ -116,27 +116,21 @@ func GenerateGoooEvidenceDeclaration(ir GoooDeclarationIR, evidence []GoooEviden
 	}
 	var builder strings.Builder
 	builder.WriteString(base)
-	if !strings.HasSuffix(base, "
-") {
-		builder.WriteString("
-")
+	if !strings.HasSuffix(base, "\n") {
+		builder.WriteString("\n")
 	}
 	for _, declaration := range evidence {
 		if strings.TrimSpace(declaration.Name) == "" || strings.TrimSpace(declaration.Source) == "" {
 			return "", fmt.Errorf("evidence name and source are required")
 		}
-		fmt.Fprintf(&builder, "evidence %s from %s
-", declaration.Name, declaration.Source)
+		fmt.Fprintf(&builder, "evidence %s from %s\n", declaration.Name, declaration.Source)
 	}
 	return builder.String(), nil
 }
 
 func parseGoooEvidenceDeclarationSource(source string) (string, []GoooEvidenceDeclarationIR, error) {
-	normalized := strings.ReplaceAll(source, "
-", "
-")
-	lines := strings.Split(normalized, "
-")
+	normalized := strings.ReplaceAll(source, "\r\n", "\n")
+	lines := strings.Split(normalized, "\n")
 	baseLines := make([]string, 0, len(lines))
 	evidence := make([]GoooEvidenceDeclarationIR, 0)
 	seen := make(map[string]struct{})
@@ -164,6 +158,5 @@ func parseGoooEvidenceDeclarationSource(source string) (string, []GoooEvidenceDe
 			Source: fields[3],
 		})
 	}
-	return strings.Join(baseLines, "
-"), evidence, nil
+	return strings.Join(baseLines, "\n"), evidence, nil
 }
