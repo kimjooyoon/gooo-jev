@@ -1,0 +1,4 @@
+package jevreplayobservationlsp
+namespace jevreplayobservationlsp
+entity JEVExternalApplyCapabilityReviewReplayObservationLSPDiagnostic id "gooo://gooo-jev/decision-external-apply-capability-review-replay-observation-lsp"
+activity ProjectJEVExternalApplyCapabilityReviewReplayObservationLSP(JEVExternalApplyCapabilityReviewReplayObservation) -> JEVExternalApplyCapabilityReviewReplayObservationLSPDiagnostic
