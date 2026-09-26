@@ -49,3 +49,14 @@ entity ExecutionEnvelopeProvenanceChainBinding id "gooo://gooo-jev/provenance-ch
 activity BindExecutionEnvelopeDeclarationIRGeneration(ExecutionEnvelopeDeclarationIRGenerationBindingInput) -> ExecutionEnvelopeDeclarationIRGenerationBinding
 activity EvaluateExecutionEnvelopeProvenanceChainBinding(ExecutionEnvelopeProvenanceChainBindingInput) -> ExecutionEnvelopeProvenanceChainBinding
 activity ValidateExecutionEnvelopeProvenanceChainBinding(ExecutionEnvelopeProvenanceChainBinding) -> ExecutionEnvelopeProvenanceChainBinding
+
+entity ExecutionEnvelopeProvenanceChainMetric id "gooo://gooo-jev/provenance-chain-metric"
+  property Status string
+  property ObservedStageCount integer
+  property ExpectedStageCount integer
+  property MissingStage string
+  property CompletenessDigest string
+  property NonExecuting boolean
+  property NonAuthorizing boolean
+
+activity MeasureExecutionEnvelopeProvenanceChainMetric(ExecutionEnvelopeProvenanceChainBinding) -> ExecutionEnvelopeProvenanceChainMetric
