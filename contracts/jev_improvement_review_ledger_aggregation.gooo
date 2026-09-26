@@ -1,0 +1,5 @@
+package jevimprovementreviewledgeraggregation
+namespace jevimprovementreviewledgeraggregation
+entity ExecutionEnvelopeJEVImprovementReviewLedgerAggregationInput id "gooo://gooo-jev/improvement-review-ledger-aggregation-input"
+entity ExecutionEnvelopeJEVImprovementReviewLedgerAggregation id "gooo://gooo-jev/improvement-review-ledger-aggregation"
+activity AggregateExecutionEnvelopeJEVImprovementReviewLedger(ExecutionEnvelopeJEVImprovementReviewLedgerAggregationInput) -> ExecutionEnvelopeJEVImprovementReviewLedgerAggregation
