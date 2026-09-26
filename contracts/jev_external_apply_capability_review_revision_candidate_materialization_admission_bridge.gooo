@@ -1,0 +1,40 @@
+package jevcandidatematerializationadmissionbridge
+
+namespace jevcandidatematerializationadmissionbridge
+
+entity CandidateMaterializationAdmissionBridge {
+  field status string
+  field missing_stage string
+  field candidate_digest string
+  field candidate_source string
+  field candidate_gate_digest string
+  field generated_candidate_digest string
+  field generated_candidate_source string
+  field generation_input_digest string
+  field generation_evidence_digest string
+  field generator_identity string
+  field materialization_status string
+  field materialization_bridge_digest string
+  field admission_decision string
+  field admission_status string
+  field admission_digest string
+  field admission_source string
+  field admission_evidence_digest string
+  field quality_metric_digest string
+  field quality_metric_source string
+  field quality_metric_evidence_digest string
+  field review_digest string
+  field review_source string
+  field review_evidence_digest string
+  field bridge_digest string
+  field non_executing bool
+  field non_authorizing bool
+}
+
+activity BindCandidateMaterializationAdmissionBridge {
+  input CandidateMaterializationAdmissionBridge
+  output CandidateMaterializationAdmissionBridge
+  effect provenance-only
+  effect execution none
+  effect authorization none
+}
