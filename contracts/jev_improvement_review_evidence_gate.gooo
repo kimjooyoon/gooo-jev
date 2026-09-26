@@ -1,0 +1,24 @@
+package jevimprovementreviewevidencegate
+namespace jevimprovementreviewevidencegate
+
+entity ImprovementReviewEvidenceGateInput id "gooo://gooo-jev/improvement-review-evidence-gate-input"
+  property CandidateAdmissionStatus string
+  property CandidateDigest string
+  property ReviewCandidateDigest string
+  property ReviewerReference string
+  property ReviewEvidenceDigest string
+  property ReviewDecision string
+  property ExecutionGranted boolean
+  property ReviewDigest string
+  property NonAuthorizing boolean
+
+entity ImprovementReviewEvidenceGate id "gooo://gooo-jev/improvement-review-evidence-gate"
+  property Status string
+  property ObservationOnly boolean
+  property CandidateDigest string
+  property ReviewDigest string
+  property MissingStage string
+  property ExecutionGranted boolean
+  property NonAuthorizing boolean
+
+activity GateImprovementReviewEvidence(ImprovementReviewEvidenceGateInput) -> ImprovementReviewEvidenceGate
