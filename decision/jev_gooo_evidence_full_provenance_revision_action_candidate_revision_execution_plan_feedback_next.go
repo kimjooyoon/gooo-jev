@@ -145,7 +145,7 @@ func DeriveExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionCandidateRev
 	}
 	directionName := directionForGoooExtendedLineageFeedback(input.Feedback.FeedbackStatus)
 	inputEvidenceDigest := digestJEVImprovementFeedbackInputs([]string{
-		input.Feedback.FeedbackBindingEvidenceDigest,
+		input.Feedback.EvidenceDigest,
 		input.Feedback.MetricEvidenceDigest,
 		input.Feedback.ReverseObservationDigest,
 		input.Feedback.AggregationEvidenceDigest,
