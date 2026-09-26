@@ -1,0 +1,31 @@
+package jev.gooo.lsp.improvement
+
+entity RevisionImprovementSymbolResult {
+    field status string
+    field missing_stage string
+    field source_digest string
+    field ir_digest string
+    field symbol_name string
+    field symbol_kind string
+    field symbol_digest string
+    field baseline_summary_digest string
+    field candidate_summary_digest string
+    field observation_digest string
+    field observation_class string
+    field review_signal string
+    field source_stable boolean
+    field proposed_ir_changed boolean
+    field generated_ir_changed boolean
+    field structure_stable boolean
+    invariant non_executing
+    invariant non_authorizing
+}
+
+activity explain_revision_improvement {
+    input source
+    input symbol_name
+    input baseline_revision_evidence_summary
+    input candidate_revision_evidence_summary
+    input revision_improvement_observation
+    output revision_improvement_symbol_result
+}
