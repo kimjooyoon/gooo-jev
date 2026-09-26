@@ -1,0 +1,6 @@
+package jevdecisionconfidenceadmissionmetric
+namespace jevdecisionconfidenceadmissionmetric
+
+entity DecisionConfidenceAdmissionMetricObservation id "gooo://gooo-jev/decision-confidence-admission-metric-observation"
+
+activity ObserveDecisionConfidenceAdmissionMetric(DecisionConfidenceExecutionAdmissionEvidence) -> DecisionConfidenceAdmissionMetricObservation
