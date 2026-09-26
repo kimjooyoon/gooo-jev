@@ -1,0 +1,74 @@
+package jevrevisionselfimprovementoutcome
+namespace jevrevisionselfimprovementoutcome
+
+entity RevisionSelfImprovementIteration id "gooo://gooo-jev/revision-self-improvement-iteration"
+property IterationDigest string
+property CandidateSourceDigest string
+property CandidateProposedSourceDigest string
+property NonAuthorizing boolean
+
+entity RevisionSelfImprovementApplicationObservation id "gooo://gooo-jev/revision-self-improvement-application-observation"
+property ObservationDigest string
+property SourceDigest string
+property ProposedSourceDigest string
+property InputIRDigest string
+property ProposedIRDigest string
+property ApplicationDigest string
+property NonAuthorizing boolean
+
+entity RevisionMetricsBinding id "gooo://gooo-jev/revision-metrics-binding"
+property BindingDigest string
+property ReceiptDigest string
+property MetricsDigest string
+property ApplicationDigest string
+property SourceDigest string
+property ProposedSourceDigest string
+property InputIRDigest string
+property ProposedIRDigest string
+property ChangedByteCount int
+property ChangedLineCount int
+property IRChanged boolean
+property NonAuthorizing boolean
+
+entity RevisionGenerationAssessment id "gooo://gooo-jev/revision-generation-assessment"
+property GenerationDigest string
+property SourceDigest string
+property ProposedSourceDigest string
+property ApplicationDigest string
+property GenerationSourceDigest string
+property GeneratedSourceDigest string
+property GeneratedIRDigest string
+property StructureDigest string
+property StructureMatch boolean
+property ExactSourceMatch boolean
+property NonAuthorizing boolean
+
+entity RevisionSelfImprovementOutcomeObservation id "gooo://gooo-jev/revision-self-improvement-outcome-observation"
+property Status string
+property MissingStage string
+property IterationDigest string
+property ApplicationObservationDigest string
+property MetricsBindingDigest string
+property GenerationAssessmentDigest string
+property SourceDigest string
+property ProposedSourceDigest string
+property InputIRDigest string
+property ProposedIRDigest string
+property CandidateDigest string
+property EditDigest string
+property ApplicationDigest string
+property MetricsDigest string
+property GeneratedSourceDigest string
+property GeneratedIRDigest string
+property StructureDigest string
+property ChangedByteCount int
+property ChangedLineCount int
+property IRChanged boolean
+property ExactSourceMatch boolean
+property StructureMatch boolean
+property OutcomeSignal string
+property OutcomeDigest string
+property NonExecuting boolean
+property NonAuthorizing boolean
+
+activity ObserveRevisionSelfImprovementOutcome(RevisionSelfImprovementIteration, RevisionSelfImprovementApplicationObservation, RevisionMetricsBinding, RevisionGenerationAssessment) -> RevisionSelfImprovementOutcomeObservation
