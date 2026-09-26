@@ -1,0 +1,6 @@
+package jevapplication
+namespace jevapplication
+entity GoooRevisionSource id "gooo://gooo-jev/revision-application/source"
+entity GoooRevisionCandidate id "gooo://gooo-jev/revision-application/candidate"
+entity GoooRevisionApplication id "gooo://gooo-jev/revision-application/result"
+activity ApplyGoooRevision(GoooRevisionSource) -> GoooRevisionApplication
