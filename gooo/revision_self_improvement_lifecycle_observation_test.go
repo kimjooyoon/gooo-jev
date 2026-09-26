@@ -82,7 +82,7 @@ func TestObserveRevisionSelfImprovementLifecycleRetainsSourceLinkFailure(t *test
 
 func TestObserveRevisionSelfImprovementLifecycleRetainsApplicationLinkFailure(t *testing.T) {
 	executionApplication, outcome := selfImprovementLifecycleInputs(t)
-	outcome.PlanDigest = digestString("other-plan")
+	outcome.ApplicationDigest = digestString("other-application")
 	outcome.OutcomeDigest = digestRevisionSelfImprovementOutcomeObservation(outcome)
 	result, err := ObserveRevisionSelfImprovementLifecycle(executionApplication, outcome)
 	if err == nil {
