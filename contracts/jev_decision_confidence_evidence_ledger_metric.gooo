@@ -1,0 +1,11 @@
+package jevdecisionconfidenceledgermetric
+namespace jevdecisionconfidenceledgermetric
+
+entity DecisionConfidenceEvidenceLedgerMetric id "gooo://gooo-jev/decision-confidence-evidence-ledger-metric"
+  property EntryDigest string
+  property VerifiedCount integer
+  property BrokenCount integer
+  property Status string
+  property NonAuthorizing boolean
+
+activity ObserveDecisionConfidenceEvidenceLedgerMetric(DecisionConfidenceEvidenceLedgerMetric) -> DecisionConfidenceEvidenceLedgerMetric
