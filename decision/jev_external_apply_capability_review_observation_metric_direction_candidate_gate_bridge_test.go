@@ -92,7 +92,7 @@ func TestBindJEVExternalApplyCapabilityReviewObservationMetricDirectionCandidate
         bridge.DirectionDigest,
     )
 
-    gateBridge := BindJEVExternalApplyCapabilityReviewObservationMetricDirectionCandidateGate(JEVExternalApplyCapabilityReviewObservationMetricDirectionCandidateGateInput{
+    gateBridge := BindJEVExternalApplyCapabilityReviewObservationMetricDirectionCandidateGate(JEVExternalApplyCapabilityReviewObservationMetricDirectionCandidateGateBridgeInput{
         ObservationMetricDirection: bridge,
         CandidateDigest:             "candidate-digest",
         RevisionSource:              "revision-source",
