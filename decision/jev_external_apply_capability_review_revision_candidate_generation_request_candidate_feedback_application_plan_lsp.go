@@ -21,7 +21,11 @@ type JEVExternalApplyCapabilityReviewRevisionCandidateGenerationRequestCandidate
     GenerationRequestEvidenceDigest string
     GeneratorIdentity string
     ProposalDecision string
-    Feedback JEVExternalApplyCapabilityReviewRevisionCandidateGenerationFeedbackLSPDiagnostic
+    FeedbackStatus string
+    GeneratedCandidateStatus string
+    CandidateDigest string
+    GenerationSource string
+    GenerationEvidenceDigest string
     FeedbackBridgeDigest string
     CandidateGateStatus string
     CandidateDecision string
@@ -52,39 +56,43 @@ func (d JEVExternalApplyCapabilityReviewRevisionCandidateGenerationRequestCandid
         !d.Publishable || d.MissingStage != "" || d.GenerationRequestStatus == "" ||
         d.GenerationRequestDigest == "" || d.GenerationRequestSource == "" ||
         d.GenerationRequestEvidenceDigest == "" || d.GeneratorIdentity == "" ||
+        d.FeedbackStatus == "" || d.GeneratedCandidateStatus == "" ||
         d.FeedbackBridgeDigest == "" || d.CandidateGateStatus == "" ||
         d.CandidateDecision == "" || d.CandidateGateDigest == "" ||
         d.CandidateGateApplicationPlanBridgeDigest == "" || d.BridgeDigest == "" ||
         d.ProjectionDigest == "" {
         return fmt.Errorf("bound JEV generation request application plan diagnostic is incomplete")
     }
-    if err := d.Feedback.Validate(); err != nil {
-        return fmt.Errorf("invalid generation feedback diagnostic: %w", err)
+    if d.FeedbackStatus != jevExternalApplyCapabilityReviewRevisionCandidateGenerationFeedbackBound ||
+        d.CandidateGateStatus != jevExternalApplyCapabilityReviewRevisionCandidateGated {
+        return fmt.Errorf("JEV generation request application plan diagnostic has invalid upstream status")
     }
     if err := d.ApplicationPlan.Validate(); err != nil {
         return fmt.Errorf("invalid application plan diagnostic: %w", err)
     }
-    if !d.Feedback.Publishable || !d.ApplicationPlan.Publishable ||
-        d.ApplicationPlan.BridgeDigest != d.CandidateGateApplicationPlanBridgeDigest {
-        return fmt.Errorf("generation request application plan nested digests are inconsistent")
+    if !d.ApplicationPlan.Publishable || d.ApplicationPlan.BridgeDigest != d.CandidateGateApplicationPlanBridgeDigest {
+        return fmt.Errorf("generation request application plan nested digest is inconsistent")
     }
     switch d.ProposalDecision {
     case "revise":
-        if d.CandidateDecision != jevExternalApplyCapabilityReviewRevisionCandidateReady ||
+        if d.GeneratedCandidateStatus != jevExternalApplyCapabilityReviewRevisionCandidateGenerationFeedbackGenerated ||
+            d.CandidateDecision != jevExternalApplyCapabilityReviewRevisionCandidateReady ||
             d.ApplicationPlan.ApplicationPlanStatus != jevExternalApplyCapabilityReviewRevisionCandidateGateApplicationPlanReady ||
-            d.Feedback.Code != "jev.external-apply.candidate-generated" {
+            d.CandidateDigest == "" || d.GenerationSource == "" || d.GenerationEvidenceDigest == "" {
             return fmt.Errorf("revise generation request application plan diagnostic is inconsistent")
         }
     case "retain":
-        if d.CandidateDecision != jevExternalApplyCapabilityReviewRevisionCandidateHold ||
+        if d.GeneratedCandidateStatus != jevExternalApplyCapabilityReviewRevisionCandidateGenerationFeedbackHeld ||
+            d.CandidateDecision != jevExternalApplyCapabilityReviewRevisionCandidateHold ||
             d.ApplicationPlan.ApplicationPlanStatus != jevExternalApplyCapabilityReviewRevisionCandidateGateApplicationPlanHeld ||
-            d.Feedback.Code != "jev.external-apply.candidate-generation-held" {
+            d.CandidateDigest != "" || d.GenerationSource != "" || d.GenerationEvidenceDigest != "" {
             return fmt.Errorf("retain generation request application plan diagnostic is inconsistent")
         }
     case "rollback":
-        if d.CandidateDecision != jevExternalApplyCapabilityReviewRevisionCandidateRejected ||
+        if d.GeneratedCandidateStatus != jevExternalApplyCapabilityReviewRevisionCandidateGenerationFeedbackRejected ||
+            d.CandidateDecision != jevExternalApplyCapabilityReviewRevisionCandidateRejected ||
             d.ApplicationPlan.ApplicationPlanStatus != jevExternalApplyCapabilityReviewRevisionCandidateGateApplicationPlanRejected ||
-            d.Feedback.Code != "jev.external-apply.candidate-generation-rejected" {
+            d.CandidateDigest != "" || d.GenerationSource != "" || d.GenerationEvidenceDigest != "" {
             return fmt.Errorf("rollback generation request application plan diagnostic is inconsistent")
         }
     default:
@@ -123,14 +131,13 @@ func ProjectJEVExternalApplyCapabilityReviewRevisionCandidateGenerationRequestCa
     if err := input.Validate(); err != nil {
         return unknown("generation-request-candidate-feedback-application-plan")
     }
-    feedback := ProjectJEVExternalApplyCapabilityReviewRevisionCandidateGenerationFeedbackLSP(input.GenerationRequestFeedbackFromBridge())
     applicationPlan := ProjectJEVExternalApplyCapabilityReviewRevisionCandidateGateApplicationPlanBridgeLSP(
         JEVExternalApplyCapabilityReviewRevisionCandidateGateApplicationPlanBridge{
-            Status: input.CandidateGateApplicationPlanStatusFromBridge(),
+            Status: input.CandidateGateApplicationPlanStatus,
             CandidateGateStatus: input.CandidateGateStatus,
             CandidateDecision: input.CandidateDecision,
             CandidateDigest: input.CandidateDigest,
-            CandidateSource: input.CandidateSource,
+            CandidateSource: input.GenerationSource,
             CandidateGateDigest: input.CandidateGateDigest,
             ApplicationPlanStatus: input.ApplicationPlanStatus,
             PlanDigest: input.PlanDigest,
@@ -149,7 +156,11 @@ func ProjectJEVExternalApplyCapabilityReviewRevisionCandidateGenerationRequestCa
         GenerationRequestEvidenceDigest: input.GenerationRequestEvidenceDigest,
         GeneratorIdentity: input.GeneratorIdentity,
         ProposalDecision: input.ProposalDecision,
-        Feedback: feedback,
+        FeedbackStatus: input.FeedbackStatus,
+        GeneratedCandidateStatus: input.GeneratedCandidateStatus,
+        CandidateDigest: input.CandidateDigest,
+        GenerationSource: input.GenerationSource,
+        GenerationEvidenceDigest: input.GenerationEvidenceDigest,
         FeedbackBridgeDigest: input.FeedbackBridgeDigest,
         CandidateGateStatus: input.CandidateGateStatus,
         CandidateDecision: input.CandidateDecision,
@@ -160,9 +171,6 @@ func ProjectJEVExternalApplyCapabilityReviewRevisionCandidateGenerationRequestCa
         Publishable: false,
         NonExecuting: true,
         NonAuthorizing: true,
-    }
-    if err := feedback.Validate(); err != nil {
-        return unknown("candidate-generation-feedback-lsp")
     }
     if err := applicationPlan.Validate(); err != nil {
         return unknown("candidate-gate-application-plan-lsp")
@@ -188,14 +196,6 @@ func ProjectJEVExternalApplyCapabilityReviewRevisionCandidateGenerationRequestCa
         return unknown("generation-request-candidate-feedback-application-plan-lsp")
     }
     return output
-}
-
-func (b JEVExternalApplyCapabilityReviewRevisionCandidateGenerationRequestCandidateFeedbackApplicationPlanBridge) GenerationRequestFeedbackFromBridge() JEVExternalApplyCapabilityReviewRevisionCandidateGenerationFeedback {
-    return b.GenerationRequestFeedback
-}
-
-func (b JEVExternalApplyCapabilityReviewRevisionCandidateGenerationRequestCandidateFeedbackApplicationPlanBridge) CandidateGateApplicationPlanStatusFromBridge() string {
-    return b.CandidateGateApplicationPlanStatus
 }
 
 func digestJEVExternalApplyCapabilityReviewRevisionCandidateGenerationRequestCandidateFeedbackApplicationPlanLSPProjection(status, feedbackBridgeDigest, candidateGateApplicationPlanBridgeDigest, bridgeDigest, proposalDecision string) string {
