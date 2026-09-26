@@ -2,7 +2,7 @@ package gooo
 
 import "testing"
 
-func lspSelfImprovementOutcomeInputs(t *testing.T) (string, string, SelfImprovementApplicationObservation, RevisionMetricsBinding, RevisionGenerationAssessment) {
+func lspSelfImprovementOutcomeInputs(t *testing.T) (string, string, RevisionSelfImprovementApplicationObservation, RevisionMetricsBinding, RevisionGenerationAssessment) {
 	t.Helper()
 	iteration, planObservation, applicationObservation := selfImprovementApplicationInputs(t)
 	application, err := ObserveRevisionSelfImprovementApplication(iteration, planObservation, applicationObservation)
