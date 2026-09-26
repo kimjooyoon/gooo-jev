@@ -1,0 +1,41 @@
+package jevimprovementcandidateevidenceadmission
+namespace jevimprovementcandidateevidenceadmission
+
+entity ImprovementCandidateEvidenceAdmissionInput id "gooo://gooo-jev/improvement-candidate-evidence-admission-input"
+  property CycleBaselineLedgerDigest string
+  property CycleResultLedgerDigest string
+  property CycleCandidateReference string
+  property CycleSourceReference string
+  property CycleOutcome string
+  property CycleNonAuthorizing boolean
+  property CycleDigest string
+  property ReplayRecordedResultLedgerDigest string
+  property ReplayRecomputedResultLedgerDigest string
+  property ReplayEvidenceDigest string
+  property ReplayStatus string
+  property ReplayNonAuthorizing boolean
+  property ReplayDigest string
+  property TransitionMetricStatus string
+  property TransitionMetricTotal integer
+  property TransitionMetricStableCount integer
+  property TransitionMetricChangedCount integer
+  property TransitionMetricUnknownCount integer
+  property TransitionMetricNonAuthorizing boolean
+  property CandidateReference string
+  property SourceReference string
+  property NonAuthorizing boolean
+
+entity ImprovementCandidateEvidenceAdmission id "gooo://gooo-jev/improvement-candidate-evidence-admission"
+  property Status string
+  property Decision string
+  property CycleDigest string
+  property ReplayDigest string
+  property EvidenceDigest string
+  property CandidateDigest string
+  property CandidateReference string
+  property SourceReference string
+  property MissingStage string
+  property NonExecuting boolean
+  property NonAuthorizing boolean
+
+activity AdmitImprovementCandidateEvidence(ImprovementCandidateEvidenceAdmissionInput) -> ImprovementCandidateEvidenceAdmission
