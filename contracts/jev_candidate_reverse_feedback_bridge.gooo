@@ -1,0 +1,4 @@
+package jevcandidatereversefeedbackbridge
+namespace jevcandidatereversefeedbackbridge
+entity ExecutionEnvelopeJEVCandidateReverseObservationFeedbackInput id "gooo://gooo-jev/candidate-reverse-feedback-input"
+activity DeriveJEVImprovementReplayFeedbackFromCandidateReverseObservation(ExecutionEnvelopeJEVCandidateReverseObservationFeedbackInput) -> JEVImprovementReplayFeedback
