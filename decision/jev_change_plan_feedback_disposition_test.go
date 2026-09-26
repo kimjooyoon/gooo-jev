@@ -12,6 +12,8 @@ func TestDecisionConfidenceChangePlanFeedbackDispositionRejectsAuthorization(t *
 func TestDecisionConfidenceChangePlanFeedbackDispositionRejectsIncompleteEvidence(t *testing.T) {
     input := DecisionConfidenceChangePlanFeedbackDispositionInput{
         NonAuthorizing: true,
+        Plan: DecisionConfidenceChangePlan{NonExecuting: true},
+        Verification: DecisionConfidenceChangePlanVerification{NonExecuting: true},
         FeedbackBinding: DecisionConfidenceChangePlanReplayFeedbackBinding{
             NonAuthorizing: true,
             NonExecuting: true,
