@@ -1,0 +1,33 @@
+namespace jevgoooevidencefullprovenancerevisionactioncandidaterevisionguard
+
+entity ExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionCandidateRevisionGuardInput id "gooo://gooo-jev/gooo-evidence-full-provenance-revision-action-candidate-revision-guard-input"
+property Candidate GoooEvidenceFullProvenanceRevisionActionCandidateRevisionBinding
+property CandidateID string
+property ObservationDigest string
+property ObservationAt string
+property Now string
+property MaxAge string
+property RequestedPath string
+property AllowedPathPrefix string
+property WriteRequested boolean
+property WriteAllowed boolean
+property ConfirmationRequired boolean
+property ConfirmationPresent boolean
+property NonAuthorizing boolean
+
+entity ExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionCandidateRevisionGuardBinding id "gooo://gooo-jev/gooo-evidence-full-provenance-revision-action-candidate-revision-guard"
+property Status string
+property MissingStage string
+property CandidateID string
+property SourceCandidateID string
+property SourceRevisionCandidateDigest string
+property SourceCandidateEvidenceDigest string
+property RevisionCandidateDigest string
+property RevisionCandidateEvidenceDigest string
+property GuardStatus string
+property GuardEvidenceDigest string
+property EvidenceDigest string
+property NonExecuting boolean
+property NonAuthorizing boolean
+
+activity GuardExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionCandidateRevision(ExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionCandidateRevisionGuardInput) -> ExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionCandidateRevisionGuardBinding
