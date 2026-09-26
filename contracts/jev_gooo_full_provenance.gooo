@@ -1,0 +1,19 @@
+package jevgooofullprovenance
+namespace jevgooofullprovenance
+
+entity ExecutionEnvelopeGoooFullProvenanceInput id "gooo://gooo-jev/gooo-full-provenance-input"
+property DeclarationID string
+property ContractID string
+property SourceText string
+property IRGeneration GoooDeclarationIRGeneration
+property ObservedStatus string
+property ExpectedStatus string
+property ObservedMissingStage string
+property ExpectedMissingStage string
+property ObservedEvidenceDigest string
+property ExpectedEvidenceDigest string
+property ReverseObservationSource string
+property MetricSource string
+property NonAuthorizing boolean
+
+activity BindExecutionEnvelopeFullProvenanceFromGooo(ExecutionEnvelopeGoooFullProvenanceInput) -> ExecutionEnvelopeFullProvenanceSourceBinding
