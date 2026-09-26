@@ -1,26 +1,25 @@
-package jevrevisionselfimprovementhistory
-namespace jevrevisionselfimprovementhistory
+package jevrevisionselfimprovementhistorylsp
+namespace jevrevisionselfimprovementhistorylsp
 
-entity RevisionSelfImprovementHistoryInput id "gooo://gooo-jev/revision-self-improvement-history-input"
-property WindowDigests string
-property FeedbackDigests string
-property CandidateSourceDigests string
-property CandidateProposedSourceDigests string
-property CandidateGeneratedIRDigests string
+entity RevisionSelfImprovementHistoryLSPInput id "gooo://gooo-jev/revision-self-improvement-history-lsp-input"
+property SourceText string
+property SymbolName string
+property History RevisionSelfImprovementHistory
 property NonAuthorizing boolean
 
-entity RevisionSelfImprovementHistory id "gooo://gooo-jev/revision-self-improvement-history"
+entity RevisionSelfImprovementHistoryLSPProjection id "gooo://gooo-jev/revision-self-improvement-history-lsp-projection"
 property Status string
+property SourceDigest string
+property IRDigest string
+property SymbolName string
+property SymbolDigest string
 property ObservationCount integer
 property FirstWindowDigest string
 property LastWindowDigest string
 property FirstFeedbackDigest string
 property LastFeedbackDigest string
-property FirstCandidateSourceDigest string
 property LastCandidateSourceDigest string
-property FirstCandidateProposedSourceDigest string
 property LastCandidateProposedSourceDigest string
-property FirstCandidateGeneratedIRDigest string
 property LastCandidateGeneratedIRDigest string
 property StableCount integer
 property NarrowerCount integer
@@ -36,4 +35,4 @@ property MissingStage string
 property NonExecuting boolean
 property NonAuthorizing boolean
 
-activity ObserveRevisionSelfImprovementHistory(RevisionSelfImprovementHistoryInput) -> RevisionSelfImprovementHistory
+activity ExplainRevisionSelfImprovementHistory(RevisionSelfImprovementHistoryLSPInput) -> RevisionSelfImprovementHistoryLSPProjection

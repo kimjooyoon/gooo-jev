@@ -36,6 +36,16 @@ func TestObserveRevisionSelfImprovementHistoryBindsOrderedSignals(t *testing.T) 
 		history.LastFeedbackDigest != feedback[2].FeedbackDigest {
 		t.Fatalf("history boundaries were not retained: %#v", history)
 	}
+	if history.FirstCandidateSourceDigest != windows[0].CandidateSourceDigest ||
+		history.LastCandidateSourceDigest != windows[2].CandidateSourceDigest ||
+		history.LastCandidateGeneratedIRDigest != windows[2].CandidateGeneratedIRDigest {
+		t.Fatalf("candidate provenance boundaries were not retained: %#v", history)
+	}
+	if len(history.CandidateSourceDigests) != history.ObservationCount ||
+		len(history.CandidateProposedSourceDigests) != history.ObservationCount ||
+		len(history.CandidateGeneratedIRDigests) != history.ObservationCount {
+		t.Fatalf("candidate provenance series was not retained: %#v", history)
+	}
 	if history.StableCount != 1 || history.NarrowerCount != 1 ||
 		history.WiderCount != 1 || history.ObserveCount != 1 ||
 		history.RemeasureCount != 1 || history.ReviewCount != 1 {
