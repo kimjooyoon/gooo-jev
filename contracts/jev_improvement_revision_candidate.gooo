@@ -1,0 +1,4 @@
+package jevimprovementrevisioncandidate
+namespace jevimprovementrevisioncandidate
+entity JEVImprovementRevisionCandidate id "gooo://gooo-jev/improvement-revision-candidate"
+activity GenerateJEVImprovementRevisionCandidate(JEVImprovementRevisionCandidateInput) -> JEVImprovementRevisionCandidate
