@@ -10,7 +10,7 @@ func candidatePlanObservationInputs(t *testing.T) (RevisionCandidateObservation,
 	if err != nil {
 		t.Fatalf("ObserveRevisionImprovement() error = %v", err)
 	}
-	selection, materialization := selectedCandidateInputs(t)
+	_, materialization := selectedCandidateInputs(t)
 	candidateObservation, err := ObserveRevisionCandidateForImprovement(comparison, materialization)
 	if err != nil {
 		t.Fatalf("ObserveRevisionCandidateForImprovement() error = %v", err)
