@@ -1,0 +1,4 @@
+package jevimprovementoriginresolution
+namespace jevimprovementoriginresolution
+entity JEVImprovementOriginResolution id "gooo://gooo-jev/improvement-origin-resolution"
+activity ResolveJEVImprovementOrigin(JEVImprovementOriginResolutionInput) -> JEVImprovementOriginResolution
