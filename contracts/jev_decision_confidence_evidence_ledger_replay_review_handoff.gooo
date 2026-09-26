@@ -1,0 +1,12 @@
+package jevdecisionconfidenceledgerreplayreviewhandoff
+namespace jevdecisionconfidenceledgerreplayreviewhandoff
+
+entity DecisionConfidenceEvidenceLedgerReplayCounterexample id "gooo://gooo-jev/decision-confidence-evidence-ledger-replay-counterexample"
+  property Status string
+
+entity DecisionConfidenceEvidenceLedgerReplayReviewHandoff id "gooo://gooo-jev/decision-confidence-evidence-ledger-replay-review-handoff"
+  property CounterexampleDigest string
+  property Status string
+  property NonAuthorizing boolean
+
+activity DeriveDecisionConfidenceEvidenceLedgerReplayReviewHandoff(DecisionConfidenceEvidenceLedgerReplayCounterexample) -> DecisionConfidenceEvidenceLedgerReplayReviewHandoff
