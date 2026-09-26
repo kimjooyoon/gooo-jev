@@ -504,3 +504,110 @@ func EvaluateExecutionEnvelopeProvenanceChainBindingFromReverseObservation(input
 		NonAuthorizing:            true,
 	})
 }
+
+// ExecutionEnvelopeArtifactDigestInput identifies an exact IR or generation
+// artifact without executing or authorizing it.
+type ExecutionEnvelopeArtifactDigestInput struct {
+	ArtifactKind   string
+	ArtifactText   string
+	NonAuthorizing bool
+}
+
+// ExecutionEnvelopeArtifactDigest records content-addressed IR/generation
+// provenance before it is attached to a declaration binding.
+type ExecutionEnvelopeArtifactDigest struct {
+	Status         string
+	ArtifactKind   string
+	ArtifactDigest string
+	MissingStage   string
+	NonExecuting   bool
+	NonAuthorizing bool
+}
+
+// ComputeExecutionEnvelopeArtifactDigest derives a digest from the artifact
+// kind and exact text, preventing IR and generation evidence from aliasing.
+func ComputeExecutionEnvelopeArtifactDigest(input ExecutionEnvelopeArtifactDigestInput) ExecutionEnvelopeArtifactDigest {
+	output := ExecutionEnvelopeArtifactDigest{
+		Status: "UNKNOWN", NonExecuting: true, NonAuthorizing: true,
+	}
+	if !input.NonAuthorizing {
+		output.NonAuthorizing = false
+		output.MissingStage = "authorization-boundary"
+		return output
+	}
+	if input.ArtifactKind != "ir" && input.ArtifactKind != "generation" {
+		output.MissingStage = "artifact-kind"
+		return output
+	}
+	if strings.TrimSpace(input.ArtifactText) == "" {
+		output.ArtifactKind = input.ArtifactKind
+		output.MissingStage = "artifact-source"
+		return output
+	}
+	digest, err := Digest(struct {
+		ArtifactKind string
+		ArtifactText string
+	}{
+		ArtifactKind: input.ArtifactKind,
+		ArtifactText: input.ArtifactText,
+	})
+	if err != nil {
+		output.ArtifactKind = input.ArtifactKind
+		output.MissingStage = "artifact-digest"
+		return output
+	}
+	output.Status = "derived"
+	output.ArtifactKind = input.ArtifactKind
+	output.ArtifactDigest = digest
+	return output
+}
+
+// ExecutionEnvelopeDeclarationIRGenerationArtifactSourceInput connects the
+// exact declaration, IR, and generation texts in one non-executing boundary.
+type ExecutionEnvelopeDeclarationIRGenerationArtifactSourceInput struct {
+	DeclarationID       string
+	ContractID          string
+	DeclarationSource   string
+	IRSource            string
+	GenerationSource    string
+	NonAuthorizing      bool
+}
+
+// BindExecutionEnvelopeDeclarationIRGenerationFromSources computes every
+// source digest before reusing the existing declaration-to-generation bind.
+func BindExecutionEnvelopeDeclarationIRGenerationFromSources(input ExecutionEnvelopeDeclarationIRGenerationArtifactSourceInput) ExecutionEnvelopeDeclarationIRGenerationBinding {
+	source := ComputeExecutionEnvelopeDeclarationSourceDigest(ExecutionEnvelopeDeclarationSourceDigestInput{
+		DeclarationID:  input.DeclarationID,
+		ContractID:     input.ContractID,
+		SourceText:     input.DeclarationSource,
+		NonAuthorizing: input.NonAuthorizing,
+	})
+	if source.Status != "derived" {
+		return ExecutionEnvelopeDeclarationIRGenerationBinding{
+			Status: "UNKNOWN", MissingStage: source.MissingStage,
+			NonExecuting: source.NonExecuting, NonAuthorizing: source.NonAuthorizing,
+		}
+	}
+	ir := ComputeExecutionEnvelopeArtifactDigest(ExecutionEnvelopeArtifactDigestInput{
+		ArtifactKind: "ir", ArtifactText: input.IRSource, NonAuthorizing: true,
+	})
+	if ir.Status != "derived" {
+		return ExecutionEnvelopeDeclarationIRGenerationBinding{
+			Status: "UNKNOWN", MissingStage: "ir-source",
+			NonExecuting: true, NonAuthorizing: true,
+		}
+	}
+	generation := ComputeExecutionEnvelopeArtifactDigest(ExecutionEnvelopeArtifactDigestInput{
+		ArtifactKind: "generation", ArtifactText: input.GenerationSource, NonAuthorizing: true,
+	})
+	if generation.Status != "derived" {
+		return ExecutionEnvelopeDeclarationIRGenerationBinding{
+			Status: "UNKNOWN", MissingStage: "generation-source",
+			NonExecuting: true, NonAuthorizing: true,
+		}
+	}
+	return BindExecutionEnvelopeDeclarationIRGeneration(
+		source.DeclarationID, source.ContractID, source.DeclarationDigest,
+		ir.ArtifactDigest, generation.ArtifactDigest,
+	)
+}
