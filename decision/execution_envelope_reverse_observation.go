@@ -1,5 +1,10 @@
 package decision
 
+import (
+	"fmt"
+	"strings"
+)
+
 // ExecutionEnvelopeReverseObservationInput compares an observed provenance
 // boundary with the expected boundary without inferring missing evidence.
 type ExecutionEnvelopeReverseObservationInput struct {
@@ -57,4 +62,98 @@ func ObserveExecutionEnvelopeProvenanceReverse(input ExecutionEnvelopeReverseObs
 	output.Status = "reproduced"
 	output.EvidenceDigest = input.ObservedEvidenceDigest
 	return output
+}
+
+// ExecutionEnvelopeReverseObservationBinding seals the observation result
+// itself so a reverse observation can be used as provenance evidence later.
+type ExecutionEnvelopeReverseObservationBinding struct {
+	Status                 string
+	FirstMismatch          string
+	ObservedEvidenceDigest string
+	ObservationDigest      string
+	NonAuthorizing         bool
+}
+
+// BindExecutionEnvelopeReverseObservation content-addresses a reverse result
+// without turning reproduction or counterexamples into authorization.
+func BindExecutionEnvelopeReverseObservation(output ExecutionEnvelopeReverseObservationOutput) ExecutionEnvelopeReverseObservationBinding {
+	binding := ExecutionEnvelopeReverseObservationBinding{Status: "UNKNOWN", NonAuthorizing: true}
+	if !output.NonAuthorizing {
+		binding.NonAuthorizing = false
+		binding.FirstMismatch = "authorization-boundary"
+		return binding
+	}
+	switch output.Status {
+	case "UNKNOWN":
+		if strings.TrimSpace(output.FirstMismatch) == "" || strings.TrimSpace(output.EvidenceDigest) != "" {
+			binding.FirstMismatch = "observation-evidence"
+			return binding
+		}
+	case "reproduced", "counterexample":
+		if strings.TrimSpace(output.EvidenceDigest) == "" || (output.Status == "counterexample" && strings.TrimSpace(output.FirstMismatch) == "") {
+			binding.FirstMismatch = "observation-evidence"
+			return binding
+		}
+	default:
+		binding.FirstMismatch = "observation-status"
+		return binding
+	}
+	digest, err := Digest(struct {
+		Status         string
+		FirstMismatch  string
+		EvidenceDigest string
+	}{
+		Status:         output.Status,
+		FirstMismatch:  output.FirstMismatch,
+		EvidenceDigest: output.EvidenceDigest,
+	})
+	if err != nil {
+		binding.FirstMismatch = "observation-digest"
+		return binding
+	}
+	binding.Status = output.Status
+	binding.FirstMismatch = output.FirstMismatch
+	binding.ObservedEvidenceDigest = output.EvidenceDigest
+	binding.ObservationDigest = digest
+	return binding
+}
+
+// Validate replays the observation digest and keeps incomplete bindings
+// distinguishable from reproduced or counterexample results.
+func (binding ExecutionEnvelopeReverseObservationBinding) Validate() error {
+	if !binding.NonAuthorizing || strings.TrimSpace(binding.ObservationDigest) == "" {
+		return fmt.Errorf("reverse observation binding is incomplete")
+	}
+	switch binding.Status {
+	case "UNKNOWN":
+		if strings.TrimSpace(binding.FirstMismatch) == "" || strings.TrimSpace(binding.ObservedEvidenceDigest) != "" {
+			return fmt.Errorf("unknown reverse observation binding has invalid evidence")
+		}
+	case "reproduced":
+		if strings.TrimSpace(binding.FirstMismatch) != "" || strings.TrimSpace(binding.ObservedEvidenceDigest) == "" {
+			return fmt.Errorf("reproduced reverse observation binding has invalid evidence")
+		}
+	case "counterexample":
+		if strings.TrimSpace(binding.FirstMismatch) == "" || strings.TrimSpace(binding.ObservedEvidenceDigest) == "" {
+			return fmt.Errorf("counterexample reverse observation binding has invalid evidence")
+		}
+	default:
+		return fmt.Errorf("unsupported reverse observation status %q", binding.Status)
+	}
+	expected, err := Digest(struct {
+		Status         string
+		FirstMismatch  string
+		EvidenceDigest string
+	}{
+		Status:         binding.Status,
+		FirstMismatch:  binding.FirstMismatch,
+		EvidenceDigest: binding.ObservedEvidenceDigest,
+	})
+	if err != nil {
+		return err
+	}
+	if expected != binding.ObservationDigest {
+		return fmt.Errorf("reverse observation binding digest mismatch")
+	}
+	return nil
 }
