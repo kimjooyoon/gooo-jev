@@ -1,0 +1,17 @@
+package jevdecisionconfidenceledgerreceiptlink
+namespace jevdecisionconfidenceledgerreceiptlink
+
+entity DecisionConfidenceEvidenceLedgerTransition id "gooo://gooo-jev/decision-confidence-evidence-ledger-transition"
+  property CurrentEntryDigest string
+  property Status string
+
+entity ExecutionReceipt id "gooo://gooo-jev/execution-receipt"
+  property ReceiptDigest string
+
+entity DecisionConfidenceEvidenceLedgerReceiptLink id "gooo://gooo-jev/decision-confidence-evidence-ledger-receipt-link"
+  property TransitionEntryDigest string
+  property ExecutionReceiptDigest string
+  property Status string
+  property NonAuthorizing boolean
+
+activity LinkDecisionConfidenceEvidenceLedgerTransitionToExecutionReceipt(DecisionConfidenceEvidenceLedgerTransition, ExecutionReceipt) -> DecisionConfidenceEvidenceLedgerReceiptLink
