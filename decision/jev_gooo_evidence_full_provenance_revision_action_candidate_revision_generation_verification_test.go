@@ -1,6 +1,9 @@
 package decision
 
-import "testing"
+import (
+	"testing"
+	"time"
+)
 
 func admittedGeneratedCandidateRevisionForVerification(t *testing.T) ExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionCandidateRevisionGenerationGuardBinding {
 	t.Helper()
@@ -48,7 +51,7 @@ func TestVerifyExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionCandidat
 
 func TestVerifyExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionCandidateRevisionGenerationRejectsStaleGuard(t *testing.T) {
 	input := validGeneratedCandidateRevisionGuardInput(t)
-	input.Now = input.ObservationAt.Add(2 *  time.Minute)
+	input.Now = input.ObservationAt.Add(2 * time.Minute)
 	output := VerifyExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionCandidateRevisionGeneration(ExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionCandidateRevisionGenerationVerificationInput{
 		Guard: GuardExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionCandidateRevisionGeneration(input),
 		ReverseObservation: ExecutionEnvelopeReverseObservationOutput{
