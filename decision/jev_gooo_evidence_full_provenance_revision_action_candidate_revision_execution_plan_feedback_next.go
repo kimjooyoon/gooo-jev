@@ -143,7 +143,6 @@ func DeriveExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionCandidateRev
 	if nextAction == "" {
 		return unknown("feedback-direction")
 	}
-	directionName := directionForGoooExtendedLineageFeedback(input.Feedback.FeedbackStatus)
 	inputEvidenceDigest := digestJEVImprovementFeedbackInputs([]string{
 		input.Feedback.EvidenceDigest,
 		input.Feedback.MetricEvidenceDigest,
