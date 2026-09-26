@@ -70,12 +70,10 @@ func (b ExecutionEnvelopeGoooEvidenceFullProvenanceBinding) Validate() error {
 	}
 	bindingDigest, err := Digest(struct {
 		BaseBindingDigest         string
-		EvidenceBindingDigest     string
 		EvidenceDeclarationDigest string
 		ProvenanceEvidenceDigest  string
 	}{
 		BaseBindingDigest:         b.BaseBindingDigest,
-		EvidenceBindingDigest:     b.EvidenceBindingDigest,
 		EvidenceDeclarationDigest: b.EvidenceDeclarationDigest,
 		ProvenanceEvidenceDigest:  b.ProvenanceEvidenceDigest,
 	})
@@ -98,6 +96,7 @@ func (b ExecutionEnvelopeGoooEvidenceFullProvenanceBinding) Validate() error {
 		IRDigest:                  b.IRDigest,
 		GenerationDigest:          b.GenerationDigest,
 		BaseBindingDigest:         b.BaseBindingDigest,
+		EvidenceBindingDigest:     b.EvidenceBindingDigest,
 		EvidenceDeclarationDigest: b.EvidenceDeclarationDigest,
 		ReverseObservationDigest:  b.ReverseObservationDigest,
 		MetricDigest:              b.MetricDigest,
@@ -200,12 +199,10 @@ func BindExecutionEnvelopeGoooEvidenceFullProvenance(input ExecutionEnvelopeGooo
 	output.CompletenessDigest = full.CompletenessDigest
 	output.EvidenceBindingDigest, err = Digest(struct {
 		BaseBindingDigest         string
-		EvidenceBindingDigest     string
 		EvidenceDeclarationDigest string
 		ProvenanceEvidenceDigest  string
 	}{
 		BaseBindingDigest:         output.BaseBindingDigest,
-		EvidenceBindingDigest:     output.EvidenceBindingDigest,
 		EvidenceDeclarationDigest: output.EvidenceDeclarationDigest,
 		ProvenanceEvidenceDigest:  output.ProvenanceEvidenceDigest,
 	})
@@ -230,6 +227,7 @@ func BindExecutionEnvelopeGoooEvidenceFullProvenance(input ExecutionEnvelopeGooo
 		IRDigest:                  output.IRDigest,
 		GenerationDigest:          output.GenerationDigest,
 		BaseBindingDigest:         output.BaseBindingDigest,
+		EvidenceBindingDigest:     output.EvidenceBindingDigest,
 		EvidenceDeclarationDigest: output.EvidenceDeclarationDigest,
 		ReverseObservationDigest:  output.ReverseObservationDigest,
 		MetricDigest:              output.MetricDigest,
