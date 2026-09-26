@@ -1,37 +1,43 @@
 package decision
 
-// DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparison
-// compares review outcome feedback observations without inferring improvement.
-type DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparison struct {
-	PreviousFeedbackDigest string `json:"previous_feedback_digest"`
-	CurrentFeedbackDigest  string `json:"current_feedback_digest"`
-	Delta                  string `json:"delta"`
-	NonAuthorizing         bool   `json:"non_authorizing"`
-}
+import "testing"
 
-func CompareDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetric(previous, current DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetric) DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparison {
-	comparison := DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparison{
-		PreviousFeedbackDigest: previous.FeedbackDigest,
-		CurrentFeedbackDigest:  current.FeedbackDigest,
-		Delta:                  "unknown",
-		NonAuthorizing:         true,
+func TestDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonPreservesDirection(t *testing.T) {
+	previous := DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetric{
+		FeedbackDigest:     "previous",
+		RejectedCount:      1,
+		NonAuthorizing:     true,
 	}
-	if previous.FeedbackDigest == "" || current.FeedbackDigest == "" || !previous.NonAuthorizing || !current.NonAuthorizing {
-		return comparison
+	current := DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetric{
+		FeedbackDigest:     "current",
+		AnalysisReadyCount: 1,
+		NonAuthorizing:     true,
 	}
-	previousTotal := previous.AnalysisReadyCount + previous.RejectedCount + previous.HoldCount
-	currentTotal := current.AnalysisReadyCount + current.RejectedCount + current.HoldCount
-	if previousTotal != 1 || currentTotal != 1 {
-		comparison.Delta = "inconclusive"
-		return comparison
+	comparison := CompareDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetric(previous, current)
+	if comparison.Delta != "increased" || !comparison.NonAuthorizing {
+		t.Fatalf("review readiness increase was not preserved: %#v", comparison)
 	}
-	switch {
-	case current.AnalysisReadyCount > previous.AnalysisReadyCount:
-		comparison.Delta = "increased"
-	case current.AnalysisReadyCount < previous.AnalysisReadyCount:
-		comparison.Delta = "declined"
-	default:
-		comparison.Delta = "unchanged"
+
+	current.AnalysisReadyCount = 0
+	current.RejectedCount = 1
+	comparison = CompareDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetric(previous, current)
+	if comparison.Delta != "unchanged" || !comparison.NonAuthorizing {
+		t.Fatalf("unchanged review state was not preserved: %#v", comparison)
 	}
-	return comparison
+
+	previous.AnalysisReadyCount = 1
+	previous.RejectedCount = 0
+	current.AnalysisReadyCount = 0
+	current.RejectedCount = 0
+	current.HoldCount = 1
+	comparison = CompareDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetric(previous, current)
+	if comparison.Delta != "declined" || !comparison.NonAuthorizing {
+		t.Fatalf("review readiness decline was not preserved: %#v", comparison)
+	}
+
+	current.HoldCount = 2
+	comparison = CompareDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetric(previous, current)
+	if comparison.Delta != "inconclusive" || !comparison.NonAuthorizing {
+		t.Fatalf("invalid one-hot state escaped inconclusive: %#v", comparison)
+	}
 }

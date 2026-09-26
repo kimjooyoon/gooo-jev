@@ -1,43 +1,17 @@
-package decision
+package jevdecisionconfidenceledgerreceiptintegrityreviewreceiptmetricreviewfeedbackmetriccomparisonfeedbackreviewoutcomefeedbackmetriccomparisonfeedbackreviewoutcomefeedbackmetriccomparison
+namespace jevdecisionconfidenceledgerreceiptintegrityreviewreceiptmetricreviewfeedbackmetriccomparisonfeedbackreviewoutcomefeedbackmetriccomparisonfeedbackreviewoutcomefeedbackmetriccomparison
 
-import "testing"
+entity DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetric id "gooo://gooo-jev/decision-confidence-evidence-ledger-receipt-integrity-review-receipt-metric-review-feedback-metric-comparison-feedback-review-outcome-feedback-metric-comparison-feedback-review-outcome-feedback-metric"
+  property FeedbackDigest string
+  property AnalysisReadyCount integer
+  property RejectedCount integer
+  property HoldCount integer
+  property NonAuthorizing boolean
 
-func TestDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonPreservesDirection(t *testing.T) {
-	previous := DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetric{
-		FeedbackDigest:     "previous",
-		RejectedCount:      1,
-		NonAuthorizing:     true,
-	}
-	current := DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetric{
-		FeedbackDigest:     "current",
-		AnalysisReadyCount: 1,
-		NonAuthorizing:     true,
-	}
-	comparison := CompareDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetric(previous, current)
-	if comparison.Delta != "increased" || !comparison.NonAuthorizing {
-		t.Fatalf("review readiness increase was not preserved: %#v", comparison)
-	}
+entity DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparison id "gooo://gooo-jev/decision-confidence-evidence-ledger-receipt-integrity-review-receipt-metric-review-feedback-metric-comparison-feedback-review-outcome-feedback-metric-comparison-feedback-review-outcome-feedback-metric-comparison"
+  property PreviousFeedbackDigest string
+  property CurrentFeedbackDigest string
+  property Delta string
+  property NonAuthorizing boolean
 
-	current.AnalysisReadyCount = 0
-	current.RejectedCount = 1
-	comparison = CompareDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetric(previous, current)
-	if comparison.Delta != "unchanged" || !comparison.NonAuthorizing {
-		t.Fatalf("unchanged review state was not preserved: %#v", comparison)
-	}
-
-	previous.AnalysisReadyCount = 1
-	previous.RejectedCount = 0
-	current.AnalysisReadyCount = 0
-	current.RejectedCount = 0
-	current.HoldCount = 1
-	comparison = CompareDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetric(previous, current)
-	if comparison.Delta != "declined" || !comparison.NonAuthorizing {
-		t.Fatalf("review readiness decline was not preserved: %#v", comparison)
-	}
-
-	current.HoldCount = 2
-	comparison = CompareDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetric(previous, current)
-	if comparison.Delta != "inconclusive" || !comparison.NonAuthorizing {
-		t.Fatalf("invalid one-hot state escaped inconclusive: %#v", comparison)
-	}
-}
+activity CompareDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetric(DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetric, DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetric) -> DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparison
