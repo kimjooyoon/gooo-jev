@@ -1,0 +1,16 @@
+entity ExecutionEnvelopeJEVImprovementReviewGateLSPInput id "gooo://gooo-jev/improvement-review-gate-lsp-input"
+ property Decision ExecutionEnvelopeJEVImprovementReviewGateDecision
+ property NonAuthorizing boolean
+
+entity ExecutionEnvelopeJEVImprovementReviewGateLSPProjection id "gooo://gooo-jev/improvement-review-gate-lsp-projection"
+ property Status string
+ property Code string
+ property Severity string
+ property Message string
+ property DecisionDigest string
+ property EvidenceDigest string
+ property MissingStage string
+ property NonExecuting boolean
+ property NonAuthorizing boolean
+
+activity ProjectExecutionEnvelopeJEVImprovementReviewGateLSP(ExecutionEnvelopeJEVImprovementReviewGateLSPInput) -> ExecutionEnvelopeJEVImprovementReviewGateLSPProjection
