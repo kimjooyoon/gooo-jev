@@ -1,0 +1,7 @@
+package jevcyclerevisioncandidateconfidence
+namespace jevcyclerevisioncandidateconfidence
+
+entity ExecutionEnvelopeJEVCycleRevisionCandidateConfidenceInput id "gooo://gooo-jev/cycle-revision-candidate-confidence-input"
+entity ExecutionEnvelopeJEVCycleRevisionCandidateConfidenceBinding id "gooo://gooo-jev/cycle-revision-candidate-confidence-binding"
+
+activity CalibrateExecutionEnvelopeJEVRevisionCandidateConfidence(ExecutionEnvelopeJEVCycleRevisionCandidateConfidenceInput) -> ExecutionEnvelopeJEVCycleRevisionCandidateConfidenceBinding
