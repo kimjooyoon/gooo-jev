@@ -14,7 +14,7 @@ func TestFreshAtRejectsStaleAndFutureResults(t *testing.T) {
 	if result.FreshAt(now.Add(time.Second), 10*time.Second) {
 		t.Fatal("expected result beyond the freshness boundary to be stale")
 	}
-	if result.FreshAt(now.Add(-time.Second), 10*time.Second) {
+	if result.FreshAt(time.Unix(99, 0).UTC(), 10*time.Second) {
 		t.Fatal("future observations must not be treated as fresh")
 	}
 }
