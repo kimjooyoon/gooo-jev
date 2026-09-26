@@ -1,0 +1,7 @@
+package jevdecision
+namespace jevdecision
+
+entity DecisionSpec id "gooo://jev/decision/spec"
+entity DecisionReceipt id "gooo://jev/decision/receipt"
+
+activity ObserveDecision(DecisionSpec) -> DecisionReceipt
