@@ -1,0 +1,18 @@
+package jevexecutionenvelopereverseobservationtransitionmetric
+namespace jevexecutionenvelopereverseobservationtransitionmetric
+
+entity ExecutionEnvelopeReverseObservationTransitionMetricInput id "gooo://gooo-jev/reverse-observation-transition-metric-input"
+  property StableCount integer
+  property ChangedCount integer
+  property UnknownCount integer
+  property NonAuthorizing boolean
+
+entity ExecutionEnvelopeReverseObservationTransitionMetric id "gooo://gooo-jev/reverse-observation-transition-metric"
+  property Status string
+  property Total integer
+  property StableCount integer
+  property ChangedCount integer
+  property UnknownCount integer
+  property NonAuthorizing boolean
+
+activity MeasureExecutionEnvelopeReverseObservationTransitionMetric(ExecutionEnvelopeReverseObservationTransitionMetricInput) -> ExecutionEnvelopeReverseObservationTransitionMetric
