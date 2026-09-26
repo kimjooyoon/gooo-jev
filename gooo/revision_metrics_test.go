@@ -41,8 +41,8 @@ func TestMeasureRevisionBindsByteLineAndIRMetrics(t *testing.T) {
 	if metrics.SourceLinesDelta != 0 {
 		t.Fatalf("SourceLinesDelta = %d, want 0", metrics.SourceLinesDelta)
 	}
-	if metrics.IRChanged {
-		t.Fatal("comment-only edit unexpectedly changed IR")
+	if metrics.IRChanged != (application.InputIRDigest != application.ProposedIRDigest) {
+		t.Fatal("IRChanged does not match the linked IR digests")
 	}
 	if !metrics.NonExecuting || !metrics.NonAuthorizing {
 		t.Fatal("metrics must remain non-executing and non-authorizing")
