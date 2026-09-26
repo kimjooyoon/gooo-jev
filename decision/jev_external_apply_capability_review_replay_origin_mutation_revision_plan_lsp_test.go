@@ -34,7 +34,7 @@ func TestProjectJEVExternalApplyCapabilityReviewReplayOriginMutationRevisionPlan
 
 func TestProjectJEVExternalApplyCapabilityReviewReplayOriginMutationRevisionPlanLSPUnknown(t *testing.T) {
     plan := JEVExternalApplyCapabilityReviewReplayOriginMutationRevisionPlan{
-        Status:         jevExternalApplyCapabilityReviewOriginMutationRevisionPlanReady,
+        Status:         jevExternalApplyCapabilityReviewReplayOriginMutationRevisionPlanReady,
         ProposalStatus: jevExternalApplyCapabilityReviewReplayOriginMutationRevisionProposalReady,
         NonExecuting:   true,
         NonAuthorizing: true,
