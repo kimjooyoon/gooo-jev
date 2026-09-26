@@ -32,17 +32,17 @@ func TestGateJEVExternalApplyCapabilityReviewReplayOriginMutation(t *testing.T) 
     }{
         {
             name:     "approve",
-            decision: jevExternalApplyCapabilityReviewReplayOriginMutationReviewApprove,
+            decision: jevExternalApplyCapabilityReviewReplayOriginMutationReviewDecisionApprove,
             status:   jevExternalApplyCapabilityReviewReplayOriginMutationReviewApproved,
         },
         {
             name:     "hold",
-            decision: jevExternalApplyCapabilityReviewReplayOriginMutationReviewHold,
+            decision: jevExternalApplyCapabilityReviewReplayOriginMutationReviewDecisionHold,
             status:   jevExternalApplyCapabilityReviewReplayOriginMutationReviewHold,
         },
         {
             name:     "reject",
-            decision: jevExternalApplyCapabilityReviewReplayOriginMutationReviewReject,
+            decision: jevExternalApplyCapabilityReviewReplayOriginMutationReviewDecisionReject,
             status:   jevExternalApplyCapabilityReviewReplayOriginMutationReviewRejected,
         },
     }
@@ -69,7 +69,7 @@ func TestGateJEVExternalApplyCapabilityReviewReplayOriginMutation(t *testing.T) 
 }
 
 func TestGateJEVExternalApplyCapabilityReviewReplayOriginMutationNotNeeded(t *testing.T) {
-    proposal := testJEVExternalApplyCapabilityReviewReplayOriginMutation(
+    proposal := testJEVExternalApplyCapabilityReviewReplayOriginMutationProposal(
         jevExternalApplyCapabilityReviewReplayOriginConsistent,
         "origin-digest",
     )
@@ -86,13 +86,13 @@ func TestGateJEVExternalApplyCapabilityReviewReplayOriginMutationNotNeeded(t *te
 }
 
 func TestGateJEVExternalApplyCapabilityReviewReplayOriginMutationPreservesUnknownStage(t *testing.T) {
-    proposal := testJEVExternalApplyCapabilityReviewReplayOriginMutation(
+    proposal := testJEVExternalApplyCapabilityReviewReplayOriginMutationProposal(
         jevExternalApplyCapabilityReviewReplayOriginMismatch,
         "different-origin-digest",
     )
     gate := GateJEVExternalApplyCapabilityReviewReplayOriginMutation(JEVExternalApplyCapabilityReviewReplayOriginMutationReviewGateInput{
         Proposal:       proposal,
-        ReviewDecision: jevExternalApplyCapabilityReviewReplayOriginMutationReviewApprove,
+        ReviewDecision: jevExternalApplyCapabilityReviewReplayOriginMutationReviewDecisionApprove,
         NonAuthorizing: true,
     })
     if gate.Status != jevExternalApplyCapabilityReviewReplayOriginMutationReviewUnknown {
