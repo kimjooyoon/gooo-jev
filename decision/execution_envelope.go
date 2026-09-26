@@ -259,7 +259,8 @@ func NewExecutionReceipt(grant CapabilityGrant, boundary CapabilityBoundary, ide
 	} else if status != ExecutionCompleted {
 		receipt.Status = ExecutionUnknown
 		receipt.UnknownReason = "execution-not-terminal"
-	}	digest, err := receipt.computeDigest()
+	}
+	digest, err := receipt.computeDigest()
 	if err != nil {
 		return ExecutionReceipt{}, fmt.Errorf("digest execution receipt: %w", err)
 	}
@@ -359,7 +360,8 @@ func NewReverseObservation(receipt ExecutionReceipt, observedOutputDigest, verif
 	} else if strings.TrimSpace(verifierDigest) == "" {
 		observation.Status = ProvenanceUnknown
 		observation.MissingStage = "reverse-verifier"
-	}	digest, err := observation.computeDigest()
+	}
+	digest, err := observation.computeDigest()
 	if err != nil {
 		return ReverseObservation{}, fmt.Errorf("digest reverse observation: %w", err)
 	}
