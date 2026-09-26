@@ -253,6 +253,7 @@ type ExecutionEnvelopeProvenanceChainMetric struct {
 	ExpectedStageCount  int
 	MissingStage        string
 	CompletenessDigest  string
+	EvidenceDigest      string
 	NonExecuting        bool
 	NonAuthorizing      bool
 }
@@ -278,6 +279,7 @@ func MeasureExecutionEnvelopeProvenanceChainMetric(binding ExecutionEnvelopeProv
 		output.MissingStage = "provenance-validation"
 		return output
 	}
+	output.EvidenceDigest = binding.EvidenceDigest
 
 	stages := []struct {
 		name  string
@@ -320,4 +322,46 @@ func MeasureExecutionEnvelopeProvenanceChainMetric(binding ExecutionEnvelopeProv
 	}
 	output.CompletenessDigest = digest
 	return output
+}
+
+// Validate ensures the reported coverage count and digest can be replayed
+// without access to mutable execution state.
+func (metric ExecutionEnvelopeProvenanceChainMetric) Validate() error {
+	if !metric.NonExecuting || !metric.NonAuthorizing ||
+		metric.ExpectedStageCount != 5 || metric.ObservedStageCount < 0 ||
+		metric.ObservedStageCount > metric.ExpectedStageCount ||
+		strings.TrimSpace(metric.CompletenessDigest) == "" {
+		return fmt.Errorf("provenance chain metric is incomplete")
+	}
+	if metric.Status == "complete" {
+		if metric.ObservedStageCount != metric.ExpectedStageCount || strings.TrimSpace(metric.MissingStage) != "" {
+			return fmt.Errorf("complete provenance chain metric has partial coverage")
+		}
+	} else if metric.Status == "UNKNOWN" {
+		if metric.ObservedStageCount == metric.ExpectedStageCount || strings.TrimSpace(metric.MissingStage) == "" {
+			return fmt.Errorf("unknown provenance chain metric has no unresolved stage")
+		}
+	} else {
+		return fmt.Errorf("unsupported provenance chain metric status %q", metric.Status)
+	}
+	expected, err := Digest(struct {
+		Status             string
+		ObservedStageCount int
+		ExpectedStageCount int
+		MissingStage       string
+		EvidenceDigest     string
+	}{
+		Status:             metric.Status,
+		ObservedStageCount: metric.ObservedStageCount,
+		ExpectedStageCount: metric.ExpectedStageCount,
+		MissingStage:       metric.MissingStage,
+		EvidenceDigest:     metric.EvidenceDigest,
+	})
+	if err != nil {
+		return err
+	}
+	if expected != metric.CompletenessDigest {
+		return fmt.Errorf("provenance chain metric digest mismatch")
+	}
+	return nil
 }
