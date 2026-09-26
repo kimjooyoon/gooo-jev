@@ -1,0 +1,25 @@
+entity ExecutionEnvelopeJEVExecutionPlanSourceInput id "gooo://gooo-jev/execution-plan-source-input"
+  property PlanID string
+  property ContractID string
+  property TaskSource string
+  property WorkspaceSource string
+  property GatewaySource string
+  property ModelSource string
+  property SuspendResumeSource string
+  property NonAuthorizing boolean
+
+entity ExecutionEnvelopeJEVExecutionPlanSourceBinding id "gooo://gooo-jev/execution-plan-source-binding"
+  property Status string
+  property PlanID string
+  property ContractID string
+  property TaskDigest string
+  property WorkspaceDigest string
+  property GatewayDigest string
+  property ModelDigest string
+  property SuspendResumeDigest string
+  property PlanDigest string
+  property MissingStage string
+  property NonExecuting boolean
+  property NonAuthorizing boolean
+
+activity DeriveExecutionEnvelopeJEVExecutionPlanFromSource(ExecutionEnvelopeJEVExecutionPlanSourceInput) -> ExecutionEnvelopeJEVExecutionPlanSourceBinding
