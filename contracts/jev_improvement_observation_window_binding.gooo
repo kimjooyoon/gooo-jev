@@ -1,0 +1,31 @@
+package jevimprovementobservationwindowbinding
+namespace jevimprovementobservationwindowbinding
+
+entity ImprovementObservationWindowBindingInput id "gooo://gooo-jev/improvement-observation-window-binding-input"
+  property ReviewGateStatus string
+  property CandidateDigest string
+  property ReviewDigest string
+  property AttestationDigest string
+  property ObservationDigest string
+  property NotBefore string
+  property NotAfter string
+  property WindowStatus string
+  property MissingStage string
+  property ObservedAt string
+  property WindowDigest string
+  property ExecutionGranted boolean
+  property NonAuthorizing boolean
+
+entity ImprovementObservationWindowBinding id "gooo://gooo-jev/improvement-observation-window-binding"
+  property Status string
+  property ObservationOnly boolean
+  property CandidateDigest string
+  property ReviewDigest string
+  property WindowDigest string
+  property ObservationDigest string
+  property AdmissionDigest string
+  property MissingStage string
+  property ExecutionGranted boolean
+  property NonAuthorizing boolean
+
+activity BindImprovementObservationWindow(ImprovementObservationWindowBindingInput) -> ImprovementObservationWindowBinding
