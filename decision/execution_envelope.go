@@ -172,6 +172,9 @@ func NewCapabilityGrant(request CapabilityRequest, boundary CapabilityBoundary, 
 	if identity.Status != WorkloadIdentityObserved {
 		return CapabilityGrant{}, errors.New("capability grant requires observed workload identity")
 	}
+	if identity.SPIFFEID != request.Subject {
+		return CapabilityGrant{}, errors.New("workload identity does not match capability request subject")
+	}
 	if strings.TrimSpace(evidenceDigest) == "" {
 		return CapabilityGrant{}, errors.New("capability grant evidence digest is required")
 	}
