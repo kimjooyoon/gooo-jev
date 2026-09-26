@@ -1,31 +1,13 @@
-package decision
+package jevdecisionconfidenceledgerreceiptintegrityreviewreceiptmetricreviewfeedbackmetriccomparisonfeedbackreviewoutcomefeedbackmetriccomparisonfeedbackreviewoutcome
+namespace jevdecisionconfidenceledgerreceiptintegrityreviewreceiptmetricreviewfeedbackmetriccomparisonfeedbackreviewoutcomefeedbackmetriccomparisonfeedbackreviewoutcome
 
-// DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewOutcome
-// records external review without authorizing a change.
-type DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewOutcome struct {
-	HandoffDigest  string `json:"handoff_digest"`
-	Decision       string `json:"decision"`
-	Status         string `json:"status"`
-	NonAuthorizing bool   `json:"non_authorizing"`
-}
+entity DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewHandoff id "gooo://gooo-jev/decision-confidence-evidence-ledger-receipt-integrity-review-receipt-metric-review-feedback-metric-comparison-feedback-review-outcome-feedback-metric-comparison-feedback-review-handoff"
+  property Status string
 
-func ObserveDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewOutcome(handoff DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewHandoff, decision string) (DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewOutcome, error) {
-	digest, err := Digest(handoff)
-	if err != nil {
-		return DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewOutcome{}, err
-	}
-	outcome := DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewOutcome{
-		HandoffDigest:  digest,
-		Decision:       decision,
-		Status:         "unknown",
-		NonAuthorizing: true,
-	}
-	if handoff.Status != "ready-for-external-review" {
-		return outcome, nil
-	}
-	switch decision {
-	case "accepted-for-analysis", "rejected":
-		outcome.Status = decision
-	}
-	return outcome, nil
-}
+entity DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewOutcome id "gooo://gooo-jev/decision-confidence-evidence-ledger-receipt-integrity-review-receipt-metric-review-feedback-metric-comparison-feedback-review-outcome-feedback-metric-comparison-feedback-review-outcome"
+  property HandoffDigest string
+  property Decision string
+  property Status string
+  property NonAuthorizing boolean
+
+activity ObserveDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewOutcome(DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewHandoff) -> DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewOutcome
