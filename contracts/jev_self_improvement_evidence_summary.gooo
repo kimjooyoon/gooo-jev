@@ -1,0 +1,5 @@
+package jevselfimprovementevidencesummary
+namespace jevselfimprovementevidencesummary
+entity ExecutionEnvelopeJEVSelfImprovementEvidenceSummaryInput id "gooo://gooo-jev/self-improvement-evidence-summary-input"
+entity ExecutionEnvelopeJEVSelfImprovementEvidenceSummary id "gooo://gooo-jev/self-improvement-evidence-summary"
+activity BindExecutionEnvelopeJEVSelfImprovementEvidenceSummary(ExecutionEnvelopeJEVSelfImprovementEvidenceSummaryInput) -> ExecutionEnvelopeJEVSelfImprovementEvidenceSummary
