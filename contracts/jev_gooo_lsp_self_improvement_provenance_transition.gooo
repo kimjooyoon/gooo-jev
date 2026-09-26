@@ -1,0 +1,62 @@
+package jev.gooo.lsp.transition
+
+entity SelfImprovementProvenanceTransitionSymbolResult {
+    field status string
+    field missing_stage string
+    field source_digest string
+    field ir_digest string
+    field symbol_name string
+    field symbol_kind string
+    field symbol_digest string
+    field previous_lifecycle_observation_digest string
+    field current_lifecycle_observation_digest string
+    field previous_source_digest string
+    field current_source_digest string
+    field previous_proposed_source_digest string
+    field current_proposed_source_digest string
+    field previous_input_ir_digest string
+    field current_input_ir_digest string
+    field previous_proposed_ir_digest string
+    field current_proposed_ir_digest string
+    field previous_generated_source_digest string
+    field current_generated_source_digest string
+    field previous_generated_ir_digest string
+    field current_generated_ir_digest string
+    field previous_structure_digest string
+    field current_structure_digest string
+    field previous_metrics_binding_digest string
+    field current_metrics_binding_digest string
+    field previous_generation_assessment_digest string
+    field current_generation_assessment_digest string
+    field previous_changed_byte_count integer
+    field current_changed_byte_count integer
+    field previous_changed_line_count integer
+    field current_changed_line_count integer
+    field previous_ir_changed boolean
+    field current_ir_changed boolean
+    field previous_exact_source_match boolean
+    field current_exact_source_match boolean
+    field previous_structure_match boolean
+    field current_structure_match boolean
+    field source_changed boolean
+    field proposed_source_changed boolean
+    field input_ir_changed boolean
+    field proposed_ir_changed boolean
+    field generated_source_changed boolean
+    field generated_ir_changed boolean
+    field structure_changed boolean
+    field metrics_changed boolean
+    field generation_changed boolean
+    field transition_signal string
+    invariant non_executing
+    invariant non_authorizing
+}
+
+activity explain_self_improvement_provenance_transition {
+    input source
+    input symbol_name
+    input previous_revision_self_improvement_lifecycle_observation
+    input current_revision_self_improvement_lifecycle_observation
+    input revision_self_improvement_provenance_transition_observation
+    output self_improvement_provenance_transition_symbol_result
+}
