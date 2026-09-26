@@ -1,0 +1,7 @@
+package jevgeneration
+namespace jevgeneration
+entity GoooGenerationInput id "gooo://gooo-jev/generation/input"
+entity GoooGenerationReceipt id "gooo://gooo-jev/generation/receipt"
+entity GoooReverseObservation id "gooo://gooo-jev/generation/reverse-observation"
+activity GenerateGoooSource(GoooGenerationInput) -> GoooGenerationReceipt
+activity ObserveGoooReverse(GoooGenerationReceipt) -> GoooReverseObservation
