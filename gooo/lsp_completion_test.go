@@ -28,15 +28,12 @@ func TestCompleteReturnsProvenanceLinkedSymbols(t *testing.T) {
 func TestCompleteIncludesActivitiesByPrefix(t *testing.T) {
 	response := Complete(validContract, "Observe")
 	if len(response.Items) != 1 || response.Items[0].Kind != ActivitySymbol {
-		t.Fatalf("unexpected activity completions: %#v", response.Items)
+		t.Fatalf("unexpected activity completions: %#v", response)
 	}
 }
 
 func TestCompleteRetainsUnknownDiagnostics(t *testing.T) {
-	response := Complete("package jevdecision
-namespace jevdecision
-activity broken
-", "")
+	response := Complete("package jevdecision\nnamespace jevdecision\nactivity broken\n", "")
 	if response.Status != "UNKNOWN" || response.MissingStage != "syntax" {
 		t.Fatalf("unexpected unknown completion: %#v", response)
 	}
