@@ -1,0 +1,10 @@
+package jevreplayledgerendtoendcycle
+namespace jevreplayledgerendtoendcycle
+
+entity ExecutionEnvelopeJEVReplayLedgerEndToEndCycleInput id "gooo://gooo-jev/replay-ledger-end-to-end-cycle-input"
+property Checkpoint JEVFullProvenanceReplayLedgerCheckpoint
+property Ledger JEVImprovementReplayFeedbackLedger
+property ChangePlanDigest string
+property NonAuthorizing boolean
+
+activity ObserveJEVReplayLedgerCycleFromLedger(ExecutionEnvelopeJEVReplayLedgerEndToEndCycleInput) -> JEVReplayLedgerCycleObservation
