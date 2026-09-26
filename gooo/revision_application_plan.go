@@ -12,6 +12,7 @@ type RevisionApplicationPlan struct {
 	InputIRDigest   string
 	BindingDigest   string
 	CandidateDigest string
+	Candidate       RevisionCandidate
 	Edit            SourceEdit
 	EditDigest      string
 	PlanDigest      string
@@ -27,6 +28,7 @@ func PlanRevisionApplication(source string, binding RevisionCandidateBinding, ed
 		SourceDigest:    digestString(source),
 		BindingDigest:   binding.BindingDigest,
 		CandidateDigest: binding.CandidateDigest,
+		Candidate:       binding.Candidate,
 		Edit:            edit,
 		EditDigest:      edit.Digest,
 		NonExecuting:    true,
