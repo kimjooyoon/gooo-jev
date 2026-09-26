@@ -1,0 +1,7 @@
+package jev.gooo.revision.direction
+namespace jev.gooo.revision.direction
+
+entity RevisionFeedback id "urn:jev:gooo:revision-feedback"
+entity RevisionDirectionProposal id "urn:jev:gooo:revision-direction-proposal"
+
+activity ProposeRevisionDirection(RevisionFeedback) -> RevisionDirectionProposal
