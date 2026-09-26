@@ -1,0 +1,7 @@
+package jev.gooo.revision.quality
+namespace jev.gooo.revision.quality
+
+entity RevisionMetrics id "urn:jev:gooo:revision-metrics"
+entity RevisionQuality id "urn:jev:gooo:revision-quality"
+
+activity EvaluateRevisionMetrics(RevisionMetrics) -> RevisionQuality
