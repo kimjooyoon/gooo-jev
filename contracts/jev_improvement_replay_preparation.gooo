@@ -1,0 +1,4 @@
+package jevimprovementreplaypreparation
+namespace jevimprovementreplaypreparation
+entity JEVImprovementReplayPreparation id "gooo://gooo-jev/improvement-replay-preparation"
+activity PrepareJEVImprovementReplay(JEVImprovementReplayPreparationInput) -> JEVImprovementReplayPreparation
