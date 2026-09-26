@@ -1,0 +1,41 @@
+package jevrevisionselfimprovementcandidate
+namespace jevrevisionselfimprovementcandidate
+
+entity RevisionSelfImprovementIteration id "gooo://gooo-jev/revision-self-improvement-iteration"
+property IterationDigest string
+property CandidateSourceDigest string
+property FeedbackSignal string
+property NonAuthorizing boolean
+
+entity RevisionCandidatePlanObservation id "gooo://gooo-jev/revision-candidate-plan-observation"
+property ObservationDigest string
+property CandidateDigest string
+property SourceDigest string
+property MaterializationDigest string
+property PlanDigest string
+property BindingDigest string
+property EditDigest string
+property ObservationSignal string
+property PlanSignal string
+property NonAuthorizing boolean
+
+entity RevisionSelfImprovementCandidateObservation id "gooo://gooo-jev/revision-self-improvement-candidate-observation"
+property Status string
+property IterationDigest string
+property CandidatePlanObservationDigest string
+property CandidateDigest string
+property SourceDigest string
+property MaterializationDigest string
+property PlanDigest string
+property BindingDigest string
+property EditDigest string
+property FeedbackSignal string
+property ObservationSignal string
+property PlanSignal string
+property CandidatePlanObserved boolean
+property ObservationDigest string
+property MissingStage string
+property NonExecuting boolean
+property NonAuthorizing boolean
+
+activity ObserveRevisionSelfImprovementCandidate(RevisionSelfImprovementIteration, RevisionCandidatePlanObservation) -> RevisionSelfImprovementCandidateObservation
