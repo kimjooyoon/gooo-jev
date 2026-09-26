@@ -1,0 +1,4 @@
+package jevreplayoriginconsistency
+namespace jevreplayoriginconsistency
+entity JEVExternalApplyCapabilityReviewReplayOriginConsistency id "gooo://gooo-jev/decision-external-apply-capability-review-replay-origin-consistency"
+activity ReconcileJEVExternalApplyCapabilityReviewReplayOrigin(JEVExternalApplyCapabilityReviewReplayOriginConsistencyInput) -> JEVExternalApplyCapabilityReviewReplayOriginConsistency
