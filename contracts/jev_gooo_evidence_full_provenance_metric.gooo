@@ -1,0 +1,31 @@
+package jevgoooevidencefullprovenancemetric
+namespace jevgoooevidencefullprovenancemetric
+
+entity ExecutionEnvelopeGoooEvidenceFullProvenanceMetricInput id "gooo://gooo-jev/gooo-evidence-full-provenance-metric-input"
+property Binding GoooEvidenceFullProvenanceBinding
+property ObservedStatus string
+property ExpectedStatus string
+property ObservedMissingStage string
+property ExpectedMissingStage string
+property ObservedEvidenceDigest string
+property ExpectedEvidenceDigest string
+property MetricSource string
+property NonAuthorizing boolean
+
+entity ExecutionEnvelopeGoooEvidenceFullProvenanceMetric id "gooo://gooo-jev/gooo-evidence-full-provenance-metric"
+property Status string
+property MissingStage string
+property Classification string
+property ConfirmedCount integer
+property RefutedCount integer
+property UnknownCount integer
+property ConfirmedPermille integer
+property RefutedPermille integer
+property UnknownPermille integer
+property InputEvidenceDigest string
+property MetricSourceDigest string
+property EvidenceDigest string
+property NonExecuting boolean
+property NonAuthorizing boolean
+
+activity BindExecutionEnvelopeGoooEvidenceFullProvenanceMetric(ExecutionEnvelopeGoooEvidenceFullProvenanceMetricInput) -> ExecutionEnvelopeGoooEvidenceFullProvenanceMetric
