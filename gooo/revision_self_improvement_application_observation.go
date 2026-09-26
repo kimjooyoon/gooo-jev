@@ -5,51 +5,51 @@ import "fmt"
 // RevisionSelfImprovementApplicationObservation links an observed candidate
 // plan application to the current iteration without executing or authorizing it.
 type RevisionSelfImprovementApplicationObservation struct {
-	Status                    string
-	MissingStage              string
-	IterationDigest            string
-	PlanObservationDigest      string
+	Status                      string
+	MissingStage                string
+	IterationDigest             string
+	PlanObservationDigest       string
 	ApplicationObservationDigest string
-	PlanDigest                string
-	ApplicationDigest          string
-	ReceiptDigest              string
-	SourceDigest               string
-	ProposedSourceDigest       string
-	InputIRDigest              string
-	ProposedIRDigest           string
-	CandidateDigest            string
-	EditDigest                string
-	FeedbackSignal             string
-	ApplicationSignal          string
-	ApplicationObserved        bool
-	ObservationDigest          string
-	NonExecuting               bool
-	NonAuthorizing             bool
+	PlanDigest                  string
+	ApplicationDigest           string
+	ReceiptDigest               string
+	SourceDigest                string
+	ProposedSourceDigest        string
+	InputIRDigest               string
+	ProposedIRDigest            string
+	CandidateDigest             string
+	EditDigest                  string
+	FeedbackSignal              string
+	ApplicationSignal           string
+	ApplicationObserved         bool
+	ObservationDigest           string
+	NonExecuting                bool
+	NonAuthorizing              bool
 }
 
 // ObserveRevisionSelfImprovementApplication links an observed application
 // receipt to a candidate plan and current iteration without applying anything.
 func ObserveRevisionSelfImprovementApplication(iteration RevisionSelfImprovementIteration, planObservation RevisionCandidatePlanObservation, applicationObservation RevisionApplicationObservation) (RevisionSelfImprovementApplicationObservation, error) {
 	result := RevisionSelfImprovementApplicationObservation{
-		Status:                      "UNKNOWN",
-		MissingStage:                "revision-self-improvement-application",
-		IterationDigest:             iteration.IterationDigest,
-		PlanObservationDigest:       applicationObservation.PlanObservationDigest,
+		Status:                       "UNKNOWN",
+		MissingStage:                 "revision-self-improvement-application",
+		IterationDigest:              iteration.IterationDigest,
+		PlanObservationDigest:        applicationObservation.PlanObservationDigest,
 		ApplicationObservationDigest: applicationObservation.ObservationDigest,
-		PlanDigest:                  applicationObservation.PlanDigest,
-		ApplicationDigest:           applicationObservation.ApplicationDigest,
-		ReceiptDigest:               applicationObservation.ReceiptDigest,
-		SourceDigest:                applicationObservation.SourceDigest,
-		ProposedSourceDigest:        applicationObservation.ProposedSourceDigest,
-		InputIRDigest:               applicationObservation.InputIRDigest,
-		ProposedIRDigest:            applicationObservation.ProposedIRDigest,
-		CandidateDigest:             applicationObservation.CandidateDigest,
-		EditDigest:                 applicationObservation.EditDigest,
-		FeedbackSignal:              iteration.FeedbackSignal,
-		ApplicationSignal:           applicationObservation.ApplicationSignal,
-		ApplicationObserved:         applicationObservation.ApplicationObserved,
-		NonExecuting:               true,
-		NonAuthorizing:             true,
+		PlanDigest:                   applicationObservation.PlanDigest,
+		ApplicationDigest:             applicationObservation.ApplicationDigest,
+		ReceiptDigest:                 applicationObservation.ReceiptDigest,
+		SourceDigest:                  applicationObservation.SourceDigest,
+		ProposedSourceDigest:          applicationObservation.ProposedSourceDigest,
+		InputIRDigest:                 applicationObservation.InputIRDigest,
+		ProposedIRDigest:              applicationObservation.ProposedIRDigest,
+		CandidateDigest:               applicationObservation.CandidateDigest,
+		EditDigest:                   applicationObservation.EditDigest,
+		FeedbackSignal:               iteration.FeedbackSignal,
+		ApplicationSignal:             applicationObservation.ApplicationSignal,
+		ApplicationObserved:           applicationObservation.ApplicationObserved,
+		NonExecuting:                 true,
+		NonAuthorizing:               true,
 	}
 	setObservationDigest := func() {
 		result.ObservationDigest = digestRevisionSelfImprovementApplicationObservation(result)
@@ -71,6 +71,11 @@ func ObserveRevisionSelfImprovementApplication(iteration RevisionSelfImprovement
 		setObservationDigest()
 		return result, fmt.Errorf("application observation is not valid: %w", err)
 	}
+	if iteration.CandidateSourceDigest != applicationObservation.SourceDigest {
+		result.MissingStage = "revision-self-improvement-application-source-link"
+		setObservationDigest()
+		return result, fmt.Errorf("application source does not match the iteration candidate source")
+	}
 	if planObservation.ObservationDigest != applicationObservation.PlanObservationDigest ||
 		planObservation.PlanDigest != applicationObservation.PlanDigest ||
 		planObservation.SourceDigest != applicationObservation.SourceDigest ||
@@ -79,11 +84,6 @@ func ObserveRevisionSelfImprovementApplication(iteration RevisionSelfImprovement
 		result.MissingStage = "revision-self-improvement-application-plan-link"
 		setObservationDigest()
 		return result, fmt.Errorf("candidate plan and application observation are not linked")
-	}
-	if iteration.CandidateSourceDigest != applicationObservation.SourceDigest {
-		result.MissingStage = "revision-self-improvement-application-source-link"
-		setObservationDigest()
-		return result, fmt.Errorf("application source does not match the iteration candidate source")
 	}
 
 	result.Status = "BOUND"
