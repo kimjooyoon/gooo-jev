@@ -1,6 +1,7 @@
 package decision
 
 import (
+	"fmt"
 	"strings"
 	"time"
 )
@@ -8,34 +9,34 @@ import (
 // ExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionGuardInput
 // carries a revision candidate into the existing typed action guard.
 type ExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionGuardInput struct {
-	RevisionCandidate   ExecutionEnvelopeGoooEvidenceFullProvenanceDirectionRevisionCandidateBinding
-	CandidateID         string
-	ObservationDigest   string
-	ObservationAt       time.Time
-	Now                 time.Time
-	MaxAge              time.Duration
-	RequestedPath       string
-	AllowedPathPrefix   string
-	WriteRequested      bool
-	WriteAllowed        bool
+	RevisionCandidate    ExecutionEnvelopeGoooEvidenceFullProvenanceDirectionRevisionCandidateBinding
+	CandidateID          string
+	ObservationDigest    string
+	ObservationAt        time.Time
+	Now                  time.Time
+	MaxAge               time.Duration
+	RequestedPath        string
+	AllowedPathPrefix    string
+	WriteRequested       bool
+	WriteAllowed         bool
 	ConfirmationRequired bool
 	ConfirmationPresent  bool
-	NonAuthorizing      bool
+	NonAuthorizing       bool
 }
 
 // ExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionGuardBinding
 // keeps revision provenance attached to the guard disposition.
 type ExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionGuardBinding struct {
-	Status                    string
-	MissingStage              string
-	CandidateID               string
-	RevisionCandidateDigest   string
-	RevisionCandidateEvidenceDigest string
-	GuardStatus               string
-	GuardEvidenceDigest       string
-	EvidenceDigest            string
-	NonExecuting              bool
-	NonAuthorizing            bool
+	Status                           string
+	MissingStage                     string
+	CandidateID                      string
+	RevisionCandidateDigest          string
+	RevisionCandidateEvidenceDigest  string
+	GuardStatus                      string
+	GuardEvidenceDigest              string
+	EvidenceDigest                   string
+	NonExecuting                     bool
+	NonAuthorizing                   bool
 }
 
 func (b ExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionGuardBinding) Validate() error {
@@ -82,8 +83,10 @@ func GuardExecutionEnvelopeGoooEvidenceFullProvenanceRevisionAction(input Execut
 			stage = "revision-action-guard"
 		}
 		return ExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionGuardBinding{
-			Status: "UNKNOWN", MissingStage: stage,
-			NonExecuting: true, NonAuthorizing: true,
+			Status:         "UNKNOWN",
+			MissingStage:   stage,
+			NonExecuting:   true,
+			NonAuthorizing: true,
 		}
 	}
 	if !input.NonAuthorizing || !input.RevisionCandidate.NonAuthorizing {
@@ -116,7 +119,7 @@ func GuardExecutionEnvelopeGoooEvidenceFullProvenanceRevisionAction(input Execut
 		Status:                          guard.Status,
 		MissingStage:                    guard.MissingStage,
 		CandidateID:                     guard.CandidateID,
-		RevisionCandidateDigest:         input.RevisionCandidate.RevisionCandidateDigest,
+		RevisionCandidateDigest:          input.RevisionCandidate.RevisionCandidateDigest,
 		RevisionCandidateEvidenceDigest: input.RevisionCandidate.RevisionCandidateEvidenceDigest,
 		GuardStatus:                     guard.Status,
 		GuardEvidenceDigest:             guard.EvidenceDigest,
@@ -146,12 +149,12 @@ func digestJEVGoooEvidenceFullProvenanceRevisionActionGuard(
 	guardEvidenceDigest string,
 ) string {
 	digest, err := Digest(struct {
-		Status                       string
-		CandidateID                  string
-		RevisionCandidateDigest      string
+		Status                          string
+		CandidateID                     string
+		RevisionCandidateDigest         string
 		RevisionCandidateEvidenceDigest string
-		GuardStatus                  string
-		GuardEvidenceDigest          string
+		GuardStatus                     string
+		GuardEvidenceDigest             string
 	}{
 		Status:                          status,
 		CandidateID:                     candidateID,
