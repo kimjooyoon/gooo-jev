@@ -16,20 +16,20 @@ const (
 type MetricDeltaDirection string
 
 const (
-    MetricImproved  MetricDeltaDirection = "improved"
-    MetricRegressed MetricDeltaDirection = "regressed"
-    MetricUnchanged MetricDeltaDirection = "unchanged"
+    MetricImproved         MetricDeltaDirection = "improved"
+    MetricRegressed        MetricDeltaDirection = "regressed"
+    MetricUnchanged        MetricDeltaDirection = "unchanged"
     MetricDirectionUnknown MetricDeltaDirection = "unknown"
 )
 
 type MetricDelta struct {
-    MetricName    string
-    Before        float64
-    After         float64
+    MetricName     string
+    Before         float64
+    After          float64
     EvidenceDigest string
-    Status        MetricDeltaStatus
-    Direction     MetricDeltaDirection
-    DeltaDigest   string
+    Status         MetricDeltaStatus
+    Direction      MetricDeltaDirection
+    DeltaDigest    string
 }
 
 func NewMetricDelta(metricName string, before, after float64, evidenceDigest string, status MetricDeltaStatus) (MetricDelta, error) {
@@ -40,10 +40,8 @@ func NewMetricDelta(metricName string, before, after float64, evidenceDigest str
         EvidenceDigest: evidenceDigest,
         Status:         status,
     }
-    if err := delta.validateShape(); err != nil {
-        return MetricDelta{}, err
-    }
-    if status == MetricObserved {
+    switch status {
+    case MetricObserved:
         switch {
         case after > before:
             delta.Direction = MetricImproved
@@ -52,8 +50,11 @@ func NewMetricDelta(metricName string, before, after float64, evidenceDigest str
         default:
             delta.Direction = MetricUnchanged
         }
-    } else {
+    case MetricUnknown:
         delta.Direction = MetricDirectionUnknown
+    }
+    if err := delta.validateShape(); err != nil {
+        return MetricDelta{}, err
     }
     digest, err := Digest(delta)
     if err != nil {
