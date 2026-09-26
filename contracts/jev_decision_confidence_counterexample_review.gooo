@@ -1,0 +1,6 @@
+package jevdecisionconfidencecounterexamplereview
+namespace jevdecisionconfidencecounterexamplereview
+
+entity DecisionConfidenceCounterexampleReview id "gooo://gooo-jev/decision-confidence-counterexample-review"
+
+activity ReviewDecisionConfidenceCounterexample(DecisionConfidenceImprovementCounterexample, ImprovementCycle, ImprovementCycleReplay) -> ImprovementReviewReceipt
