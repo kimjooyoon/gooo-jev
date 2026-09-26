@@ -20,6 +20,7 @@ type ExecutionEnvelopeProvenanceChainLSPBinding struct {
 	MissingStageIndex   int
 	EvidencePrefixDigest string
 	ChainEvidenceDigest string
+	ChainBindingDigest  string
 	NonAuthorizing      bool
 }
 
@@ -35,6 +36,10 @@ func ProjectExecutionEnvelopeProvenanceChainLSP(input ExecutionEnvelopeProvenanc
 		output.MissingStage = "authorization-boundary"
 		return output
 	}
+	if err := input.Chain.Validate(); err != nil {
+		output.Code = "chain-integrity"
+		return output
+	}
 	if input.Chain.Status == "ready" {
 		projected := ProjectExecutionEnvelopeLSPDiagnostic(ExecutionEnvelopeLSPDiagnosticInput{
 			Status:              "clear",
@@ -48,6 +53,7 @@ func ProjectExecutionEnvelopeProvenanceChainLSP(input ExecutionEnvelopeProvenanc
 		output.Code = projected.Code
 		output.EvidencePrefixDigest = projected.EvidencePrefixDigest
 		output.ChainEvidenceDigest = input.Chain.EvidenceDigest
+		output.ChainBindingDigest = input.Chain.BindingDigest
 		return output
 	}
 	if input.Chain.MissingStage == "" {
@@ -71,5 +77,6 @@ func ProjectExecutionEnvelopeProvenanceChainLSP(input ExecutionEnvelopeProvenanc
 	output.MissingStageIndex = projected.MissingStageIndex
 	output.EvidencePrefixDigest = projected.EvidencePrefixDigest
 	output.ChainEvidenceDigest = input.Chain.EvidenceDigest
+	output.ChainBindingDigest = input.Chain.BindingDigest
 	return output
 }
