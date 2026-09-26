@@ -1,0 +1,29 @@
+package jevrevisionselfimprovementfeedbacklsp
+namespace jevrevisionselfimprovementfeedbacklsp
+
+entity RevisionSelfImprovementFeedbackLSPInput id "gooo://gooo-jev/revision-self-improvement-feedback-lsp-input"
+property SourceText string
+property SymbolName string
+property Feedback RevisionSelfImprovementFeedback
+property NonAuthorizing boolean
+
+entity RevisionSelfImprovementFeedbackLSPProjection id "gooo://gooo-jev/revision-self-improvement-feedback-lsp-projection"
+property Status string
+property SourceDigest string
+property IRDigest string
+property SymbolName string
+property SymbolDigest string
+property WindowDigest string
+property FeedbackDigest string
+property ComparisonSignal string
+property FeedbackSignal string
+property FeedbackReason string
+property RequiresObservation boolean
+property RequiresReview boolean
+property RequiresInspection boolean
+property RequiresMeasurement boolean
+property MissingStage string
+property NonExecuting boolean
+property NonAuthorizing boolean
+
+activity ExplainRevisionSelfImprovementFeedback(RevisionSelfImprovementFeedbackLSPInput) -> RevisionSelfImprovementFeedbackLSPProjection
