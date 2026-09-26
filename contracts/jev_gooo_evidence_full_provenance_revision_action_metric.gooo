@@ -1,0 +1,25 @@
+package jevgoooevidencefullprovenancerevisionactionmetric
+namespace jevgoooevidencefullprovenancerevisionactionmetric
+
+entity ExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionMetricInput id "gooo://gooo-jev/gooo-evidence-full-provenance-revision-action-metric-input"
+property Projection GoooEvidenceFullProvenanceRevisionActionLSPBinding
+property MetricName string
+property AdditionalUnknownCount integer
+property NonAuthorizing boolean
+
+entity ExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionMetricBinding id "gooo://gooo-jev/gooo-evidence-full-provenance-revision-action-metric"
+property Status string
+property MissingStage string
+property MetricName string
+property Total integer
+property VerifiedCount integer
+property ReviewCount integer
+property CounterexampleCount integer
+property UnknownCount integer
+property ProjectionEvidenceDigest string
+property MetricEvidenceDigest string
+property EvidenceDigest string
+property NonExecuting boolean
+property NonAuthorizing boolean
+
+activity MeasureExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionMetric(ExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionMetricInput) -> ExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionMetricBinding
