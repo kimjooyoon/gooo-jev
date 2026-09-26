@@ -1,0 +1,5 @@
+package jevreviewledgermetricbinding
+namespace jevreviewledgermetricbinding
+entity ExecutionEnvelopeJEVReviewLedgerMetricBindingInput id "gooo://gooo-jev/review-ledger-metric-binding-input"
+entity ExecutionEnvelopeJEVReviewLedgerMetricBinding id "gooo://gooo-jev/review-ledger-metric-binding"
+activity BindExecutionEnvelopeJEVReviewLedgerToMetric(ExecutionEnvelopeJEVReviewLedgerMetricBindingInput) -> ExecutionEnvelopeJEVReviewLedgerMetricBinding
