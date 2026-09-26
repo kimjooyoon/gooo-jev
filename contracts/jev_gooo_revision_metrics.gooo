@@ -1,0 +1,7 @@
+package jev.gooo.revision.metrics
+namespace jev.gooo.revision.metrics
+
+entity RevisionApplication id "urn:jev:gooo:revision-application"
+entity RevisionMetrics id "urn:jev:gooo:revision-metrics"
+
+activity MeasureRevision(RevisionApplication) -> RevisionMetrics
