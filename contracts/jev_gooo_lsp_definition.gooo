@@ -1,0 +1,7 @@
+package jev.gooo.lsp.definition
+namespace jev.gooo.lsp.definition
+
+entity DefinitionRequest id "urn:jev:gooo:lsp:definition-request"
+entity DefinitionResult id "urn:jev:gooo:lsp:definition-result"
+
+activity Definition(DefinitionRequest) -> DefinitionResult
