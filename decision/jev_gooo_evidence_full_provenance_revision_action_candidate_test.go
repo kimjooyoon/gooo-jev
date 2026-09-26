@@ -81,6 +81,27 @@ func TestGenerateExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionCandid
 		direction.CandidateSource,
 		direction.InputEvidenceDigest,
 	)
+	direction.EvidenceDigest, _ = Digest(struct {
+		MetricEvidenceDigest      string
+		FeedbackDigest            string
+		AggregationEvidenceDigest string
+		DirectiveStatus           string
+		Directive                 string
+		CandidateDigest           string
+		CandidateSource           string
+		InputEvidenceDigest       string
+		DirectionEvidenceDigest   string
+	}{
+		MetricEvidenceDigest:      direction.MetricEvidenceDigest,
+		FeedbackDigest:            direction.FeedbackDigest,
+		AggregationEvidenceDigest: direction.AggregationEvidenceDigest,
+		DirectiveStatus:           direction.DirectiveStatus,
+		Directive:                 direction.Directive,
+		CandidateDigest:           direction.CandidateDigest,
+		CandidateSource:           direction.CandidateSource,
+		InputEvidenceDigest:       direction.InputEvidenceDigest,
+		DirectionEvidenceDigest:   direction.DirectionEvidenceDigest,
+	})
 	output := GenerateExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionCandidate(ExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionCandidateInput{
 		Feedback:             feedback,
 		Direction:            direction,
