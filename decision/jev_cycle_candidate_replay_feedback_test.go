@@ -36,15 +36,18 @@ func cycleCandidateReplayCandidate(cycle JEVImprovementCycleObservation) Executi
 }
 
 func cycleCandidateReplayReverse(status string) ExecutionEnvelopeReverseObservationBinding {
+	observedEvidence := status + "-evidence"
+	expectedEvidence := observedEvidence
 	expectedStatus := "ready"
 	if status == "counterexample" {
 		expectedStatus = "hold"
+		expectedEvidence = "expected-evidence"
 	}
 	return BindExecutionEnvelopeReverseObservation(ObserveExecutionEnvelopeProvenanceReverse(ExecutionEnvelopeReverseObservationInput{
 		ObservedStatus: "ready",
 		ExpectedStatus: expectedStatus,
-		ObservedEvidenceDigest: status + "-evidence",
-		ExpectedEvidenceDigest: "expected-evidence",
+		ObservedEvidenceDigest: observedEvidence,
+		ExpectedEvidenceDigest: expectedEvidence,
 		NonAuthorizing: true,
 	}))
 }
