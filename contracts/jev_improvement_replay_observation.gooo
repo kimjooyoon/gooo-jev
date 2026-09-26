@@ -1,0 +1,4 @@
+package jevimprovementreplayobservation
+namespace jevimprovementreplayobservation
+entity JEVImprovementReplayObservation id "gooo://gooo-jev/improvement-replay-observation"
+activity ObserveJEVImprovementReplay(JEVImprovementReplayObservationInput) -> JEVImprovementReplayObservation
