@@ -1,0 +1,7 @@
+package jev.gooo.lsp.document.symbols
+namespace jev.gooo.lsp.document.symbols
+
+entity DocumentSymbolsRequest id "urn:jev:gooo:lsp:document-symbols-request"
+entity DocumentSymbolResult id "urn:jev:gooo:lsp:document-symbol-result"
+
+activity DocumentSymbols(DocumentSymbolsRequest) -> DocumentSymbolResult
