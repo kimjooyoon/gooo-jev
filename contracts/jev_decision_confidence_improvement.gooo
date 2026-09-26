@@ -1,0 +1,9 @@
+package jevdecisionconfidenceimprovement
+namespace jevdecisionconfidenceimprovement
+
+entity DecisionConfidenceAssessment id "gooo://gooo-jev/decision-confidence-assessment"
+entity DecisionConfidenceObservation id "gooo://gooo-jev/decision-confidence-observation"
+entity DecisionConfidenceObservationReplay id "gooo://gooo-jev/decision-confidence-observation-replay"
+entity DecisionConfidenceImprovementSignal id "gooo://gooo-jev/decision-confidence-improvement-signal"
+
+activity DeriveDecisionConfidenceImprovementSignal(DecisionConfidenceAssessment) -> DecisionConfidenceImprovementSignal
