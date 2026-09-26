@@ -1,0 +1,33 @@
+package jevcandidatematerializationadmissionevaluationoutcomefeedbackrevisionproposal
+
+namespace jevcandidatematerializationadmissionevaluationoutcomefeedbackrevisionproposal
+
+entity CandidateMaterializationAdmissionEvaluationOutcomeFeedbackRevisionProposalBridgeInput {
+  field proposal_decision string
+  field proposal_target string
+  field proposal_digest string
+  field proposal_source string
+  field proposal_evidence_digest string
+  field non_authorizing bool
+}
+
+entity CandidateMaterializationAdmissionEvaluationOutcomeFeedbackRevisionProposalBridge {
+  field revision_proposal_status string
+  field proposal_decision string
+  field proposal_target string
+  field proposal_digest string
+  field proposal_source string
+  field proposal_evidence_digest string
+  field bridge_digest string
+  field non_executing bool
+  field non_authorizing bool
+}
+
+activity BindCandidateMaterializationAdmissionEvaluationOutcomeFeedbackRevisionProposalBridge {
+  input CandidateMaterializationAdmissionEvaluationOutcomeFeedbackRevisionProposalBridgeInput
+  output CandidateMaterializationAdmissionEvaluationOutcomeFeedbackRevisionProposalBridge
+  effect provenance-only
+  effect execution none
+  effect authorization none
+}
+
