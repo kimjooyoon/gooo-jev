@@ -1,14 +1,30 @@
-package jevdecisionconfidenceledgerreceiptintegrityreviewreceiptmetricreviewfeedbackmetriccomparisonfeedbackreviewoutcomefeedbackmetriccomparisonfeedbackcounterexample
-namespace jevdecisionconfidenceledgerreceiptintegrityreviewreceiptmetricreviewfeedbackmetriccomparisonfeedbackreviewoutcomefeedbackmetriccomparisonfeedbackcounterexample
+package decision
 
-entity DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedback id "gooo://gooo-jev/decision-confidence-evidence-ledger-receipt-integrity-review-receipt-metric-review-feedback-metric-comparison-feedback-review-outcome-feedback-metric-comparison-feedback"
-  property Delta string
-  property Status string
+// DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackCounterexample
+// preserves review-required comparison feedback without creating a candidate.
+type DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackCounterexample struct {
+	FeedbackDigest string `json:"feedback_digest"`
+	Delta          string `json:"delta"`
+	Status         string `json:"status"`
+	NonAuthorizing bool   `json:"non_authorizing"`
+}
 
-entity DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackCounterexample id "gooo://gooo-jev/decision-confidence-evidence-ledger-receipt-integrity-review-receipt-metric-review-feedback-metric-comparison-feedback-review-outcome-feedback-metric-comparison-feedback-counterexample"
-  property FeedbackDigest string
-  property Delta string
-  property Status string
-  property NonAuthorizing boolean
-
-activity ObserveDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackCounterexample(DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedback) -> DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackCounterexample
+func ObserveDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackCounterexample(feedback DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedback) (DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackCounterexample, error) {
+	digest, err := Digest(feedback)
+	if err != nil {
+		return DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackCounterexample{}, err
+	}
+	counterexample := DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackCounterexample{
+		FeedbackDigest: digest,
+		Delta:          feedback.Delta,
+		Status:         "unknown",
+		NonAuthorizing: true,
+	}
+	switch feedback.Status {
+	case "review-required":
+		counterexample.Status = "counterexample"
+	case "observation-only":
+		counterexample.Status = "no-counterexample"
+	}
+	return counterexample, nil
+}
