@@ -67,9 +67,9 @@ func (b ExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionDirectionBindin
 		DirectiveStatus:            b.DirectiveStatus,
 		Directive:                 b.Directive,
 		CandidateDigest:            b.CandidateDigest,
-		CandidateSource:            b.CandidateSource,
-		InputEvidenceDigest:        b.InputEvidenceDigest,
-		DirectionEvidenceDigest:    b.DirectionEvidenceDigest,
+		CandidateSource:           b.CandidateSource,
+		InputEvidenceDigest:       b.InputEvidenceDigest,
+		DirectionEvidenceDigest:   b.DirectionEvidenceDigest,
 	})
 	if err != nil || b.EvidenceDigest != expected {
 		return fmt.Errorf("Gooo revision action direction digest mismatch")
@@ -109,7 +109,7 @@ func DeriveExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionDirection(in
 		Confirmed:           input.Feedback.Confirmed,
 		Refuted:             input.Feedback.Refuted,
 		Unknown:             input.Feedback.Unknown,
-		InputEvidenceDigest: digestJEVImprovementFeedbackInputs([]string{input.Feedback.FeedbackEvidenceDigest}),
+		InputEvidenceDigest: digestJEVImprovementFeedbackInputs([]string{input.Feedback.FeedbackDigest}),
 		EvidenceDigest:      input.Feedback.AggregationEvidenceDigest,
 		NonExecuting:        true,
 		NonAuthorizing:      true,
@@ -158,7 +158,7 @@ func DeriveExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionDirection(in
 		MetricEvidenceDigest:      output.MetricEvidenceDigest,
 		FeedbackDigest:            output.FeedbackDigest,
 		AggregationEvidenceDigest: output.AggregationEvidenceDigest,
-		DirectiveStatus:            output.DirectiveStatus,
+		DirectiveStatus:           output.DirectiveStatus,
 		Directive:                 output.Directive,
 		CandidateDigest:           output.CandidateDigest,
 		CandidateSource:           output.CandidateSource,
