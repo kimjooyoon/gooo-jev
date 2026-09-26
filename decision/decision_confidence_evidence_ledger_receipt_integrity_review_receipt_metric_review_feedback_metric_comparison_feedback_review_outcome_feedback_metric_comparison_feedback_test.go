@@ -1,30 +1,37 @@
 package decision
 
-// DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedback
-// preserves comparison outcomes as review input without selecting a change.
-type DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedback struct {
-	ComparisonDigest string `json:"comparison_digest"`
-	Delta            string `json:"delta"`
-	Status           string `json:"status"`
-	NonAuthorizing   bool   `json:"non_authorizing"`
-}
+import "testing"
 
-func DeriveDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedback(comparison DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparison) (DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedback, error) {
-	digest, err := Digest(comparison)
+func TestDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackPreservesGuardrails(t *testing.T) {
+	comparison := DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparison{
+		PreviousFeedbackDigest: "previous",
+		CurrentFeedbackDigest:  "current",
+		Delta:                  "declined",
+		NonAuthorizing:         true,
+	}
+	feedback, err := DeriveDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedback(comparison)
 	if err != nil {
-		return DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedback{}, err
+		t.Fatalf("derive declined feedback: %v", err)
 	}
-	feedback := DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedback{
-		ComparisonDigest: digest,
-		Delta:            comparison.Delta,
-		Status:           "hold",
-		NonAuthorizing:   true,
+	if feedback.Status != "review-required" || feedback.ComparisonDigest == "" || !feedback.NonAuthorizing {
+		t.Fatalf("unexpected declined feedback: %#v", feedback)
 	}
-	switch comparison.Delta {
-	case "declined":
-		feedback.Status = "review-required"
-	case "increased", "unchanged":
-		feedback.Status = "observation-only"
+
+	comparison.Delta = "increased"
+	feedback, err = DeriveDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedback(comparison)
+	if err != nil {
+		t.Fatalf("derive increased feedback: %v", err)
 	}
-	return feedback, nil
+	if feedback.Status != "observation-only" || !feedback.NonAuthorizing {
+		t.Fatalf("increased state escaped observation-only: %#v", feedback)
+	}
+
+	comparison.Delta = "inconclusive"
+	feedback, err = DeriveDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedback(comparison)
+	if err != nil {
+		t.Fatalf("derive inconclusive feedback: %v", err)
+	}
+	if feedback.Status != "hold" || !feedback.NonAuthorizing {
+		t.Fatalf("inconclusive state escaped hold: %#v", feedback)
+	}
 }
