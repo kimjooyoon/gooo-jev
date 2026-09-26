@@ -1,0 +1,8 @@
+package jevreplayledgermetric
+namespace jevreplayledgermetric
+
+entity ExecutionEnvelopeJEVReplayLedgerMetricInput id "gooo://gooo-jev/replay-ledger-metric-input"
+property Ledger JEVImprovementReplayFeedbackLedger
+property NonAuthorizing boolean
+
+activity MeasureJEVReplayLedgerMetric(ExecutionEnvelopeJEVReplayLedgerMetricInput) -> JEVReplayLedgerMetric
