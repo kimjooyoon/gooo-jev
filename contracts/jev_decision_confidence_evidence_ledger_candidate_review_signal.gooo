@@ -1,0 +1,12 @@
+package jevdecisionconfidenceledgercandidatereviewsignal
+namespace jevdecisionconfidenceledgercandidatereviewsignal
+
+entity DecisionConfidenceEvidenceLedgerExternalReviewOutcome id "gooo://gooo-jev/decision-confidence-evidence-ledger-external-review-outcome"
+  property Status string
+
+entity DecisionConfidenceEvidenceLedgerCandidateReviewSignal id "gooo://gooo-jev/decision-confidence-evidence-ledger-candidate-review-signal"
+  property ReviewOutcomeDigest string
+  property Status string
+  property NonAuthorizing boolean
+
+activity DeriveDecisionConfidenceEvidenceLedgerCandidateReviewSignal(DecisionConfidenceEvidenceLedgerExternalReviewOutcome) -> DecisionConfidenceEvidenceLedgerCandidateReviewSignal

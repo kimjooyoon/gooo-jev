@@ -1,0 +1,16 @@
+package jevexecutionenvelopeauditdispositionmetric
+namespace jevexecutionenvelopeauditdispositionmetric
+
+entity ExecutionEnvelopeAuditDispositionMetricInput id "gooo://gooo-jev/execution-audit-disposition-metric-input"
+  property AuditOnlyCount integer
+  property ReviewOnlyCount integer
+  property BlockedCount integer
+  property NonAuthorizing boolean
+
+entity ExecutionEnvelopeAuditDispositionMetric id "gooo://gooo-jev/execution-audit-disposition-metric"
+  property Status string
+  property Total integer
+  property DominantMode string
+  property NonAuthorizing boolean
+
+activity MeasureExecutionEnvelopeAuditDispositionMetric(ExecutionEnvelopeAuditDispositionMetricInput) -> ExecutionEnvelopeAuditDispositionMetric

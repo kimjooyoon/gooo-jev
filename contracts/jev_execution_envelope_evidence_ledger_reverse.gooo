@@ -1,0 +1,19 @@
+package jevexecutionenvelopeevidenceledgerreverse
+namespace jevexecutionenvelopeevidenceledgerreverse
+
+entity ExecutionEnvelopeEvidenceLedgerReverseInput id "gooo://gooo-jev/execution-envelope-evidence-ledger-reverse-input"
+  property ObservedStatus string
+  property ExpectedStatus string
+  property ObservedLedgerDigest string
+  property ExpectedLedgerDigest string
+  property ObservedMissingStage string
+  property ExpectedMissingStage string
+  property NonAuthorizing boolean
+
+entity ExecutionEnvelopeEvidenceLedgerReverse id "gooo://gooo-jev/execution-envelope-evidence-ledger-reverse"
+  property Status string
+  property FirstMismatch string
+  property LedgerDigest string
+  property NonAuthorizing boolean
+
+activity ObserveExecutionEnvelopeEvidenceLedgerReverse(ExecutionEnvelopeEvidenceLedgerReverseInput) -> ExecutionEnvelopeEvidenceLedgerReverse

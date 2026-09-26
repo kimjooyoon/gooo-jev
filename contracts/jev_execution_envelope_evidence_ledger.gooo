@@ -1,0 +1,20 @@
+package jevexecutionenvelopeevidenceledger
+namespace jevexecutionenvelopeevidenceledger
+
+entity ExecutionEnvelopeEvidenceLedgerInput id "gooo://gooo-jev/execution-envelope-evidence-ledger-input"
+  property DeclarationDigest string
+  property IRDigest string
+  property GenerationDigest string
+  property ReverseObservationDigest string
+  property MetricDigest string
+  property FeedbackDigest string
+  property OutcomeDigest string
+  property NonAuthorizing boolean
+
+entity ExecutionEnvelopeEvidenceLedger id "gooo://gooo-jev/execution-envelope-evidence-ledger"
+  property Status string
+  property LedgerDigest string
+  property MissingStage string
+  property NonAuthorizing boolean
+
+activity SealExecutionEnvelopeEvidenceLedger(ExecutionEnvelopeEvidenceLedgerInput) -> ExecutionEnvelopeEvidenceLedger

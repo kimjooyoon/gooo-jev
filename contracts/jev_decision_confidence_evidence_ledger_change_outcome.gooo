@@ -1,0 +1,14 @@
+package jevdecisionconfidenceledgerchangeoutcome
+namespace jevdecisionconfidenceledgerchangeoutcome
+
+entity DecisionConfidenceEvidenceLedgerChangePlanObservation id "gooo://gooo-jev/decision-confidence-evidence-ledger-change-plan-observation"
+  property PlanDigest string
+  property Status string
+
+entity DecisionConfidenceEvidenceLedgerChangeOutcome id "gooo://gooo-jev/decision-confidence-evidence-ledger-change-outcome"
+  property PlanDigest string
+  property Outcome string
+  property Status string
+  property NonAuthorizing boolean
+
+activity ObserveDecisionConfidenceEvidenceLedgerChangeOutcome(DecisionConfidenceEvidenceLedgerChangePlanObservation) -> DecisionConfidenceEvidenceLedgerChangeOutcome

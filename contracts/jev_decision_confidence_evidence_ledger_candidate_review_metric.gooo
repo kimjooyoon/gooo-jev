@@ -1,0 +1,16 @@
+package jevdecisionconfidenceledgercandidatereviewmetric
+namespace jevdecisionconfidenceledgercandidatereviewmetric
+
+entity DecisionConfidenceEvidenceLedgerCandidateReviewSignal id "gooo://gooo-jev/decision-confidence-evidence-ledger-candidate-review-signal"
+  property ReviewOutcomeDigest string
+  property Status string
+
+entity DecisionConfidenceEvidenceLedgerCandidateReviewMetric id "gooo://gooo-jev/decision-confidence-evidence-ledger-candidate-review-metric"
+  property SignalDigest string
+  property ReadyCount integer
+  property RejectedCount integer
+  property HoldCount integer
+  property Status string
+  property NonAuthorizing boolean
+
+activity ObserveDecisionConfidenceEvidenceLedgerCandidateReviewMetric(DecisionConfidenceEvidenceLedgerCandidateReviewSignal) -> DecisionConfidenceEvidenceLedgerCandidateReviewMetric

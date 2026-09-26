@@ -1,0 +1,16 @@
+package jevexecutionenvelopeauditdisposition
+namespace jevexecutionenvelopeauditdisposition
+
+entity ExecutionEnvelopeAuditDispositionInput id "gooo://gooo-jev/execution-audit-disposition-input"
+  property LedgerStatus string
+  property BoundaryStatus string
+  property CounterexampleStatus string
+  property NonAuthorizing boolean
+
+entity ExecutionEnvelopeAuditDisposition id "gooo://gooo-jev/execution-audit-disposition"
+  property Status string
+  property Mode string
+  property FirstMissing string
+  property NonAuthorizing boolean
+
+activity ClassifyExecutionEnvelopeAuditDisposition(ExecutionEnvelopeAuditDispositionInput) -> ExecutionEnvelopeAuditDisposition

@@ -1,0 +1,6 @@
+package jevdecisionconfidencefallbackpromotion
+namespace jevdecisionconfidencefallbackpromotion
+
+entity DecisionConfidenceFallbackPromotionEvidence id "gooo://gooo-jev/decision-confidence-fallback-promotion-evidence"
+
+activity EvaluateDecisionConfidenceFallbackPromotion(DecisionConfidenceFallbackObservation, DecisionConfidenceFallbackExecutionLink, ImprovementReviewReceipt) -> DecisionConfidenceFallbackPromotionEvidence

@@ -1,0 +1,19 @@
+package jevdecisionconfidenceledgercandidatereviewreceipt
+namespace jevdecisionconfidenceledgercandidatereviewreceipt
+
+entity DecisionConfidenceEvidenceLedgerCandidateReviewSignal id "gooo://gooo-jev/decision-confidence-evidence-ledger-candidate-review-signal"
+  property ReviewOutcomeDigest string
+  property Status string
+
+entity DecisionConfidenceEvidenceLedgerExternalReviewOutcome id "gooo://gooo-jev/decision-confidence-evidence-ledger-external-review-outcome"
+  property HandoffDigest string
+  property Status string
+
+entity DecisionConfidenceEvidenceLedgerCandidateReviewReceipt id "gooo://gooo-jev/decision-confidence-evidence-ledger-candidate-review-receipt"
+  property SignalDigest string
+  property ReviewOutcomeDigest string
+  property ReceiptDigest string
+  property Status string
+  property NonAuthorizing boolean
+
+activity BuildDecisionConfidenceEvidenceLedgerCandidateReviewReceipt(DecisionConfidenceEvidenceLedgerCandidateReviewSignal, DecisionConfidenceEvidenceLedgerExternalReviewOutcome) -> DecisionConfidenceEvidenceLedgerCandidateReviewReceipt

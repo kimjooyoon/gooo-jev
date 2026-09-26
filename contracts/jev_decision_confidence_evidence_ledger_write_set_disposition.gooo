@@ -1,0 +1,12 @@
+package jevdecisionconfidenceledgerwritesetdisposition
+namespace jevdecisionconfidenceledgerwritesetdisposition
+
+entity DecisionConfidenceEvidenceLedgerWriteSetIntegrity id "gooo://gooo-jev/decision-confidence-evidence-ledger-write-set-integrity"
+  property Status string
+
+entity DecisionConfidenceEvidenceLedgerWriteSetDisposition id "gooo://gooo-jev/decision-confidence-evidence-ledger-write-set-disposition"
+  property IntegrityDigest string
+  property Status string
+  property NonAuthorizing boolean
+
+activity DeriveDecisionConfidenceEvidenceLedgerWriteSetDisposition(DecisionConfidenceEvidenceLedgerWriteSetIntegrity) -> DecisionConfidenceEvidenceLedgerWriteSetDisposition

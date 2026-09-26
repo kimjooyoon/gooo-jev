@@ -1,0 +1,6 @@
+package jevdecisionconfidencechangeplan
+namespace jevdecisionconfidencechangeplan
+
+entity DecisionConfidenceChangePlan id "gooo://gooo-jev/decision-confidence-change-plan"
+
+activity PlanDecisionConfidenceChange(DecisionConfidenceImprovementProposal) -> DecisionConfidenceChangePlan

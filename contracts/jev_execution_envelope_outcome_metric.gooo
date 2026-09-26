@@ -1,0 +1,19 @@
+package jevexecutionenvelopeoutcomemetric
+namespace jevexecutionenvelopeoutcomemetric
+
+entity ExecutionEnvelopeOutcomeMetricInput id "gooo://gooo-jev/execution-envelope-outcome-metric-input"
+  property Status string
+  property OutcomeDigest string
+  property MissingStage string
+  property NonAuthorizing boolean
+
+entity ExecutionEnvelopeOutcomeMetric id "gooo://gooo-jev/execution-envelope-outcome-metric"
+  property OutcomeDigest string
+  property AcceptedCount integer
+  property RejectedCount integer
+  property HoldCount integer
+  property Status string
+  property MissingStage string
+  property NonAuthorizing boolean
+
+activity ObserveExecutionEnvelopeOutcomeMetric(ExecutionEnvelopeOutcomeMetricInput) -> ExecutionEnvelopeOutcomeMetric

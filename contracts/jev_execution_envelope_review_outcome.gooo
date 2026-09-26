@@ -1,0 +1,18 @@
+package jevexecutionenvelopereviewoutcome
+namespace jevexecutionenvelopereviewoutcome
+
+entity ExecutionEnvelopeReviewOutcomeInput id "gooo://gooo-jev/execution-envelope-review-outcome-input"
+  property HandoffStatus string
+  property HandoffDigest string
+  property ReviewRequired boolean
+  property OutcomeStatus string
+  property OutcomeEvidenceDigest string
+  property NonAuthorizing boolean
+
+entity ExecutionEnvelopeReviewOutcome id "gooo://gooo-jev/execution-envelope-review-outcome"
+  property Status string
+  property OutcomeDigest string
+  property MissingStage string
+  property NonAuthorizing boolean
+
+activity RecordExecutionEnvelopeReviewOutcome(ExecutionEnvelopeReviewOutcomeInput) -> ExecutionEnvelopeReviewOutcome

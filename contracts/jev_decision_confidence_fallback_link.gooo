@@ -1,0 +1,6 @@
+package jevdecisionconfidencefallbacklink
+namespace jevdecisionconfidencefallbacklink
+
+entity DecisionConfidenceFallbackExecutionLink id "gooo://gooo-jev/decision-confidence-fallback-execution-link"
+
+activity LinkDecisionConfidenceFallbackToReverseObservation(DecisionConfidenceFallbackObservation, ReverseObservation) -> DecisionConfidenceFallbackExecutionLink

@@ -1,0 +1,11 @@
+package jevdecisionconfidenceledgertransition
+namespace jevdecisionconfidenceledgertransition
+
+entity DecisionConfidenceEvidenceLedgerTransition id "gooo://gooo-jev/decision-confidence-evidence-ledger-transition"
+  property PreviousEntryDigest string
+  property CurrentEntryDigest string
+  property SequenceDelta integer
+  property Status string
+  property NonAuthorizing boolean
+
+activity ObserveDecisionConfidenceEvidenceLedgerTransition(DecisionConfidenceEvidenceLedgerTransition) -> DecisionConfidenceEvidenceLedgerTransition

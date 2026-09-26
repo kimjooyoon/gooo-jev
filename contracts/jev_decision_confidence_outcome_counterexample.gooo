@@ -1,0 +1,6 @@
+package jevdecisionconfidenceoutcomecounterexample
+namespace jevdecisionconfidenceoutcomecounterexample
+
+entity DecisionConfidenceOutcomeCounterexample id "gooo://gooo-jev/decision-confidence-outcome-counterexample"
+
+activity RecordDecisionConfidenceOutcomeCounterexample(DecisionConfidenceChangeOutcomeComparison) -> DecisionConfidenceImprovementCounterexample

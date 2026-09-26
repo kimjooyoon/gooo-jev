@@ -1,0 +1,7 @@
+package jevdecisionconfidencereplay
+namespace jevdecisionconfidencereplay
+
+entity DecisionConfidenceAssessment id "gooo://gooo-jev/decision-confidence-assessment"
+entity DecisionConfidenceAssessmentReplay id "gooo://gooo-jev/decision-confidence-assessment-replay"
+
+activity ReplayDecisionConfidenceAssessment(DecisionConfidenceAssessment) -> DecisionConfidenceAssessmentReplay

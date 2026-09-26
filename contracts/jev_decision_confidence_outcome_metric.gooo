@@ -1,0 +1,6 @@
+package jevdecisionconfidenceoutcomemetric
+namespace jevdecisionconfidenceoutcomemetric
+
+entity DecisionConfidenceChangeOutcomeMetric id "gooo://gooo-jev/decision-confidence-change-outcome-metric"
+
+activity ObserveDecisionConfidenceChangeOutcomeMetric(DecisionConfidenceChangePlanDispositionObservation) -> DecisionConfidenceChangeOutcomeMetric

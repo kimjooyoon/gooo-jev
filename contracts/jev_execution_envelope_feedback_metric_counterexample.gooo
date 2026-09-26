@@ -1,0 +1,16 @@
+package jevexecutionenvelopefeedbackmetriccounterexample
+namespace jevexecutionenvelopefeedbackmetriccounterexample
+
+entity ExecutionEnvelopeFeedbackMetricCounterexampleInput id "gooo://gooo-jev/execution-envelope-feedback-metric-counterexample-input"
+  property PreviousFeedbackDigest string
+  property CurrentFeedbackDigest string
+  property Delta string
+  property NonAuthorizing boolean
+
+entity ExecutionEnvelopeFeedbackMetricCounterexample id "gooo://gooo-jev/execution-envelope-feedback-metric-counterexample"
+  property Status string
+  property ReviewRequired boolean
+  property ComparisonDigest string
+  property NonAuthorizing boolean
+
+activity ClassifyExecutionEnvelopeFeedbackMetricCounterexample(ExecutionEnvelopeFeedbackMetricCounterexampleInput) -> ExecutionEnvelopeFeedbackMetricCounterexample

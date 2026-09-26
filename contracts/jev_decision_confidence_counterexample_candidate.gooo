@@ -1,0 +1,6 @@
+package jevdecisionconfidencecounterexamplecandidate
+namespace jevdecisionconfidencecounterexamplecandidate
+
+entity DecisionConfidenceCounterexampleCandidate id "gooo://gooo-jev/decision-confidence-counterexample-candidate"
+
+activity ProposeImprovementCandidateFromCounterexample(DecisionConfidenceImprovementCounterexample, ImprovementCycle, ImprovementCycleReplay) -> ImprovementCandidate

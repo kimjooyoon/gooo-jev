@@ -1,0 +1,14 @@
+package jevdecisionconfidenceledgerreplayreviewsignal
+namespace jevdecisionconfidenceledgerreplayreviewsignal
+
+entity DecisionConfidenceEvidenceLedgerReplayOutcomeObservation id "gooo://gooo-jev/decision-confidence-evidence-ledger-replay-outcome-observation"
+  property Outcome string
+  property Status string
+
+entity DecisionConfidenceEvidenceLedgerReplayReviewSignal id "gooo://gooo-jev/decision-confidence-evidence-ledger-replay-review-signal"
+  property ObservationDigest string
+  property Outcome string
+  property Status string
+  property NonAuthorizing boolean
+
+activity DeriveDecisionConfidenceEvidenceLedgerReplayReviewSignal(DecisionConfidenceEvidenceLedgerReplayOutcomeObservation) -> DecisionConfidenceEvidenceLedgerReplayReviewSignal

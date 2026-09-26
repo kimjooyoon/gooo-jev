@@ -1,0 +1,20 @@
+package jevexecutionenvelopereviewfeedback
+namespace jevexecutionenvelopereviewfeedback
+
+entity ExecutionEnvelopeReviewFeedbackInput id "gooo://gooo-jev/execution-envelope-review-feedback-input"
+  property DispositionStatus string
+  property ReviewRequired boolean
+  property MismatchStage string
+  property EvidenceDigest string
+  property ReviewStatus string
+  property ReviewerEvidenceDigest string
+  property NonAuthorizing boolean
+
+entity ExecutionEnvelopeReviewFeedback id "gooo://gooo-jev/execution-envelope-review-feedback"
+  property Status string
+  property FeedbackDigest string
+  property ReviewRequired boolean
+  property MissingStage string
+  property NonAuthorizing boolean
+
+activity RecordExecutionEnvelopeReviewFeedback(ExecutionEnvelopeReviewFeedbackInput) -> ExecutionEnvelopeReviewFeedback

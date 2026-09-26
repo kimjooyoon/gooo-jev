@@ -1,0 +1,17 @@
+package jevexecutionenvelopecounterexampledisposition
+namespace jevexecutionenvelopecounterexampledisposition
+
+entity ExecutionEnvelopeCounterexampleDispositionInput id "gooo://gooo-jev/execution-envelope-counterexample-disposition-input"
+  property Status string
+  property FirstMismatch string
+  property EvidenceDigest string
+  property NonAuthorizing boolean
+
+entity ExecutionEnvelopeCounterexampleDisposition id "gooo://gooo-jev/execution-envelope-counterexample-disposition"
+  property Status string
+  property ReviewRequired boolean
+  property MismatchStage string
+  property EvidenceDigest string
+  property NonAuthorizing boolean
+
+activity ClassifyExecutionEnvelopeCounterexample(ExecutionEnvelopeCounterexampleDispositionInput) -> ExecutionEnvelopeCounterexampleDisposition

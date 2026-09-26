@@ -1,0 +1,19 @@
+package jevexecutionenvelopereverseobservation
+namespace jevexecutionenvelopereverseobservation
+
+entity ExecutionEnvelopeReverseObservationInput id "gooo://gooo-jev/execution-envelope-reverse-observation-input"
+  property ObservedStatus string
+  property ExpectedStatus string
+  property ObservedMissingStage string
+  property ExpectedMissingStage string
+  property ObservedEvidenceDigest string
+  property ExpectedEvidenceDigest string
+  property NonAuthorizing boolean
+
+entity ExecutionEnvelopeReverseObservationOutput id "gooo://gooo-jev/execution-envelope-reverse-observation-output"
+  property Status string
+  property FirstMismatch string
+  property EvidenceDigest string
+  property NonAuthorizing boolean
+
+activity ObserveExecutionEnvelopeProvenanceReverse(ExecutionEnvelopeReverseObservationInput) -> ExecutionEnvelopeReverseObservationOutput

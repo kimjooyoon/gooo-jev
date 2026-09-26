@@ -1,0 +1,14 @@
+package jevdecisionconfidenceledgerreplayoutcome
+namespace jevdecisionconfidenceledgerreplayoutcome
+
+entity DecisionConfidenceEvidenceLedgerReplayDisposition id "gooo://gooo-jev/decision-confidence-evidence-ledger-replay-disposition"
+  property ObservationDigest string
+  property Status string
+
+entity DecisionConfidenceEvidenceLedgerReplayOutcomeObservation id "gooo://gooo-jev/decision-confidence-evidence-ledger-replay-outcome-observation"
+  property DispositionDigest string
+  property Outcome string
+  property Status string
+  property NonAuthorizing boolean
+
+activity ObserveDecisionConfidenceEvidenceLedgerReplayOutcome(DecisionConfidenceEvidenceLedgerReplayDisposition) -> DecisionConfidenceEvidenceLedgerReplayOutcomeObservation

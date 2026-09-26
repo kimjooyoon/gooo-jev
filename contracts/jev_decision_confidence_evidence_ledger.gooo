@@ -1,0 +1,14 @@
+package jevdecisionconfidenceledger
+namespace jevdecisionconfidenceledger
+
+entity DecisionConfidenceEvidenceLedgerEntry id "gooo://gooo-jev/decision-confidence-evidence-ledger-entry"
+  property Sequence integer
+  property Kind string
+  property SourceDigest string
+  property PreviousEntryDigest string
+  property EntryDigest string
+  property NonAuthorizing boolean
+
+activity CreateDecisionConfidenceEvidenceLedgerEntry(DecisionConfidenceEvidenceLedgerEntry) -> DecisionConfidenceEvidenceLedgerEntry
+activity VerifyDecisionConfidenceEvidenceLedgerEntry(DecisionConfidenceEvidenceLedgerEntry) -> DecisionConfidenceEvidenceLedgerEntry
+activity AppendDecisionConfidenceEvidenceLedgerEntry(DecisionConfidenceEvidenceLedgerEntry) -> DecisionConfidenceEvidenceLedgerEntry

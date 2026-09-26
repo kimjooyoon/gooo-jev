@@ -1,0 +1,17 @@
+package jevdecisionconfidenceledgerwritesetintegrity
+namespace jevdecisionconfidenceledgerwritesetintegrity
+
+entity DecisionConfidenceEvidenceLedgerWriteSetObservation id "gooo://gooo-jev/decision-confidence-evidence-ledger-write-set-observation"
+  property WriteSetDigest string
+  property Status string
+
+entity DecisionConfidenceEvidenceLedgerWriteSetExpectation id "gooo://gooo-jev/decision-confidence-evidence-ledger-write-set-expectation"
+  property ExpectedWriteSetDigest string
+
+entity DecisionConfidenceEvidenceLedgerWriteSetIntegrity id "gooo://gooo-jev/decision-confidence-evidence-ledger-write-set-integrity"
+  property ObservedWriteSetDigest string
+  property ExpectedWriteSetDigest string
+  property Status string
+  property NonAuthorizing boolean
+
+activity VerifyDecisionConfidenceEvidenceLedgerWriteSetIntegrity(DecisionConfidenceEvidenceLedgerWriteSetObservation, DecisionConfidenceEvidenceLedgerWriteSetExpectation) -> DecisionConfidenceEvidenceLedgerWriteSetIntegrity

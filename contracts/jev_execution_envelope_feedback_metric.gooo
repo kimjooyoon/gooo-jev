@@ -1,0 +1,21 @@
+package jevexecutionenvelopefeedbackmetric
+namespace jevexecutionenvelopefeedbackmetric
+
+entity ExecutionEnvelopeFeedbackMetricInput id "gooo://gooo-jev/execution-envelope-feedback-metric-input"
+  property Status string
+  property FeedbackDigest string
+  property ReviewRequired boolean
+  property MissingStage string
+  property NonAuthorizing boolean
+
+entity ExecutionEnvelopeFeedbackMetric id "gooo://gooo-jev/execution-envelope-feedback-metric"
+  property FeedbackDigest string
+  property AnalysisReadyCount integer
+  property RejectedCount integer
+  property HoldCount integer
+  property ObservationOnlyCount integer
+  property Status string
+  property MissingStage string
+  property NonAuthorizing boolean
+
+activity ObserveExecutionEnvelopeFeedbackMetric(ExecutionEnvelopeFeedbackMetricInput) -> ExecutionEnvelopeFeedbackMetric

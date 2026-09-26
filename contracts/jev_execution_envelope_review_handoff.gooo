@@ -1,0 +1,16 @@
+package jevexecutionenvelopereviewhandoff
+namespace jevexecutionenvelopereviewhandoff
+
+entity ExecutionEnvelopeReviewHandoffInput id "gooo://gooo-jev/execution-envelope-review-handoff-input"
+  property Status string
+  property ReviewRequired boolean
+  property ComparisonDigest string
+  property NonAuthorizing boolean
+
+entity ExecutionEnvelopeReviewHandoff id "gooo://gooo-jev/execution-envelope-review-handoff"
+  property Status string
+  property HandoffDigest string
+  property ReviewRequired boolean
+  property NonAuthorizing boolean
+
+activity CreateExecutionEnvelopeReviewHandoff(ExecutionEnvelopeReviewHandoffInput) -> ExecutionEnvelopeReviewHandoff

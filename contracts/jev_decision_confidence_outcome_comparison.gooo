@@ -1,0 +1,6 @@
+package jevdecisionconfidenceoutcomecomparison
+namespace jevdecisionconfidenceoutcomecomparison
+
+entity DecisionConfidenceChangeOutcomeComparison id "gooo://gooo-jev/decision-confidence-change-outcome-comparison"
+
+activity CompareDecisionConfidenceChangeOutcomes(DecisionConfidenceChangeOutcomeMetric, DecisionConfidenceChangeOutcomeMetric) -> DecisionConfidenceChangeOutcomeComparison

@@ -1,0 +1,17 @@
+package jevdecisionconfidenceledgerreplay
+namespace jevdecisionconfidenceledgerreplay
+
+entity DecisionConfidenceEvidenceLedgerTransition id "gooo://gooo-jev/decision-confidence-evidence-ledger-transition"
+  property Status string
+
+entity DecisionConfidenceEvidenceLedgerReceiptLink id "gooo://gooo-jev/decision-confidence-evidence-ledger-receipt-link"
+  property ExecutionReceiptDigest string
+  property Status string
+
+entity DecisionConfidenceEvidenceLedgerReplayObservation id "gooo://gooo-jev/decision-confidence-evidence-ledger-replay-observation"
+  property TransitionDigest string
+  property ExecutionReceiptDigest string
+  property Status string
+  property NonAuthorizing boolean
+
+activity ObserveDecisionConfidenceEvidenceLedgerReplay(DecisionConfidenceEvidenceLedgerTransition, DecisionConfidenceEvidenceLedgerReceiptLink) -> DecisionConfidenceEvidenceLedgerReplayObservation

@@ -1,0 +1,6 @@
+package jevdecisionconfidencefallbackobservation
+namespace jevdecisionconfidencefallbackobservation
+
+entity DecisionConfidenceFallbackObservation id "gooo://gooo-jev/decision-confidence-fallback-observation"
+
+activity ObserveDecisionConfidenceFallback(DecisionConfidenceFallbackPlan) -> DecisionConfidenceFallbackObservation

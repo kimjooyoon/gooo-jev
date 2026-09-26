@@ -1,0 +1,7 @@
+package jevlifecycleattestationwindow
+namespace jevlifecycleattestationwindow
+
+entity ExecutionLifecycleAttestation id "gooo://gooo-jev/execution-lifecycle-attestation"
+entity ExecutionLifecycleAttestationWindow id "gooo://gooo-jev/execution-lifecycle-attestation-window"
+
+activity ObserveExecutionLifecycleAttestationWindow(ExecutionLifecycleAttestation) -> ExecutionLifecycleAttestationWindow

@@ -1,0 +1,14 @@
+package jevdecisionconfidenceledgerreceiptintegrityreviewreceiptmetriccounterexample
+namespace jevdecisionconfidenceledgerreceiptintegrityreviewreceiptmetriccounterexample
+
+entity DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricFeedback id "gooo://gooo-jev/decision-confidence-evidence-ledger-receipt-integrity-review-receipt-metric-feedback"
+  property Delta string
+  property Status string
+
+entity DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricCounterexample id "gooo://gooo-jev/decision-confidence-evidence-ledger-receipt-integrity-review-receipt-metric-counterexample"
+  property FeedbackDigest string
+  property Delta string
+  property Status string
+  property NonAuthorizing boolean
+
+activity ObserveDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricCounterexample(DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricFeedback) -> DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricCounterexample

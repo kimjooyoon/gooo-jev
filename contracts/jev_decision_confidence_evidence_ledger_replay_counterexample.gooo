@@ -1,0 +1,14 @@
+package jevdecisionconfidenceledgerreplaycounterexample
+namespace jevdecisionconfidenceledgerreplaycounterexample
+
+entity DecisionConfidenceEvidenceLedgerReplayReviewSignal id "gooo://gooo-jev/decision-confidence-evidence-ledger-replay-review-signal"
+  property Outcome string
+  property Status string
+
+entity DecisionConfidenceEvidenceLedgerReplayCounterexample id "gooo://gooo-jev/decision-confidence-evidence-ledger-replay-counterexample"
+  property SignalDigest string
+  property Outcome string
+  property Status string
+  property NonAuthorizing boolean
+
+activity ObserveDecisionConfidenceEvidenceLedgerReplayCounterexample(DecisionConfidenceEvidenceLedgerReplayReviewSignal) -> DecisionConfidenceEvidenceLedgerReplayCounterexample

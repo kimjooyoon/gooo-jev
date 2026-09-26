@@ -1,0 +1,7 @@
+package jevlifecycleattestation
+namespace jevlifecycleattestation
+
+entity ExecutionLifecycleAuthorization id "gooo://gooo-jev/execution-lifecycle-authorization"
+entity ExecutionLifecycleAttestation id "gooo://gooo-jev/execution-lifecycle-attestation"
+
+activity AttestExecutionLifecycle(ExecutionLifecycleAuthorization) -> ExecutionLifecycleAttestation

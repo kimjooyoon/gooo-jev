@@ -1,0 +1,16 @@
+package jevdecisionconfidenceledgercandidatereviewreceiptmetric
+namespace jevdecisionconfidenceledgercandidatereviewreceiptmetric
+
+entity DecisionConfidenceEvidenceLedgerCandidateReviewReceiptVerification id "gooo://gooo-jev/decision-confidence-evidence-ledger-candidate-review-receipt-verification"
+  property ReceiptDigest string
+  property Status string
+
+entity DecisionConfidenceEvidenceLedgerCandidateReviewReceiptMetric id "gooo://gooo-jev/decision-confidence-evidence-ledger-candidate-review-receipt-metric"
+  property ReceiptDigest string
+  property VerifiedCount integer
+  property MismatchCount integer
+  property UnknownCount integer
+  property Status string
+  property NonAuthorizing boolean
+
+activity ObserveDecisionConfidenceEvidenceLedgerCandidateReviewReceiptMetric(DecisionConfidenceEvidenceLedgerCandidateReviewReceiptVerification) -> DecisionConfidenceEvidenceLedgerCandidateReviewReceiptMetric

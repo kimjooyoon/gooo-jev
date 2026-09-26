@@ -1,0 +1,13 @@
+package jevdecisionconfidenceledgerfeedbacksignal
+namespace jevdecisionconfidenceledgerfeedbacksignal
+
+entity DecisionConfidenceEvidenceLedgerCandidateReviewMetricComparison id "gooo://gooo-jev/decision-confidence-evidence-ledger-candidate-review-metric-comparison"
+  property Delta string
+
+entity DecisionConfidenceEvidenceLedgerFeedbackSignal id "gooo://gooo-jev/decision-confidence-evidence-ledger-feedback-signal"
+  property ComparisonDigest string
+  property Delta string
+  property Status string
+  property NonAuthorizing boolean
+
+activity DeriveDecisionConfidenceEvidenceLedgerFeedbackSignal(DecisionConfidenceEvidenceLedgerCandidateReviewMetricComparison) -> DecisionConfidenceEvidenceLedgerFeedbackSignal

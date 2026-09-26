@@ -1,0 +1,7 @@
+package jevlifecycleauthorization
+namespace jevlifecycleauthorization
+
+entity ExecutionLifecycleReplayObservation id "gooo://gooo-jev/execution-lifecycle-replay-observation"
+entity ExecutionLifecycleAuthorization id "gooo://gooo-jev/execution-lifecycle-authorization"
+
+activity AuthorizeExecutionLifecycle(ExecutionLifecycleReplayObservation) -> ExecutionLifecycleAuthorization

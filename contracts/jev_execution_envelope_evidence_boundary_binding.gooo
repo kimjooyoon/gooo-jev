@@ -1,0 +1,15 @@
+package jevexecutionenvelopeevidenceboundarybinding
+namespace jevexecutionenvelopeevidenceboundarybinding
+
+entity ExecutionEnvelopeEvidenceBoundaryBindingInput id "gooo://gooo-jev/execution-evidence-boundary-binding-input"
+  property LedgerDigest string
+  property BoundaryDigest string
+  property NonAuthorizing boolean
+
+entity ExecutionEnvelopeEvidenceBoundaryBinding id "gooo://gooo-jev/execution-evidence-boundary-binding"
+  property Status string
+  property BindingDigest string
+  property MissingStage string
+  property NonAuthorizing boolean
+
+activity BindExecutionEnvelopeEvidenceBoundary(ExecutionEnvelopeEvidenceBoundaryBindingInput) -> ExecutionEnvelopeEvidenceBoundaryBinding

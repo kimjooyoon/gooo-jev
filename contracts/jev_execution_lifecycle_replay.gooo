@@ -1,0 +1,9 @@
+package jevlifecyclereplay
+namespace jevlifecyclereplay
+
+entity ExecutionLifecycleReceipt id "gooo://gooo-jev/execution-lifecycle-receipt"
+entity ReverseObservation id "gooo://gooo-jev/reverse-observation"
+entity ExecutionLifecycleReplayObservation id "gooo://gooo-jev/execution-lifecycle-replay-observation"
+
+activity ReplayLifecycle(ExecutionLifecycleReceipt) -> ExecutionLifecycleReplayObservation
+activity BindReverseObservation(ExecutionLifecycleReceipt) -> ReverseObservation

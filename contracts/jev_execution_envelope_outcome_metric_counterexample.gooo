@@ -1,0 +1,16 @@
+package jevexecutionenvelopeoutcomemetriccounterexample
+namespace jevexecutionenvelopeoutcomemetriccounterexample
+
+entity ExecutionEnvelopeOutcomeMetricCounterexampleInput id "gooo://gooo-jev/execution-envelope-outcome-metric-counterexample-input"
+  property PreviousOutcomeDigest string
+  property CurrentOutcomeDigest string
+  property Delta string
+  property NonAuthorizing boolean
+
+entity ExecutionEnvelopeOutcomeMetricCounterexample id "gooo://gooo-jev/execution-envelope-outcome-metric-counterexample"
+  property Status string
+  property ReviewRequired boolean
+  property ComparisonDigest string
+  property NonAuthorizing boolean
+
+activity ClassifyExecutionEnvelopeOutcomeMetricCounterexample(ExecutionEnvelopeOutcomeMetricCounterexampleInput) -> ExecutionEnvelopeOutcomeMetricCounterexample

@@ -1,0 +1,8 @@
+package jevdecisionconfidenceobservation
+namespace jevdecisionconfidenceobservation
+
+entity DecisionConfidenceAssessment id "gooo://gooo-jev/decision-confidence-assessment"
+entity ReverseObservation id "gooo://gooo-jev/reverse-observation"
+entity DecisionConfidenceObservation id "gooo://gooo-jev/decision-confidence-observation"
+
+activity ObserveDecisionConfidence(DecisionConfidenceAssessment) -> DecisionConfidenceObservation

@@ -1,0 +1,19 @@
+package jevexecutionenvelopecapabilityboundary
+namespace jevexecutionenvelopecapabilityboundary
+
+entity ExecutionEnvelopeCapabilityBoundaryInput id "gooo://gooo-jev/execution-capability-boundary-input"
+  property SandboxProfile string
+  property WorkspaceDigest string
+  property GatewayPolicyDigest string
+  property ModelIdentity string
+  property SPIFFEIdentity string
+  property NetworkAllowlistDigest string
+  property NonAuthorizing boolean
+
+entity ExecutionEnvelopeCapabilityBoundary id "gooo://gooo-jev/execution-capability-boundary"
+  property Status string
+  property BoundaryDigest string
+  property MissingCapability string
+  property NonAuthorizing boolean
+
+activity SealExecutionEnvelopeCapabilityBoundary(ExecutionEnvelopeCapabilityBoundaryInput) -> ExecutionEnvelopeCapabilityBoundary

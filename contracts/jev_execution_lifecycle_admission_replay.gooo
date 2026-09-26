@@ -1,0 +1,7 @@
+package jevlifecycleadmissionreplay
+namespace jevlifecycleadmissionreplay
+
+entity ExecutionLifecycleAdmission id "gooo://gooo-jev/execution-lifecycle-admission"
+entity ExecutionLifecycleAdmissionReplay id "gooo://gooo-jev/execution-lifecycle-admission-replay"
+
+activity ReplayExecutionLifecycleAdmission(ExecutionLifecycleAdmission) -> ExecutionLifecycleAdmissionReplay

@@ -1,0 +1,13 @@
+package jevdecisionconfidenceledgerchangeoutcomefeedback
+namespace jevdecisionconfidenceledgerchangeoutcomefeedback
+
+entity DecisionConfidenceEvidenceLedgerChangeOutcomeComparison id "gooo://gooo-jev/decision-confidence-evidence-ledger-change-outcome-comparison"
+  property Delta string
+
+entity DecisionConfidenceEvidenceLedgerChangeOutcomeFeedback id "gooo://gooo-jev/decision-confidence-evidence-ledger-change-outcome-feedback"
+  property PlanDigest string
+  property Delta string
+  property Status string
+  property NonAuthorizing boolean
+
+activity DeriveDecisionConfidenceEvidenceLedgerChangeOutcomeFeedback(DecisionConfidenceEvidenceLedgerChangeOutcomeComparison) -> DecisionConfidenceEvidenceLedgerChangeOutcomeFeedback
