@@ -47,7 +47,7 @@ func DeriveJEVImprovementReplayFeedbackFromCycleCandidateReverseObservation(inpu
 		output.MissingStage = "candidate-cycle-binding"
 		return output
 	}
-	return DeriveJEVImprovementReplayFeedbackFromCycleRevisionCandidate(ExecutionEnvelopeJEVCandidateFeedbackAdapterInput{
+	return DeriveJEVImprovementReplayFeedbackFromCycleRevisionCandidate(ExecutionEnvelopeJEVCycleCandidateFeedbackAdapterInput{
 		CandidateBinding: input.Candidate,
 		ReverseBinding:   input.ReverseBinding,
 		MetricDigest:     input.MetricDigest,
