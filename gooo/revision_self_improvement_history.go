@@ -9,27 +9,36 @@ import (
 // RevisionSelfImprovementHistory preserves an ordered series of self-improvement
 // windows and their next-observation feedback without claiming improvement.
 type RevisionSelfImprovementHistory struct {
-	Status                string
-	MissingStage          string
-	ObservationCount      int
-	WindowDigests         []string
-	FeedbackDigests       []string
-	FirstWindowDigest     string
-	LastWindowDigest      string
-	FirstFeedbackDigest   string
-	LastFeedbackDigest    string
-	StableCount           int
-	NarrowerCount         int
-	WiderCount             int
-	MixedCount             int
-	ObserveCount          int
-	RemeasureCount        int
-	ReviewCount           int
-	InspectCount          int
-	HistorySignal         string
-	HistoryDigest         string
-	NonExecuting          bool
-	NonAuthorizing        bool
+	Status                            string
+	MissingStage                      string
+	ObservationCount                  int
+	WindowDigests                     []string
+	FeedbackDigests                   []string
+	CandidateSourceDigests            []string
+	CandidateProposedSourceDigests    []string
+	CandidateGeneratedIRDigests       []string
+	FirstWindowDigest                 string
+	LastWindowDigest                  string
+	FirstFeedbackDigest               string
+	LastFeedbackDigest                string
+	FirstCandidateSourceDigest        string
+	LastCandidateSourceDigest         string
+	FirstCandidateProposedSourceDigest string
+	LastCandidateProposedSourceDigest  string
+	FirstCandidateGeneratedIRDigest   string
+	LastCandidateGeneratedIRDigest    string
+	StableCount                       int
+	NarrowerCount                     int
+	WiderCount                        int
+	MixedCount                        int
+	ObserveCount                      int
+	RemeasureCount                    int
+	ReviewCount                       int
+	InspectCount                      int
+	HistorySignal                     string
+	HistoryDigest                     string
+	NonExecuting                     bool
+	NonAuthorizing                   bool
 }
 
 // ObserveRevisionSelfImprovementHistory binds ordered windows to their
@@ -41,6 +50,9 @@ func ObserveRevisionSelfImprovementHistory(windows []RevisionSelfImprovementWind
 		ObservationCount: len(windows),
 		WindowDigests:    make([]string, 0, len(windows)),
 		FeedbackDigests:  make([]string, 0, len(feedback)),
+		CandidateSourceDigests:         make([]string, 0, len(windows)),
+		CandidateProposedSourceDigests: make([]string, 0, len(windows)),
+		CandidateGeneratedIRDigests:    make([]string, 0, len(windows)),
 		NonExecuting:     true,
 		NonAuthorizing:   true,
 	}
@@ -65,6 +77,9 @@ func ObserveRevisionSelfImprovementHistory(windows []RevisionSelfImprovementWind
 			return history, fmt.Errorf("window %d is not valid: %w", index, err)
 		}
 		history.WindowDigests = append(history.WindowDigests, window.WindowDigest)
+		history.CandidateSourceDigests = append(history.CandidateSourceDigests, window.CandidateSourceDigest)
+		history.CandidateProposedSourceDigests = append(history.CandidateProposedSourceDigests, window.CandidateProposedSourceDigest)
+		history.CandidateGeneratedIRDigests = append(history.CandidateGeneratedIRDigests, window.CandidateGeneratedIRDigest)
 		switch window.ComparisonSignal {
 		case "stable":
 			history.StableCount++
@@ -104,6 +119,12 @@ func ObserveRevisionSelfImprovementHistory(windows []RevisionSelfImprovementWind
 	history.LastWindowDigest = history.WindowDigests[len(history.WindowDigests)-1]
 	history.FirstFeedbackDigest = history.FeedbackDigests[0]
 	history.LastFeedbackDigest = history.FeedbackDigests[len(history.FeedbackDigests)-1]
+	history.FirstCandidateSourceDigest = history.CandidateSourceDigests[0]
+	history.LastCandidateSourceDigest = history.CandidateSourceDigests[len(history.CandidateSourceDigests)-1]
+	history.FirstCandidateProposedSourceDigest = history.CandidateProposedSourceDigests[0]
+	history.LastCandidateProposedSourceDigest = history.CandidateProposedSourceDigests[len(history.CandidateProposedSourceDigests)-1]
+	history.FirstCandidateGeneratedIRDigest = history.CandidateGeneratedIRDigests[0]
+	history.LastCandidateGeneratedIRDigest = history.CandidateGeneratedIRDigests[len(history.CandidateGeneratedIRDigests)-1]
 	history.HistorySignal = revisionSelfImprovementHistorySignal(history)
 	history.Status = "BOUND"
 	history.MissingStage = ""
@@ -155,13 +176,22 @@ func (h RevisionSelfImprovementHistory) Validate() error {
 	if h.ObservationCount < 1 {
 		return fmt.Errorf("revision self-improvement history observation count must be positive")
 	}
-	if len(h.WindowDigests) != h.ObservationCount || len(h.FeedbackDigests) != h.ObservationCount {
+	if len(h.WindowDigests) != h.ObservationCount || len(h.FeedbackDigests) != h.ObservationCount ||
+		len(h.CandidateSourceDigests) != h.ObservationCount ||
+		len(h.CandidateProposedSourceDigests) != h.ObservationCount ||
+		len(h.CandidateGeneratedIRDigests) != h.ObservationCount {
 		return fmt.Errorf("revision self-improvement history digest counts do not match observations")
 	}
 	if h.WindowDigests[0] != h.FirstWindowDigest ||
 		h.WindowDigests[len(h.WindowDigests)-1] != h.LastWindowDigest ||
 		h.FeedbackDigests[0] != h.FirstFeedbackDigest ||
-		h.FeedbackDigests[len(h.FeedbackDigests)-1] != h.LastFeedbackDigest {
+		h.FeedbackDigests[len(h.FeedbackDigests)-1] != h.LastFeedbackDigest ||
+		h.CandidateSourceDigests[0] != h.FirstCandidateSourceDigest ||
+		h.CandidateSourceDigests[len(h.CandidateSourceDigests)-1] != h.LastCandidateSourceDigest ||
+		h.CandidateProposedSourceDigests[0] != h.FirstCandidateProposedSourceDigest ||
+		h.CandidateProposedSourceDigests[len(h.CandidateProposedSourceDigests)-1] != h.LastCandidateProposedSourceDigest ||
+		h.CandidateGeneratedIRDigests[0] != h.FirstCandidateGeneratedIRDigest ||
+		h.CandidateGeneratedIRDigests[len(h.CandidateGeneratedIRDigests)-1] != h.LastCandidateGeneratedIRDigest {
 		return fmt.Errorf("revision self-improvement history boundary digests are not linked")
 	}
 	for index, digest := range h.WindowDigests {
@@ -170,6 +200,11 @@ func (h RevisionSelfImprovementHistory) Validate() error {
 		}
 		if !validDigest(h.FeedbackDigests[index]) {
 			return fmt.Errorf("revision self-improvement history feedback digest %d is invalid", index)
+		}
+		if !validDigest(h.CandidateSourceDigests[index]) ||
+			!validDigest(h.CandidateProposedSourceDigests[index]) ||
+			!validDigest(h.CandidateGeneratedIRDigests[index]) {
+			return fmt.Errorf("revision self-improvement history candidate provenance digest %d is invalid", index)
 		}
 	}
 	if h.StableCount < 0 || h.NarrowerCount < 0 || h.WiderCount < 0 || h.MixedCount < 0 ||
@@ -203,10 +238,19 @@ func digestRevisionSelfImprovementHistory(history RevisionSelfImprovementHistory
 		strconv.Itoa(history.ObservationCount),
 		strings.Join(history.WindowDigests, ","),
 		strings.Join(history.FeedbackDigests, ","),
+		strings.Join(history.CandidateSourceDigests, ","),
+		strings.Join(history.CandidateProposedSourceDigests, ","),
+		strings.Join(history.CandidateGeneratedIRDigests, ","),
 		history.FirstWindowDigest,
 		history.LastWindowDigest,
 		history.FirstFeedbackDigest,
 		history.LastFeedbackDigest,
+		history.FirstCandidateSourceDigest,
+		history.LastCandidateSourceDigest,
+		history.FirstCandidateProposedSourceDigest,
+		history.LastCandidateProposedSourceDigest,
+		history.FirstCandidateGeneratedIRDigest,
+		history.LastCandidateGeneratedIRDigest,
 		strconv.Itoa(history.StableCount),
 		strconv.Itoa(history.NarrowerCount),
 		strconv.Itoa(history.WiderCount),
