@@ -170,6 +170,6 @@ func ProjectJEVExternalApplyCapabilityReviewRevisionCandidateApplicationPlanCapa
 }
 
 func digestJEVExternalApplyCapabilityReviewRevisionCandidateApplicationPlanCapabilityScopeBridgeLSPDiagnostic(severity, code, message, status, missingStage, applicationPlanStatus, planDigest, planSource, planEvidenceDigest, applicationPlanBridgeDigest, spiffeID, audience, sandboxPolicyDigest, networkAllowlistDigest, scopeEvidenceDigest, scopeStatus, bridgeDigest string, publishable bool) string {
-    sum := sha256.Sum256([]byte(fmt.Sprintf("%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%t", severity, code, message, status, missingStage, applicationPlanStatus, planDigest, planSource, planEvidenceDigest, applicationPlanBridgeDigest, spiffeID, audience, sandboxPolicyDigest, networkAllowlistDigest, scopeEvidenceDigest, scopeStatus, bridgeDigest, publishable)))
+    sum := sha256.Sum256([]byte(fmt.Sprintf("%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%t", severity, code, message, status, missingStage, applicationPlanStatus, planDigest, planSource, planEvidenceDigest, applicationPlanBridgeDigest, spiffeID, audience, sandboxPolicyDigest, networkAllowlistDigest, scopeEvidenceDigest, scopeStatus, bridgeDigest, publishable)))
     return hex.EncodeToString(sum[:])
 }
