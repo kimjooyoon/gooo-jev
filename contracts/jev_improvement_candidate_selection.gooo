@@ -1,0 +1,4 @@
+package jevimprovementcandidateselection
+namespace jevimprovementcandidateselection
+entity JEVImprovementCandidateSelection id "gooo://gooo-jev/improvement-candidate-selection"
+activity SelectJEVImprovementCandidate(JEVImprovementCandidateSelectionInput) -> JEVImprovementCandidateSelection
