@@ -1,0 +1,7 @@
+package jev.gooo.revision.trend
+namespace jev.gooo.revision.trend
+
+entity RevisionTrendRequest id "urn:jev:gooo:revision-trend-request"
+entity RevisionTrendObservation id "urn:jev:gooo:revision-trend-observation"
+
+activity ObserveRevisionTrend(RevisionTrendRequest) -> RevisionTrendObservation
