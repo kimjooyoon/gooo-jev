@@ -1,0 +1,15 @@
+entity ExecutionEnvelopeJEVImprovementReviewGateInput id "gooo://gooo-jev/improvement-review-gate-input"
+ property Binding ExecutionEnvelopeJEVImprovementCycleRevisionFeedbackBinding
+ property NonAuthorizing boolean
+
+entity ExecutionEnvelopeJEVImprovementReviewGateDecision id "gooo://gooo-jev/improvement-review-gate-decision"
+ property Status string
+ property FeedbackStatus string
+ property RevisionCandidateDigest string
+ property BindingDigest string
+ property DecisionDigest string
+ property MissingStage string
+ property NonExecuting boolean
+ property NonAuthorizing boolean
+
+activity EvaluateExecutionEnvelopeJEVImprovementReviewGate(ExecutionEnvelopeJEVImprovementReviewGateInput) -> ExecutionEnvelopeJEVImprovementReviewGateDecision
