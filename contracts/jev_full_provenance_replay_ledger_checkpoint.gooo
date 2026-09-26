@@ -1,0 +1,9 @@
+package jevfullprovenancereplayledger
+namespace jevfullprovenancereplayledger
+
+entity ExecutionEnvelopeJEVFullProvenanceReplayLedgerInput id "gooo://gooo-jev/full-provenance-replay-ledger-input"
+property Provenance ExecutionEnvelopeFullProvenanceSourceBinding
+property Ledger JEVImprovementReplayFeedbackLedger
+property NonAuthorizing boolean
+
+activity BindJEVFullProvenanceReplayLedgerCheckpoint(ExecutionEnvelopeJEVFullProvenanceReplayLedgerInput) -> JEVFullProvenanceReplayLedgerCheckpoint
