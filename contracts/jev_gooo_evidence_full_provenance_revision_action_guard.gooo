@@ -5,9 +5,9 @@ entity ExecutionEnvelopeGoooEvidenceFullProvenanceRevisionActionGuardInput id "g
 property RevisionCandidate GoooEvidenceFullProvenanceDirectionRevisionCandidateBinding
 property CandidateID string
 property ObservationDigest string
-property ObservationAt timestamp
-property Now timestamp
-property MaxAge duration
+property ObservationAt string
+property Now string
+property MaxAge string
 property RequestedPath string
 property AllowedPathPrefix string
 property WriteRequested boolean
