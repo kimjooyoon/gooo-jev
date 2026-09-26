@@ -1,0 +1,12 @@
+package jevdecisionconfidenceledgerchangeoutcomereviewhandoff
+namespace jevdecisionconfidenceledgerchangeoutcomereviewhandoff
+
+entity DecisionConfidenceEvidenceLedgerChangeOutcomeCounterexample id "gooo://gooo-jev/decision-confidence-evidence-ledger-change-outcome-counterexample"
+  property Status string
+
+entity DecisionConfidenceEvidenceLedgerChangeOutcomeReviewHandoff id "gooo://gooo-jev/decision-confidence-evidence-ledger-change-outcome-review-handoff"
+  property CounterexampleDigest string
+  property Status string
+  property NonAuthorizing boolean
+
+activity DeriveDecisionConfidenceEvidenceLedgerChangeOutcomeReviewHandoff(DecisionConfidenceEvidenceLedgerChangeOutcomeCounterexample) -> DecisionConfidenceEvidenceLedgerChangeOutcomeReviewHandoff
