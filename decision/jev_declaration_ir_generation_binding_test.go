@@ -109,3 +109,29 @@ func TestExecutionEnvelopeProvenanceChainBindingValidateReplaysEvidence(t *testi
 		t.Fatal("tampered prefix must fail validation")
 	}
 }
+
+func TestValidateExecutionEnvelopeProvenanceChainBindingFailsClosed(t *testing.T) {
+	ready := EvaluateExecutionEnvelopeProvenanceChainBinding(ExecutionEnvelopeProvenanceChainBindingInput{
+		DeclarationIRGeneration:  validDeclarationIRGenerationBinding(),
+		ReverseObservationDigest: "reverse-observation-digest",
+		MetricDigest:              "metric-digest",
+		NonAuthorizing:            true,
+	})
+	tampered := ready
+	tampered.EvidenceDigest = "tampered-evidence"
+	unknown := ValidateExecutionEnvelopeProvenanceChainBinding(tampered)
+	if unknown.Status != "UNKNOWN" || unknown.MissingStage != "provenance-validation" ||
+		unknown.EvidenceDigest != "" || !unknown.NonExecuting || !unknown.NonAuthorizing {
+		t.Fatalf("validator retained unsafe evidence: %+v", unknown)
+	}
+	if err := unknown.Validate(); err != nil {
+		t.Fatalf("validator output should be self-validating: %v", err)
+	}
+
+	unsafe := ready
+	unsafe.NonAuthorizing = false
+	unknown = ValidateExecutionEnvelopeProvenanceChainBinding(unsafe)
+	if unknown.Status != "UNKNOWN" || unknown.MissingStage != "provenance-validation" || unknown.NonAuthorizing {
+		t.Fatalf("validator erased authorization violation: %+v", unknown)
+	}
+}
