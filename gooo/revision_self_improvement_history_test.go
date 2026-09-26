@@ -61,7 +61,7 @@ func TestObserveRevisionSelfImprovementHistoryRetainsFeedbackFailureIndex(t *tes
 
 func TestObserveRevisionSelfImprovementHistoryRetainsLengthMismatch(t *testing.T) {
 	windows, feedback := selfImprovementHistoryInputs(t)
-	_, feedback = feedback[:len(feedback)-1], feedback
+	feedback = feedback[:len(feedback)-1]
 	history, err := ObserveRevisionSelfImprovementHistory(windows, feedback)
 	if err == nil {
 		t.Fatal("ObserveRevisionSelfImprovementHistory() error = nil, want count failure")
