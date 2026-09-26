@@ -70,7 +70,7 @@ func TestObserveRevisionEvidenceChainBindsAllStages(t *testing.T) {
 }
 
 func TestObserveRevisionEvidenceChainRetainsMetricLinkStage(t *testing.T) {
-	application, metrics, quality, feedback, materialization, generation := revisionEvidenceChainInputs(t)
+	_, metrics, quality, feedback, materialization, generation := revisionEvidenceChainInputs(t)
 	otherCandidate, err := ProposeRevision(choiceAssessmentForRevision(t), ClarifyRevision)
 	if err != nil {
 		t.Fatalf("ProposeRevision() error = %v", err)
@@ -80,10 +80,6 @@ func TestObserveRevisionEvidenceChainRetainsMetricLinkStage(t *testing.T) {
 	otherApplication, err := ApplyRevision(validContract, digestString(validContract), otherCandidate, edit)
 	if err != nil {
 		t.Fatalf("ApplyRevision() error = %v", err)
-	}
-	_, err = ObserveRevisionEvidenceChain(otherApplication, metrics, quality, feedback, materialization, generation)
-	if err == nil {
-		t.Fatal("ObserveRevisionEvidenceChain() error = nil, want metric link failure")
 	}
 	chain, chainErr := ObserveRevisionEvidenceChain(otherApplication, metrics, quality, feedback, materialization, generation)
 	if chainErr == nil || chain.Status != "UNKNOWN" || chain.MissingStage != "revision-chain-link-metrics" {
@@ -104,12 +100,12 @@ func TestObserveRevisionEvidenceChainRejectsTamperedDigest(t *testing.T) {
 }
 
 func TestObserveRevisionEvidenceChainIsDeterministic(t *testing.T) {
-	inputs := revisionEvidenceChainInputs(t)
-	first, err := ObserveRevisionEvidenceChain(inputs[0], inputs[1], inputs[2], inputs[3], inputs[4], inputs[5])
+	application, metrics, quality, feedback, materialization, generation := revisionEvidenceChainInputs(t)
+	first, err := ObserveRevisionEvidenceChain(application, metrics, quality, feedback, materialization, generation)
 	if err != nil {
 		t.Fatalf("first ObserveRevisionEvidenceChain() error = %v", err)
 	}
-	second, err := ObserveRevisionEvidenceChain(inputs[0], inputs[1], inputs[2], inputs[3], inputs[4], inputs[5])
+	second, err := ObserveRevisionEvidenceChain(application, metrics, quality, feedback, materialization, generation)
 	if err != nil {
 		t.Fatalf("second ObserveRevisionEvidenceChain() error = %v", err)
 	}
