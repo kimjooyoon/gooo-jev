@@ -86,7 +86,11 @@ func DispositionDecisionConfidenceChangePlanWithFeedback(input DecisionConfidenc
         output.MissingStage = "feedback-change-plan-binding"
         return output
     }
-    disposition := DispositionDecisionConfidenceChangePlan(input.Plan, input.Verification)
+    disposition, err := DispositionDecisionConfidenceChangePlan(input.Plan, input.Verification)
+    if err != nil {
+        output.MissingStage = "change-plan-disposition"
+        return output
+    }
     if disposition.Status == "" || disposition.DispositionDigest == "" {
         output.MissingStage = "change-plan-disposition"
         return output
