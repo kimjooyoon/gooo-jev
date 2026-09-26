@@ -1,68 +1,52 @@
 package decision
 
 import (
-	"errors"
-	"strings"
+	"testing"
 	"time"
 )
 
-type RuleProvider struct {
-	ProviderName   string
-	Values         map[string]Value
-	EvidencePrefix string
-	Clock          func() time.Time
+func TestRuleProviderReturnsConfiguredValue(t *testing.T) {
+	score := 0.7
+	spec := Spec{
+		ID:           "risk-review",
+		Question:     "Is the proposed change low risk?",
+		Kind:         KindScore,
+		PolicyDigest: "policy-1",
+	}
+	provider := RuleProvider{
+		Values: map[string]Value{
+			spec.ID: {Score: &score},
+		},
+		Clock: func() time.Time { return time.Unix(30, 0).UTC() },
+	}
+	result, err := provider.Observe(spec, State{Digest: "state-3"})
+	if err != nil {
+		t.Fatalf("Observe() error = %v", err)
+	}
+	if result.Status != StatusObserved {
+		t.Fatalf("status = %q, want %q", result.Status, StatusObserved)
+	}
+	if result.Value.Score == nil || *result.Value.Score != score {
+		t.Fatalf("score = %#v, want %v", result.Value.Score, score)
+	}
 }
 
-func (provider RuleProvider) Name() string {
-	if strings.TrimSpace(provider.ProviderName) == "" {
-		return "rule"
+func TestRuleProviderReturnsUnknownWhenValueIsMissing(t *testing.T) {
+	spec := Spec{
+		ID:           "freshness",
+		Question:     "Is the evidence fresh enough?",
+		Kind:         KindNoul,
+		PolicyDigest: "policy-2",
 	}
-	return provider.ProviderName
-}
-
-func (provider RuleProvider) Observe(spec Spec, state State) (Result, error) {
-	if err := spec.Validate(); err != nil {
-		return Result{}, err
+	provider := RuleProvider{
+		Values: map[string]Value{},
+		Clock:  func() time.Time { return time.Unix(40, 0).UTC() },
 	}
-	if strings.TrimSpace(state.Digest) == "" {
-		return Result{}, errors.New("decision state digest is required")
+	result, err := provider.Observe(spec, State{Digest: "state-4"})
+	if err != nil {
+		t.Fatalf("Observe() error = %v", err)
 	}
-	observedAt := time.Now().UTC()
-	if provider.Clock != nil {
-		observedAt = provider.Clock().UTC()
+	if result.Status != StatusUnknown {
+		t.Fatalf("status = %q, want %q", result.Status, StatusUnknown)
 	}
-	if observedAt.IsZero() {
-		return Result{}, errors.New("rule provider observation time is required")
-	}
-	result := Result{
-		SpecID:         spec.ID,
-		Kind:           spec.Kind,
-		Provider:       provider.Name(),
-		Status:         StatusUnknown,
-		EvidenceDigest: provider.evidenceDigest(spec, state),
-		ObservedAt:     observedAt,
-	}
-	if value, ok := provider.Values[spec.ID]; ok {
-		result.Value = value
-		result.Status = StatusObserved
-	}
-	if err := result.ValidateFor(spec); err != nil {
-		return Result{}, err
-	}
-	return result, nil
-}
-
-func (provider RuleProvider) evidenceDigest(spec Spec, state State) string {
-	digest, _ := Digest(struct {
-		SpecID        string
-		StateDigest   string
-		Provider      string
-		EvidencePrefix string
-	}{
-		SpecID:         spec.ID,
-		StateDigest:    state.Digest,
-		Provider:       provider.Name(),
-		EvidencePrefix: provider.EvidencePrefix,
-	})
-	return digest
 }
