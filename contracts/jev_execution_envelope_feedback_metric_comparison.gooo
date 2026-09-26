@@ -1,0 +1,20 @@
+package jevexecutionenvelopefeedbackmetriccomparison
+namespace jevexecutionenvelopefeedbackmetriccomparison
+
+entity ExecutionEnvelopeFeedbackMetric id "gooo://gooo-jev/execution-envelope-feedback-metric-comparison-input"
+  property FeedbackDigest string
+  property AnalysisReadyCount integer
+  property RejectedCount integer
+  property HoldCount integer
+  property ObservationOnlyCount integer
+  property Status string
+  property MissingStage string
+  property NonAuthorizing boolean
+
+entity ExecutionEnvelopeFeedbackMetricComparison id "gooo://gooo-jev/execution-envelope-feedback-metric-comparison"
+  property PreviousFeedbackDigest string
+  property CurrentFeedbackDigest string
+  property Delta string
+  property NonAuthorizing boolean
+
+activity CompareExecutionEnvelopeFeedbackMetric(ExecutionEnvelopeFeedbackMetric, ExecutionEnvelopeFeedbackMetric) -> ExecutionEnvelopeFeedbackMetricComparison
