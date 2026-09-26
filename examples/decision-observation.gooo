@@ -3,5 +3,7 @@ namespace jevdecision
 
 entity DecisionSpec id "gooo://jev/decision/spec"
 entity DecisionReceipt id "gooo://jev/decision/receipt"
+entity DecisionFreshness id "gooo://jev/decision/freshness"
 
 activity ObserveDecision(DecisionSpec) -> DecisionReceipt
+activity ObserveDecisionFreshness(DecisionReceipt) -> DecisionFreshness
