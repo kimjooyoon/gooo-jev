@@ -1,0 +1,6 @@
+package jevlineage
+namespace jevlineage
+entity GoooProvenanceLineage id "gooo://gooo-jev/lineage-revision/lineage"
+entity GoooRevisionCandidate id "gooo://gooo-jev/lineage-revision/candidate"
+entity GoooLineageRevisionReceipt id "gooo://gooo-jev/lineage-revision/receipt"
+activity ApplyGoooLineageRevision(GoooProvenanceLineage) -> GoooLineageRevisionReceipt
