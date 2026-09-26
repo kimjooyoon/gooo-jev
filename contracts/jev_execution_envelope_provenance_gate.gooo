@@ -1,0 +1,18 @@
+package jevexecutionenvelopeprovenancegate
+namespace jevexecutionenvelopeprovenancegate
+
+entity ExecutionEnvelopeProvenanceGateInput id "gooo://gooo-jev/execution-envelope-provenance-gate-input"
+  property DeclarationDigest string
+  property IRDigest string
+  property GenerationDigest string
+  property ReverseObservationDigest string
+  property MetricDigest string
+  property NonAuthorizing boolean
+
+entity ExecutionEnvelopeProvenanceGateOutput id "gooo://gooo-jev/execution-envelope-provenance-gate-output"
+  property Status string
+  property MissingStage string
+  property EvidenceDigest string
+  property NonAuthorizing boolean
+
+activity EvaluateExecutionEnvelopeProvenanceGate(ExecutionEnvelopeProvenanceGateInput) -> ExecutionEnvelopeProvenanceGateOutput
