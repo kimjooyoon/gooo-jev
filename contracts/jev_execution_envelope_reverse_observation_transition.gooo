@@ -1,0 +1,17 @@
+package jevexecutionenvelopereverseobservationtransition
+namespace jevexecutionenvelopereverseobservationtransition
+
+entity ExecutionEnvelopeReverseObservationTransitionInput id "gooo://gooo-jev/reverse-observation-transition-input"
+  property PreviousObservationDigest string
+  property CurrentObservationDigest string
+  property NonAuthorizing boolean
+
+entity ExecutionEnvelopeReverseObservationTransition id "gooo://gooo-jev/reverse-observation-transition"
+  property Status string
+  property Changed boolean
+  property Direction string
+  property FirstMismatch string
+  property ObservationDigest string
+  property NonAuthorizing boolean
+
+activity CompareExecutionEnvelopeReverseObservationTransition(ExecutionEnvelopeReverseObservationTransitionInput) -> ExecutionEnvelopeReverseObservationTransition
