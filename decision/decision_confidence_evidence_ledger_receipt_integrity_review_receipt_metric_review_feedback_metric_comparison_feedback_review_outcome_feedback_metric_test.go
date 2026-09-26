@@ -2,31 +2,42 @@ package decision
 
 import "testing"
 
-func TestDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricIsOneHot(t *testing.T) {
-	ready := ObserveDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetric(DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedback{
-		OutcomeDigest:  "outcome",
-		Status:         "analysis-ready",
-		NonAuthorizing: true,
-	})
-	if ready.AnalysisReadyCount != 1 || ready.RejectedCount != 0 || ready.HoldCount != 0 || ready.Status != "analysis-ready" || !ready.NonAuthorizing {
-		t.Fatalf("unexpected analysis-ready metric: %#v", ready)
+func TestDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonPreservesDirection(t *testing.T) {
+	previous := DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetric{
+		FeedbackDigest:     "previous",
+		RejectedCount:      1,
+		NonAuthorizing:     true,
+	}
+	current := DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetric{
+		FeedbackDigest:     "current",
+		AnalysisReadyCount: 1,
+		NonAuthorizing:     true,
+	}
+	comparison := CompareDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetric(previous, current)
+	if comparison.Delta != "increased" || !comparison.NonAuthorizing {
+		t.Fatalf("review readiness increase was not preserved: %#v", comparison)
 	}
 
-	rejected := ObserveDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetric(DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedback{
-		OutcomeDigest:  "outcome",
-		Status:         "rejected",
-		NonAuthorizing: true,
-	})
-	if rejected.AnalysisReadyCount != 0 || rejected.RejectedCount != 1 || rejected.HoldCount != 0 || rejected.Status != "rejected" || !rejected.NonAuthorizing {
-		t.Fatalf("unexpected rejected metric: %#v", rejected)
+	current.AnalysisReadyCount = 0
+	current.RejectedCount = 1
+	comparison = CompareDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetric(previous, current)
+	if comparison.Delta != "unchanged" || !comparison.NonAuthorizing {
+		t.Fatalf("unchanged review state was not preserved: %#v", comparison)
 	}
 
-	hold := ObserveDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetric(DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedback{
-		OutcomeDigest:  "outcome",
-		Status:         "hold",
-		NonAuthorizing: true,
-	})
-	if hold.AnalysisReadyCount != 0 || hold.RejectedCount != 0 || hold.HoldCount != 1 || hold.Status != "hold" || !hold.NonAuthorizing {
-		t.Fatalf("unexpected hold metric: %#v", hold)
+	previous.AnalysisReadyCount = 1
+	previous.RejectedCount = 0
+	current.AnalysisReadyCount = 0
+	current.RejectedCount = 0
+	current.HoldCount = 1
+	comparison = CompareDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetric(previous, current)
+	if comparison.Delta != "declined" || !comparison.NonAuthorizing {
+		t.Fatalf("review readiness decline was not preserved: %#v", comparison)
+	}
+
+	current.HoldCount = 2
+	comparison = CompareDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetric(previous, current)
+	if comparison.Delta != "inconclusive" || !comparison.NonAuthorizing {
+		t.Fatalf("invalid one-hot state escaped inconclusive: %#v", comparison)
 	}
 }
