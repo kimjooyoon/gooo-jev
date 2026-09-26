@@ -6,17 +6,17 @@ import (
 )
 
 type RevisionApplicationPlan struct {
-	Status        string
-	MissingStage  string
-	SourceDigest  string
-	InputIRDigest string
-	BindingDigest string
+	Status          string
+	MissingStage    string
+	SourceDigest    string
+	InputIRDigest   string
+	BindingDigest   string
 	CandidateDigest string
-	Edit          SourceEdit
-	EditDigest    string
-	PlanDigest    string
-	NonExecuting  bool
-	NonAuthorizing bool
+	Edit            SourceEdit
+	EditDigest      string
+	PlanDigest      string
+	NonExecuting    bool
+	NonAuthorizing  bool
 }
 
 // PlanRevisionApplication records the validated inputs for one bounded revision.
@@ -44,8 +44,7 @@ func PlanRevisionApplication(source string, binding RevisionCandidateBinding, ed
 		plan.MissingStage = "revision-application-plan-edit"
 		return plan, fmt.Errorf("gooo revision application plan: edit digest does not match its fields")
 	}
-	if edit.Start.Line != edit.End.Line || strings.Contains(edit.Replacement, "
-") {
+	if edit.Start.Line != edit.End.Line || strings.Contains(edit.Replacement, "\n") {
 		plan.MissingStage = "revision-application-plan-range"
 		return plan, fmt.Errorf("gooo revision application plan: edit must stay on one line")
 	}
@@ -91,22 +90,17 @@ func (p RevisionApplicationPlan) Validate() error {
 	if p.Edit.Digest != p.EditDigest || digestSourceEdit(p.Edit) != p.EditDigest {
 		return fmt.Errorf("revision application plan edit is not linked")
 	}
-	if p.Edit.Start.Line != p.Edit.End.Line || strings.Contains(p.Edit.Replacement, "
-") {
+	if p.Edit.Start.Line != p.Edit.End.Line || strings.Contains(p.Edit.Replacement, "\n") {
 		return fmt.Errorf("revision application plan range is invalid")
 	}
-	if err := p.CandidateValidate(); err != nil {
-		return err
+	if err := p.Candidate.Validate(); err != nil {
+		return fmt.Errorf("revision application plan candidate: %w", err)
+	}
+	if p.Candidate.CandidateDigest != p.CandidateDigest {
+		return fmt.Errorf("revision application plan candidate digest is not linked")
 	}
 	if digestRevisionApplicationPlan(p) != p.PlanDigest {
 		return fmt.Errorf("revision application plan digest does not match its fields")
-	}
-	return nil
-}
-
-func (p RevisionApplicationPlan) CandidateValidate() error {
-	if p.CandidateDigest == "" {
-		return fmt.Errorf("revision application plan candidate digest is required")
 	}
 	return nil
 }
