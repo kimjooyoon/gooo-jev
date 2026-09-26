@@ -113,7 +113,7 @@ func (b RevisionMetricsBinding) Validate() error {
 }
 
 func digestRevisionMetricsBinding(binding RevisionMetricsBinding) string {
-	return digestString(fmt.Sprintf("%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%d|%d|%d|%d|%d|%d|%d|%d|%t|%t",
+	return digestString(fmt.Sprintf("%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%d|%d|%d|%d|%d|%d|%d|%d|%t|%t|%t",
 		binding.Status,
 		binding.MissingStage,
 		binding.ReceiptDigest,
