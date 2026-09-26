@@ -188,7 +188,7 @@ func (binding ExecutionEnvelopeProvenanceChainBinding) Validate() error {
 		if strings.TrimSpace(binding.MissingStage) == "" {
 			return fmt.Errorf("unknown provenance chain is missing its first unresolved stage")
 		}
-		if binding.MissingStage == "authorization-boundary" || binding.MissingStage == "declaration-ir-generation" {
+		if binding.MissingStage == "authorization-boundary" || binding.MissingStage == "declaration-ir-generation" || binding.MissingStage == "provenance-validation" {
 			if strings.TrimSpace(binding.DeclarationID) != "" || strings.TrimSpace(binding.ContractID) != "" ||
 				strings.TrimSpace(binding.DeclarationDigest) != "" || strings.TrimSpace(binding.IRDigest) != "" ||
 				strings.TrimSpace(binding.GenerationDigest) != "" || strings.TrimSpace(binding.BindingDigest) != "" ||
@@ -228,4 +228,19 @@ func (binding ExecutionEnvelopeProvenanceChainBinding) Validate() error {
 		return fmt.Errorf("provenance gate replay mismatch")
 	}
 	return nil
+}
+
+// ValidateExecutionEnvelopeProvenanceChainBinding converts unverifiable or
+// unsafe stored evidence into an explicit UNKNOWN result without retaining
+// stale digests. A valid result is returned unchanged.
+func ValidateExecutionEnvelopeProvenanceChainBinding(binding ExecutionEnvelopeProvenanceChainBinding) ExecutionEnvelopeProvenanceChainBinding {
+	if err := binding.Validate(); err == nil {
+		return binding
+	}
+	return ExecutionEnvelopeProvenanceChainBinding{
+		Status:         "UNKNOWN",
+		MissingStage:   "provenance-validation",
+		NonExecuting:   binding.NonExecuting,
+		NonAuthorizing: binding.NonAuthorizing,
+	}
 }
