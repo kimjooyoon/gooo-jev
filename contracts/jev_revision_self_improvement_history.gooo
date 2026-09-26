@@ -1,0 +1,30 @@
+package jevrevisionselfimprovementhistory
+namespace jevrevisionselfimprovementhistory
+
+entity RevisionSelfImprovementHistoryInput id "gooo://gooo-jev/revision-self-improvement-history-input"
+property WindowDigests string
+property FeedbackDigests string
+property NonAuthorizing boolean
+
+entity RevisionSelfImprovementHistory id "gooo://gooo-jev/revision-self-improvement-history"
+property Status string
+property ObservationCount integer
+property FirstWindowDigest string
+property LastWindowDigest string
+property FirstFeedbackDigest string
+property LastFeedbackDigest string
+property StableCount integer
+property NarrowerCount integer
+property WiderCount integer
+property MixedCount integer
+property ObserveCount integer
+property RemeasureCount integer
+property ReviewCount integer
+property InspectCount integer
+property HistorySignal string
+property HistoryDigest string
+property MissingStage string
+property NonExecuting boolean
+property NonAuthorizing boolean
+
+activity ObserveRevisionSelfImprovementHistory(RevisionSelfImprovementHistoryInput) -> RevisionSelfImprovementHistory
