@@ -1,0 +1,7 @@
+package jev.gooo.lsp.hover
+namespace jev.gooo.lsp.hover
+
+entity HoverRequest id "urn:jev:gooo:lsp-hover-request"
+entity HoverResult id "urn:jev:gooo:lsp-hover-result"
+
+activity Hover(HoverRequest) -> HoverResult
