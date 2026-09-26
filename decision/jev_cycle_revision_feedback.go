@@ -34,10 +34,12 @@ func BindExecutionEnvelopeJEVImprovementCycleToRevisionFeedback(input ExecutionE
 	output := ExecutionEnvelopeJEVImprovementCycleRevisionFeedbackBinding{
 		Status: "UNKNOWN", NonExecuting: true, NonAuthorizing: true,
 	}
-	if !input.NonAuthorizing || !input.CycleBinding.NonAuthorizing || !input.RevisionCandidate.NonAuthorizing || !input.Feedback.NonAuthorizing {
-		if !input.NonAuthorizing {
-			output.NonAuthorizing = false
-		}
+	if !input.NonAuthorizing {
+		output.NonAuthorizing = false
+		output.MissingStage = "authorization-boundary"
+		return output
+	}
+	if !input.CycleBinding.NonAuthorizing {
 		output.MissingStage = "authorization-boundary"
 		return output
 	}
@@ -46,6 +48,10 @@ func BindExecutionEnvelopeJEVImprovementCycleToRevisionFeedback(input ExecutionE
 		if strings.TrimSpace(output.MissingStage) == "" {
 			output.MissingStage = "improvement-cycle"
 		}
+		return output
+	}
+	if !input.RevisionCandidate.NonAuthorizing || !input.Feedback.NonAuthorizing {
+		output.MissingStage = "authorization-boundary"
 		return output
 	}
 	if err := input.RevisionCandidate.Validate(); err != nil {
