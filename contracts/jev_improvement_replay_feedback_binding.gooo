@@ -1,0 +1,27 @@
+package jevimprovementreplayfeedbackbinding
+namespace jevimprovementreplayfeedbackbinding
+
+entity ImprovementReplayFeedbackBindingInput id "gooo://gooo-jev/improvement-replay-feedback-binding-input"
+  property ReplayBindingStatus string
+  property CycleDigest string
+  property ReplayDigest string
+  property CandidateDigest string
+  property FeedbackDigest string
+  property FeedbackKind string
+  property MetricName string
+  property NonAuthorizing boolean
+
+entity ImprovementReplayFeedbackBinding id "gooo://gooo-jev/improvement-replay-feedback-binding"
+  property Status string
+  property FeedbackKind string
+  property MetricName string
+  property FeedbackDigest string
+  property CycleDigest string
+  property ReplayDigest string
+  property CandidateDigest string
+  property EvidenceDigest string
+  property MissingStage string
+  property NonExecuting boolean
+  property NonAuthorizing boolean
+
+activity BindImprovementReplayFeedback(ImprovementReplayFeedbackBindingInput) -> ImprovementReplayFeedbackBinding
