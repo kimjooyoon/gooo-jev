@@ -1,0 +1,26 @@
+package jev.gooo.revision.generation
+
+entity RevisionGenerationAssessment {
+    field status string
+    field missing_stage string
+    field source_digest string
+    field proposed_source_digest string
+    field application_digest string
+    field assessment_digest string
+    field generation_source_digest string
+    field generated_source_digest string
+    field generated_ir_digest string
+    field structure_digest string
+    field structure_match boolean
+    field exact_source_match boolean
+    field source_match_class string
+    field generation_digest string
+    invariant non_executing
+    invariant non_authorizing
+}
+
+activity assess_revision_generation {
+    input revision_application_assessment
+    input generation_receipt
+    output revision_generation_assessment
+}
