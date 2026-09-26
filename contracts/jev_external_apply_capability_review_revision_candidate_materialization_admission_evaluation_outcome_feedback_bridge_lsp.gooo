@@ -1,0 +1,27 @@
+package jevcandidatematerializationadmissionevaluationoutcomefeedbacklsp
+
+namespace jevcandidatematerializationadmissionevaluationoutcomefeedbacklsp
+
+entity CandidateMaterializationAdmissionEvaluationOutcomeFeedbackBridgeLSPDiagnostic {
+  field evaluation_outcome_projection_digest string
+  field feedback_direction string
+  field feedback_target string
+  field feedback_digest string
+  field feedback_source string
+  field feedback_evidence_digest string
+  field feedback_status string
+  field feedback_bridge_digest string
+  field projection_digest string
+  field publishable bool
+  field non_executing bool
+  field non_authorizing bool
+}
+
+activity ProjectCandidateMaterializationAdmissionEvaluationOutcomeFeedbackBridgeLSP {
+  input CandidateMaterializationAdmissionEvaluationOutcomeFeedbackBridgeLSPDiagnostic
+  output CandidateMaterializationAdmissionEvaluationOutcomeFeedbackBridgeLSPDiagnostic
+  effect provenance-only
+  effect execution none
+  effect authorization none
+}
+
