@@ -1,0 +1,19 @@
+entity ExecutionEnvelopeJEVExecutionPlanLifecycleInput id "gooo://gooo-jev/execution-plan-lifecycle-input"
+  property PlanBinding ExecutionEnvelopeJEVExecutionPlanSourceBinding
+  property Replay ExecutionLifecycleReplayObservation
+  property Authorization ExecutionLifecycleAuthorization
+  property NonAuthorizing boolean
+
+entity ExecutionEnvelopeJEVExecutionPlanLifecycleBinding id "gooo://gooo-jev/execution-plan-lifecycle-binding"
+  property Status string
+  property PlanID string
+  property ContractID string
+  property PlanDigest string
+  property ReplayDigest string
+  property AuthorizationDigest string
+  property BindingDigest string
+  property MissingStage string
+  property NonExecuting boolean
+  property NonAuthorizing boolean
+
+activity BindExecutionEnvelopeJEVExecutionPlanToLifecycle(ExecutionEnvelopeJEVExecutionPlanLifecycleInput) -> ExecutionEnvelopeJEVExecutionPlanLifecycleBinding
