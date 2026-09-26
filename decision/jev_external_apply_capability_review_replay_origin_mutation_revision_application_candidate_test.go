@@ -4,14 +4,14 @@ import "testing"
 
 func TestGenerateJEVExternalApplyCapabilityReviewReplayOriginMutationRevisionApplicationCandidateReady(t *testing.T) {
     gate := JEVExternalApplyCapabilityReviewReplayOriginMutationRevisionPlanReviewGate{
-        Status:               jevExternalApplyCapabilityReviewReplayOriginMutationRevisionPlanReviewGateReady,
-        PlanStatus:           jevExternalApplyCapabilityReviewReplayOriginMutationRevisionPlanReady,
-        Decision:             jevExternalApplyCapabilityReviewReplayOriginMutationRevisionPlanReviewApprove,
-        PlanDigest:           "plan-digest",
-        ReviewSource:         "review-source",
+        Status:                jevExternalApplyCapabilityReviewReplayOriginMutationRevisionPlanReviewGateReady,
+        PlanStatus:            jevExternalApplyCapabilityReviewReplayOriginMutationRevisionPlanReady,
+        Decision:              jevExternalApplyCapabilityReviewReplayOriginMutationRevisionPlanReviewApprove,
+        PlanDigest:            "plan-digest",
+        ReviewSource:          "review-source",
         ReviewEvidenceDigest: "review-evidence",
-        NonExecuting:         true,
-        NonAuthorizing:       true,
+        NonExecuting:          true,
+        NonAuthorizing:        true,
     }
     gate.GateDigest = digestJEVExternalApplyCapabilityReviewReplayOriginMutationRevisionPlanReviewGate(
         gate.Status,
@@ -40,21 +40,28 @@ func TestGenerateJEVExternalApplyCapabilityReviewReplayOriginMutationRevisionApp
 
 func TestGenerateJEVExternalApplyCapabilityReviewReplayOriginMutationRevisionApplicationCandidateUnknownWithoutSource(t *testing.T) {
     gate := JEVExternalApplyCapabilityReviewReplayOriginMutationRevisionPlanReviewGate{
-        Status:               jevExternalApplyCapabilityReviewReplayOriginMutationRevisionPlanReviewGateReady,
-        PlanStatus:           jevExternalApplyCapabilityReviewReplayOriginMutationRevisionPlanReady,
-        Decision:             jevExternalApplyCapabilityReviewReplayOriginMutationRevisionPlanReviewApprove,
-        PlanDigest:           "plan-digest",
-        GateDigest:           "gate-digest",
-        ReviewSource:         "review-source",
+        Status:                jevExternalApplyCapabilityReviewReplayOriginMutationRevisionPlanReviewGateReady,
+        PlanStatus:            jevExternalApplyCapabilityReviewReplayOriginMutationRevisionPlanReady,
+        Decision:              jevExternalApplyCapabilityReviewReplayOriginMutationRevisionPlanReviewApprove,
+        PlanDigest:            "plan-digest",
+        ReviewSource:          "review-source",
         ReviewEvidenceDigest: "review-evidence",
-        NonExecuting:         true,
-        NonAuthorizing:       true,
+        NonExecuting:          true,
+        NonAuthorizing:        true,
     }
+    gate.GateDigest = digestJEVExternalApplyCapabilityReviewReplayOriginMutationRevisionPlanReviewGate(
+        gate.Status,
+        gate.PlanStatus,
+        gate.Decision,
+        gate.PlanDigest,
+        gate.ReviewSource,
+        gate.ReviewEvidenceDigest,
+    )
 
     candidate := GenerateJEVExternalApplyCapabilityReviewReplayOriginMutationRevisionApplicationCandidate(JEVExternalApplyCapabilityReviewReplayOriginMutationRevisionApplicationCandidateInput{
-        ReviewGate:      gate,
+        ReviewGate:       gate,
         ApplicationTarget: "target",
-        NonAuthorizing:  true,
+        NonAuthorizing:   true,
     })
     if candidate.Status != jevExternalApplyCapabilityReviewReplayOriginMutationRevisionApplicationCandidateUnknown ||
         candidate.MissingStage != "application-source" ||
