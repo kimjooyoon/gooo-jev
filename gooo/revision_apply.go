@@ -15,18 +15,18 @@ type SourceEdit struct {
 
 // RevisionApplication is a non-executing result of applying and reverse-observing one edit.
 type RevisionApplication struct {
-	Status                string
-	MissingStage          string
-	SourceDigest          string
-	ProposedSourceDigest  string
-	InputIRDigest         string
-	ProposedIRDigest      string
-	CandidateDigest       string
-	EditDigest            string
-	ApplicationDigest     string
-	ProposedSource        string
-	NonExecuting          bool
-	NonAuthorizing        bool
+	Status               string
+	MissingStage         string
+	SourceDigest         string
+	ProposedSourceDigest string
+	InputIRDigest        string
+	ProposedIRDigest     string
+	CandidateDigest      string
+	EditDigest           string
+	ApplicationDigest    string
+	ProposedSource       string
+	NonExecuting         bool
+	NonAuthorizing       bool
 }
 
 // ApplyRevision applies one bounded edit only when the expected source digest matches.
@@ -70,7 +70,7 @@ func ApplyRevision(source, expectedSourceDigest string, candidate RevisionCandid
 		return application, fmt.Errorf("gooo revision application: range: %w", err)
 	}
 
-	input, err := Parse(source)
+	inputIRDigest, err := parseRevisionSource(source)
 	if err != nil {
 		application.MissingStage = "revision-source-parse"
 		return application, fmt.Errorf("gooo revision application: source: %w", err)
@@ -78,7 +78,7 @@ func ApplyRevision(source, expectedSourceDigest string, candidate RevisionCandid
 	proposed := source[:start] + edit.Replacement + source[end:]
 	application.ProposedSource = proposed
 	application.ProposedSourceDigest = digestString(proposed)
-	output, err := Parse(proposed)
+	proposedIRDigest, err := parseRevisionSource(proposed)
 	if err != nil {
 		application.MissingStage = "revision-reverse-observation"
 		return application, fmt.Errorf("gooo revision application: proposed source: %w", err)
@@ -86,8 +86,8 @@ func ApplyRevision(source, expectedSourceDigest string, candidate RevisionCandid
 
 	application.Status = "BOUND"
 	application.MissingStage = ""
-	application.InputIRDigest = input.IRDigest
-	application.ProposedIRDigest = output.IRDigest
+	application.InputIRDigest = inputIRDigest
+	application.ProposedIRDigest = proposedIRDigest
 	application.ApplicationDigest = digestRevisionApplication(application)
 	return application, nil
 }
@@ -119,6 +119,24 @@ func (a RevisionApplication) Validate() error {
 		return fmt.Errorf("application digest does not match its fields")
 	}
 	return nil
+}
+
+func parseRevisionSource(source string) (string, error) {
+	for _, line := range strings.Split(source, "\n") {
+		text := strings.TrimSpace(line)
+		if strings.HasPrefix(text, "decision ") {
+			document, err := ParseDecision(source)
+			if err != nil {
+				return "", err
+			}
+			return document.IRDigest, nil
+		}
+	}
+	document, err := Parse(source)
+	if err != nil {
+		return "", err
+	}
+	return document.IRDigest, nil
 }
 
 func digestSourceEdit(edit SourceEdit) string {
