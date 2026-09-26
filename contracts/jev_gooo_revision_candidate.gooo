@@ -1,0 +1,13 @@
+package jevgooorevisioncandidate
+namespace jevgooorevisioncandidate
+
+entity ExecutionEnvelopeGoooRevisionCandidateInput id "gooo://gooo-jev/gooo-revision-candidate-input"
+property Provenance ExecutionEnvelopeFullProvenanceSourceBinding
+property ChangePlanDigest string
+property Feedback JEVImprovementFeedbackAggregation
+property Directive JEVImprovementDirectionDirective
+property RevisionSource string
+property RevisionChangeDigest string
+property NonAuthorizing boolean
+
+activity GenerateExecutionEnvelopeJEVRevisionCandidateFromGoooFullProvenance(ExecutionEnvelopeGoooRevisionCandidateInput) -> ExecutionEnvelopeJEVCycleRevisionCandidateGenerationBinding
