@@ -24,7 +24,6 @@ func TestProjectExecutionEnvelopeProvenanceChainLSPProjectsReadyAndMissingStages
 
 	missing := EvaluateExecutionEnvelopeProvenanceChainBinding(ExecutionEnvelopeProvenanceChainBindingInput{
 		DeclarationIRGeneration:  validDeclarationIRGenerationBinding(),
-		ReverseObservationDigest: "reverse-observation-digest",
 		MetricDigest:              "metric-digest",
 		NonAuthorizing:            true,
 	})
