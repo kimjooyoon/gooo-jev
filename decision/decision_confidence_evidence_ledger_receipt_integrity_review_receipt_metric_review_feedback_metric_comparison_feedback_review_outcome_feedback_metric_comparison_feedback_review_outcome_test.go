@@ -1,31 +1,35 @@
 package decision
 
-// DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewOutcome
-// records external review without authorizing a change.
-type DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewOutcome struct {
-	HandoffDigest  string `json:"handoff_digest"`
-	Decision       string `json:"decision"`
-	Status         string `json:"status"`
-	NonAuthorizing bool   `json:"non_authorizing"`
-}
+import "testing"
 
-func ObserveDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewOutcome(handoff DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewHandoff, decision string) (DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewOutcome, error) {
-	digest, err := Digest(handoff)
+func TestDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewOutcomeDoesNotAuthorize(t *testing.T) {
+	handoff := DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewHandoff{
+		CounterexampleDigest: "counterexample",
+		Status:              "ready-for-external-review",
+		NonAuthorizing:      true,
+	}
+	outcome, err := ObserveDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewOutcome(handoff, "accepted-for-analysis")
 	if err != nil {
-		return DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewOutcome{}, err
+		t.Fatalf("observe accepted review: %v", err)
 	}
-	outcome := DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewOutcome{
-		HandoffDigest:  digest,
-		Decision:       decision,
-		Status:         "unknown",
-		NonAuthorizing: true,
+	if outcome.Status != "accepted-for-analysis" || outcome.HandoffDigest == "" || !outcome.NonAuthorizing {
+		t.Fatalf("unexpected accepted review: %#v", outcome)
 	}
-	if handoff.Status != "ready-for-external-review" {
-		return outcome, nil
+
+	outcome, err = ObserveDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewOutcome(handoff, "approved")
+	if err != nil {
+		t.Fatalf("observe invalid review: %v", err)
 	}
-	switch decision {
-	case "accepted-for-analysis", "rejected":
-		outcome.Status = decision
+	if outcome.Status != "unknown" || !outcome.NonAuthorizing {
+		t.Fatalf("invalid decision escaped unknown: %#v", outcome)
 	}
-	return outcome, nil
+
+	handoff.Status = "hold"
+	outcome, err = ObserveDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackMetricComparisonFeedbackReviewOutcome(handoff, "rejected")
+	if err != nil {
+		t.Fatalf("observe held review: %v", err)
+	}
+	if outcome.Status != "unknown" || !outcome.NonAuthorizing {
+		t.Fatalf("held handoff escaped unknown: %#v", outcome)
+	}
 }
