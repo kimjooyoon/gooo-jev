@@ -1,0 +1,37 @@
+package jevlsprevisionselfimprovementcycleevidencecoverage
+
+namespace jevlsprevisionselfimprovementcycleevidencecoverage
+
+entity LSPRevisionSelfImprovementCycleEvidenceCoverageMetricInput {
+  property bridge_digest string
+  property metric_name string
+  property source_digest string
+  property candidate_source_digest string
+  property generated_ir_digest string
+  property reverse_observation_digest string
+  property linked_evidence_count integer
+  property required_evidence_count integer
+  property coverage_signal string
+  property metric_digest string
+}
+
+entity LSPRevisionSelfImprovementCycleEvidenceCoverageMetric {
+  property status string
+  property missing_stage string
+  property bridge_digest string
+  property metric_name string
+  property source_digest string
+  property candidate_source_digest string
+  property generated_ir_digest string
+  property reverse_observation_digest string
+  property linked_evidence_count integer
+  property required_evidence_count integer
+  property coverage_signal string
+  property metric_digest string
+  property projection_digest string
+  property read_only boolean
+  property non_executing boolean
+  property non_authorizing boolean
+}
+
+activity ObserveLSPRevisionSelfImprovementCycleEvidenceCoverageMetric(LSPRevisionSelfImprovementCycleEvidenceCoverageMetricInput) -> LSPRevisionSelfImprovementCycleEvidenceCoverageMetric
