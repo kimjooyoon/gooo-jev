@@ -33,8 +33,8 @@ func TestObserveRevisionSelfImprovementProvenanceReplanRetainsDecisionFailure(t 
 
 func TestObserveRevisionSelfImprovementProvenanceReplanRetainsRequirementFailure(t *testing.T) {
 	decision, plan := provenanceReplanInputs(t)
-	plan.RequiresInspection = !plan.RequiresInspection
-	plan.ObservationDigest = digestRevisionSelfImprovementExecutionPlan(plan)
+	decision.RequiresInspection = !decision.RequiresInspection
+	decision.ObservationDigest = digestRevisionSelfImprovementProvenanceReverseDecision(decision)
 	result, err := ObserveRevisionSelfImprovementProvenanceReplan(decision, plan)
 	if err == nil { t.Fatal("ObserveRevisionSelfImprovementProvenanceReplan() error = nil, want requirement link failure") }
 	if result.Status != "UNKNOWN" || result.MissingStage != "revision-self-improvement-provenance-replan-requirement-link" { t.Fatalf("unexpected unknown requirement replan: %#v", result) }
