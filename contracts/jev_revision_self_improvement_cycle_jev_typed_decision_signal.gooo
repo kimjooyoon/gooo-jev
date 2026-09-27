@@ -1,0 +1,25 @@
+contract revision_self_improvement_cycle_jev_typed_decision_signal {
+  input {
+    question_id: identifier
+    question_kind: choice | score | noul
+    decision_digest: digest
+    evidence_digest: digest
+    confidence_milli: integer
+  }
+
+  observe {
+    status: bound | unknown
+    missing_stage: stage?
+    decision_signal: "jev-choice-observed" | "jev-score-observed" | "jev-noul-observed" | "jev-typed-decision-unknown"
+    decision_observation_digest: digest
+    non_executing: true
+    non_authorizing: true
+  }
+
+  semantics {
+    parallel_questions: true
+    confidence_range: [0, 1000]
+    noul_confidence: absent
+    effect: observation_only
+  }
+}
