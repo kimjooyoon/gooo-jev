@@ -1,0 +1,38 @@
+module revision_self_improvement_cycle_jev_security_capability_envelope_observation_lsp
+
+input status
+input workload_identity_status
+input evidence_prefix_digest
+input plan_digest
+input network_allowlist_digest
+input requested_capabilities
+input observed_capabilities
+input missing_capability
+input target_stage
+input reverse_observation_digest
+input observation_digest
+
+status INFORMATION BOUND capability envelope observation
+status WARNING DEFERRED capability envelope observation
+status ERROR UNKNOWN or incomplete capability envelope observation
+
+field code
+field severity
+field workload_identity_status
+field evidence_prefix_digest
+field plan_digest
+field network_allowlist_digest
+field requested_capabilities
+field observed_capabilities
+field missing_capability
+field target_stage
+field reverse_observation_digest
+field observation_digest
+
+constraint inspection_only
+constraint capability_envelope_projection
+constraint no_authorization
+constraint no_execution
+constraint read_only
+constraint no_edits
+constraint no_command
