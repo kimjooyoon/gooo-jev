@@ -1,0 +1,67 @@
+package jevrevisionselfimprovementprovenancereverseobservation
+namespace jevrevisionselfimprovementprovenancereverseobservation
+
+entity RevisionSelfImprovementProvenanceApplicationFeedbackObservation id "gooo://gooo-jev/revision-self-improvement-provenance-application-feedback-observation"
+property ObservationDigest string
+property PlanDispositionDigest string
+property IterationProvenanceDigest string
+property PlanDigest string
+property ApplicationDigest string
+property ReceiptDigest string
+property ApplicationProposedSourceDigest string
+property ApplicationProposedIRDigest string
+property FeedbackSignal string
+property ApplicationSignal string
+property FeedbackApplicationSignal string
+property SignalsAligned boolean
+property NonAuthorizing boolean
+
+entity RevisionSelfImprovementReverseObservation id "gooo://gooo-jev/revision-self-improvement-reverse-observation"
+property ObservationDigest string
+property ProposedSourceDigest string
+property ProposedIRDigest string
+property GeneratedIRDigest string
+property ObservedGeneratedIRDigest string
+property StructureDigest string
+property ObservedStructureDigest string
+property ReverseSignal string
+property ExactIRMatch boolean
+property ExactStructureMatch boolean
+property NonAuthorizing boolean
+
+entity RevisionSelfImprovementProvenanceReverseObservationInput id "gooo://gooo-jev/revision-self-improvement-provenance-reverse-observation-input"
+property Feedback RevisionSelfImprovementProvenanceApplicationFeedbackObservation
+property Reverse RevisionSelfImprovementReverseObservation
+property NonAuthorizing boolean
+
+entity RevisionSelfImprovementProvenanceReverseObservation id "gooo://gooo-jev/revision-self-improvement-provenance-reverse-observation"
+property Status string
+property MissingStage string
+property ApplicationFeedbackDigest string
+property ReverseObservationDigest string
+property PlanDispositionDigest string
+property IterationProvenanceDigest string
+property PlanDigest string
+property ApplicationDigest string
+property ReceiptDigest string
+property ProposedSourceDigest string
+property ReverseProposedSourceDigest string
+property ProposedIRDigest string
+property ReverseProposedIRDigest string
+property GeneratedIRDigest string
+property ReverseGeneratedIRDigest string
+property StructureDigest string
+property ReverseStructureDigest string
+property FeedbackSignal string
+property ApplicationSignal string
+property FeedbackApplicationSignal string
+property ReverseSignal string
+property ProvenanceReverseSignal string
+property SignalsAligned boolean
+property ExactIRMatch boolean
+property ExactStructureMatch boolean
+property ObservationDigest string
+property NonExecuting boolean
+property NonAuthorizing boolean
+
+activity ObserveRevisionSelfImprovementProvenanceReverseObservation(RevisionSelfImprovementProvenanceReverseObservationInput) -> RevisionSelfImprovementProvenanceReverseObservation
