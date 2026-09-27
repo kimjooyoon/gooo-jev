@@ -93,3 +93,18 @@ func capabilityQueryByID(capabilities []CapabilityQueryCapability, id string) (C
 	}
 	return CapabilityQueryCapability{}, false
 }
+
+func TestCapabilityQuerySuggestedExamplesAreDiscoverable(t *testing.T) {
+	for _, entry := range capabilityQueryCatalog {
+		if !entry.Safe {
+			continue
+		}
+		response := DiscoverCapabilityQuery(entry.ExampleQuery)
+		if response.Status != CapabilityQueryAvailable || len(response.Capabilities) == 0 {
+			t.Fatalf("catalog example is not discoverable: id=%q query=%q response=%+v", entry.ID, entry.ExampleQuery, response)
+		}
+		if err := response.Validate(); err != nil {
+			t.Fatalf("catalog example should validate: id=%q error=%v", entry.ID, err)
+		}
+	}
+}
