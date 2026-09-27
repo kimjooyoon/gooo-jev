@@ -1,0 +1,24 @@
+contract revision_self_improvement_cycle_jev_decision_confidence_metric_reverse_observation {
+  input {
+    metric: revision_self_improvement_cycle_jev_decision_confidence_metric_observation
+  }
+
+  observe {
+    status: bound | unknown
+    missing_stage: stage?
+    metric_name: "jev-typed-decision-confidence-milli"
+    metric_digest: digest
+    reconstructed_metric_digest: digest
+    decision_observation_digest: digest
+    reverse_signal: "jev-decision-confidence-metric-reverse-complete" | "jev-decision-confidence-metric-reverse-incomplete" | "jev-decision-confidence-metric-reverse-unknown"
+    observation_digest: digest
+    non_executing: true
+    non_authorizing: true
+  }
+
+  semantics {
+    source: revision_self_improvement_cycle_jev_decision_confidence_metric
+    effect: reverse_observation_only
+    authority: none
+  }
+}
