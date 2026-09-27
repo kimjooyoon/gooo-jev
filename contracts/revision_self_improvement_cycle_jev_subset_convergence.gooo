@@ -1,0 +1,45 @@
+contract revision_self_improvement_cycle_jev_subset_convergence {
+  input {
+    subset_name: string
+    declaration_digest: digest
+    ir_digest: digest
+    generation_digest: digest
+    reverse_observation_digest: digest
+    convergence_iteration: integer
+    stability_status: stable | unknown
+    reverse_observation_status: observed | unknown
+    source_line_count: integer
+    generated_line_count: integer
+  }
+
+  observe {
+    status: bound | unknown
+    missing_stage: stage?
+    subset_name: string
+    declaration_digest: digest
+    ir_digest: digest
+    generation_digest: digest
+    reverse_observation_digest: digest
+    convergence_iteration: integer
+    stability_status: stable | unknown
+    reverse_observation_status: observed | unknown
+    source_line_count: integer
+    generated_line_count: integer
+    convergence_signal: "jev-subset-convergence-observed" | "jev-subset-convergence-unknown"
+    observation_digest: digest
+    read_only: true
+    non_executing: true
+    non_authorizing: true
+  }
+
+  semantics {
+    requires_declaration: true
+    requires_ir: true
+    requires_generation: true
+    requires_reverse_observation: true
+    bounded_subset_only: true
+    effect: observation_only
+    authority: none
+    decision: defer
+  }
+}
