@@ -99,7 +99,10 @@ func (d DecisionConfidenceChangeOutcomeMetricLSPDiagnostic) Validate() error {
 	if d.EvidenceDigest == "" {
 		return fmt.Errorf("outcome LSP evidence digest is required")
 	}
-	expected := digestDecisionConfidenceChangeOutcomeMetricLSP(d)
+	expected, err := digestDecisionConfidenceChangeOutcomeMetricLSP(d)
+	if err != nil {
+		return fmt.Errorf("digest outcome LSP diagnostic: %w", err)
+	}
 	if expected != d.EvidenceDigest {
 		return fmt.Errorf("outcome LSP evidence digest mismatch")
 	}
