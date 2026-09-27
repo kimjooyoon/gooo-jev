@@ -1,0 +1,6 @@
+revision_self_improvement_cycle_jev_execution_plan_reverse_observation_coverage_metric {
+  input execution_plan_reverse_observation RevisionSelfImprovementCycleJEVExecutionPlanReverseObservation
+  observe status missing_stage metric_name required_digest_count linked_digest_count coverage_milli coverage_band metric_signal metric_digest reverse_observation_digest observation_digest non_executing non_authorizing
+  semantics effect reverse_observation_only
+  authority none
+}
