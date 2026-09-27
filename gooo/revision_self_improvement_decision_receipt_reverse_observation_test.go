@@ -2,9 +2,19 @@ package gooo
 
 import "testing"
 
-func TestObserveRevisionSelfImprovementDecisionReceiptReverseObservationBindsEvidence(t *testing.T) {
+func decisionReceiptReverseObservationInput(t *testing.T) (RevisionSelfImprovementDecisionReceiptObservation, RevisionSelfImprovementProvenanceReverseObservation) {
+	t.Helper()
 	receipt := lspDecisionReceiptInput(t)
-	_, reverse := provenanceReverseObservationInputs(t)
+	feedback, reverse := provenanceReverseObservationInputs(t)
+	provenanceReverse, err := ObserveRevisionSelfImprovementProvenanceReverseObservation(feedback, reverse)
+	if err != nil {
+		t.Fatalf("observe provenance reverse observation: %v", err)
+	}
+	return receipt, provenanceReverse
+}
+
+func TestObserveRevisionSelfImprovementDecisionReceiptReverseObservationBindsEvidence(t *testing.T) {
+	receipt, reverse := decisionReceiptReverseObservationInput(t)
 	got, err := ObserveRevisionSelfImprovementDecisionReceiptReverseObservation(receipt, reverse)
 	if err != nil {
 		t.Fatalf("observe decision receipt reverse boundary: %v", err)
@@ -26,8 +36,7 @@ func TestObserveRevisionSelfImprovementDecisionReceiptReverseObservationBindsEvi
 }
 
 func TestObserveRevisionSelfImprovementDecisionReceiptReverseObservationPreservesUnknown(t *testing.T) {
-	receipt := lspDecisionReceiptInput(t)
-	_, reverse := provenanceReverseObservationInputs(t)
+	receipt, reverse := decisionReceiptReverseObservationInput(t)
 	reverse.ObservationDigest = digestString("tampered")
 	got, err := ObserveRevisionSelfImprovementDecisionReceiptReverseObservation(receipt, reverse)
 	if err == nil {
@@ -40,8 +49,7 @@ func TestObserveRevisionSelfImprovementDecisionReceiptReverseObservationPreserve
 }
 
 func TestObserveRevisionSelfImprovementDecisionReceiptReverseObservationIsDeterministic(t *testing.T) {
-	receipt := lspDecisionReceiptInput(t)
-	_, reverse := provenanceReverseObservationInputs(t)
+	receipt, reverse := decisionReceiptReverseObservationInput(t)
 	first, err := ObserveRevisionSelfImprovementDecisionReceiptReverseObservation(receipt, reverse)
 	if err != nil {
 		t.Fatalf("first reverse boundary: %v", err)
