@@ -14,8 +14,12 @@ func TestDeriveGoooDeclarationIRGenerationRoundTrip(t *testing.T) {
 		SourceText:     sampleGoooDeclaration,
 		NonAuthorizing: true,
 	})
-	if derived.Status != "ready" || derived.MissingStage != "" || derived.SourceDigest == "" || derived.IRDigest == "" || derived.GenerationDigest == "" || derived.GeneratedSource == "" {
+	if derived.Status != "ready" || derived.MissingStage != "" || derived.SourceDigest == "" || derived.IRDigest == "" || derived.GenerationDigest == "" || derived.GeneratedSource == "" ||
+		derived.ReverseObservationStatus != "ready" || derived.RoundTripIRDigest != derived.IRDigest || derived.ReverseObservationDigest == "" {
 		t.Fatalf("derived = %#v", derived)
+	}
+	if err := derived.Validate(); err != nil {
+		t.Fatalf("derived validation error = %v", err)
 	}
 	roundTrip := DeriveGoooDeclarationIRGeneration(GoooDeclarationIRGenerationInput{
 		SourceText:     derived.GeneratedSource,
@@ -26,6 +30,25 @@ func TestDeriveGoooDeclarationIRGenerationRoundTrip(t *testing.T) {
 	}
 	if len(derived.IR.Entities) != 2 || len(derived.IR.Activities) != 1 || derived.IR.Activities[0].Parameters[0].Type != "DecisionSpec" {
 		t.Fatalf("unexpected IR = %#v", derived.IR)
+	}
+}
+
+func TestDeriveGoooDeclarationIRGenerationRejectsTamperedReverseObservation(t *testing.T) {
+	derived := DeriveGoooDeclarationIRGeneration(GoooDeclarationIRGenerationInput{
+		SourceText:     sampleGoooDeclaration,
+		NonAuthorizing: true,
+	})
+	derived.RoundTripIRDigest = "tampered-round-trip-ir"
+	if err := derived.Validate(); err == nil {
+		t.Fatal("tampered round-trip IR must fail validation")
+	}
+	derived = DeriveGoooDeclarationIRGeneration(GoooDeclarationIRGenerationInput{
+		SourceText:     sampleGoooDeclaration,
+		NonAuthorizing: true,
+	})
+	derived.ReverseObservationDigest = "tampered-reverse-observation"
+	if err := derived.Validate(); err == nil {
+		t.Fatal("tampered reverse observation must fail validation")
 	}
 }
 

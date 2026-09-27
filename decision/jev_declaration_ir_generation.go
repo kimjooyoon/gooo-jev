@@ -56,6 +56,9 @@ type GoooDeclarationIRGeneration struct {
 	IRDigest         string
 	GeneratedSource  string
 	GenerationDigest string
+	ReverseObservationStatus string
+	RoundTripIRDigest         string
+	ReverseObservationDigest  string
 	MissingStage     string
 	NonExecuting     bool
 	NonAuthorizing   bool
@@ -65,7 +68,8 @@ type GoooDeclarationIRGeneration struct {
 // grammar, computes a deterministic IR, and generates canonical source.
 func DeriveGoooDeclarationIRGeneration(input GoooDeclarationIRGenerationInput) GoooDeclarationIRGeneration {
 	output := GoooDeclarationIRGeneration{
-		Status: "UNKNOWN", NonExecuting: true, NonAuthorizing: true,
+		Status: "UNKNOWN", ReverseObservationStatus: "UNKNOWN",
+		NonExecuting: true, NonAuthorizing: true,
 	}
 	if !input.NonAuthorizing {
 		output.NonAuthorizing = false
@@ -105,13 +109,83 @@ func DeriveGoooDeclarationIRGeneration(input GoooDeclarationIRGenerationInput) G
 		output.MissingStage = "generation-digest"
 		return output
 	}
-	output.Status = "ready"
 	output.IR = ir
 	output.SourceDigest = sourceDigest
 	output.IRDigest = irDigest
 	output.GeneratedSource = generated
 	output.GenerationDigest = generationDigest
+	roundTripIR, err := parseGoooDeclarationIR(generated)
+	if err != nil {
+		output.MissingStage = "reverse-observation"
+		return output
+	}
+	roundTripIRDigest, err := Digest(roundTripIR)
+	if err != nil {
+		output.MissingStage = "reverse-observation-digest"
+		return output
+	}
+	reverseObservationDigest, err := Digest(struct {
+		IRDigest          string
+		GenerationDigest  string
+		RoundTripIRDigest string
+	}{
+		IRDigest:          irDigest,
+		GenerationDigest:  generationDigest,
+		RoundTripIRDigest: roundTripIRDigest,
+	})
+	if err != nil {
+		output.MissingStage = "reverse-observation-evidence"
+		return output
+	}
+	output.RoundTripIRDigest = roundTripIRDigest
+	output.ReverseObservationDigest = reverseObservationDigest
+	if roundTripIRDigest != irDigest {
+		output.MissingStage = "reverse-observation"
+		return output
+	}
+	output.ReverseObservationStatus = "ready"
+	output.Status = "ready"
 	return output
+}
+
+// Validate replays the declaration-to-generation reverse-observation
+// invariant without executing any declared activity.
+func (result GoooDeclarationIRGeneration) Validate() error {
+	if !result.NonExecuting || !result.NonAuthorizing {
+		return fmt.Errorf("declaration IR generation crossed an execution or authorization boundary")
+	}
+	if result.Status == "UNKNOWN" {
+		if strings.TrimSpace(result.MissingStage) == "" {
+			return fmt.Errorf("unknown declaration IR generation is missing its first unresolved stage")
+		}
+		return nil
+	}
+	if result.Status != "ready" || result.ReverseObservationStatus != "ready" ||
+		strings.TrimSpace(result.SourceDigest) == "" ||
+		strings.TrimSpace(result.IRDigest) == "" ||
+		strings.TrimSpace(result.GenerationDigest) == "" ||
+		strings.TrimSpace(result.RoundTripIRDigest) == "" ||
+		strings.TrimSpace(result.ReverseObservationDigest) == "" ||
+		result.RoundTripIRDigest != result.IRDigest ||
+		strings.TrimSpace(result.MissingStage) != "" {
+		return fmt.Errorf("declaration IR generation reverse observation is incomplete")
+	}
+	expected, err := Digest(struct {
+		IRDigest          string
+		GenerationDigest  string
+		RoundTripIRDigest string
+	}{
+		IRDigest:          result.IRDigest,
+		GenerationDigest:  result.GenerationDigest,
+		RoundTripIRDigest: result.RoundTripIRDigest,
+	})
+	if err != nil {
+		return err
+	}
+	if expected != result.ReverseObservationDigest {
+		return fmt.Errorf("declaration IR generation reverse observation digest mismatch")
+	}
+	return nil
 }
 
 // GenerateGoooDeclaration emits canonical source for a parsed declaration.

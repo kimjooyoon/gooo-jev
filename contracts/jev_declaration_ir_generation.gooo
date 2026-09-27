@@ -32,6 +32,9 @@ property SourceDigest string
 property IRDigest string
 property GeneratedSource string
 property GenerationDigest string
+property ReverseObservationStatus string
+property RoundTripIRDigest string
+property ReverseObservationDigest string
 property MissingStage string
 property NonExecuting boolean
 property NonAuthorizing boolean
