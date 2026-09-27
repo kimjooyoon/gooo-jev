@@ -1,0 +1,21 @@
+package jevdeclarationevidencecyclemetric
+namespace jevdeclarationevidencecyclemetric
+
+entity ExecutionEnvelopeDeclarationEvidenceCycleMetricInput id "gooo://gooo-jev/declaration-evidence-cycle-metric-input"
+property ProjectionStatus string
+property MissingStage string
+property FirstMismatch string
+property EvidenceDigest string
+
+entity ExecutionEnvelopeDeclarationEvidenceCycleMetricProjection id "gooo://gooo-jev/declaration-evidence-cycle-metric-projection"
+property Status string
+property StageCount int
+property StageTotal int
+property Coverage float64
+property FirstMissingStage string
+property EvidenceDigest string
+property MetricDigest string
+property NonExecuting boolean
+property NonAuthorizing boolean
+
+activity MeasureExecutionEnvelopeDeclarationEvidenceCycleMetric(ExecutionEnvelopeDeclarationEvidenceCycleMetricInput) -> ExecutionEnvelopeDeclarationEvidenceCycleMetricProjection
