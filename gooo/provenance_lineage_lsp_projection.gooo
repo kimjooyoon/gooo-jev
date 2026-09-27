@@ -1,0 +1,24 @@
+module provenance_lineage_lsp_projection
+
+input lineage_status
+input missing_stage
+input edge_count
+input chain_digest
+input evidence_digest
+input read_only
+input non_authorizing
+
+status BOUND validated provenance lineage is exposed read-only
+status UNKNOWN lineage evidence is incomplete, invalid, or crosses a capability boundary
+
+field publishable
+field severity
+field code
+field observation_digest
+
+constraint read_only
+constraint no_improvement_claim
+constraint no_execution
+constraint no_authorization
+constraint no_edits
+constraint no_command
