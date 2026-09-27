@@ -43,6 +43,7 @@ jobs:
           go build ./cmd/gooo-lsp
           go build ./cmd/gooo-generate
           go build ./cmd/gooo-evaluate
+          go build ./cmd/gooo-trend
       - name: Exercise declaration workflows
         shell: bash
         run: |
