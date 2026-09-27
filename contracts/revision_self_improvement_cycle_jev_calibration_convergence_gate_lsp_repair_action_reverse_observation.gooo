@@ -1,0 +1,30 @@
+contract revision_self_improvement_cycle_jev_calibration_convergence_gate_lsp_repair_action_reverse_observation {
+  input action_digest:string
+  input gate_decision:string
+  input suggested_action:string
+  input projection_observation_digest:string
+  input evidence_prefix_digest:string
+  input source_observation_digest:string
+  input missing_stage:string
+  input missing_stage_index:int
+
+  observe reverse_action {
+    when action_digest == "" -> UNKNOWN("jev-calibration-convergence-gate-lsp-repair-action")
+    when missing_stage_index < 0 -> UNKNOWN("jev-calibration-convergence-gate-lsp-repair-action-stage-index")
+    otherwise -> BOUND(action_digest)
+  }
+
+  preserve provenance {
+    action_digest
+    gate_decision
+    suggested_action
+    projection_observation_digest
+    evidence_prefix_digest
+    source_observation_digest
+    missing_stage
+    missing_stage_index
+    reverse_observation_digest
+    non_executing
+    non_authorizing
+  }
+}
