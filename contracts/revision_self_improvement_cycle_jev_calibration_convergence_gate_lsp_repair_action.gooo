@@ -1,0 +1,34 @@
+contract revision_self_improvement_cycle_jev_calibration_convergence_gate_lsp_repair_action {
+  input projection_observation_digest:string
+  input evidence_prefix_digest:string
+  input source_observation_digest:string
+  input reverse_observation_digest:string
+  input gate_decision:string
+  input projection_signal:string
+  input missing_stage:string
+  input missing_stage_index:int
+
+  decide repair_action {
+    when projection_observation_digest == "" -> UNKNOWN("jev-calibration-convergence-gate-lsp-projection")
+    when evidence_prefix_digest == "" -> UNKNOWN("jev-calibration-convergence-gate-lsp-projection-evidence-prefix")
+    when reverse_observation_digest == "" -> UNKNOWN("jev-calibration-convergence-gate-lsp-reverse-observation")
+    when gate_decision == "jev-calibration-convergence-converged" -> BOUND("observe-convergence")
+    when gate_decision == "jev-calibration-convergence-regressed" -> BOUND("review-regression")
+    when gate_decision == "jev-calibration-convergence-defer" -> BOUND("wait-for-comparable-evidence")
+    otherwise -> UNKNOWN("jev-calibration-convergence-gate-decision")
+  }
+
+  preserve provenance {
+    projection_observation_digest
+    evidence_prefix_digest
+    source_observation_digest
+    reverse_observation_digest
+    gate_decision
+    projection_signal
+    missing_stage
+    missing_stage_index
+    action_digest
+    non_executing
+    non_authorizing
+  }
+}
