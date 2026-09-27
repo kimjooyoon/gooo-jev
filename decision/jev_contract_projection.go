@@ -132,7 +132,7 @@ func parseGoooContractShape(source string) (goooContractShape, string) {
 			}
 			shape.fields = append(shape.fields, parts[1])
 		case "constraint":
-			if len(parts) != 2 || shape.constraints[parts[1]] {
+			if len(parts) != 2 {
 				return goooContractShape{}, "contract-syntax"
 			}
 			shape.constraints[parts[1]] = true
@@ -220,7 +220,6 @@ func containsString(values []string, target string) bool {
 	for _, value := range values {
 		if value == target {
 			return true
-		}
 	}
 	return false
 }
