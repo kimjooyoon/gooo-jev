@@ -65,8 +65,7 @@ func TestExplainSelfImprovementIterationProvenanceRetainsObservationFailure(t *t
 
 func TestExplainSelfImprovementIterationProvenanceRetainsSourceLinkFailure(t *testing.T) {
 	source, symbolName, current, observation := lspSelfImprovementIterationProvenanceInputs(t, false)
-	result, err := ExplainSelfImprovementIterationProvenance(source+"
-", symbolName, current, observation)
+	result, err := ExplainSelfImprovementIterationProvenance(source+"\n", symbolName, current, observation)
 	if err == nil {
 		t.Fatal("ExplainSelfImprovementIterationProvenance() error = nil, want source link failure")
 	}
