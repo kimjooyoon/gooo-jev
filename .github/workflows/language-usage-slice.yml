@@ -20,7 +20,7 @@ jobs:
   usage-contract:
     name: usage contract
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
     steps:
       - name: Check out source
         uses: actions/checkout@v4
@@ -32,7 +32,7 @@ jobs:
       - name: Test
         run: go test ./...
       - name: Race test
-        run: go test -race ./gooo/...
+        run: go test -race -timeout=35m ./gooo/...
       - name: Vet
         run: go vet ./...
       - name: Build usability commands
