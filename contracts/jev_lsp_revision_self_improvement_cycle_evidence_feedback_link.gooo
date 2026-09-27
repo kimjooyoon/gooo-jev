@@ -1,0 +1,49 @@
+package jevlsprevisionselfimprovementcycleevidencefeedbacklink
+
+namespace jevlsprevisionselfimprovementcycleevidencefeedbacklink
+
+entity LSPRevisionSelfImprovementCycleEvidenceCoverageFeedbackInput {
+  property bridge_digest string
+  property coverage_metric_digest string
+  property feedback_digest string
+  property source_digest string
+  property candidate_source_digest string
+  property generated_ir_digest string
+  property reverse_observation_digest string
+  property coverage_signal string
+  property feedback_signal string
+  property feedback_reason string
+  property requires_observation boolean
+  property requires_review boolean
+  property requires_replan boolean
+  property requires_measurement boolean
+  property feedback_aligned boolean
+  property link_signal string
+}
+
+entity LSPRevisionSelfImprovementCycleEvidenceCoverageFeedback {
+  property status string
+  property missing_stage string
+  property bridge_digest string
+  property coverage_metric_digest string
+  property feedback_digest string
+  property source_digest string
+  property candidate_source_digest string
+  property generated_ir_digest string
+  property reverse_observation_digest string
+  property coverage_signal string
+  property feedback_signal string
+  property feedback_reason string
+  property requires_observation boolean
+  property requires_review boolean
+  property requires_replan boolean
+  property requires_measurement boolean
+  property feedback_aligned boolean
+  property link_signal string
+  property projection_digest string
+  property read_only boolean
+  property non_executing boolean
+  property non_authorizing boolean
+}
+
+activity ObserveLSPRevisionSelfImprovementCycleEvidenceCoverageFeedback(LSPRevisionSelfImprovementCycleEvidenceCoverageFeedbackInput) -> LSPRevisionSelfImprovementCycleEvidenceCoverageFeedback
