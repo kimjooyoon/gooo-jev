@@ -10,10 +10,6 @@ import (
 	"github.com/kimjooyoon/gooo-jev/gooo"
 )
 
-type planDocument struct {
-	Plan gooo.UsageActionPlan `json:"plan"`
-}
-
 type observationDocument struct {
 	Observation gooo.UsageObservation `json:"observation"`
 }
@@ -28,8 +24,8 @@ func main() {
 	if err != nil {
 		fail(err)
 	}
-	var document planDocument
-	if err := json.Unmarshal(data, &document); err != nil {
+	var plan gooo.UsageActionPlan
+	if err := json.Unmarshal(data, &plan); err != nil {
 		fail(err)
 	}
 	metricValue, err := strconv.ParseFloat(os.Args[5], 64)
@@ -42,7 +38,7 @@ func main() {
 	}
 
 	observation, err := gooo.ObserveUsageAction(
-		document.Plan,
+		plan,
 		os.Args[2],
 		gooo.UsageObservationKind(os.Args[3]),
 		os.Args[4],
@@ -53,7 +49,7 @@ func main() {
 	if err != nil {
 		fail(err)
 	}
-	if err := observation.ValidateAgainst(document.Plan); err != nil {
+	if err := observation.ValidateAgainst(plan); err != nil {
 		fail(err)
 	}
 	output := observationDocument{Observation: observation}
