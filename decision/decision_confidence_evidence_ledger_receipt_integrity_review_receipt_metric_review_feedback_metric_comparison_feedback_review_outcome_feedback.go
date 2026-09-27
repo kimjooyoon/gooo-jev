@@ -4,6 +4,7 @@ package decision
 // converts an external review outcome into non-authorizing feedback.
 type DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedback struct {
 	OutcomeDigest  string `json:"outcome_digest"`
+	Decision       string `json:"decision"`
 	Status         string `json:"status"`
 	NonAuthorizing bool   `json:"non_authorizing"`
 }
@@ -15,7 +16,8 @@ func DeriveDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricRe
 	}
 	feedback := DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedback{
 		OutcomeDigest:  digest,
-		Status:        "hold",
+		Decision:       outcome.Decision,
+		Status:         "hold",
 		NonAuthorizing: true,
 	}
 	switch outcome.Status {
