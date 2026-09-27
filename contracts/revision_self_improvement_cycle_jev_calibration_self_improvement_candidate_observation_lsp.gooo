@@ -1,0 +1,33 @@
+module revision_self_improvement_cycle_jev_calibration_self_improvement_candidate_observation_lsp
+
+input status
+input source_digest
+input ir_digest
+input generated_digest
+input reverse_observation_digest
+input expected_delta
+input observed_delta
+input missing_stage_index
+
+status INFORMATION BOUND complete source-to-reverse-observation chain
+status ERROR UNKNOWN or incomplete source-to-reverse-observation chain
+
+field code
+field severity
+field source_digest
+field ir_digest
+field generated_digest
+field reverse_observation_digest
+field expected_delta
+field observed_delta
+field missing_stage_index
+
+constraint inspection_only
+constraint evidence_chain_projection
+constraint signed_metric_projection
+constraint no_improvement_claim
+constraint read_only
+constraint no_edits
+constraint no_command
+constraint no_execution
+constraint no_authorization
