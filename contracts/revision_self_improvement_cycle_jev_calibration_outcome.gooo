@@ -1,0 +1,36 @@
+contract revision_self_improvement_cycle_jev_calibration_outcome {
+  input {
+    decision_digest: digest
+    declaration_digest: digest
+    ir_digest: digest
+    generation_digest: digest
+    reverse_observation_digest: digest
+    predicted_label: string
+    observed_label: string
+    confidence_milli: integer
+    abstained: boolean
+    outcome_status: observed | unknown
+  }
+
+  observe {
+    status: bound | unknown
+    missing_stage: stage?
+    outcome_class: correct | incorrect | abstained | unknown
+    outcome_signal: "jev-calibration-outcome-observed" | "jev-calibration-outcome-unknown"
+    observation_digest: digest
+    read_only: true
+    non_executing: true
+    non_authorizing: true
+  }
+
+  semantics {
+    requires_outcome_observation: true
+    requires_source_declaration: true
+    requires_ir_binding: true
+    requires_generation_binding: true
+    requires_reverse_observation: true
+    effect: observation_only
+    authority: none
+    decision: defer
+  }
+}
