@@ -41,3 +41,4 @@ jobs:
           go build ./cmd/gooo-feedback
           go build ./cmd/gooo-complete
           go build ./cmd/gooo-lsp
+          go build ./cmd/gooo-generate
