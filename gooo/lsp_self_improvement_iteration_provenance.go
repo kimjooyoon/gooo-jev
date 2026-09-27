@@ -97,7 +97,7 @@ func ExplainSelfImprovementIterationProvenance(
 		return result, fmt.Errorf("iteration provenance observation is not valid: %w", err)
 	}
 	if snapshot.SourceDigest != current.SourceDigest ||
-		observation.SourceDigest() != snapshot.SourceDigest {
+		observation.SourceDigest != snapshot.SourceDigest {
 		result.MissingStage = "lsp-self-improvement-iteration-provenance-source-link"
 		setResultDigest()
 		return result, fmt.Errorf("LSP source digest is not linked to current iteration provenance")
@@ -130,10 +130,6 @@ func ExplainSelfImprovementIterationProvenance(
 	return result, fmt.Errorf("LSP symbol %q was not found", symbolName)
 }
 
-func (o RevisionSelfImprovementIterationProvenanceObservation) SourceDigest() string {
-	return o.SourceDigest
-}
-
 func (r SelfImprovementIterationProvenanceSymbolResult) Validate() error {
 	if r.Status == "" {
 		return fmt.Errorf("LSP iteration provenance status is empty")
@@ -152,19 +148,19 @@ func (r SelfImprovementIterationProvenanceSymbolResult) Validate() error {
 		return fmt.Errorf("bound LSP iteration provenance is incomplete")
 	}
 	for name, digest := range map[string]string{
-		"source":             r.SourceDigest,
-		"ir":                 r.IRDigest,
-		"symbol":             r.SymbolDigest,
-		"lifecycle":          r.CurrentLifecycleObservationDigest,
-		"iteration":         r.IterationDigest,
-		"legacy-history":     r.LegacyHistoryDigest,
-		"provenance-history": r.ProvenanceHistoryDigest,
-		"window":             r.WindowDigest,
-		"feedback":           r.FeedbackDigest,
-		"bridge":             r.BridgeDigest,
+		"source":                 r.SourceDigest,
+		"ir":                     r.IRDigest,
+		"symbol":                 r.SymbolDigest,
+		"lifecycle":              r.CurrentLifecycleObservationDigest,
+		"iteration":             r.IterationDigest,
+		"legacy-history":         r.LegacyHistoryDigest,
+		"provenance-history":     r.ProvenanceHistoryDigest,
+		"window":                 r.WindowDigest,
+		"feedback":               r.FeedbackDigest,
+		"bridge":                 r.BridgeDigest,
 		"candidate-generated-ir": r.CandidateGeneratedIRDigest,
-		"observation":        r.ObservationDigest,
-		"result":             r.ResultDigest,
+		"observation":            r.ObservationDigest,
+		"result":                 r.ResultDigest,
 	} {
 		if !validDigest(digest) {
 			return fmt.Errorf("LSP iteration provenance %s digest is invalid", name)
