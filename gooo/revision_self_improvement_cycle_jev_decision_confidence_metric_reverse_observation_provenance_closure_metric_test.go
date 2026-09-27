@@ -3,8 +3,8 @@ package gooo
 import "testing"
 
 func TestRevisionSelfImprovementCycleJEVDecisionConfidenceMetricReverseObservationProvenanceClosureMetricPreservesUnknown(t *testing.T) {
-	reverseObservation := ObserveRevisionSelfImprovementCycleJEVDecisionConfidenceMetricReverseObservation(
-		RevisionSelfImprovementCycleJEVDecisionConfidenceMetricReverseObservation{},
+	reverseObservation, _ := ObserveRevisionSelfImprovementCycleJEVDecisionConfidenceMetricReverseObservation(
+		RevisionSelfImprovementCycleJEVDecisionConfidenceMetricObservation{},
 	)
 	closureMetric := ObserveRevisionSelfImprovementCycleJEVDecisionConfidenceMetricReverseObservationProvenanceClosureMetric(reverseObservation)
 
@@ -23,8 +23,8 @@ func TestRevisionSelfImprovementCycleJEVDecisionConfidenceMetricReverseObservati
 }
 
 func TestRevisionSelfImprovementCycleJEVDecisionConfidenceMetricReverseObservationProvenanceClosureMetricRejectsTamperedObservation(t *testing.T) {
-	reverseObservation := ObserveRevisionSelfImprovementCycleJEVDecisionConfidenceMetricReverseObservation(
-		RevisionSelfImprovementCycleJEVDecisionConfidenceMetricReverseObservation{},
+	reverseObservation, _ := ObserveRevisionSelfImprovementCycleJEVDecisionConfidenceMetricReverseObservation(
+		RevisionSelfImprovementCycleJEVDecisionConfidenceMetricObservation{},
 	)
 	reverseObservation.ObservationDigest = digestString("tampered")
 	closureMetric := ObserveRevisionSelfImprovementCycleJEVDecisionConfidenceMetricReverseObservationProvenanceClosureMetric(reverseObservation)
