@@ -1,0 +1,42 @@
+package jev.gooo.lsp.iterationprovenance
+
+entity SelfImprovementIterationProvenanceSymbolResult {
+    field status string
+    field missing_stage string
+    field source_digest string
+    field ir_digest string
+    field symbol_name string
+    field symbol_kind string
+    field symbol_digest string
+    field current_lifecycle_observation_digest string
+    field iteration_digest string
+    field legacy_history_digest string
+    field provenance_history_digest string
+    field window_digest string
+    field feedback_digest string
+    field bridge_digest string
+    field candidate_generated_ir_digest string
+    field legacy_history_signal string
+    field provenance_history_signal string
+    field decision_signal string
+    field feedback_signal string
+    field bridge_signal string
+    field stage_count integer
+    field metrics_change_count integer
+    field generation_change_count integer
+    field requires_observation boolean
+    field requires_inspection boolean
+    field requires_measurement boolean
+    field observation_digest string
+    field result_digest string
+    invariant non_executing
+    invariant non_authorizing
+}
+
+activity explain_self_improvement_iteration_provenance {
+    input source
+    input symbol_name
+    input current_revision_self_improvement_lifecycle_observation
+    input revision_self_improvement_iteration_provenance_observation
+    output self_improvement_iteration_provenance_symbol_result
+}
