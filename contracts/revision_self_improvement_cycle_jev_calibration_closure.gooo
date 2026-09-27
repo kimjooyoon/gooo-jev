@@ -1,0 +1,27 @@
+contract revision_self_improvement_cycle_jev_calibration_closure {
+  input {
+    calibration_window: revision_self_improvement_cycle_jev_calibration_window_observation
+    generation_trace_digest: digest
+    reverse_observation_coverage_digest: digest
+  }
+
+  observe {
+    status: bound | unknown
+    missing_stage: stage?
+    calibration_error_milli: integer
+    calibration_status: observed | unknown
+    closure_signal: "jev-calibration-closure-observed" | "jev-calibration-closure-unknown"
+    observation_digest: digest
+    read_only: true
+    non_executing: true
+    non_authorizing: true
+  }
+
+  semantics {
+    requires_outcome_backed_calibration: true
+    requires_generation_trace: true
+    requires_reverse_observation_coverage: true
+    effect: observation_only
+    authority: none
+  }
+}
