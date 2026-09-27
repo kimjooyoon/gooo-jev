@@ -1,0 +1,40 @@
+package jevtypeddecisioncalibrationwindowlsp
+namespace jevtypeddecisioncalibrationwindowlsp
+
+entity TypedDecisionCalibrationWindowLSPInput id "gooo://gooo-jev/typed-decision-calibration-window-lsp-input"
+property Status string
+property SourceVersion string
+property ContractVersion string
+property ObservationCount int
+property KnownObservationCount int
+property WithinToleranceCount int
+property MeanAbsoluteError float64
+property EvidenceCoverage float64
+property MinimumWindow int
+property FirstMismatch string
+property MissingStage string
+property ObservationEvidenceDigest string
+property NonExecuting boolean
+property NonAuthorizing boolean
+
+entity TypedDecisionCalibrationWindowLSPProjection id "gooo://gooo-jev/typed-decision-calibration-window-lsp-projection"
+property Status string
+property Code string
+property Severity string
+property Message string
+property SourceVersion string
+property ContractVersion string
+property ObservationCount int
+property KnownObservationCount int
+property WithinToleranceCount int
+property MeanAbsoluteError float64
+property EvidenceCoverage float64
+property MinimumWindow int
+property FirstMismatch string
+property MissingStage string
+property ObservationEvidenceDigest string
+property EvidenceDigest string
+property NonExecuting boolean
+property NonAuthorizing boolean
+
+activity ProjectTypedDecisionCalibrationWindowLSP(TypedDecisionCalibrationWindowLSPInput) -> TypedDecisionCalibrationWindowLSPProjection
