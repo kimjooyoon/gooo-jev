@@ -1,0 +1,8 @@
+package support_triage
+namespace operations
+
+entity Ticket id "support-ticket"
+  property state text
+  property confidence number
+
+activity route_ticket(ticket Ticket, confidence number) -> Route
