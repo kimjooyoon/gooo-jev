@@ -196,7 +196,7 @@ func executionEnvelopeDeclarationIRGenerationLSPDigest(
 	projection ExecutionEnvelopeDeclarationIRGenerationLSPProjection,
 ) string {
 	return digestString(fmt.Sprintf(
-		"gooo-declaration-ir-generation-lsp|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%t|%t",
+		"gooo-declaration-ir-generation-lsp|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%t|%t",
 		projection.Status,
 		projection.Code,
 		projection.Severity,
