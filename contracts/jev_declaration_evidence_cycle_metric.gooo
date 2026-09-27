@@ -12,7 +12,9 @@ property Status string
 property StageCount int
 property StageTotal int
 property Coverage float64
+property CoverageMilli integer
 property FirstMissingStage string
+property MissingStageIndex integer
 property EvidenceDigest string
 property MetricDigest string
 property NonExecuting boolean
