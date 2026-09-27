@@ -1,0 +1,21 @@
+module revision_self_improvement_cycle_jev_calibration_decision_routing_plan_observation_lsp
+
+input status
+input target_stage
+input observation_digest
+input reason
+
+status INFORMATION for BOUND plan provenance evidence
+status HINT for DEFERRED plan provenance evidence
+status ERROR for UNKNOWN or missing plan provenance evidence
+
+field code
+field severity
+
+constraint inspection_only
+constraint provenance_projection
+constraint read_only
+constraint no_edits
+constraint no_command
+constraint no_execution
+constraint no_authorization
