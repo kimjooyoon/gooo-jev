@@ -1,0 +1,29 @@
+package jevrevisionselfimprovementcycleevidencecoveragefeedbackdecisionobservationmetric
+
+namespace jevrevisionselfimprovementcycleevidencecoveragefeedbackdecisionobservationmetric
+
+entity RevisionSelfImprovementCycleEvidenceCoverageFeedbackDecisionObservationMetricInput {
+  property decision_observation_digest string
+  property metric_name string
+  property linked_stage_count integer
+  property required_stage_count integer
+  property linked_digest_count integer
+  property metric_signal string
+}
+
+entity RevisionSelfImprovementCycleEvidenceCoverageFeedbackDecisionObservationMetricObservation {
+  property status string
+  property missing_stage string
+  property decision_observation_digest string
+  property metric_name string
+  property linked_stage_count integer
+  property required_stage_count integer
+  property linked_digest_count integer
+  property metric_signal string
+  property metric_digest string
+  property observation_digest string
+  property non_executing boolean
+  property non_authorizing boolean
+}
+
+activity ObserveRevisionSelfImprovementCycleEvidenceCoverageFeedbackDecisionObservationMetric(RevisionSelfImprovementCycleEvidenceCoverageFeedbackDecisionObservationMetricInput) -> RevisionSelfImprovementCycleEvidenceCoverageFeedbackDecisionObservationMetricObservation
