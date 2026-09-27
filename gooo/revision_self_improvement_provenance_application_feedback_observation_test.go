@@ -7,7 +7,9 @@ func provenanceApplicationFeedbackInputs(t *testing.T) (RevisionSelfImprovementP
 	iteration, plan := provenancePlanDispositionInputs(t)
 	disposition, err := ObserveRevisionSelfImprovementProvenancePlanDisposition(iteration, plan)
 	if err != nil { t.Fatalf("ObserveRevisionSelfImprovementProvenancePlanDisposition() error = %v", err) }
-	_, _, application := selfImprovementApplicationInputs(t)
+	selfImprovementIteration, planObservation, applicationObservation := selfImprovementApplicationInputs(t)
+	application, err := ObserveRevisionSelfImprovementApplication(selfImprovementIteration, planObservation, applicationObservation)
+	if err != nil { t.Fatalf("ObserveRevisionSelfImprovementApplication() error = %v", err) }
 	return disposition, application
 }
 
