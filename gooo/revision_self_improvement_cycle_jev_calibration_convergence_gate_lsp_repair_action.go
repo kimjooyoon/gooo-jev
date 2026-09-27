@@ -35,7 +35,7 @@ type RevisionSelfImprovementCycleJEVCalibrationConvergenceGateLSPRepairAction st
 	ReverseObservationDigest    string
 	ActionDigest                 string
 	NonExecuting                bool
-	NonAuthorizing               bool
+	NonAuthorizing              bool
 }
 
 func ProjectRevisionSelfImprovementCycleJEVCalibrationConvergenceGateLSPRepairAction(
@@ -45,7 +45,7 @@ func ProjectRevisionSelfImprovementCycleJEVCalibrationConvergenceGateLSPRepairAc
 		Status:                       "UNKNOWN",
 		MissingStage:                 input.MissingStage,
 		MissingStageIndex:            input.MissingStageIndex,
-		GateDecision:                input.GateDecision,
+		GateDecision:                 input.GateDecision,
 		ProjectionSignal:             input.ProjectionSignal,
 		ProjectionObservationDigest: input.ProjectionObservationDigest,
 		EvidencePrefixDigest:         input.EvidencePrefixDigest,
@@ -82,16 +82,19 @@ func ProjectRevisionSelfImprovementCycleJEVCalibrationConvergenceGateLSPRepairAc
 	switch action.GateDecision {
 	case "jev-calibration-convergence-converged":
 		action.Status = "BOUND"
+		action.MissingStage = ""
 		action.SuggestedAction = "observe-convergence"
 		action.Title = "Observe comparable convergence"
 		action.Reason = "calibration improved on a stable choice set"
 	case "jev-calibration-convergence-regressed":
 		action.Status = "BOUND"
+		action.MissingStage = ""
 		action.SuggestedAction = "review-regression"
 		action.Title = "Review calibration regression"
 		action.Reason = "calibration regressed on a stable choice set"
 	case "jev-calibration-convergence-defer":
 		action.Status = "BOUND"
+		action.MissingStage = ""
 		action.SuggestedAction = "wait-for-comparable-evidence"
 		action.Title = "Wait for comparable evidence"
 		action.Reason = "choice-set or evidence lineage changed"
