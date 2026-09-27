@@ -1,0 +1,19 @@
+module jev_calibration_convergence_gate_lsp_repair_action_closure_bounded_replan
+
+input trajectory_observation
+input closure_metric
+
+status PROPOSED for REGRESSED or UNKNOWN trajectory
+status NO_ACTION for IMPROVED or UNCHANGED trajectory
+status DEFERRED for deferred producer state
+status UNKNOWN for identity or basis evidence mismatch
+
+field target_stage
+field missing_stage_index
+field basis_delta_digest
+field plan_digest
+
+constraint read_only
+constraint no_execution
+constraint no_authorization
+constraint preserve_first_unresolved_stage
