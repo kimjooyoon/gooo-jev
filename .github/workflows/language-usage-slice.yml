@@ -61,7 +61,7 @@ jobs:
           go run ./cmd/gooo-discover examples/support-triage/partial.gooo pro > "$RUNNER_TEMP/discovery.json"
           jq -e '.discovery.non_executing == true and .discovery.non_authorizing == true and ([.discovery.capabilities[] | select(.id == "syntax_completion" and .state == "AVAILABLE")] | length) == 1 and ([.discovery.capabilities[] | select(.id == "canonical_generation" and .state == "UNKNOWN")] | length) == 1' "$RUNNER_TEMP/discovery.json"
           go run ./cmd/gooo-plan "$RUNNER_TEMP/discovery.json" > "$RUNNER_TEMP/plan.json"
-          jq -e '([.plan.actions[] | select(.capability_id == "syntax_completion" and .state == "READY")] | length) == 1 and ([.plan.actions[] | select(.capability_id == "canonical_generation" and .state == "DEFERRED")] | length) == 1' "$RUNNER_TEMP/plan.json"
-          plan_digest=$(jq -r '.plan.plan_digest' "$RUNNER_TEMP/plan.json")
+          jq -e '([.actions[] | select(.capability_id == "syntax_completion" and .state == "READY")] | length) == 1 and ([.actions[] | select(.capability_id == "canonical_generation" and .state == "DEFERRED")] | length) == 1' "$RUNNER_TEMP/plan.json"
+          plan_digest=$(jq -r '.plan_digest' "$RUNNER_TEMP/plan.json")
           go run ./cmd/gooo-observe "$RUNNER_TEMP/plan.json" syntax_completion:edit_declaration confirmed completion_quality 1 "$plan_digest" 2026-09-28T00:00:00Z > "$RUNNER_TEMP/observation.json"
           jq -e '.observation.non_executing == true and .observation.non_authorizing == true and .observation.kind == "confirmed" and .observation.plan_digest == (.observation.evidence_digest)' "$RUNNER_TEMP/observation.json"
