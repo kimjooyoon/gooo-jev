@@ -1,0 +1,60 @@
+package jevrevisionselfimprovementprovenanceapplicationfeedback
+namespace jevrevisionselfimprovementprovenanceapplicationfeedback
+
+entity RevisionSelfImprovementProvenancePlanDispositionObservation id "gooo://gooo-jev/revision-self-improvement-provenance-plan-disposition-observation"
+property ObservationDigest string
+property IterationProvenanceDigest string
+property PlanObservationDigest string
+property PlanDigest string
+property CandidateSourceDigest string
+property CandidateProposedSourceDigest string
+property DispositionSignal string
+property SignalsAligned boolean
+property NonAuthorizing boolean
+
+entity RevisionSelfImprovementApplicationObservation id "gooo://gooo-jev/revision-self-improvement-application-observation"
+property ObservationDigest string
+property PlanObservationDigest string
+property PlanDigest string
+property ApplicationDigest string
+property ReceiptDigest string
+property SourceDigest string
+property ProposedSourceDigest string
+property ProposedIRDigest string
+property FeedbackSignal string
+property ApplicationSignal string
+property ApplicationObserved boolean
+property NonAuthorizing boolean
+
+entity RevisionSelfImprovementProvenanceApplicationFeedbackInput id "gooo://gooo-jev/revision-self-improvement-provenance-application-feedback-input"
+property PlanDisposition RevisionSelfImprovementProvenancePlanDispositionObservation
+property Application RevisionSelfImprovementApplicationObservation
+property NonAuthorizing boolean
+
+entity RevisionSelfImprovementProvenanceApplicationFeedbackObservation id "gooo://gooo-jev/revision-self-improvement-provenance-application-feedback-observation"
+property Status string
+property MissingStage string
+property PlanDispositionDigest string
+property IterationProvenanceDigest string
+property PlanObservationDigest string
+property ApplicationObservationDigest string
+property PlanDigest string
+property ApplicationDigest string
+property ReceiptDigest string
+property CandidateSourceDigest string
+property ApplicationSourceDigest string
+property CandidateProposedSourceDigest string
+property ApplicationProposedSourceDigest string
+property CandidateGeneratedIRDigest string
+property ApplicationProposedIRDigest string
+property FeedbackSignal string
+property ApplicationSignal string
+property DispositionSignal string
+property FeedbackApplicationSignal string
+property SignalsAligned boolean
+property ApplicationObserved boolean
+property ObservationDigest string
+property NonExecuting boolean
+property NonAuthorizing boolean
+
+activity ObserveRevisionSelfImprovementProvenanceApplicationFeedback(RevisionSelfImprovementProvenanceApplicationFeedbackInput) -> RevisionSelfImprovementProvenanceApplicationFeedbackObservation
