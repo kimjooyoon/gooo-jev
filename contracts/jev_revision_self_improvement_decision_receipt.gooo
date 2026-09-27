@@ -24,4 +24,4 @@ entity RevisionSelfImprovementDecisionReceiptObservation {
   property non_authorizing boolean
 }
 
-activity ObserveRevisionSelfImprovementProvenanceDecision(RevisionSelfImprovementDecisionReceiptInput) -> RevisionSelfImprovementDecisionReceiptObservation
+activity ObserveRevisionSelfImprovementProvenanceDecisionReceipt(RevisionSelfImprovementDecisionReceiptInput) -> RevisionSelfImprovementDecisionReceiptObservation
