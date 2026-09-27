@@ -1,0 +1,27 @@
+module revision_self_improvement_cycle_jev_calibration_confidence_gate_observation_lsp
+
+input status
+input confidence
+input threshold
+input evidence_prefix_digest
+input source_version
+input missing_stage_index
+
+status INFORMATION AUTO confidence gate observation
+status HINT REVIEW confidence gate observation
+status ERROR UNKNOWN or incomplete confidence gate observation
+
+field code
+field severity
+field evidence_prefix_digest
+field source_version
+field missing_stage_index
+
+constraint inspection_only
+constraint confidence_boundary_projection
+constraint no_improvement_claim
+constraint read_only
+constraint no_edits
+constraint no_command
+constraint no_execution
+constraint no_authorization
