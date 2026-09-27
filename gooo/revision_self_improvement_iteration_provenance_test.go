@@ -85,7 +85,7 @@ func TestObserveRevisionSelfImprovementIterationProvenanceBindsChanged(t *testin
 		observation.DecisionSignal != "inspect" ||
 		observation.FeedbackSignal != "inspect" ||
 		!observation.RequiresMeasurement ||
-		observation.GenerationChangeCount == 0 {
+		observation.MetricsChangeCount == 0 {
 		t.Fatalf("unexpected changed iteration provenance observation: %#v", observation)
 	}
 }
