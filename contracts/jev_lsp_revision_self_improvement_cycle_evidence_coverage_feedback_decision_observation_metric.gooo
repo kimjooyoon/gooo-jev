@@ -1,0 +1,31 @@
+package jevlsprevisionselfimprovementcycleevidencecoveragefeedbackdecisionobservationmetric
+
+namespace jevlsprevisionselfimprovementcycleevidencecoveragefeedbackdecisionobservationmetric
+
+entity LSPRevisionSelfImprovementCycleEvidenceCoverageFeedbackDecisionObservationMetricInput {
+  property decision_observation_digest string
+  property metric_name string
+  property linked_stage_count integer
+  property required_stage_count integer
+  property linked_digest_count integer
+  property metric_signal string
+  property metric_digest string
+}
+
+entity LSPRevisionSelfImprovementCycleEvidenceCoverageFeedbackDecisionObservationMetricObservation {
+  property status string
+  property missing_stage string
+  property decision_observation_digest string
+  property metric_name string
+  property linked_stage_count integer
+  property required_stage_count integer
+  property linked_digest_count integer
+  property metric_signal string
+  property metric_digest string
+  property projection_digest string
+  property read_only boolean
+  property non_executing boolean
+  property non_authorizing boolean
+}
+
+activity ObserveLSPRevisionSelfImprovementCycleEvidenceCoverageFeedbackDecisionObservationMetric(LSPRevisionSelfImprovementCycleEvidenceCoverageFeedbackDecisionObservationMetricInput) -> LSPRevisionSelfImprovementCycleEvidenceCoverageFeedbackDecisionObservationMetricObservation
