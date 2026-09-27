@@ -1,6 +1,7 @@
 package usage_replan
 namespace usage_replan
 
+entity UsageObservation id "gooo://gooo-jev/usage-observation"
 entity UsageObservationWindow id "gooo://gooo-jev/usage-observation-window"
 entity UsageReplanObservation id "gooo://gooo-jev/usage-replan-observation"
 
