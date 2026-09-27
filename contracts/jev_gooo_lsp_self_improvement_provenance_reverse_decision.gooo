@@ -1,0 +1,45 @@
+package jev.gooo.lsp.provenancereversedecision
+
+entity SelfImprovementProvenanceReverseDecisionSymbolResult {
+    field status string
+    field missing_stage string
+    field source_digest string
+    field ir_digest string
+    field symbol_name string
+    field symbol_kind string
+    field symbol_digest string
+    field application_feedback_digest string
+    field reverse_observation_digest string
+    field decision_digest string
+    field plan_disposition_digest string
+    field iteration_provenance_digest string
+    field plan_digest string
+    field application_digest string
+    field receipt_digest string
+    field proposed_source_digest string
+    field decision_proposed_source_digest string
+    field generated_ir_digest string
+    field decision_generated_ir_digest string
+    field feedback_signal string
+    field application_signal string
+    field feedback_application_signal string
+    field reverse_signal string
+    field provenance_reverse_signal string
+    field decision_signal string
+    field decision_feedback_signal string
+    field decision_reason string
+    field signals_aligned boolean
+    field requires_observation boolean
+    field requires_review boolean
+    field requires_inspection boolean
+    field requires_measurement boolean
+    invariant non_executing
+    invariant non_authorizing
+}
+
+activity explain_self_improvement_provenance_reverse_decision {
+    input source
+    input symbol_name
+    input revision_self_improvement_provenance_reverse_decision_observation
+    output self_improvement_provenance_reverse_decision_symbol_result
+}
