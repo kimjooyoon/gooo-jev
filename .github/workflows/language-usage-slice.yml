@@ -46,6 +46,7 @@ jobs:
           go build ./cmd/gooo-trend
           go build ./cmd/gooo-evaluate-trend
           go build ./cmd/gooo-discover
+          go build ./cmd/gooo-plan
       - name: Exercise declaration workflows
         shell: bash
         run: |
@@ -58,3 +59,5 @@ jobs:
           jq -e '.completion.non_executing == true and .completion.non_authorizing == true and .completion.source_digest != ""' "$RUNNER_TEMP/lsp.jsonl"
           go run ./cmd/gooo-discover examples/support-triage/partial.gooo pro > "$RUNNER_TEMP/discovery.json"
           jq -e '.discovery.non_executing == true and .discovery.non_authorizing == true and ([.discovery.capabilities[] | select(.id == "syntax_completion" and .state == "AVAILABLE")] | length) == 1 and ([.discovery.capabilities[] | select(.id == "canonical_generation" and .state == "UNKNOWN")] | length) == 1' "$RUNNER_TEMP/discovery.json"
+          go run ./cmd/gooo-plan "$RUNNER_TEMP/discovery.json" > "$RUNNER_TEMP/plan.json"
+          jq -e '([.actions[] | select(.capability_id == "syntax_completion" and .state == "READY")] | length) == 1 and ([.actions[] | select(.capability_id == "canonical_generation" and .state == "DEFERRED")] | length) == 1' "$RUNNER_TEMP/plan.json"
