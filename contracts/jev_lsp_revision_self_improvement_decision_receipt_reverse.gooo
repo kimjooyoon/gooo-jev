@@ -1,0 +1,33 @@
+package jevlsprevisionselfimprovementdecisionreverse
+
+namespace jevlsprevisionselfimprovementdecisionreverse
+
+entity LSPRevisionSelfImprovementDecisionReceiptReverseInput {
+  property decision_receipt_digest string
+  property reverse_observation_digest string
+  property decision_signal string
+  property decision_reason string
+  property reverse_signal string
+  property provenance_reverse_signal string
+  property decision_feedback_signal string
+  property signals_aligned boolean
+}
+
+entity LSPRevisionSelfImprovementDecisionReceiptReverseObservation {
+  property status string
+  property missing_stage string
+  property decision_receipt_digest string
+  property reverse_observation_digest string
+  property decision_signal string
+  property decision_reason string
+  property reverse_signal string
+  property provenance_reverse_signal string
+  property decision_feedback_signal string
+  property signals_aligned boolean
+  property projection_digest string
+  property read_only boolean
+  property non_executing boolean
+  property non_authorizing boolean
+}
+
+activity ObserveLSPRevisionSelfImprovementDecisionReceiptReverseObservation(LSPRevisionSelfImprovementDecisionReceiptReverseInput) -> LSPRevisionSelfImprovementDecisionReceiptReverseObservation
