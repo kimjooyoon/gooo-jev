@@ -1,0 +1,24 @@
+contract revision_self_improvement_cycle_jev_decision_confidence_metric {
+  input {
+    typed_decision_signal: revision_self_improvement_cycle_jev_typed_decision_signal_observation
+  }
+
+  metric {
+    name: "jev-typed-decision-confidence-milli"
+    confidence_band: high | medium | low | none | unknown
+    linked_digest_count: integer
+    required_digest_count: integer
+    metric_signal: "jev-decision-confidence-observed" | "jev-decision-confidence-unknown"
+    metric_digest: digest
+    read_only: true
+    non_executing: true
+    non_authorizing: true
+  }
+
+  semantics {
+    linked_digests: [decision, evidence, decision_observation]
+    confidence_scale: [0, 1000]
+    noul_confidence: none
+    effect: observation_only
+  }
+}
