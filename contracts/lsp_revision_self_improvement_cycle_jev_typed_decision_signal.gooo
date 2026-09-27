@@ -1,0 +1,27 @@
+contract lsp_revision_self_improvement_cycle_jev_typed_decision_signal {
+  input {
+    signal: revision_self_improvement_cycle_jev_typed_decision_signal_observation
+  }
+
+  project {
+    question_id: identifier
+    question_kind: choice | score | noul
+    decision_digest: digest
+    evidence_digest: digest
+    confidence_milli: integer
+    decision_observation_digest: digest
+    status: bound | unknown
+    missing_stage: stage?
+    projection_signal: "jev-typed-decision-lsp-projected" | "jev-typed-decision-lsp-unknown"
+    projection_digest: digest
+    read_only: true
+    non_executing: true
+    non_authorizing: true
+  }
+
+  semantics {
+    source: revision_self_improvement_cycle_jev_typed_decision_signal
+    effect: editor_observation_only
+    authority: none
+  }
+}
