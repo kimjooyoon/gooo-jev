@@ -34,7 +34,9 @@ func TestObserveRevisionSelfImprovementCycleJEVCalibrationOutcomeDelta(t *testin
 
 func TestObserveRevisionSelfImprovementCycleJEVCalibrationOutcomeDeltaRejectsLineageMismatch(t *testing.T) {
 	input := jevCalibrationOutcomeDeltaInput()
-	input.Current.SourceObservationDigest = digestString("source:other")
+	currentInput := jevCalibrationOutcomeWindowInput()
+	currentInput.SourceObservationDigest = digestString("source:other")
+	input.Current = ObserveRevisionSelfImprovementCycleJEVCalibrationOutcomeWindow(currentInput)
 	observation := ObserveRevisionSelfImprovementCycleJEVCalibrationOutcomeDelta(input)
 	if observation.Status != "UNKNOWN" ||
 		observation.MissingStage != "revision-self-improvement-cycle-jev-calibration-outcome-delta-source-lineage" {
