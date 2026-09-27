@@ -2,19 +2,20 @@ package gooo
 
 import "testing"
 
-func TestObserveRevisionSelfImprovementProvenanceDecisionBindsReplan(t *testing.T) {
-	input, err := provenanceNextIterationInputs(t)
+func TestObserveRevisionSelfImprovementProvenanceDecisionReceiptBindsReplan(t *testing.T) {
+	replan, nextIteration := provenanceNextIterationInputs(t)
+	input, err := ObserveRevisionSelfImprovementProvenanceNextIteration(replan, nextIteration)
 	if err != nil {
-		t.Fatalf("build provenance next iteration input: %v", err)
+		t.Fatalf("observe provenance next iteration: %v", err)
 	}
-	got, err := ObserveRevisionSelfImprovementProvenanceDecision(
+	got, err := ObserveRevisionSelfImprovementProvenanceDecisionReceipt(
 		input,
 		digestString("next-iteration-question"),
 		revisionSelfImprovementDecisionReceiptRequireReplan,
 		"next iteration boundary is not aligned",
 	)
 	if err != nil {
-		t.Fatalf("observe provenance decision: %v", err)
+		t.Fatalf("observe provenance decision receipt: %v", err)
 	}
 	if got.Status != revisionSelfImprovementDecisionReceiptBoundStatus {
 		t.Fatalf("status = %q, want %q", got.Status, revisionSelfImprovementDecisionReceiptBoundStatus)
@@ -36,12 +37,13 @@ func TestObserveRevisionSelfImprovementProvenanceDecisionBindsReplan(t *testing.
 	}
 }
 
-func TestObserveRevisionSelfImprovementProvenanceDecisionPreservesUnknown(t *testing.T) {
-	input, err := provenanceNextIterationInputs(t)
+func TestObserveRevisionSelfImprovementProvenanceDecisionReceiptPreservesUnknown(t *testing.T) {
+	replan, nextIteration := provenanceNextIterationInputs(t)
+	input, err := ObserveRevisionSelfImprovementProvenanceNextIteration(replan, nextIteration)
 	if err != nil {
-		t.Fatalf("build provenance next iteration input: %v", err)
+		t.Fatalf("observe provenance next iteration: %v", err)
 	}
-	got, err := ObserveRevisionSelfImprovementProvenanceDecision(
+	got, err := ObserveRevisionSelfImprovementProvenanceDecisionReceipt(
 		input,
 		digestString("next-iteration-question"),
 		revisionSelfImprovementDecisionReceiptAllowNextIteration,
@@ -59,18 +61,19 @@ func TestObserveRevisionSelfImprovementProvenanceDecisionPreservesUnknown(t *tes
 	if got.DecisionAligned {
 		t.Fatal("unknown decision receipt must not claim alignment")
 	}
-	if got.NonExecuting != true || got.NonAuthorizing != true {
+	if !got.NonExecuting || !got.NonAuthorizing {
 		t.Fatal("unknown decision receipt must preserve safety flags")
 	}
 }
 
-func TestObserveRevisionSelfImprovementProvenanceDecisionRejectsTamperedInput(t *testing.T) {
-	input, err := provenanceNextIterationInputs(t)
+func TestObserveRevisionSelfImprovementProvenanceDecisionReceiptRejectsTamperedInput(t *testing.T) {
+	replan, nextIteration := provenanceNextIterationInputs(t)
+	input, err := ObserveRevisionSelfImprovementProvenanceNextIteration(replan, nextIteration)
 	if err != nil {
-		t.Fatalf("build provenance next iteration input: %v", err)
+		t.Fatalf("observe provenance next iteration: %v", err)
 	}
 	input.ObservationDigest = digestString("tampered")
-	got, err := ObserveRevisionSelfImprovementProvenanceDecision(
+	got, err := ObserveRevisionSelfImprovementProvenanceDecisionReceipt(
 		input,
 		digestString("next-iteration-question"),
 		revisionSelfImprovementDecisionReceiptRequireReplan,
@@ -87,12 +90,13 @@ func TestObserveRevisionSelfImprovementProvenanceDecisionRejectsTamperedInput(t 
 	}
 }
 
-func TestObserveRevisionSelfImprovementProvenanceDecisionIsDeterministic(t *testing.T) {
-	input, err := provenanceNextIterationInputs(t)
+func TestObserveRevisionSelfImprovementProvenanceDecisionReceiptIsDeterministic(t *testing.T) {
+	replan, nextIteration := provenanceNextIterationInputs(t)
+	input, err := ObserveRevisionSelfImprovementProvenanceNextIteration(replan, nextIteration)
 	if err != nil {
-		t.Fatalf("build provenance next iteration input: %v", err)
+		t.Fatalf("observe provenance next iteration: %v", err)
 	}
-	first, err := ObserveRevisionSelfImprovementProvenanceDecision(
+	first, err := ObserveRevisionSelfImprovementProvenanceDecisionReceipt(
 		input,
 		digestString("next-iteration-question"),
 		revisionSelfImprovementDecisionReceiptRequireReplan,
@@ -101,7 +105,7 @@ func TestObserveRevisionSelfImprovementProvenanceDecisionIsDeterministic(t *test
 	if err != nil {
 		t.Fatalf("first observation: %v", err)
 	}
-	second, err := ObserveRevisionSelfImprovementProvenanceDecision(
+	second, err := ObserveRevisionSelfImprovementProvenanceDecisionReceipt(
 		input,
 		digestString("next-iteration-question"),
 		revisionSelfImprovementDecisionReceiptRequireReplan,
