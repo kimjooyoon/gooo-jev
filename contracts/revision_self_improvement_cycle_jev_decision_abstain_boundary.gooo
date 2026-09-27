@@ -1,0 +1,31 @@
+contract revision_self_improvement_cycle_jev_decision_abstain_boundary {
+  input {
+    metric: revision_self_improvement_cycle_jev_decision_confidence_metric_observation
+    accept_threshold_milli: integer
+    abstain_lower_milli: integer
+    abstain_upper_milli: integer
+    generation_digest: digest
+    reverse_observation_digest: digest
+  }
+
+  observe {
+    status: bound | unknown
+    missing_stage: stage?
+    disposition: direct_filter_candidate | abstain_for_calibration | escalate_to_full_validator | unknown
+    calibration_status: unverified
+    calibration_required: true
+    boundary_signal: "jev-decision-abstain-boundary-observed" | "jev-decision-abstain-boundary-unknown"
+    observation_digest: digest
+    read_only: true
+    non_executing: true
+    non_authorizing: true
+  }
+
+  semantics {
+    confidence_scale: [0, 1000]
+    abstain_before_accept: true
+    calibration_required_before_automation: true
+    effect: observation_only
+    authority: none
+  }
+}
