@@ -1,0 +1,36 @@
+contract revision_self_improvement_cycle_jev_calibration_window {
+  input {
+    metric_name: "jev-typed-decision-confidence-milli"
+    question_kind: choice | score
+    sample_count: integer
+    correct_count: integer
+    confidence_sum_milli: integer
+    calibration_data_digest: digest
+    generation_digest: digest
+    reverse_observation_digest: digest
+    source_observation_digest: digest
+  }
+
+  observe {
+    status: bound | unknown
+    missing_stage: stage?
+    accuracy_milli: integer
+    mean_confidence_milli: integer
+    calibration_error_milli: integer
+    calibration_status: observed | unknown
+    calibration_signal: "jev-calibration-window-observed" | "jev-calibration-window-unknown"
+    observation_digest: digest
+    read_only: true
+    non_executing: true
+    non_authorizing: true
+  }
+
+  semantics {
+    confidence_scale: [0, 1000]
+    sample_bound: [1, 1000000]
+    requires_outcomes: true
+    requires_generation_and_reverse_observation: true
+    effect: observation_only
+    authority: none
+  }
+}
