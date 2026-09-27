@@ -8,11 +8,11 @@ const (
 	ExecutionEnvelopeDeclarationEvidenceCycleUnknown  = "UNKNOWN"
 	ExecutionEnvelopeDeclarationEvidenceCycleError    = "ERROR"
 
-	executionEnvelopeDeclarationEvidenceCycleBoundCode    = "gooo.declaration_evidence_cycle.bound"
-	executionEnvelopeDeclarationEvidenceCycleDeferredCode = "gooo.declaration_evidence_cycle.deferred"
-	executionEnvelopeDeclarationEvidenceCycleUnknownCode  = "gooo.declaration_evidence_cycle.unknown"
+	executionEnvelopeDeclarationEvidenceCycleBoundCode     = "gooo.declaration_evidence_cycle.bound"
+	executionEnvelopeDeclarationEvidenceCycleDeferredCode  = "gooo.declaration_evidence_cycle.deferred"
+	executionEnvelopeDeclarationEvidenceCycleUnknownCode   = "gooo.declaration_evidence_cycle.unknown"
 	executionEnvelopeDeclarationEvidenceCycleIntegrityCode = "gooo.declaration_evidence_cycle.integrity"
-	executionEnvelopeDeclarationEvidenceCycleBoundaryCode = "gooo.declaration_evidence_cycle.capability_boundary"
+	executionEnvelopeDeclarationEvidenceCycleBoundaryCode  = "gooo.declaration_evidence_cycle.capability_boundary"
 )
 
 type ExecutionEnvelopeDeclarationEvidenceCycleInput struct {
@@ -25,8 +25,8 @@ type ExecutionEnvelopeDeclarationEvidenceCycleInput struct {
 	GenerationDigest          string
 	BindingDigest             string
 	ReverseStatus             string
-	ReverseObservationDigest string
-	ReverseFirstMismatch     string
+	ReverseObservationDigest  string
+	ReverseFirstMismatch      string
 	NonExecuting              bool
 	NonAuthorizing            bool
 }
@@ -56,21 +56,21 @@ func ProjectExecutionEnvelopeDeclarationEvidenceCycleLSP(
 	input ExecutionEnvelopeDeclarationEvidenceCycleInput,
 ) ExecutionEnvelopeDeclarationEvidenceCycleProjection {
 	output := ExecutionEnvelopeDeclarationEvidenceCycleProjection{
-		Status:                    ExecutionEnvelopeDeclarationEvidenceCycleUnknown,
-		Code:                      executionEnvelopeDeclarationEvidenceCycleUnknownCode,
-		Severity:                  "warning",
-		Message:                   "declaration evidence cycle is unresolved",
-		DeclarationID:             input.DeclarationID,
-		ContractID:                input.ContractID,
+		Status:                   ExecutionEnvelopeDeclarationEvidenceCycleUnknown,
+		Code:                     executionEnvelopeDeclarationEvidenceCycleUnknownCode,
+		Severity:                 "warning",
+		Message:                  "declaration evidence cycle is unresolved",
+		DeclarationID:            input.DeclarationID,
+		ContractID:               input.ContractID,
 		DeclarationDigest:         input.DeclarationDigest,
-		IRDigest:                  input.IRDigest,
-		GenerationDigest:          input.GenerationDigest,
-		BindingDigest:             input.BindingDigest,
-		ReverseObservationDigest:  input.ReverseObservationDigest,
-		FirstMismatch:             input.ReverseFirstMismatch,
-		MissingStage:              "declaration_source",
-		NonExecuting:              true,
-		NonAuthorizing:            true,
+		IRDigest:                 input.IRDigest,
+		GenerationDigest:         input.GenerationDigest,
+		BindingDigest:            input.BindingDigest,
+		ReverseObservationDigest: input.ReverseObservationDigest,
+		FirstMismatch:            input.ReverseFirstMismatch,
+		MissingStage:             "declaration_source",
+		NonExecuting:             true,
+		NonAuthorizing:           true,
 	}
 
 	switch {
@@ -87,13 +87,13 @@ func ProjectExecutionEnvelopeDeclarationEvidenceCycleLSP(
 		}
 	case input.IRStatus != ExecutionEnvelopeDeclarationIRGenerationLSPBound:
 		output.MissingStage = "declaration_ir_generation"
-	case input.ReverseStatus == DecisionRouteReverseDeferredStatus:
+	case input.ReverseStatus == "DEFERRED":
 		output.Status = ExecutionEnvelopeDeclarationEvidenceCycleDeferred
 		output.Code = executionEnvelopeDeclarationEvidenceCycleDeferredCode
 		output.Severity = "warning"
 		output.Message = "declaration evidence cycle is deferred at reverse observation"
 		output.MissingStage = "reverse_observation"
-	case input.ReverseStatus != DecisionRouteReverseBoundStatus:
+	case input.ReverseStatus != "BOUND":
 		output.MissingStage = "reverse_observation"
 	case !validDigest(input.DeclarationDigest) ||
 		!validDigest(input.IRDigest) ||
