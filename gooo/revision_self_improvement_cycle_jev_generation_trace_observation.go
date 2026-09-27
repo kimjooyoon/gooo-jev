@@ -10,35 +10,35 @@ const (
 )
 
 type RevisionSelfImprovementCycleJEVGenerationTraceEvidence struct {
-	Status                    string
-	MissingStage              string
-	ContractName              string
-	ContractDigest             string
-	IRDigest                   string
-	GeneratedArtifactDigest    string
-	ReverseObservationDigest   string
-	MetricDigest               string
-	EvidencePrefixDigest       string
-	ObservationDigest          string
-	NonExecuting               bool
-	NonAuthorizing             bool
+	Status                  string
+	MissingStage            string
+	ContractName            string
+	ContractDigest           string
+	IRDigest                 string
+	GeneratedArtifactDigest  string
+	ReverseObservationDigest string
+	MetricDigest             string
+	EvidencePrefixDigest     string
+	ObservationDigest        string
+	NonExecuting             bool
+	NonAuthorizing           bool
 }
 
 type RevisionSelfImprovementCycleJEVGenerationTraceObservation struct {
-	Status                    string
-	MissingStage              string
-	MetricName                string
-	ContractName              string
-	ContractDigest             string
-	IRDigest                   string
-	GeneratedArtifactDigest    string
-	ReverseObservationDigest   string
-	MetricDigest               string
-	EvidencePrefixDigest       string
-	TraceSignal               string
-	ObservationDigest          string
-	NonExecuting               bool
-	NonAuthorizing             bool
+	Status                  string
+	MissingStage            string
+	MetricName              string
+	ContractName             string
+	ContractDigest           string
+	IRDigest                 string
+	GeneratedArtifactDigest  string
+	ReverseObservationDigest string
+	MetricDigest             string
+	EvidencePrefixDigest     string
+	TraceSignal              string
+	ObservationDigest        string
+	NonExecuting             bool
+	NonAuthorizing           bool
 }
 
 func ObserveRevisionSelfImprovementCycleJEVGenerationTraceObservation(
@@ -95,12 +95,12 @@ func (value RevisionSelfImprovementCycleJEVGenerationTraceEvidence) Validate() e
 		return fmt.Errorf("bound generation trace evidence must identify its contract")
 	}
 	for name, digest := range map[string]string{
-		"contract":          value.ContractDigest,
-		"ir":                value.IRDigest,
-		"generated_artifact": value.GeneratedArtifactDigest,
+		"contract":            value.ContractDigest,
+		"ir":                  value.IRDigest,
+		"generated_artifact":  value.GeneratedArtifactDigest,
 		"reverse_observation": value.ReverseObservationDigest,
-		"metric":            value.MetricDigest,
-		"evidence_prefix":   value.EvidencePrefixDigest,
+		"metric":              value.MetricDigest,
+		"evidence_prefix":     value.EvidencePrefixDigest,
 	} {
 		if !validJEVDecisionConfidenceClosureDigest(digest) {
 			return fmt.Errorf("invalid %s digest", name)
@@ -132,12 +132,12 @@ func (value RevisionSelfImprovementCycleJEVGenerationTraceObservation) Validate(
 			return fmt.Errorf("bound generation trace observation must identify its contract")
 		}
 		for name, digest := range map[string]string{
-			"contract":          value.ContractDigest,
-			"ir":                value.IRDigest,
-			"generated_artifact": value.GeneratedArtifactDigest,
+			"contract":            value.ContractDigest,
+			"ir":                  value.IRDigest,
+			"generated_artifact":  value.GeneratedArtifactDigest,
 			"reverse_observation": value.ReverseObservationDigest,
-			"metric":            value.MetricDigest,
-			"evidence_prefix":   value.EvidencePrefixDigest,
+			"metric":              value.MetricDigest,
+			"evidence_prefix":     value.EvidencePrefixDigest,
 		} {
 			if !validJEVDecisionConfidenceClosureDigest(digest) {
 				return fmt.Errorf("invalid %s digest", name)
@@ -158,7 +158,7 @@ func revisionSelfImprovementCycleJEVGenerationTraceEvidenceDigest(
 	value RevisionSelfImprovementCycleJEVGenerationTraceEvidence,
 ) string {
 	return digestString(fmt.Sprintf(
-		"jev-generation-trace-evidence|%s|%s|%s|%s|%s|%s|%s|%s|%t|%t",
+		"jev-generation-trace-evidence|%v|%v|%v|%v|%v|%v|%v|%v|%v|%v|%v",
 		value.Status,
 		value.MissingStage,
 		value.ContractName,
@@ -177,7 +177,7 @@ func revisionSelfImprovementCycleJEVGenerationTraceObservationDigest(
 	value RevisionSelfImprovementCycleJEVGenerationTraceObservation,
 ) string {
 	return digestString(fmt.Sprintf(
-		"jev-generation-trace-observation|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%t|%t",
+		"jev-generation-trace-observation|%v|%v|%v|%v|%v|%v|%v|%v|%v|%v|%v|%v|%v",
 		value.Status,
 		value.MissingStage,
 		value.MetricName,
