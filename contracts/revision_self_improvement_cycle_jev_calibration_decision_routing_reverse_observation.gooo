@@ -1,0 +1,20 @@
+module jev_calibration_decision_routing_reverse_observation
+
+input expected_route
+input observed_source_version
+input observed_contract_version
+input observed_status
+input observed_decision_digest
+
+status BOUND only for exact source, contract, status, and digest
+status DEFERRED when the route producer remains deferred
+status UNKNOWN for missing, changed, or unresolved evidence
+
+field observation_digest
+
+constraint preserve_identity
+constraint preserve_decision_digest
+constraint unresolved_is_not_bound
+constraint read_only
+constraint no_execution
+constraint no_authorization
