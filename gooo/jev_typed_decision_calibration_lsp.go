@@ -31,6 +31,7 @@ type ExecutionEnvelopeTypedDecisionCalibrationLSPInput struct {
 	OutcomeDigest             string
 	SelectedProbability       float64
 	Confidence                float64
+	ConfidenceMethod          string
 	OutcomeKnown              bool
 	ObservedOutcome           bool
 	AbsoluteError             float64
@@ -59,6 +60,7 @@ type ExecutionEnvelopeTypedDecisionCalibrationLSPProjection struct {
 	OutcomeDigest             string
 	SelectedProbability       float64
 	Confidence                float64
+	ConfidenceMethod          string
 	OutcomeKnown              bool
 	ObservedOutcome           bool
 	AbsoluteError             float64
@@ -91,6 +93,7 @@ func ProjectExecutionEnvelopeTypedDecisionCalibrationLSP(
 		OutcomeDigest:             input.OutcomeDigest,
 		SelectedProbability:       input.SelectedProbability,
 		Confidence:                input.Confidence,
+		ConfidenceMethod:          input.ConfidenceMethod,
 		OutcomeKnown:              input.OutcomeKnown,
 		ObservedOutcome:           input.ObservedOutcome,
 		AbsoluteError:             input.AbsoluteError,
@@ -168,6 +171,8 @@ func calibrationInputError(input ExecutionEnvelopeTypedDecisionCalibrationLSPInp
 		return "selected-probability"
 	case !finiteCalibrationLSPUnit(input.Confidence):
 		return "confidence"
+	case !validExternalTypedDecisionConfidenceMethod(input.ConfidenceMethod):
+		return "confidence-method"
 	case !input.OutcomeKnown:
 		return "outcome"
 	case input.WindowSize <= 0:
@@ -195,6 +200,15 @@ func finiteCalibrationLSPUnit(value float64) bool {
 	return !math.IsNaN(value) && !math.IsInf(value, 0) && value >= 0 && value <= 1
 }
 
+func validExternalTypedDecisionConfidenceMethod(value string) bool {
+	switch value {
+	case "unspecified", "calibrated", "max_probability", "top_two_margin", "one_minus_entropy":
+		return true
+	default:
+		return false
+	}
+}
+
 func validExternalTypedDecisionCalibrationDigest(value string) bool {
 	const prefix = "sha256:"
 	if !strings.HasPrefix(value, prefix) || len(value) != len(prefix)+64 {
@@ -208,7 +222,7 @@ func executionEnvelopeTypedDecisionCalibrationLSPDigest(
 	projection ExecutionEnvelopeTypedDecisionCalibrationLSPProjection,
 ) string {
 	return digestString(fmt.Sprintf(
-		"gooo-typed-decision-calibration-lsp|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%0.9f|%0.9f|%t|%t|%0.9f|%0.9f|%t|%d|%s|%s|%t|%t",
+		"gooo-typed-decision-calibration-lsp|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%0.9f|%0.9f|%s|%t|%t|%0.9f|%0.9f|%t|%d|%s|%s|%t|%t",
 		projection.Status,
 		projection.Code,
 		projection.Severity,
@@ -221,6 +235,7 @@ func executionEnvelopeTypedDecisionCalibrationLSPDigest(
 		projection.CalibrationEvidenceDigest,
 		projection.SelectedProbability,
 		projection.Confidence,
+		projection.ConfidenceMethod,
 		projection.OutcomeKnown,
 		projection.ObservedOutcome,
 		projection.AbsoluteError,
@@ -265,6 +280,7 @@ func (projection ExecutionEnvelopeTypedDecisionCalibrationLSPProjection) Validat
 				OutcomeDigest:             projection.OutcomeDigest,
 				SelectedProbability:       projection.SelectedProbability,
 				Confidence:                projection.Confidence,
+				ConfidenceMethod:          projection.ConfidenceMethod,
 				OutcomeKnown:              projection.OutcomeKnown,
 				ObservedOutcome:           projection.ObservedOutcome,
 				AbsoluteError:             projection.AbsoluteError,

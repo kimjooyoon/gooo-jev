@@ -17,6 +17,7 @@ func typedDecisionCalibrationLSPBoundInput() ExecutionEnvelopeTypedDecisionCalib
 		OutcomeDigest:             "sha256:" + strings.Repeat("3", 64),
 		SelectedProbability:       0.8,
 		Confidence:                0.9,
+		ConfidenceMethod:          "calibrated",
 		OutcomeKnown:              true,
 		ObservedOutcome:           false,
 		AbsoluteError:             0.8,
@@ -75,6 +76,19 @@ func TestProjectTypedDecisionCalibrationLSPRejectsCapabilityBoundary(t *testing.
 	if projection.Status != ExecutionEnvelopeTypedDecisionCalibrationLSPError ||
 		projection.Code != executionEnvelopeTypedDecisionCalibrationLSPBoundaryCode ||
 		projection.FirstMismatch != "capability-boundary" {
+		t.Fatalf("projection = %#v", projection)
+	}
+	if err := projection.Validate(); err != nil {
+		t.Fatalf("Validate() error = %v", err)
+	}
+}
+
+func TestProjectTypedDecisionCalibrationLSPRejectsUnknownConfidenceMethod(t *testing.T) {
+	input := typedDecisionCalibrationLSPBoundInput()
+	input.ConfidenceMethod = "untrusted-method"
+	projection := ProjectExecutionEnvelopeTypedDecisionCalibrationLSP(input)
+	if projection.Status != ExecutionEnvelopeTypedDecisionCalibrationLSPError ||
+		projection.FirstMismatch != "confidence-method" {
 		t.Fatalf("projection = %#v", projection)
 	}
 	if err := projection.Validate(); err != nil {
