@@ -34,6 +34,7 @@ func TestObserveRevisionSelfImprovementCycleMetricFeedbackRegression(t *testing.
 	metric.BaselineValue = 12
 	metric.CandidateValue = 15
 	metric.MetricDelta = 3
+	metric.MetricSignal = "metric-regressed"
 	metric.MetricEvidenceDigest = digestRevisionSelfImprovementCycleMetricEvidence(metric)
 	metric.ObservationDigest = digestRevisionSelfImprovementCycleMetric(metric)
 	feedback, err := ObserveRevisionSelfImprovementCycleMetricFeedback(metric)
