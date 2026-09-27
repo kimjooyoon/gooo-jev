@@ -8,6 +8,10 @@ on:
     branches:
       - main
 
+concurrency:
+  group: language-usage-${{ github.ref }}
+  cancel-in-progress: true
+
 permissions:
   contents: read
 
@@ -15,6 +19,7 @@ jobs:
   usage-contract:
     name: usage contract
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - name: Check out source
         uses: actions/checkout@v4
