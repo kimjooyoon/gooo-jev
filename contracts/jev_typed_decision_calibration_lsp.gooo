@@ -12,6 +12,7 @@ property CalibrationEvidenceDigest string
 property OutcomeDigest string
 property SelectedProbability float64
 property Confidence float64
+property ConfidenceMethod string
 property OutcomeKnown boolean
 property ObservedOutcome boolean
 property AbsoluteError float64
@@ -37,6 +38,7 @@ property CalibrationEvidenceDigest string
 property OutcomeDigest string
 property SelectedProbability float64
 property Confidence float64
+property ConfidenceMethod string
 property OutcomeKnown boolean
 property ObservedOutcome boolean
 property AbsoluteError float64
