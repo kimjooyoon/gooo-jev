@@ -13,7 +13,18 @@ func cycleEvidenceCoverageFeedbackDecisionBoundaryInputs(t *testing.T) (
 	if err != nil {
 		t.Fatalf("observe cycle feedback decision boundary: %v", err)
 	}
-	_, _, feedback := cycleFeedbackBridgeInputs(t)
+	metricInput := cycleMetricInput(t)
+	metricInput.Direction = "lower-is-better"
+	metricInput.BaselineValue = 12
+	metricInput.CandidateValue = 15
+	metric, err := ObserveRevisionSelfImprovementCycleMetric(cycle, metricInput)
+	if err != nil {
+		t.Fatalf("observe regressed cycle metric: %v", err)
+	}
+	feedback, err := ObserveRevisionSelfImprovementCycleMetricFeedback(metric)
+	if err != nil {
+		t.Fatalf("observe regressed cycle feedback: %v", err)
+	}
 	coverage, err := ObserveRevisionSelfImprovementCycleEvidenceCoverageMetric(bridge)
 	if err != nil {
 		t.Fatalf("observe cycle evidence coverage metric: %v", err)
