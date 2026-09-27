@@ -5,10 +5,7 @@ import "testing"
 func TestDiscoverUsageAndPlanPreserveCapabilityState(t *testing.T) {
 	source := "package support\nnamespace triage\nentity ticket\nproperty\n"
 
-	discovery, err := DiscoverUsage(source, "pro")
-	if err != nil {
-		t.Fatalf("discover usage: %v", err)
-	}
+	discovery := DiscoverUsage(source, "pro")
 	if err := discovery.Validate(); err != nil {
 		t.Fatalf("validate discovery: %v", err)
 	}
