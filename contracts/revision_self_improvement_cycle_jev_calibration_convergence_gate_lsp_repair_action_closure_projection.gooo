@@ -1,0 +1,18 @@
+module jev_calibration_convergence_gate_lsp_repair_action_closure_projection
+
+input closure_metric
+projection lsp_code_action
+
+status BOUND as informational
+status UNKNOWN as actionable provenance inspection
+status DEFERRED as actionable producer-state inspection
+
+field metric_digest
+field missing_stage
+field missing_stage_index
+
+constraint read_only
+constraint no_edits
+constraint no_command
+constraint no_execution
+constraint no_authorization
