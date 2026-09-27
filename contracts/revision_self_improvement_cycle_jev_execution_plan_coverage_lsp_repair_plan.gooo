@@ -1,0 +1,6 @@
+revision_self_improvement_cycle_jev_execution_plan_coverage_lsp_repair_plan {
+  input execution_plan_coverage_lsp_projection RevisionSelfImprovementCycleJEVExecutionPlanReverseObservationCoverageMetricLSPProjection
+  observe status missing_stage plan_name target_stage repair_action evidence_prefix_digest projection_digest plan_signal observation_digest non_executing non_authorizing
+  semantics effect repair_plan_only
+  authority none
+}
