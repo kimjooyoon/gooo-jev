@@ -5,7 +5,7 @@ import "testing"
 func TestObserveRevisionSelfImprovementDecisionReceiptReverseObservationBindsEvidence(t *testing.T) {
 	receipt := lspDecisionReceiptInput(t)
 	_, reverse := provenanceReverseObservationInputs(t)
-	got, err := ObserveRevisionSelfImprovementDecisionReceiptReverseObservation(receipt, mustProvenanceReverseObservation(t, reverse))
+	got, err := ObserveRevisionSelfImprovementDecisionReceiptReverseObservation(receipt, reverse)
 	if err != nil {
 		t.Fatalf("observe decision receipt reverse boundary: %v", err)
 	}
