@@ -51,7 +51,7 @@ func ObserveRevisionSelfImprovementCycleFeedbackDecisionLink(
 		setDigest()
 		return result, fmt.Errorf("cycle feedback bridge is not valid: %w", err)
 	}
-	if err := decision.Validate(); err != nil {
+	if err := validateRevisionSelfImprovementDecisionReceiptObservation(decision); err != nil {
 		result.MissingStage = "revision-self-improvement-cycle-feedback-decision-link-decision"
 		setDigest()
 		return result, fmt.Errorf("decision receipt is not valid: %w", err)
