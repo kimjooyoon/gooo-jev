@@ -23,6 +23,7 @@ type problem struct {
 type response struct {
     ID string `json:"id"`
     Completion *gooo.SyntaxCompletionResponse `json:"completion,omitempty"`
+    Assistance *gooo.UsageAssistance `json:"assistance,omitempty"`
     Error *problem `json:"error,omitempty"`
 }
 
@@ -47,7 +48,24 @@ func main() {
             }
             continue
         }
-        if err := encoder.Encode(response{ID: input.ID, Completion: &completion}); err != nil {
+        discovery := gooo.DiscoverUsage(input.Source, input.Prefix)
+        plan, err := gooo.PlanUsageActions(discovery)
+        if err != nil {
+            if encodeErr := encoder.Encode(response{ID: input.ID, Error: &problem{Code: "invalid_usage_plan", Message: err.Error()}}); encodeErr != nil {
+                fmt.Fprintln(os.Stderr, encodeErr)
+                os.Exit(1)
+            }
+            continue
+        }
+        assistance, err := gooo.ExplainUsage(discovery, plan)
+        if err != nil {
+            if encodeErr := encoder.Encode(response{ID: input.ID, Error: &problem{Code: "invalid_usage_assistance", Message: err.Error()}}); encodeErr != nil {
+                fmt.Fprintln(os.Stderr, encodeErr)
+                os.Exit(1)
+            }
+            continue
+        }
+        if err := encoder.Encode(response{ID: input.ID, Completion: &completion, Assistance: &assistance}); err != nil {
             fmt.Fprintln(os.Stderr, err)
             os.Exit(1)
         }
