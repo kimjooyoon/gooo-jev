@@ -1,0 +1,7 @@
+package jevdecisionconfidencechangeoutcomemetriclsp
+
+namespace jevdecisionconfidencechangeoutcomemetriclsp
+
+entity DecisionConfidenceChangeOutcomeMetricLSPDiagnostic id "gooo://gooo-jev/decision-confidence-change-outcome-metric-lsp"
+
+activity ProjectDecisionConfidenceChangeOutcomeMetricLSP(DecisionConfidenceChangeOutcomeMetric) -> DecisionConfidenceChangeOutcomeMetricLSPDiagnostic
