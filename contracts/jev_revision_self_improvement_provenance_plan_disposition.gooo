@@ -20,11 +20,17 @@ property CandidateProposedSourceDigest string
 property CandidateGeneratedIRDigest string
 property PlanInputIRDigest string
 property ProvenanceHistorySignal string
+property ProvenanceDecisionSignal string
 property DecisionSignal string
 property PlanningSignal string
 property PlanSignal string
 property DispositionSignal string
 property PlanObserved boolean
+property ProvenanceRequiresObservation boolean
+property ProvenanceRequiresReview boolean
+property ProvenanceRequiresInspection boolean
+property ProvenanceRequiresMeasurement boolean
+property SignalsAligned boolean
 property RequiresObservation boolean
 property RequiresReview boolean
 property RequiresInspection boolean
