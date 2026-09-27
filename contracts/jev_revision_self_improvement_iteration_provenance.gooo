@@ -1,0 +1,40 @@
+package jevrevisionselfimprovementiterationprovenance
+namespace jevrevisionselfimprovementiterationprovenance
+
+entity RevisionSelfImprovementIterationProvenanceInput id "gooo://gooo-jev/revision-self-improvement-iteration-provenance-input"
+property Iteration RevisionSelfImprovementIteration
+property ProvenanceHistory RevisionSelfImprovementProvenanceHistoryObservation
+property ProvenanceFeedbackBridge RevisionSelfImprovementProvenanceFeedbackBridgeObservation
+property NonAuthorizing boolean
+
+entity RevisionSelfImprovementIterationProvenanceObservation id "gooo://gooo-jev/revision-self-improvement-iteration-provenance-observation"
+property Status string
+property StageCount integer
+property IterationDigest string
+property SourceDigest string
+property IRDigest string
+property LegacyHistoryDigest string
+property ProvenanceHistoryDigest string
+property WindowDigest string
+property FeedbackDigest string
+property BridgeDigest string
+property CandidateSourceDigest string
+property CandidateProposedSourceDigest string
+property CandidateGeneratedIRDigest string
+property LegacyHistorySignal string
+property ProvenanceHistorySignal string
+property DecisionSignal string
+property FeedbackSignal string
+property BridgeSignal string
+property MetricsChangeCount integer
+property GenerationChangeCount integer
+property RequiresObservation boolean
+property RequiresInspection boolean
+property RequiresMeasurement boolean
+property ObservationSignal string
+property ObservationDigest string
+property MissingStage string
+property NonExecuting boolean
+property NonAuthorizing boolean
+
+activity ObserveRevisionSelfImprovementIterationProvenance(RevisionSelfImprovementIterationProvenanceInput) -> RevisionSelfImprovementIterationProvenanceObservation
