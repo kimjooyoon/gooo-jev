@@ -1,0 +1,32 @@
+package jevrevisionselfimprovementcyclefeedbackdecisionlink
+
+namespace jevrevisionselfimprovementcyclefeedbackdecisionlink
+
+entity RevisionSelfImprovementCycleFeedbackDecisionLinkInput {
+  property bridge_digest string
+  property decision_digest string
+  property question_digest string
+  property feedback_signal string
+  property decision_signal string
+  property decision_reason string
+  property receipt_signal string
+}
+
+entity RevisionSelfImprovementCycleFeedbackDecisionLinkObservation {
+  property status string
+  property missing_stage string
+  property bridge_digest string
+  property decision_digest string
+  property question_digest string
+  property feedback_signal string
+  property decision_signal string
+  property decision_reason string
+  property receipt_signal string
+  property decision_aligned boolean
+  property link_signal string
+  property observation_digest string
+  property non_executing boolean
+  property non_authorizing boolean
+}
+
+activity ObserveRevisionSelfImprovementCycleFeedbackDecisionLink(RevisionSelfImprovementCycleFeedbackDecisionLinkInput) -> RevisionSelfImprovementCycleFeedbackDecisionLinkObservation
