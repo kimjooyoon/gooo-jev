@@ -1,0 +1,35 @@
+package jevrevisionselfimprovementcycleevidencefeedbackdecisionboundary
+
+namespace jevrevisionselfimprovementcycleevidencefeedbackdecisionboundary
+
+entity RevisionSelfImprovementCycleEvidenceCoverageFeedbackDecisionBoundaryInput {
+  property cycle_digest string
+  property bridge_digest string
+  property evidence_feedback_digest string
+  property decision_boundary_digest string
+  property coverage_signal string
+  property feedback_signal string
+  property feedback_reason string
+  property decision_signal string
+}
+
+entity RevisionSelfImprovementCycleEvidenceCoverageFeedbackDecisionBoundaryObservation {
+  property status string
+  property missing_stage string
+  property cycle_digest string
+  property bridge_digest string
+  property evidence_feedback_digest string
+  property decision_boundary_digest string
+  property coverage_signal string
+  property feedback_signal string
+  property feedback_reason string
+  property decision_signal string
+  property boundary_signal string
+  property evidence_feedback_aligned boolean
+  property boundary_aligned boolean
+  property observation_digest string
+  property non_executing boolean
+  property non_authorizing boolean
+}
+
+activity ObserveRevisionSelfImprovementCycleEvidenceCoverageFeedbackDecisionBoundary(RevisionSelfImprovementCycleEvidenceCoverageFeedbackDecisionBoundaryInput) -> RevisionSelfImprovementCycleEvidenceCoverageFeedbackDecisionBoundaryObservation
