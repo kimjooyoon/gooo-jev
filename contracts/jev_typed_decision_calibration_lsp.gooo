@@ -1,0 +1,52 @@
+package jevtypeddecisioncalibrationlsp
+namespace jevtypeddecisioncalibrationlsp
+
+entity TypedDecisionCalibrationLSPInput id "gooo://gooo-jev/typed-decision-calibration-lsp-input"
+property Status string
+property SourceVersion string
+property ContractVersion string
+property ModelRevision string
+property QuestionID string
+property SignalEvidenceDigest string
+property CalibrationEvidenceDigest string
+property OutcomeDigest string
+property SelectedProbability float64
+property Confidence float64
+property OutcomeKnown boolean
+property ObservedOutcome boolean
+property AbsoluteError float64
+property Tolerance float64
+property WithinTolerance boolean
+property WindowSize int
+property FirstMismatch string
+property MissingStage string
+property NonExecuting boolean
+property NonAuthorizing boolean
+
+entity TypedDecisionCalibrationLSPProjection id "gooo://gooo-jev/typed-decision-calibration-lsp-projection"
+property Status string
+property Code string
+property Severity string
+property Message string
+property SourceVersion string
+property ContractVersion string
+property ModelRevision string
+property QuestionID string
+property SignalEvidenceDigest string
+property CalibrationEvidenceDigest string
+property OutcomeDigest string
+property SelectedProbability float64
+property Confidence float64
+property OutcomeKnown boolean
+property ObservedOutcome boolean
+property AbsoluteError float64
+property Tolerance float64
+property WithinTolerance boolean
+property WindowSize int
+property FirstMismatch string
+property MissingStage string
+property EvidenceDigest string
+property NonExecuting boolean
+property NonAuthorizing boolean
+
+activity ProjectTypedDecisionCalibrationLSP(TypedDecisionCalibrationLSPInput) -> TypedDecisionCalibrationLSPProjection
