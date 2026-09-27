@@ -1,0 +1,21 @@
+contract lsp_revision_self_improvement_cycle_jev_declarative_execution_plan_boundary {
+  input {
+    boundary: revision_self_improvement_cycle_jev_declarative_execution_plan_boundary_observation
+  }
+
+  project {
+    status: bound | unknown
+    missing_stage: stage?
+    projection_signal: "jev-declarative-plan-boundary-lsp-projected" | "jev-declarative-plan-boundary-lsp-unknown"
+    projection_digest: digest
+    read_only: true
+    non_executing: true
+    non_authorizing: true
+  }
+
+  semantics {
+    source: revision_self_improvement_cycle_jev_declarative_execution_plan_boundary
+    effect: editor_observation_only
+    authority: none
+  }
+}
