@@ -1,0 +1,45 @@
+package jevlsprevisionselfimprovementcyclemetricfeedback
+
+namespace jevlsprevisionselfimprovementcyclemetricfeedback
+
+entity LSPRevisionSelfImprovementCycleMetricFeedbackInput {
+  property cycle_metric_digest string
+  property cycle_digest string
+  property metric_name string
+  property direction string
+  property baseline_value integer
+  property candidate_value integer
+  property metric_delta integer
+  property metric_signal string
+  property feedback_signal string
+  property feedback_reason string
+  property requires_observation boolean
+  property requires_review boolean
+  property requires_replan boolean
+  property requires_measurement boolean
+}
+
+entity LSPRevisionSelfImprovementCycleMetricFeedback {
+  property status string
+  property missing_stage string
+  property cycle_metric_digest string
+  property cycle_digest string
+  property metric_name string
+  property direction string
+  property baseline_value integer
+  property candidate_value integer
+  property metric_delta integer
+  property metric_signal string
+  property feedback_signal string
+  property feedback_reason string
+  property requires_observation boolean
+  property requires_review boolean
+  property requires_replan boolean
+  property requires_measurement boolean
+  property projection_digest string
+  property read_only boolean
+  property non_executing boolean
+  property non_authorizing boolean
+}
+
+activity ObserveLSPRevisionSelfImprovementCycleMetricFeedback(LSPRevisionSelfImprovementCycleMetricFeedbackInput) -> LSPRevisionSelfImprovementCycleMetricFeedback
