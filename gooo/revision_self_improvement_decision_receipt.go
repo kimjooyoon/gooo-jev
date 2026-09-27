@@ -14,12 +14,13 @@ const (
 	revisionSelfImprovementDecisionReceiptRequireReplan = "require-replan"
 	revisionSelfImprovementDecisionReceiptAcceptedSignal = "provenance-decision-accepted"
 
-	revisionSelfImprovementDecisionReceiptMissingInput = "revision-self-improvement-provenance-decision-input"
-	revisionSelfImprovementDecisionReceiptMissingQuestion = "revision-self-improvement-provenance-decision-question"
-	revisionSelfImprovementDecisionReceiptMissingReason = "revision-self-improvement-provenance-decision-reason"
-	revisionSelfImprovementDecisionReceiptMissingSignal = "revision-self-improvement-provenance-decision-signal"
-	revisionSelfImprovementDecisionReceiptMissingAlignment = "revision-self-improvement-provenance-decision-alignment"
+	revisionSelfImprovementDecisionReceiptMissingInput = "revision-self-improvement-provenance-decision-receipt-input"
+	revisionSelfImprovementDecisionReceiptMissingQuestion = "revision-self-improvement-provenance-decision-receipt-question"
+	revisionSelfImprovementDecisionReceiptMissingReason = "revision-self-improvement-provenance-decision-receipt-reason"
+	revisionSelfImprovementDecisionReceiptMissingSignal = "revision-self-improvement-provenance-decision-receipt-signal"
+	revisionSelfImprovementDecisionReceiptMissingAlignment = "revision-self-improvement-provenance-decision-receipt-alignment"
 	revisionSelfImprovementDecisionReceiptMissingReceipt = "revision-self-improvement-provenance-decision-receipt"
+
 )
 
 type RevisionSelfImprovementDecisionReceiptObservation struct {
@@ -37,7 +38,7 @@ type RevisionSelfImprovementDecisionReceiptObservation struct {
 	NonAuthorizing         bool
 }
 
-func ObserveRevisionSelfImprovementProvenanceDecision(
+func ObserveRevisionSelfImprovementProvenanceDecisionReceipt(
 	input RevisionSelfImprovementProvenanceNextIterationObservation,
 	questionDigest string,
 	decisionSignal string,
@@ -53,7 +54,7 @@ func ObserveRevisionSelfImprovementProvenanceDecision(
 		NonExecuting:           true,
 		NonAuthorizing:         true,
 	}
-	if err := validateRevisionSelfImprovementProvenanceNextIterationObservation(input); err != nil {
+	if err := input.Validate(); err != nil {
 		observation.ObservationDigest = digestRevisionSelfImprovementDecisionReceipt(observation)
 		return observation, errors.Join(errors.New(revisionSelfImprovementDecisionReceiptMissingInput), err)
 	}
