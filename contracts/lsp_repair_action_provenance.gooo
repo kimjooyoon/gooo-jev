@@ -1,0 +1,31 @@
+contract lsp_repair_action_provenance {
+  input {
+    source_digest: digest
+    ir_digest: digest
+    repair_plan_digest: digest
+    plan_signal: string
+  }
+
+  observe {
+    status: bound | unknown
+    missing_stage: stage?
+    target_stage: stage?
+    title: string
+    kind: quickfix
+    plan_signal: string
+    action_signal: "lsp-repair-action-deferred" | "lsp-repair-action-complete" | "lsp-repair-action-unknown"
+    action_digest: digest
+    read_only: true
+    non_executing: true
+    non_authorizing: true
+  }
+
+  semantics {
+    requires_source_binding: true
+    requires_ir_binding: true
+    requires_repair_plan: true
+    effect: observation_only
+    authority: none
+    decision: defer
+  }
+}
