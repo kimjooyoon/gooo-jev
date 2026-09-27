@@ -1,0 +1,11 @@
+contract revision_self_improvement_cycle_jev_calibration_convergence_gate_lsp_projection_reverse_observation {
+  input revision_self_improvement_cycle_jev_calibration_convergence_gate_lsp_projection
+  observe status missing_stage missing_stage_index metric_name gate_decision projection_signal projection_observation_digest evidence_prefix_digest source_observation_digest reverse_observation_coverage_digest reverse_signal observation_digest non_executing non_authorizing
+  semantics {
+    effect reverse_observation_only
+    authority none
+    preserves_projection_digest: true
+    preserves_unknown_stage: true
+    preserves_evidence_prefix_digest: true
+  }
+}
