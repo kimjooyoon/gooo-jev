@@ -1,0 +1,41 @@
+module jev_calibration_decision_route_reverse_observation_lsp
+
+input status
+input source_version
+input contract_version
+input route_status
+input route_record_digest
+input decision_digest
+input expected_route_status
+input observed_route_status
+input outcome_digest
+input target_stage
+input observation_digest
+input review_required
+
+status INFORMATION BOUND route and outcome evidence
+status WARNING review or deferred route reverse evidence
+status ERROR UNKNOWN or mismatched route reverse evidence
+
+field code
+field severity
+field source_version
+field contract_version
+field route_status
+field route_record_digest
+field decision_digest
+field expected_route_status
+field observed_route_status
+field outcome_digest
+field target_stage
+field observation_digest
+field review_required
+
+constraint inspection_only
+constraint preserve_decision_digest
+constraint no_outcome_judgment
+constraint no_authorization
+constraint no_execution
+constraint read_only
+constraint no_edits
+constraint no_command
