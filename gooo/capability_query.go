@@ -30,6 +30,7 @@ type CapabilityQueryResponse struct {
 	Query           string                     `json:"query"`
 	Capabilities    []CapabilityQueryCapability `json:"capabilities"`
 	Suggestions     []string                   `json:"suggestions"`
+	SuggestedQueries []string                  `json:"suggested_queries"`
 	FirstMismatch   string                     `json:"first_mismatch"`
 	MissingStage    string                     `json:"missing_stage"`
 	QueryDigest     string                     `json:"query_digest"`
@@ -68,6 +69,7 @@ func DiscoverCapabilityQuery(query string) CapabilityQueryResponse {
 		Status:         CapabilityQueryUnknown,
 		Query:          strings.TrimSpace(query),
 		Suggestions:    capabilityQuerySuggestions(),
+		SuggestedQueries: capabilityQueryExampleSuggestions(),
 		FirstMismatch:  "query",
 		MissingStage:   "capability_catalog",
 		NonExecuting:   true,
@@ -157,6 +159,17 @@ func capabilityQuerySuggestions() []string {
 	return suggestions
 }
 
+func capabilityQueryExampleSuggestions() []string {
+	suggestions := make([]string, 0)
+	for _, entry := range capabilityQueryCatalog {
+		if entry.Safe && strings.TrimSpace(entry.ExampleQuery) != "" {
+			suggestions = append(suggestions, entry.ExampleQuery)
+		}
+	}
+	sort.Strings(suggestions)
+	return suggestions
+}
+
 func hasDeferredCapabilityQuery(capabilities []CapabilityQueryCapability) bool {
 	for _, capability := range capabilities {
 		if capability.State == CapabilityQueryDeferred {
@@ -169,6 +182,9 @@ func hasDeferredCapabilityQuery(capabilities []CapabilityQueryCapability) bool {
 func (response CapabilityQueryResponse) Validate() error {
 	if response.Status != CapabilityQueryAvailable && response.Status != CapabilityQueryDeferred && response.Status != CapabilityQueryUnknown {
 		return fmt.Errorf("capability query status %q is invalid", response.Status)
+	}
+	if len(response.SuggestedQueries) == 0 {
+		return fmt.Errorf("capability query has no natural-language follow-up suggestions")
 	}
 	if !response.NonExecuting || !response.NonAuthorizing {
 		return fmt.Errorf("capability query crossed an execution or authorization boundary")
@@ -199,5 +215,6 @@ func digestCapabilityQuery(response CapabilityQueryResponse) string {
 		parts = append(parts, capability.ID, string(capability.State), capability.Stage, capability.Description, capability.NextOperation, capability.ExampleQuery)
 	}
 	parts = append(parts, response.Suggestions...)
+	parts = append(parts, response.SuggestedQueries...)
 	return digestString(strings.Join(parts, "|"))
 }

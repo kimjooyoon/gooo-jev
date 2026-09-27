@@ -31,7 +31,7 @@ func TestDiscoverCapabilityQueryPreservesExternalBoundary(t *testing.T) {
 
 func TestDiscoverCapabilityQueryUnknownRetainsSuggestions(t *testing.T) {
 	response := DiscoverCapabilityQuery("quantum breakfast compiler")
-	if response.Status != CapabilityQueryUnknown || response.FirstMismatch != "query" || response.MissingStage != "capability_catalog" || len(response.Suggestions) == 0 {
+	if response.Status != CapabilityQueryUnknown || response.FirstMismatch != "query" || response.MissingStage != "capability_catalog" || len(response.Suggestions) == 0 || len(response.SuggestedQueries) == 0 || !hasCapabilityQuerySuggestion(response.SuggestedQueries, "How do I generate a canonical .gooo declaration?") {
 		t.Fatalf("unexpected unknown response: %+v", response)
 	}
 	if err := response.Validate(); err != nil {
@@ -50,6 +50,15 @@ func TestDiscoverCapabilityQueryRejectsTamperedDigest(t *testing.T) {
 func hasCapabilityQuery(capabilities []CapabilityQueryCapability, id string) bool {
 	_, ok := capabilityQueryByID(capabilities, id)
 	return ok
+}
+
+func hasCapabilityQuerySuggestion(suggestions []string, expected string) bool {
+	for _, suggestion := range suggestions {
+		if suggestion == expected {
+			return true
+		}
+	}
+	return false
 }
 
 func capabilityQueryByID(capabilities []CapabilityQueryCapability, id string) (CapabilityQueryCapability, bool) {
