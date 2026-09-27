@@ -1,0 +1,34 @@
+module jev_capability_query
+namespace jevcapabilityquery
+
+entity CapabilityQueryInput id "gooo://gooo-jev/capability-query-input"
+property Query string
+property DeclarationSource string
+property NonAuthorizing boolean
+
+entity CapabilityQueryMatch id "gooo://gooo-jev/capability-query-match"
+property ID string
+property State string
+property Stage string
+property Description string
+property NextOperation string
+property ExampleQuery string
+property NonExecuting boolean
+property NonAuthorizing boolean
+
+entity CapabilityQueryObservation id "gooo://gooo-jev/capability-query-observation"
+property Status string
+property Query string
+property Capabilities string
+property Suggestions string
+property SuggestedQueries string
+property FirstMismatch string
+property MissingStage string
+property QueryDigest string
+property DeclarationSourceDigest string
+property DeclarationObservedSignals string
+property DeclarationBound boolean
+property NonExecuting boolean
+property NonAuthorizing boolean
+
+activity DiscoverCapabilityQuery(CapabilityQueryInput) -> CapabilityQueryObservation
