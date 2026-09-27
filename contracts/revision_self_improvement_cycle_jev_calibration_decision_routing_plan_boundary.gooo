@@ -1,0 +1,23 @@
+module jev_calibration_decision_routing_plan_boundary
+
+input source_version
+input contract_version
+input route_status
+input route_decision_digest
+input reverse_observation_status
+input observation_digest
+input plan_digest
+
+status PROPOSED only for a route with bound reverse observation
+status DEFERRED for deferred route or reverse producer
+status UNKNOWN for missing, changed, or unresolved evidence
+
+field target_stage
+field boundary_digest
+
+constraint preserve_route_digest
+constraint preserve_observation_digest
+constraint preserve_plan_digest
+constraint read_only
+constraint no_execution
+constraint no_authorization
