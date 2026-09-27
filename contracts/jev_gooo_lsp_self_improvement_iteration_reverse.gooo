@@ -1,0 +1,40 @@
+package jev.gooo.lsp.iterationreverse
+
+entity SelfImprovementIterationReverseSymbolResult {
+    field status string
+    field missing_stage string
+    field source_digest string
+    field ir_digest string
+    field symbol_name string
+    field symbol_kind string
+    field symbol_digest string
+    field current_lifecycle_observation_digest string
+    field iteration_observation_digest string
+    field reverse_observation_digest string
+    field candidate_source_digest string
+    field candidate_proposed_source_digest string
+    field candidate_generated_ir_digest string
+    field reverse_source_digest string
+    field reverse_proposed_source_digest string
+    field reverse_generated_ir_digest string
+    field reverse_generated_ir_matches_candidate boolean
+    field metrics_binding_digest string
+    field generation_assessment_digest string
+    field exact_source_match boolean
+    field exact_ir_match boolean
+    field exact_structure_match boolean
+    field reverse_signal string
+    field relation_signal string
+    field result_digest string
+    invariant non_executing
+    invariant non_authorizing
+}
+
+activity explain_self_improvement_iteration_reverse_observation {
+    input source
+    input symbol_name
+    input revision_self_improvement_lifecycle_observation
+    input revision_self_improvement_iteration_provenance_observation
+    input revision_self_improvement_reverse_observation
+    output self_improvement_iteration_reverse_symbol_result
+}
