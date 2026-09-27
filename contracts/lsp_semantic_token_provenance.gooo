@@ -1,0 +1,38 @@
+contract lsp_semantic_token_provenance {
+  input {
+    source_digest: digest
+    ir_digest: digest
+    generation_digest: digest
+    reverse_observation_digest: digest
+    input_observation_digest: digest
+    provenance_status: observed | unknown
+    missing_stage: stage?
+  }
+
+  observe {
+    status: bound | unknown
+    missing_stage: stage?
+    provenance_status: observed | unknown
+    token_type: string
+    token_modifiers: string
+    source_digest: digest
+    ir_digest: digest
+    generation_digest: digest
+    reverse_observation_digest: digest
+    input_observation_digest: digest
+    observation_digest: digest
+    read_only: true
+    non_executing: true
+    non_authorizing: true
+  }
+
+  semantics {
+    requires_source_binding: true
+    requires_ir_binding: true
+    requires_generation_binding: true
+    requires_reverse_observation: true
+    effect: observation_only
+    authority: none
+    decision: defer
+  }
+}
