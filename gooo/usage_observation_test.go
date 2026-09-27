@@ -28,6 +28,9 @@ func TestObserveUsageActionKeepsDeferredWorkUnknown(t *testing.T) {
 	if err := ready.ValidateAgainst(plan); err != nil {
 		t.Fatalf("validate ready observation: %v", err)
 	}
+	if !ready.NonExecuting || !ready.NonAuthorizing {
+		t.Fatal("usage observation must be non-executing and non-authorizing")
+	}
 
 	if _, err := ObserveUsageAction(
 		plan,
@@ -53,7 +56,7 @@ func TestObserveUsageActionKeepsDeferredWorkUnknown(t *testing.T) {
 	if err != nil {
 		t.Fatalf("observe deferred action: %v", err)
 	}
-	if unknown.Kind != UsageObservationUnknown || !unknown.NonAuthorizing {
+	if unknown.Kind != UsageObservationUnknown || !unknown.NonExecuting || !unknown.NonAuthorizing {
 		t.Fatalf("unexpected deferred observation: %#v", unknown)
 	}
 }
