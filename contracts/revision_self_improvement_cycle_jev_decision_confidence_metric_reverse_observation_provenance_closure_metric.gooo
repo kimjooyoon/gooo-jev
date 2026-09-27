@@ -1,0 +1,6 @@
+revision_self_improvement_cycle_jev_decision_confidence_metric_reverse_observation_provenance_closure_metric {
+  input reverse_observation RevisionSelfImprovementCycleJEVDecisionConfidenceMetricReverseObservation
+  observe status missing_stage metric_name metric_digest reverse_observation_digest closure_signal observation_digest non_executing non_authorizing
+  semantics effect reverse_observation_only
+  authority none
+}
