@@ -36,5 +36,15 @@ func TestDiscoverUsageAndPlanPreserveCapabilityState(t *testing.T) {
 	if !plan.NonExecuting || !plan.NonAuthorizing {
 		t.Fatal("usage plan must remain non-executing and non-authorizing")
 	}
+
+	originalDescription := discovery.Capabilities[0].Description
+	discovery.Capabilities[0].Description = "tampered"
+	if err := discovery.Validate(); err == nil {
+		t.Fatal("expected tampered capability description to invalidate discovery")
+	}
+	discovery.Capabilities[0].Description = originalDescription
+	if err := discovery.Validate(); err != nil {
+		t.Fatalf("restore discovery after tamper check: %v", err)
+	}
 }
 
