@@ -1,0 +1,25 @@
+package jevrevisionselfimprovementcyclesecurityworkloadidentityboundary
+
+namespace jevrevisionselfimprovementcyclesecurityworkloadidentityboundary
+
+entity RevisionSelfImprovementCycleSecurityWorkloadIdentityBoundaryInput {
+  property workload_id string
+  property issuer_id string
+  property audience_id string
+  property policy_digest string
+}
+
+entity RevisionSelfImprovementCycleSecurityWorkloadIdentityBoundaryObservation {
+  property status string
+  property missing_stage string
+  property workload_id string
+  property issuer_id string
+  property audience_id string
+  property policy_digest string
+  property boundary_signal string
+  property boundary_digest string
+  property non_executing boolean
+  property non_authorizing boolean
+}
+
+activity ObserveRevisionSelfImprovementCycleSecurityWorkloadIdentityBoundary(RevisionSelfImprovementCycleSecurityWorkloadIdentityBoundaryInput) -> RevisionSelfImprovementCycleSecurityWorkloadIdentityBoundaryObservation
