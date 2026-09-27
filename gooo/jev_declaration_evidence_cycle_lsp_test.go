@@ -4,18 +4,18 @@ import "testing"
 
 func TestProjectExecutionEnvelopeDeclarationEvidenceCycleLSPBound(t *testing.T) {
 	projection := ProjectExecutionEnvelopeDeclarationEvidenceCycleLSP(ExecutionEnvelopeDeclarationEvidenceCycleInput{
-		SourceStatus:              GoooDeclarationSourceDerived,
-		DeclarationID:             "decl://example",
-		ContractID:                "contract://example",
-		DeclarationDigest:         "sha256:declaration",
-		IRStatus:                  ExecutionEnvelopeDeclarationIRGenerationLSPBound,
-		IRDigest:                  "sha256:ir",
-		GenerationDigest:          "sha256:generation",
-		BindingDigest:             "sha256:binding",
-		ReverseStatus:             DecisionRouteReverseBoundStatus,
-		ReverseObservationDigest:  "sha256:reverse",
-		NonExecuting:              true,
-		NonAuthorizing:            true,
+		SourceStatus:             GoooDeclarationSourceDerived,
+		DeclarationID:            "decl://example",
+		ContractID:               "contract://example",
+		DeclarationDigest:        "sha256:declaration",
+		IRStatus:                 ExecutionEnvelopeDeclarationIRGenerationLSPBound,
+		IRDigest:                 "sha256:ir",
+		GenerationDigest:         "sha256:generation",
+		BindingDigest:            "sha256:binding",
+		ReverseStatus:            "BOUND",
+		ReverseObservationDigest: "sha256:reverse",
+		NonExecuting:             true,
+		NonAuthorizing:           true,
 	})
 	if projection.Status != ExecutionEnvelopeDeclarationEvidenceCycleBound {
 		t.Fatalf("status = %s, want %s", projection.Status, ExecutionEnvelopeDeclarationEvidenceCycleBound)
@@ -27,17 +27,17 @@ func TestProjectExecutionEnvelopeDeclarationEvidenceCycleLSPBound(t *testing.T) 
 
 func TestProjectExecutionEnvelopeDeclarationEvidenceCycleLSPPreservesFirstMissingStage(t *testing.T) {
 	projection := ProjectExecutionEnvelopeDeclarationEvidenceCycleLSP(ExecutionEnvelopeDeclarationEvidenceCycleInput{
-		SourceStatus:       GoooDeclarationSourceDerived,
-		DeclarationID:      "decl://example",
-		ContractID:         "contract://example",
-		DeclarationDigest:  "sha256:declaration",
-		IRStatus:           ExecutionEnvelopeDeclarationIRGenerationLSPUnknown,
-		IRDigest:           "sha256:ir",
-		GenerationDigest:   "sha256:generation",
-		BindingDigest:      "sha256:binding",
-		ReverseStatus:      DecisionRouteReverseUnknownStatus,
-		NonExecuting:       true,
-		NonAuthorizing:     true,
+		SourceStatus:      GoooDeclarationSourceDerived,
+		DeclarationID:     "decl://example",
+		ContractID:        "contract://example",
+		DeclarationDigest: "sha256:declaration",
+		IRStatus:          ExecutionEnvelopeDeclarationIRGenerationLSPUnknown,
+		IRDigest:          "sha256:ir",
+		GenerationDigest:  "sha256:generation",
+		BindingDigest:     "sha256:binding",
+		ReverseStatus:     "UNKNOWN",
+		NonExecuting:      true,
+		NonAuthorizing:    true,
 	})
 	if projection.Status != ExecutionEnvelopeDeclarationEvidenceCycleUnknown ||
 		projection.MissingStage != "declaration_ir_generation" {
@@ -50,19 +50,19 @@ func TestProjectExecutionEnvelopeDeclarationEvidenceCycleLSPPreservesFirstMissin
 
 func TestProjectExecutionEnvelopeDeclarationEvidenceCycleLSPPreservesDeferredReverseObservation(t *testing.T) {
 	projection := ProjectExecutionEnvelopeDeclarationEvidenceCycleLSP(ExecutionEnvelopeDeclarationEvidenceCycleInput{
-		SourceStatus:              GoooDeclarationSourceDerived,
-		DeclarationID:             "decl://example",
-		ContractID:                "contract://example",
-		DeclarationDigest:          "sha256:declaration",
-		IRStatus:                  ExecutionEnvelopeDeclarationIRGenerationLSPBound,
-		IRDigest:                  "sha256:ir",
-		GenerationDigest:          "sha256:generation",
-		BindingDigest:             "sha256:binding",
-		ReverseStatus:             DecisionRouteReverseDeferredStatus,
-		ReverseObservationDigest:  "sha256:reverse",
-		ReverseFirstMismatch:      "producer-deferred",
-		NonExecuting:              true,
-		NonAuthorizing:            true,
+		SourceStatus:             GoooDeclarationSourceDerived,
+		DeclarationID:            "decl://example",
+		ContractID:               "contract://example",
+		DeclarationDigest:        "sha256:declaration",
+		IRStatus:                 ExecutionEnvelopeDeclarationIRGenerationLSPBound,
+		IRDigest:                 "sha256:ir",
+		GenerationDigest:         "sha256:generation",
+		BindingDigest:            "sha256:binding",
+		ReverseStatus:            "DEFERRED",
+		ReverseObservationDigest: "sha256:reverse",
+		ReverseFirstMismatch:     "producer-deferred",
+		NonExecuting:             true,
+		NonAuthorizing:           true,
 	})
 	if projection.Status != ExecutionEnvelopeDeclarationEvidenceCycleDeferred ||
 		projection.FirstMismatch != "producer-deferred" {
@@ -75,18 +75,18 @@ func TestProjectExecutionEnvelopeDeclarationEvidenceCycleLSPPreservesDeferredRev
 
 func TestProjectExecutionEnvelopeDeclarationEvidenceCycleLSPRejectsTampering(t *testing.T) {
 	projection := ProjectExecutionEnvelopeDeclarationEvidenceCycleLSP(ExecutionEnvelopeDeclarationEvidenceCycleInput{
-		SourceStatus:              GoooDeclarationSourceDerived,
-		DeclarationID:             "decl://example",
-		ContractID:                "contract://example",
+		SourceStatus:             GoooDeclarationSourceDerived,
+		DeclarationID:            "decl://example",
+		ContractID:               "contract://example",
 		DeclarationDigest:         "sha256:declaration",
-		IRStatus:                  ExecutionEnvelopeDeclarationIRGenerationLSPBound,
-		IRDigest:                  "sha256:ir",
-		GenerationDigest:          "sha256:generation",
-		BindingDigest:             "sha256:binding",
-		ReverseStatus:             DecisionRouteReverseBoundStatus,
-		ReverseObservationDigest:  "sha256:reverse",
+		IRStatus:                 ExecutionEnvelopeDeclarationIRGenerationLSPBound,
+		IRDigest:                 "sha256:ir",
+		GenerationDigest:         "sha256:generation",
+		BindingDigest:            "sha256:binding",
+		ReverseStatus:             "BOUND",
+		ReverseObservationDigest: "sha256:reverse",
 		NonExecuting:              true,
-		NonAuthorizing:            true,
+		NonAuthorizing:           true,
 	})
 	projection.EvidenceDigest = "sha256:tampered"
 	if err := projection.Validate(); err == nil {
