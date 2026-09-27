@@ -1,0 +1,14 @@
+module jev_calibration_convergence_gate_lsp_repair_action_closure_trajectory
+
+input previous_closure_metric
+input current_closure_metric
+
+status IMPROVED only when non_BOUND becomes BOUND
+status REGRESSED only when BOUND becomes non_BOUND
+status UNCHANGED only when equal BOUND metric digests remain equal
+status UNKNOWN when identity changes or a BOUND digest changes without a comparable score
+status DEFERRED when either producer is deferred
+
+constraint exact_source_identity
+constraint exact_contract_identity
+constraint preserve_delta_digest
