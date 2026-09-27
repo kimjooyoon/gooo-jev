@@ -12,9 +12,10 @@ import (
 )
 
 type report struct {
-	Path               string                       `json:"path,omitempty"`
-	Discovery           *gooo.UsageDiscoveryResponse `json:"discovery,omitempty"`
-	CapabilityDiscovery *gooo.CapabilityQueryResponse `json:"capability_discovery,omitempty"`
+	Path                string                        `json:"path,omitempty"`
+	Discovery            *gooo.UsageDiscoveryResponse  `json:"discovery,omitempty"`
+	CapabilityDiscovery  *gooo.CapabilityQueryResponse `json:"capability_discovery,omitempty"`
+	CapabilityTrail      *gooo.CapabilityQueryTrail    `json:"capability_trail,omitempty"`
 }
 
 func main() {
@@ -40,23 +41,22 @@ func main() {
 		queryText = "What can gooo do with this declaration?"
 	}
 	var capabilityDiscovery *gooo.CapabilityQueryResponse
+	var capabilityTrail *gooo.CapabilityQueryTrail
 	if queryText != "" {
-		response := gooo.DiscoverCapabilityQuery(queryText)
-		if len(source) > 0 {
-			response = gooo.DiscoverCapabilityQueryWithDeclaration(queryText, string(source))
-		}
-		if err := response.Validate(); err != nil {
-			fmt.Fprintf(os.Stderr, "invalid capability query: %v\n", err)
+		trail := gooo.DiscoverCapabilityQueryTrail(queryText, string(source))
+		if err := trail.Validate(); err != nil {
+			fmt.Fprintf(os.Stderr, "invalid capability query trail: %v\n", err)
 			os.Exit(1)
 		}
-		capabilityDiscovery = &response
+		capabilityDiscovery = &trail.Response
+		capabilityTrail = &trail
 	}
 	if flag.NArg() == 0 {
 		if capabilityDiscovery == nil {
 			fmt.Fprintln(os.Stderr, "usage: go run ./cmd/gooo-discover [--query <question>] [declaration.gooo] [prefix]")
 			os.Exit(64)
 		}
-		if err := json.NewEncoder(os.Stdout).Encode(report{CapabilityDiscovery: capabilityDiscovery}); err != nil {
+		if err := json.NewEncoder(os.Stdout).Encode(report{CapabilityDiscovery: capabilityDiscovery, CapabilityTrail: capabilityTrail}); err != nil {
 			fmt.Fprintf(os.Stderr, "write capability discovery: %v\n", err)
 			os.Exit(1)
 		}
@@ -71,7 +71,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "invalid usage discovery: %v\n", err)
 		os.Exit(1)
 	}
-	if err := json.NewEncoder(os.Stdout).Encode(report{Path: path, Discovery: &discovery, CapabilityDiscovery: capabilityDiscovery}); err != nil {
+	if err := json.NewEncoder(os.Stdout).Encode(report{Path: path, Discovery: &discovery, CapabilityDiscovery: capabilityDiscovery, CapabilityTrail: capabilityTrail}); err != nil {
 		fmt.Fprintf(os.Stderr, "write usage discovery: %v\n", err)
 		os.Exit(1)
 	}
