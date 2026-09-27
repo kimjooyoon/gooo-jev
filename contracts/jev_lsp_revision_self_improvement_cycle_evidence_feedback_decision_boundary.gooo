@@ -1,0 +1,39 @@
+package jevlsprevisionselfimprovementcycleevidencefeedbackdecisionboundary
+
+namespace jevlsprevisionselfimprovementcycleevidencefeedbackdecisionboundary
+
+entity LSPRevisionSelfImprovementCycleEvidenceCoverageFeedbackDecisionBoundaryInput {
+  property cycle_digest string
+  property bridge_digest string
+  property evidence_feedback_digest string
+  property decision_boundary_digest string
+  property coverage_signal string
+  property feedback_signal string
+  property feedback_reason string
+  property decision_signal string
+  property boundary_signal string
+  property evidence_feedback_aligned boolean
+  property boundary_aligned boolean
+}
+
+entity LSPRevisionSelfImprovementCycleEvidenceCoverageFeedbackDecisionBoundary {
+  property status string
+  property missing_stage string
+  property cycle_digest string
+  property bridge_digest string
+  property evidence_feedback_digest string
+  property decision_boundary_digest string
+  property coverage_signal string
+  property feedback_signal string
+  property feedback_reason string
+  property decision_signal string
+  property boundary_signal string
+  property evidence_feedback_aligned boolean
+  property boundary_aligned boolean
+  property projection_digest string
+  property read_only boolean
+  property non_executing boolean
+  property non_authorizing boolean
+}
+
+activity ObserveLSPRevisionSelfImprovementCycleEvidenceCoverageFeedbackDecisionBoundary(LSPRevisionSelfImprovementCycleEvidenceCoverageFeedbackDecisionBoundaryInput) -> LSPRevisionSelfImprovementCycleEvidenceCoverageFeedbackDecisionBoundary
