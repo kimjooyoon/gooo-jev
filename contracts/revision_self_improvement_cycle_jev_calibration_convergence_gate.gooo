@@ -1,0 +1,46 @@
+contract revision_self_improvement_cycle_jev_calibration_convergence_gate {
+  input {
+    outcome_delta_status: bound | unknown
+    outcome_delta_signal: improved | regressed | flat | unknown
+    outcome_delta_observation_digest: digest
+    choice_set_sensitivity_status: bound | unknown
+    choice_set_sensitivity_signal: stable | choice_set_changed | order_changed | choice_set_and_order_changed | unknown
+    choice_set_decision_signal: compare | defer
+    choice_set_sensitivity_observation_digest: digest
+    source_observation_digest: digest
+    reverse_observation_coverage_digest: digest
+    generation_trace_coverage_metric: bound | unknown
+    generation_trace_coverage_observation_digest: digest
+  }
+
+  observe {
+    status: bound | unknown
+    missing_stage: stage?
+    outcome_delta_signal: improved | regressed | flat | unknown
+    choice_set_sensitivity_signal: stable | choice_set_changed | order_changed | choice_set_and_order_changed | unknown
+    choice_set_decision_signal: compare | defer
+    outcome_delta_observation_digest: digest
+    choice_set_sensitivity_observation_digest: digest
+    source_observation_digest: digest
+    reverse_observation_coverage_digest: digest
+    coverage_metric_observation_digest: digest
+    coverage_metric_signal: complete | unknown
+    gate_decision: converged | regressed | defer | unknown
+    observation_digest: digest
+    read_only: true
+    non_executing: true
+    non_authorizing: true
+  }
+
+  semantics {
+    requires_outcome_delta: true
+    requires_choice_set_sensitivity: true
+    requires_generation_trace_reverse_observation_coverage: true
+    changed_choice_set_defers_comparison: true
+    flat_outcome_defers: true
+    missing_or_tampered_lineage_is_unknown: true
+    effect: observation_only
+    authority: none
+    decision: defer
+  }
+}
