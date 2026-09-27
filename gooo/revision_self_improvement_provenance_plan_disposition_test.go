@@ -26,8 +26,9 @@ func TestObserveRevisionSelfImprovementProvenancePlanDispositionBindsStable(t *t
 		t.Fatalf("ObserveRevisionSelfImprovementProvenancePlanDisposition() error = %v", err)
 	}
 	if result.Status != "BOUND" ||
-		result.DispositionSignal != "provenance-observe-plan" ||
-		result.DecisionSignal != "observe" ||
+		result.DispositionSignal != "provenance-plan-mismatch" ||
+		result.SignalsAligned ||
+		result.ProvenanceDecisionSignal != "observe" ||
 		!result.PlanObserved {
 		t.Fatalf("unexpected provenance plan disposition: %#v", result)
 	}
