@@ -1,0 +1,32 @@
+module jev_calibration_decision_routing_boundary
+
+input declaration_digest
+input ir_digest
+input generated_digest
+input reverse_observation_digest
+input calibration_digest
+input outcome_window_digest
+input choice_set_digest
+input calibrated_choice_set_digest
+input outcome_count
+input calibrated_probability
+input accept_threshold
+input review_threshold
+
+status ACCEPT_CANDIDATE when calibrated evidence meets accept threshold
+status REVIEW_CANDIDATE when calibrated evidence meets review threshold
+status ABSTAIN_CANDIDATE when calibrated evidence is below review threshold
+status DEFERRED when the decision producer is deferred
+status UNKNOWN when evidence, identity, choice-set, outcome, probability, or thresholds are invalid
+
+field missing_stage
+field missing_stage_index
+field evidence_coverage
+field decision_digest
+
+constraint outcome_backed_calibration
+constraint choice_set_identity_must_match
+constraint preserve_first_missing_stage
+constraint read_only
+constraint no_execution
+constraint no_authorization
