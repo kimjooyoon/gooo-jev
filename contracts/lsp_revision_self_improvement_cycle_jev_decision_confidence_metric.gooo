@@ -1,0 +1,33 @@
+contract lsp_revision_self_improvement_cycle_jev_decision_confidence_metric {
+  input {
+    metric: revision_self_improvement_cycle_jev_decision_confidence_metric_observation
+  }
+
+  project {
+    metric_name: "jev-typed-decision-confidence-milli"
+    question_id: identifier
+    question_kind: choice | score | noul
+    confidence_milli: integer
+    confidence_band: high | medium | low | none | unknown
+    decision_digest: digest
+    evidence_digest: digest
+    decision_observation_digest: digest
+    linked_digest_count: integer
+    required_digest_count: integer
+    metric_signal: "jev-decision-confidence-observed" | "jev-decision-confidence-unknown"
+    metric_digest: digest
+    status: bound | unknown
+    missing_stage: stage?
+    projection_signal: "jev-decision-confidence-lsp-projected" | "jev-decision-confidence-lsp-unknown"
+    projection_digest: digest
+    read_only: true
+    non_executing: true
+    non_authorizing: true
+  }
+
+  semantics {
+    source: revision_self_improvement_cycle_jev_decision_confidence_metric
+    effect: editor_observation_only
+    authority: none
+  }
+}
