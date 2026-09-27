@@ -1,0 +1,27 @@
+package jevrevisionselfimprovementdecision
+
+namespace jevrevisionselfimprovementdecision
+
+entity RevisionSelfImprovementDecisionReceiptInput {
+  property input_observation_digest string
+  property question_digest string
+  property decision_signal string
+  property decision_reason string
+}
+
+entity RevisionSelfImprovementDecisionReceiptObservation {
+  property status string
+  property missing_stage string
+  property input_observation_digest string
+  property question_digest string
+  property decision_digest string
+  property decision_signal string
+  property decision_reason string
+  property receipt_signal string
+  property decision_aligned boolean
+  property observation_digest string
+  property non_executing boolean
+  property non_authorizing boolean
+}
+
+activity ObserveRevisionSelfImprovementProvenanceDecisionReceipt(RevisionSelfImprovementDecisionReceiptInput) -> RevisionSelfImprovementDecisionReceiptObservation
