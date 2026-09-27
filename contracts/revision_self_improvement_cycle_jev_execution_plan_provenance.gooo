@@ -1,0 +1,6 @@
+revision_self_improvement_cycle_jev_execution_plan_provenance {
+  input execution_plan_evidence RevisionSelfImprovementCycleJEVExecutionPlanEvidence
+  observe status missing_stage metric_name contract_name task_digest workspace_digest gateway_policy_digest model_digest suspend_resume_digest evidence_prefix_digest plan_signal observation_digest non_executing non_authorizing
+  semantics effect reverse_observation_only
+  authority none
+}
