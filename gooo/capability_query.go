@@ -29,6 +29,7 @@ type CapabilityQueryResponse struct {
 	Status          CapabilityQueryState       `json:"status"`
 	Query           string                     `json:"query"`
 	Capabilities    []CapabilityQueryCapability `json:"capabilities"`
+	Declaration     *CapabilityQueryDeclaration `json:"declaration,omitempty"`
 	Suggestions     []string                   `json:"suggestions"`
 	SuggestedQueries []string                  `json:"suggested_queries"`
 	FirstMismatch   string                     `json:"first_mismatch"`
@@ -36,6 +37,15 @@ type CapabilityQueryResponse struct {
 	QueryDigest     string                     `json:"query_digest"`
 	NonExecuting    bool                       `json:"non_executing"`
 	NonAuthorizing  bool                       `json:"non_authorizing"`
+}
+
+// CapabilityQueryDeclaration records only source-bound observations from a
+// declaration. It is not an execution plan, a semantic proof, or an
+// authorization grant.
+type CapabilityQueryDeclaration struct {
+	Bound           bool     `json:"bound"`
+	SourceDigest    string   `json:"source_digest"`
+	ObservedSignals []string `json:"observed_signals"`
 }
 
 type capabilityQueryEntry struct {
@@ -97,6 +107,57 @@ func DiscoverCapabilityQuery(query string) CapabilityQueryResponse {
 	response.MissingStage = ""
 	response.QueryDigest = digestCapabilityQuery(response)
 	return response
+}
+
+// DiscoverCapabilityQueryWithDeclaration adds a deterministic, read-only
+// observation of the declaration that motivated the question. The query
+// result remains catalog-driven; declaration signals only explain what was
+// actually present in the supplied source.
+func DiscoverCapabilityQueryWithDeclaration(query, declaration string) CapabilityQueryResponse {
+	response := DiscoverCapabilityQuery(query)
+	response.Declaration = inspectCapabilityQueryDeclaration(declaration)
+	response.QueryDigest = digestCapabilityQuery(response)
+	return response
+}
+
+func inspectCapabilityQueryDeclaration(declaration string) *CapabilityQueryDeclaration {
+	raw := strings.TrimSpace(declaration)
+	signals := make([]string, 0)
+	for _, line := range strings.Split(raw, "\n") {
+		normalized := strings.ToLower(strings.TrimSpace(line))
+		for _, candidate := range []struct {
+			prefix string
+			id     string
+		}{
+			{prefix: "entity ", id: "entity"},
+			{prefix: "operation ", id: "operation"},
+			{prefix: "observe ", id: "observe"},
+			{prefix: "transform ", id: "transform"},
+			{prefix: "contract ", id: "contract"},
+			{prefix: "policy ", id: "policy"},
+			{prefix: "workflow ", id: "workflow"},
+		} {
+			if !strings.HasPrefix(normalized, candidate.prefix) {
+				continue
+			}
+			seen := false
+			for _, signal := range signals {
+				if signal == candidate.id {
+					seen = true
+					break
+				}
+			}
+			if !seen {
+				signals = append(signals, candidate.id)
+			}
+		}
+	}
+	sort.Strings(signals)
+	return &CapabilityQueryDeclaration{
+		Bound:           raw != "",
+		SourceDigest:    digestString("gooo-capability-declaration|" + raw),
+		ObservedSignals: signals,
+	}
 }
 
 func capabilityQueryMatches(query string) []CapabilityQueryCapability {
@@ -192,6 +253,9 @@ func (response CapabilityQueryResponse) Validate() error {
 	if !validDigest(response.QueryDigest) {
 		return fmt.Errorf("capability query digest is invalid")
 	}
+	if response.Declaration != nil && !validDigest(response.Declaration.SourceDigest) {
+		return fmt.Errorf("capability query declaration digest is invalid")
+	}
 	if response.Status == CapabilityQueryAvailable && (len(response.Capabilities) == 0 || response.FirstMismatch != "" || response.MissingStage != "") {
 		return fmt.Errorf("available capability query is incomplete")
 	}
@@ -216,5 +280,9 @@ func digestCapabilityQuery(response CapabilityQueryResponse) string {
 	}
 	parts = append(parts, response.Suggestions...)
 	parts = append(parts, response.SuggestedQueries...)
+	if response.Declaration != nil {
+		parts = append(parts, "declaration", fmt.Sprintf("%t", response.Declaration.Bound), response.Declaration.SourceDigest)
+		parts = append(parts, response.Declaration.ObservedSignals...)
+	}
 	return digestString(strings.Join(parts, "|"))
 }

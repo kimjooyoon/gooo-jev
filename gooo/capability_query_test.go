@@ -47,6 +47,30 @@ func TestDiscoverCapabilityQueryRejectsTamperedDigest(t *testing.T) {
 	}
 }
 
+func TestDiscoverCapabilityQueryBindsDeclarationObservation(t *testing.T) {
+	response := DiscoverCapabilityQueryWithDeclaration(
+		"What can gooo do with this declaration?",
+		"entity Usage\noperation observe\n",
+	)
+	if response.Declaration == nil || !response.Declaration.Bound || response.Declaration.SourceDigest == "" {
+		t.Fatalf("declaration observation was not bound: %+v", response.Declaration)
+	}
+	if len(response.Declaration.ObservedSignals) != 2 || response.Declaration.ObservedSignals[0] != "entity" || response.Declaration.ObservedSignals[1] != "operation" {
+		t.Fatalf("unexpected declaration signals: %+v", response.Declaration.ObservedSignals)
+	}
+	if err := response.Validate(); err != nil {
+		t.Fatalf("declaration-bound response should validate: %v", err)
+	}
+}
+
+func TestDiscoverCapabilityQueryRejectsTamperedDeclarationBinding(t *testing.T) {
+	response := DiscoverCapabilityQueryWithDeclaration("show provenance", "entity Usage")
+	response.Declaration.SourceDigest = "sha256:tampered"
+	if err := response.Validate(); err == nil {
+		t.Fatal("tampered declaration binding should fail validation")
+	}
+}
+
 func hasCapabilityQuery(capabilities []CapabilityQueryCapability, id string) bool {
 	_, ok := capabilityQueryByID(capabilities, id)
 	return ok

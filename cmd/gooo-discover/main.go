@@ -20,9 +20,31 @@ type report struct {
 func main() {
 	query := flag.String("query", "", "discover capabilities from a natural-language query")
 	flag.Parse()
+	if flag.NArg() > 2 {
+		fmt.Fprintln(os.Stderr, "usage: go run ./cmd/gooo-discover [--query <question>] [declaration.gooo] [prefix]")
+		os.Exit(64)
+	}
+	var path string
+	var source []byte
+	if flag.NArg() > 0 {
+		path = filepath.Clean(flag.Arg(0))
+		var err error
+		source, err = os.ReadFile(path)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "read declaration: %v\n", err)
+			os.Exit(1)
+		}
+	}
+	queryText := strings.TrimSpace(*query)
+	if queryText == "" && len(source) > 0 {
+		queryText = "What can gooo do with this declaration?"
+	}
 	var capabilityDiscovery *gooo.CapabilityQueryResponse
-	if strings.TrimSpace(*query) != "" {
-		response := gooo.DiscoverCapabilityQuery(*query)
+	if queryText != "" {
+		response := gooo.DiscoverCapabilityQuery(queryText)
+		if len(source) > 0 {
+			response = gooo.DiscoverCapabilityQueryWithDeclaration(queryText, string(source))
+		}
 		if err := response.Validate(); err != nil {
 			fmt.Fprintf(os.Stderr, "invalid capability query: %v\n", err)
 			os.Exit(1)
@@ -40,19 +62,9 @@ func main() {
 		}
 		return
 	}
-	if flag.NArg() > 2 {
-		fmt.Fprintln(os.Stderr, "usage: go run ./cmd/gooo-discover [--query <question>] [declaration.gooo] [prefix]")
-		os.Exit(64)
-	}
-	path := filepath.Clean(flag.Arg(0))
 	prefix := ""
 	if flag.NArg() == 2 {
 		prefix = flag.Arg(1)
-	}
-	source, err := os.ReadFile(path)
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "read declaration: %v\n", err)
-		os.Exit(1)
 	}
 	discovery := gooo.DiscoverUsage(string(source), prefix)
 	if err := discovery.Validate(); err != nil {
