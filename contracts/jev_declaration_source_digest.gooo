@@ -1,0 +1,19 @@
+module jev_declaration_source_digest
+namespace jevdeclarationsourcedigest
+
+entity ExecutionEnvelopeDeclarationSourceDigestInput id "gooo://gooo-jev/declaration-source-digest-input"
+property DeclarationID string
+property ContractID string
+property SourceText string
+property NonAuthorizing boolean
+
+entity ExecutionEnvelopeDeclarationSourceDigest id "gooo://gooo-jev/declaration-source-digest"
+property Status string
+property DeclarationID string
+property ContractID string
+property DeclarationDigest string
+property MissingStage string
+property NonExecuting boolean
+property NonAuthorizing boolean
+
+activity ComputeExecutionEnvelopeDeclarationSourceDigest(ExecutionEnvelopeDeclarationSourceDigestInput) -> ExecutionEnvelopeDeclarationSourceDigest
