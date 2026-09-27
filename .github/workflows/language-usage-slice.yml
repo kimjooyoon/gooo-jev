@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - agent/language-usage-slice-20260928
+      - agent/capability-discovery-20260928
   pull_request:
     branches:
       - main
@@ -61,6 +62,10 @@ jobs:
           jq -e '.completion.non_executing == true and .completion.non_authorizing == true and .completion.source_digest != "" and .assistance.non_executing == true and .assistance.non_authorizing == true and (.assistance.summary | contains("syntax_completion"))' "$RUNNER_TEMP/lsp.jsonl"
           go run ./cmd/gooo-discover examples/support-triage/partial.gooo pro > "$RUNNER_TEMP/discovery.json"
           jq -e '.discovery.non_executing == true and .discovery.non_authorizing == true and ([.discovery.capabilities[] | select(.id == "syntax_completion" and .state == "AVAILABLE")] | length) == 1 and ([.discovery.capabilities[] | select(.id == "canonical_generation" and .state == "UNKNOWN")] | length) == 1' "$RUNNER_TEMP/discovery.json"
+          go run ./cmd/gooo-discover --query "What can gooo do?" > "$RUNNER_TEMP/query-discovery.json"
+          jq -e '.capability_discovery.status == "AVAILABLE" and (.capability_discovery.capabilities | map(.id) | index("canonical_generation")) != null and .capability_discovery.non_executing == true and .capability_discovery.non_authorizing == true' "$RUNNER_TEMP/query-discovery.json"
+          go run ./cmd/gooo-discover --query "Can gooo execute and authorize a network workload?" > "$RUNNER_TEMP/deferred-query.json"
+          jq -e '.capability_discovery.status == "DEFERRED" and .capability_discovery.first_mismatch == "external_boundary" and .capability_discovery.non_authorizing == true' "$RUNNER_TEMP/deferred-query.json"
           go run ./cmd/gooo-plan "$RUNNER_TEMP/discovery.json" > "$RUNNER_TEMP/plan.json"
           jq -e '([.actions[] | select(.capability_id == "syntax_completion" and .state == "READY")] | length) == 1 and ([.actions[] | select(.capability_id == "canonical_generation" and .state == "DEFERRED")] | length) == 1' "$RUNNER_TEMP/plan.json"
           go run ./cmd/gooo-assist examples/support-triage/partial.gooo pro > "$RUNNER_TEMP/assistance.txt"
