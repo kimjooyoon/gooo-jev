@@ -1,0 +1,43 @@
+package jev.gooo.lsp.provenancereplan
+
+entity SelfImprovementProvenanceReplanSymbolResult {
+    field status string
+    field missing_stage string
+    field source_digest string
+    field ir_digest string
+    field symbol_name string
+    field symbol_kind string
+    field symbol_digest string
+    field provenance_decision_digest string
+    field execution_plan_observation_digest string
+    field decision_digest string
+    field previous_plan_digest string
+    field next_plan_digest string
+    field plan_observation_digest string
+    field materialization_digest string
+    field binding_digest string
+    field input_ir_digest string
+    field candidate_digest string
+    field edit_digest string
+    field decision_signal string
+    field decision_reason string
+    field planning_signal string
+    field plan_signal string
+    field decision_feedback_signal string
+    field replan_signal string
+    field signals_aligned boolean
+    field plan_observed boolean
+    field requires_observation boolean
+    field requires_review boolean
+    field requires_inspection boolean
+    field requires_measurement boolean
+    invariant non_executing
+    invariant non_authorizing
+}
+
+activity explain_self_improvement_provenance_replan {
+    input source
+    input symbol_name
+    input revision_self_improvement_provenance_replan_observation
+    output self_improvement_provenance_replan_symbol_result
+}
