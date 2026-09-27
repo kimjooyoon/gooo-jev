@@ -46,7 +46,11 @@ jobs:
           go build ./cmd/gooo-evaluate
           go build ./cmd/gooo-trend
           go build ./cmd/gooo-evaluate-trend
-          go build ./cmd/gooo-discover
+          go build ./cmd/gooo-discover          go run ./cmd/gooo-contract contracts/usage_replan.gooo > "$RUNNER_TEMP/usage-replan-contract.json"
+          jq -e '.Status != "UNKNOWN" and .ContractDigest != "" and .NonExecuting == true and .NonAuthorizing == true' "$RUNNER_TEMP/usage-replan-contract.json"
+          printf '{}' > "$RUNNER_TEMP/unknown-usage-window.json"
+          go run ./cmd/gooo-replan "$RUNNER_TEMP/unknown-usage-window.json" > "$RUNNER_TEMP/unknown-usage-replan.json"
+          jq -e '.status == "UNKNOWN" and .disposition == "HOLD_FOR_EVIDENCE" and .non_executing == true and .non_authorizing == true and .first_mismatch == "WINDOW_INTEGRITY" and .missing_stage_index == 0' "$RUNNER_TEMP/unknown-usage-replan.json"
           go build ./cmd/gooo-plan
           go build ./cmd/gooo-observe
           go build ./cmd/gooo-assist
