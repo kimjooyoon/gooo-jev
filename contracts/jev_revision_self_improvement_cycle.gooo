@@ -1,0 +1,45 @@
+package jevrevisionselfimprovementcycle
+
+namespace jevrevisionselfimprovementcycle
+
+entity RevisionSelfImprovementCycleInput {
+  property next_iteration_observation_digest string
+  property decision_receipt_digest string
+  property decision_receipt_reverse_digest string
+  property source_digest string
+  property next_source_digest string
+  property ir_digest string
+  property next_ir_digest string
+  property history_digest string
+  property feedback_digest string
+  property reverse_observation_digest string
+  property transition_signal string
+  property decision_signal string
+  property reverse_signal string
+}
+
+entity RevisionSelfImprovementCycleObservation {
+  property status string
+  property missing_stage string
+  property next_iteration_observation_digest string
+  property decision_receipt_digest string
+  property decision_receipt_reverse_digest string
+  property source_digest string
+  property next_source_digest string
+  property ir_digest string
+  property next_ir_digest string
+  property history_digest string
+  property feedback_digest string
+  property reverse_observation_digest string
+  property transition_signal string
+  property decision_signal string
+  property reverse_signal string
+  property cycle_signal string
+  property signals_aligned boolean
+  property observation_count integer
+  property observation_digest string
+  property non_executing boolean
+  property non_authorizing boolean
+}
+
+activity ObserveRevisionSelfImprovementCycle(RevisionSelfImprovementCycleInput) -> RevisionSelfImprovementCycleObservation
