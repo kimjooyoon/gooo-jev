@@ -20,6 +20,7 @@ type CapabilityQueryCapability struct {
 	Stage          string              `json:"stage"`
 	Description    string              `json:"description"`
 	NextOperation  string              `json:"next_operation"`
+	ExampleQuery   string              `json:"example_query"`
 	NonExecuting   bool                `json:"non_executing"`
 	NonAuthorizing bool                `json:"non_authorizing"`
 }
@@ -41,22 +42,23 @@ type capabilityQueryEntry struct {
 	Stage         string
 	Description   string
 	NextOperation string
+	ExampleQuery  string
 	Aliases       []string
 	Safe          bool
 }
 
 var capabilityQueryCatalog = []capabilityQueryEntry{
-	{ID: "syntax_completion", Stage: "SYNTAX", Description: "suggest keywords and symbols for a declaration prefix", NextOperation: "edit_declaration", Aliases: []string{"syntax", "completion", "autocomplete", "lsp", "문법", "완성"}, Safe: true},
-	{ID: "declaration_analysis", Stage: "ANALYSIS", Description: "inspect source-bound declaration diagnostics without execution", NextOperation: "inspect_diagnostics", Aliases: []string{"analysis", "diagnostic", "diagnostics", "분석", "진단"}, Safe: true},
-	{ID: "ir_generation", Stage: "GENERATION", Description: "derive an intermediate representation from a bound declaration", NextOperation: "generate_ir", Aliases: []string{"ir", "intermediate representation", "representation", "중간 표현"}, Safe: true},
-	{ID: "canonical_generation", Stage: "GENERATION", Description: "produce a canonical .gooo declaration from its representation", NextOperation: "write_generated_declaration", Aliases: []string{"generate", "generation", "codegen", "code generation", "생성", "코드 생성"}, Safe: true},
-	{ID: "round_trip_observation", Stage: "REVERSE_OBSERVATION", Description: "reparse generated source and compare its representation", NextOperation: "compare_round_trip_ir", Aliases: []string{"round trip", "roundtrip", "reparse", "재파싱"}, Safe: true},
-	{ID: "reverse_observation", Stage: "REVERSE_OBSERVATION", Description: "inspect source and generation evidence at a reverse boundary", NextOperation: "inspect_reverse_digest", Aliases: []string{"reverse observation", "reverse", "provenance", "origin", "기원", "역관찰"}, Safe: true},
-	{ID: "provenance", Stage: "PROVENANCE", Description: "trace source, generation, and reverse-observation evidence", NextOperation: "inspect_provenance_chain", Aliases: []string{"provenance chain", "source lineage", "기원 추적"}, Safe: true},
-	{ID: "feedback_trend", Stage: "FEEDBACK", Description: "compare feedback and calibration windows with evidence lineage", NextOperation: "compare_feedback_window", Aliases: []string{"feedback", "trend", "calibration", "피드백", "추세"}, Safe: true},
-	{ID: "support_triage", Stage: "WORKFLOW", Description: "structure support-triage workflows and their next observations", NextOperation: "inspect_support_route", Aliases: []string{"support", "support triage", "triage", "workflow", "지원", "분류"}, Safe: true},
-	{ID: "security_boundary", Stage: "SECURITY_BOUNDARY", Description: "observe workload identity and network capability boundaries", NextOperation: "bind_external_security_evidence", Aliases: []string{"security", "spiffe", "workload identity", "network", "credential", "보안"}, Safe: false},
-	{ID: "execution_authorization", Stage: "EXECUTION_AUTHORIZATION_BOUNDARY", Description: "execution and authorization require an explicit external boundary", NextOperation: "provide_explicit_external_boundary", Aliases: []string{"execute", "execution", "run", "authorize", "authorization", "permission", "실행", "권한"}, Safe: false},
+	{ID: "syntax_completion", Stage: "SYNTAX", Description: "suggest keywords and symbols for a declaration prefix", NextOperation: "edit_declaration", ExampleQuery: "How do I complete a .gooo declaration?", Aliases: []string{"syntax", "completion", "autocomplete", "lsp", "문법", "완성"}, Safe: true},
+	{ID: "declaration_analysis", Stage: "ANALYSIS", Description: "inspect source-bound declaration diagnostics without execution", NextOperation: "inspect_diagnostics", ExampleQuery: "Can gooo analyze this .gooo declaration?", Aliases: []string{"analysis", "diagnostic", "diagnostics", "분석", "진단"}, Safe: true},
+	{ID: "ir_generation", Stage: "GENERATION", Description: "derive an intermediate representation from a bound declaration", NextOperation: "generate_ir", ExampleQuery: "What IR can this .gooo declaration produce?", Aliases: []string{"ir", "intermediate representation", "representation", "중간 표현"}, Safe: true},
+	{ID: "canonical_generation", Stage: "GENERATION", Description: "produce a canonical .gooo declaration from its representation", NextOperation: "write_generated_declaration", ExampleQuery: "How do I generate a canonical .gooo declaration?", Aliases: []string{"generate", "generation", "codegen", "code generation", "생성", "코드 생성"}, Safe: true},
+	{ID: "round_trip_observation", Stage: "REVERSE_OBSERVATION", Description: "reparse generated source and compare its representation", NextOperation: "compare_round_trip_ir", ExampleQuery: "Can gooo compare a generated declaration round trip?", Aliases: []string{"round trip", "roundtrip", "reparse", "재파싱"}, Safe: true},
+	{ID: "reverse_observation", Stage: "REVERSE_OBSERVATION", Description: "inspect source and generation evidence at a reverse boundary", NextOperation: "inspect_reverse_digest", ExampleQuery: "How do I inspect reverse observation evidence?", Aliases: []string{"reverse observation", "reverse", "provenance", "origin", "기원", "역관찰"}, Safe: true},
+	{ID: "provenance", Stage: "PROVENANCE", Description: "trace source, generation, and reverse-observation evidence", NextOperation: "inspect_provenance_chain", ExampleQuery: "Where did this .gooo declaration come from?", Aliases: []string{"provenance chain", "source lineage", "기원 추적"}, Safe: true},
+	{ID: "feedback_trend", Stage: "FEEDBACK", Description: "compare feedback and calibration windows with evidence lineage", NextOperation: "compare_feedback_window", ExampleQuery: "How has gooo feedback changed over time?", Aliases: []string{"feedback", "trend", "calibration", "피드백", "추세"}, Safe: true},
+	{ID: "support_triage", Stage: "WORKFLOW", Description: "structure support-triage workflows and their next observations", NextOperation: "inspect_support_route", ExampleQuery: "How should I triage this gooo support request?", Aliases: []string{"support", "support triage", "triage", "workflow", "지원", "분류"}, Safe: true},
+	{ID: "security_boundary", Stage: "SECURITY_BOUNDARY", Description: "observe workload identity and network capability boundaries", NextOperation: "bind_external_security_evidence", ExampleQuery: "What external security boundary is required?", Aliases: []string{"security", "spiffe", "workload identity", "network", "credential", "보안"}, Safe: false},
+	{ID: "execution_authorization", Stage: "EXECUTION_AUTHORIZATION_BOUNDARY", Description: "execution and authorization require an explicit external boundary", NextOperation: "provide_explicit_external_boundary", ExampleQuery: "What explicit boundary is needed before execution?", Aliases: []string{"execute", "execution", "run", "authorize", "authorization", "permission", "실행", "권한"}, Safe: false},
 }
 
 // DiscoverCapabilityQuery explains what the language can currently expose from
@@ -132,7 +134,7 @@ func capabilityQueryMatch(entry capabilityQueryEntry) CapabilityQueryCapability 
 	if !entry.Safe {
 		state = CapabilityQueryDeferred
 	}
-	return CapabilityQueryCapability{ID: entry.ID, State: state, Stage: entry.Stage, Description: entry.Description, NextOperation: entry.NextOperation, NonExecuting: true, NonAuthorizing: true}
+	return CapabilityQueryCapability{ID: entry.ID, State: state, Stage: entry.Stage, Description: entry.Description, NextOperation: entry.NextOperation, ExampleQuery: entry.ExampleQuery, NonExecuting: true, NonAuthorizing: true}
 }
 
 func capabilityQueryIsOverview(query string) bool {
@@ -181,7 +183,7 @@ func (response CapabilityQueryResponse) Validate() error {
 		return fmt.Errorf("unresolved capability query lost its boundary")
 	}
 	for _, capability := range response.Capabilities {
-		if strings.TrimSpace(capability.ID) == "" || strings.TrimSpace(capability.Stage) == "" || strings.TrimSpace(capability.Description) == "" || strings.TrimSpace(capability.NextOperation) == "" || capability.State == "" || !capability.NonExecuting || !capability.NonAuthorizing {
+		if strings.TrimSpace(capability.ID) == "" || strings.TrimSpace(capability.Stage) == "" || strings.TrimSpace(capability.Description) == "" || strings.TrimSpace(capability.NextOperation) == "" || strings.TrimSpace(capability.ExampleQuery) == "" || capability.State == "" || !capability.NonExecuting || !capability.NonAuthorizing {
 			return fmt.Errorf("capability query match is incomplete")
 		}
 	}
@@ -194,7 +196,7 @@ func (response CapabilityQueryResponse) Validate() error {
 func digestCapabilityQuery(response CapabilityQueryResponse) string {
 	parts := []string{"gooo-capability-query", strings.ToLower(strings.TrimSpace(response.Query)), string(response.Status), response.FirstMismatch, response.MissingStage}
 	for _, capability := range response.Capabilities {
-		parts = append(parts, capability.ID, string(capability.State), capability.Stage, capability.Description, capability.NextOperation)
+		parts = append(parts, capability.ID, string(capability.State), capability.Stage, capability.Description, capability.NextOperation, capability.ExampleQuery)
 	}
 	parts = append(parts, response.Suggestions...)
 	return digestString(strings.Join(parts, "|"))

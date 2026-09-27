@@ -10,6 +10,10 @@ func TestDiscoverCapabilityQueryOverview(t *testing.T) {
 	if !hasCapabilityQuery(response.Capabilities, "canonical_generation") || !hasCapabilityQuery(response.Capabilities, "provenance") {
 		t.Fatalf("overview omitted useful capabilities: %+v", response.Capabilities)
 	}
+	canonical, ok := capabilityQueryByID(response.Capabilities, "canonical_generation")
+	if !ok || canonical.ExampleQuery == "" {
+		t.Fatalf("overview omitted an actionable example query: %+v", response.Capabilities)
+	}
 	if err := response.Validate(); err != nil {
 		t.Fatalf("overview should validate: %v", err)
 	}
@@ -37,17 +41,22 @@ func TestDiscoverCapabilityQueryUnknownRetainsSuggestions(t *testing.T) {
 
 func TestDiscoverCapabilityQueryRejectsTamperedDigest(t *testing.T) {
 	response := DiscoverCapabilityQuery("show provenance and generation")
-	response.Capabilities[0].Description = "tampered"
+	response.Capabilities[0].ExampleQuery = "tampered"
 	if err := response.Validate(); err == nil {
 		t.Fatal("tampered response should fail validation")
 	}
 }
 
 func hasCapabilityQuery(capabilities []CapabilityQueryCapability, id string) bool {
+	_, ok := capabilityQueryByID(capabilities, id)
+	return ok
+}
+
+func capabilityQueryByID(capabilities []CapabilityQueryCapability, id string) (CapabilityQueryCapability, bool) {
 	for _, capability := range capabilities {
 		if capability.ID == id {
-			return true
+			return capability, true
 		}
 	}
-	return false
+	return CapabilityQueryCapability{}, false
 }
