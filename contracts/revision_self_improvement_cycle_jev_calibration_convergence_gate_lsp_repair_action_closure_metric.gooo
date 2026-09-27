@@ -1,0 +1,16 @@
+module jev_calibration_convergence_gate_lsp_repair_action_closure_metric
+
+stage declaration
+stage ir
+stage generated
+stage repair_action
+stage reverse_observation
+stage evidence_prefix
+
+status BOUND when all stages and digests match
+status UNKNOWN when a stage is missing or a digest is tampered
+status DEFERRED when a producer is not explicitly BOUND
+
+rule no_execution
+rule no_authorization
+rule preserve_missing_stage_index
