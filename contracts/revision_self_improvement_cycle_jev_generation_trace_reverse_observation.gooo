@@ -1,0 +1,6 @@
+revision_self_improvement_cycle_jev_generation_trace_reverse_observation {
+  input generation_trace_observation RevisionSelfImprovementCycleJEVGenerationTraceObservation
+  observe status missing_stage metric_name contract_name contract_digest ir_digest generated_artifact_digest metric_digest evidence_prefix_digest reconstructed_trace_digest reverse_signal observation_digest non_executing non_authorizing
+  semantics effect reverse_observation_only
+  authority none
+}
