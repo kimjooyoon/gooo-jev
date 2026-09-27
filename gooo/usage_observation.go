@@ -3,6 +3,7 @@ package gooo
 import (
 	"errors"
 	"math"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -16,18 +17,18 @@ const (
 )
 
 type UsageObservation struct {
-	SourceDigest      string                 `json:"source_digest"`
-	DiscoveryDigest   string                 `json:"discovery_digest"`
-	PlanDigest        string                 `json:"plan_digest"`
-	ActionID          string                 `json:"action_id"`
-	CapabilityID     string                 `json:"capability_id"`
-	Kind             UsageObservationKind   `json:"kind"`
-	MetricName       string                 `json:"metric_name"`
-	MetricValue      float64                `json:"metric_value"`
-	EvidenceDigest   string                 `json:"evidence_digest"`
-	RecordedAt       time.Time              `json:"recorded_at"`
-	NonAuthorizing   bool                   `json:"non_authorizing"`
-	ObservationDigest string                `json:"observation_digest"`
+	SourceDigest       string               `json:"source_digest"`
+	DiscoveryDigest    string               `json:"discovery_digest"`
+	PlanDigest         string               `json:"plan_digest"`
+	ActionID           string               `json:"action_id"`
+	CapabilityID       string               `json:"capability_id"`
+	Kind               UsageObservationKind `json:"kind"`
+	MetricName         string               `json:"metric_name"`
+	MetricValue        float64              `json:"metric_value"`
+	EvidenceDigest     string               `json:"evidence_digest"`
+	RecordedAt         time.Time            `json:"recorded_at"`
+	NonAuthorizing     bool                 `json:"non_authorizing"`
+	ObservationDigest  string               `json:"observation_digest"`
 }
 
 // ObserveUsageAction records an evidence-bound result without executing or authorizing an action.
@@ -124,7 +125,7 @@ func digestUsageObservation(observation UsageObservation) string {
 	return digestString(observation.SourceDigest + "|" + observation.DiscoveryDigest + "|" +
 		observation.PlanDigest + "|" + observation.ActionID + "|" + observation.CapabilityID + "|" +
 		string(observation.Kind) + "|" + observation.MetricName + "|" +
-		formatUsageObservationMetric(observation.MetricValue) + "|" + observation.EvidenceDigest + "|" +
+		strconv.FormatFloat(observation.MetricValue, 'g', -1, 64) + "|" + observation.EvidenceDigest + "|" +
 		observation.RecordedAt.UTC().Format(time.RFC3339Nano))
 }
 
