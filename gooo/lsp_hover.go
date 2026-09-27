@@ -6,46 +6,55 @@ import (
 )
 
 type HoverResult struct {
-	Status           string
-	MissingStage     string
-	SourceDigest     string
-	IRDigest         string
-	Requested        Position
-	SymbolName       string
-	Kind             SymbolKind
-	SymbolDigest     string
-	Declaration      string
-	Contents         string
-	HoverDigest      string
-	NonExecuting     bool
-	NonAuthorizing   bool
+	Status               string
+	MissingStage         string
+	MissingStageIndex    int
+	SourceDigest         string
+	IRDigest             string
+	EvidencePrefixDigest string
+	Requested            Position
+	SymbolName           string
+	Kind                 SymbolKind
+	SymbolDigest         string
+	Declaration          string
+	Contents             string
+	HoverDigest          string
+	NonExecuting         bool
+	NonAuthorizing       bool
 }
 
 func Hover(source string, position Position) HoverResult {
 	snapshot := Analyze(source)
 	result := HoverResult{
-		Status:         "UNKNOWN",
-		MissingStage:   "lsp-hover",
-		SourceDigest:   snapshot.SourceDigest,
-		IRDigest:       snapshot.IRDigest,
-		Requested:       position,
-		NonExecuting:    true,
-		NonAuthorizing:  true,
+		Status:               "UNKNOWN",
+		MissingStage:         "lsp-hover",
+		MissingStageIndex:    hoverMissingStageIndex("lsp-hover"),
+		SourceDigest:         snapshot.SourceDigest,
+		IRDigest:             snapshot.IRDigest,
+		EvidencePrefixDigest: hoverEvidencePrefixDigest(source, position),
+		Requested:            position,
+		NonExecuting:         true,
+		NonAuthorizing:       true,
 	}
 	if snapshot.Status != "BOUND" {
-		result.MissingStage = snapshot.MissingStage
-		if result.MissingStage == "" {
-			result.MissingStage = "lsp-hover-analysis"
+		missingStage := snapshot.MissingStage
+		if missingStage == "" {
+			missingStage = "lsp-hover-analysis"
 		}
+		result.setMissingStage(missingStage)
 		return result
 	}
 	if position.Line < 1 || position.Column < 1 {
-		result.MissingStage = "lsp-hover-position"
+		result.setMissingStage("lsp-hover-position")
 		return result
 	}
 	declaration, ok := sourceLine(source, position.Line)
 	if !ok {
-		result.MissingStage = "lsp-hover-position"
+		result.setMissingStage("lsp-hover-position")
+		return result
+	}
+	if position.Column > len([]rune(declaration))+1 {
+		result.setMissingStage("lsp-hover-position")
 		return result
 	}
 	for _, symbol := range snapshot.Symbols {
@@ -54,6 +63,7 @@ func Hover(source string, position Position) HoverResult {
 		}
 		result.Status = "BOUND"
 		result.MissingStage = ""
+		result.MissingStageIndex = -1
 		result.SymbolName = symbol.Name
 		result.Kind = symbol.Kind
 		result.SymbolDigest = symbol.Digest
@@ -62,8 +72,13 @@ func Hover(source string, position Position) HoverResult {
 		result.HoverDigest = digestHoverResult(result)
 		return result
 	}
-	result.MissingStage = "lsp-hover-symbol"
+	result.setMissingStage("lsp-hover-symbol")
 	return result
+}
+
+func (h *HoverResult) setMissingStage(stage string) {
+	h.MissingStage = stage
+	h.MissingStageIndex = hoverMissingStageIndex(stage)
 }
 
 func (h HoverResult) Validate() error {
@@ -72,6 +87,15 @@ func (h HoverResult) Validate() error {
 	}
 	if !validDigest(h.SourceDigest) {
 		return fmt.Errorf("hover source digest is invalid")
+	}
+	if h.MissingStage == "" && h.MissingStageIndex != -1 {
+		return fmt.Errorf("bound hover must use missing stage index -1")
+	}
+	if h.MissingStage != "" && h.MissingStageIndex < 0 {
+		return fmt.Errorf("unknown hover must retain a missing stage index")
+	}
+	if h.EvidencePrefixDigest != "" && !validDigest(h.EvidencePrefixDigest) {
+		return fmt.Errorf("hover evidence prefix digest is invalid")
 	}
 	if !h.NonExecuting || !h.NonAuthorizing {
 		return fmt.Errorf("hover must remain non-executing and non-authorizing")
@@ -105,12 +129,42 @@ func sourceLine(source string, line int) (string, bool) {
 	return lines[line-1], true
 }
 
+func hoverMissingStageIndex(stage string) int {
+	switch stage {
+	case "syntax":
+		return 0
+	case "lsp-hover-analysis":
+		return 1
+	case "lsp-hover-position":
+		return 2
+	case "lsp-hover-symbol":
+		return 3
+	case "lsp-hover":
+		return 4
+	default:
+		return 5
+	}
+}
+
+func hoverEvidencePrefixDigest(source string, position Position) string {
+	if position.Line < 1 {
+		return ""
+	}
+	lines := strings.Split(source, "\n")
+	if position.Line > len(lines) {
+		return ""
+	}
+	return digestString(strings.Join(lines[:position.Line], "\n"))
+}
+
 func digestHoverResult(result HoverResult) string {
-	return digestString(fmt.Sprintf("%s|%s|%s|%s|%d|%d|%s|%s|%s|%s|%s|%t|%t",
+	return digestString(fmt.Sprintf("%s|%s|%d|%s|%s|%s|%d|%d|%s|%s|%s|%s|%s|%t|%t",
 		result.Status,
 		result.MissingStage,
+		result.MissingStageIndex,
 		result.SourceDigest,
 		result.IRDigest,
+		result.EvidencePrefixDigest,
 		result.Requested.Line,
 		result.Requested.Column,
 		result.SymbolName,
