@@ -1,0 +1,35 @@
+package jevlsprevisionselfimprovementcycleevidencecoveragefeedbackdecisionobservationmetricreverseobservationprovenanceclosuremetric
+
+namespace jevlsprevisionselfimprovementcycleevidencecoveragefeedbackdecisionobservationmetricreverseobservationprovenanceclosuremetric
+
+entity LSPRevisionSelfImprovementCycleEvidenceCoverageFeedbackDecisionObservationMetricReverseObservationProvenanceClosureMetricInput {
+  property metric_observation_digest string
+  property metric_digest string
+  property reconstructed_metric_digest string
+  property decision_observation_digest string
+  property reverse_observation_digest string
+  property linked_digest_count integer
+  property required_digest_count integer
+  property metric_signal string
+  property closure_digest string
+}
+
+entity LSPRevisionSelfImprovementCycleEvidenceCoverageFeedbackDecisionObservationMetricReverseObservationProvenanceClosureMetricObservation {
+  property status string
+  property missing_stage string
+  property metric_observation_digest string
+  property metric_digest string
+  property reconstructed_metric_digest string
+  property decision_observation_digest string
+  property reverse_observation_digest string
+  property linked_digest_count integer
+  property required_digest_count integer
+  property metric_signal string
+  property closure_digest string
+  property projection_digest string
+  property read_only boolean
+  property non_executing boolean
+  property non_authorizing boolean
+}
+
+activity ObserveLSPRevisionSelfImprovementCycleEvidenceCoverageFeedbackDecisionObservationMetricReverseObservationProvenanceClosureMetric(LSPRevisionSelfImprovementCycleEvidenceCoverageFeedbackDecisionObservationMetricReverseObservationProvenanceClosureMetricInput) -> LSPRevisionSelfImprovementCycleEvidenceCoverageFeedbackDecisionObservationMetricReverseObservationProvenanceClosureMetricObservation
