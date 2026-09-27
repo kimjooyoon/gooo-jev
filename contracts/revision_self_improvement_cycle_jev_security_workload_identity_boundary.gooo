@@ -1,0 +1,34 @@
+contract revision_self_improvement_cycle_jev_security_workload_identity_boundary {
+  input {
+    workload_identity_digest: digest
+    external_evidence_digest: digest
+    audience: string
+    expires_at_unix: integer
+    evidence_status: observed | unknown
+    permission_state: defer
+    generation_trace_digest: digest
+    reverse_observation_coverage_digest: digest
+  }
+
+  observe {
+    status: bound | unknown
+    missing_stage: stage?
+    evidence_status: observed | unknown
+    permission_state: defer
+    boundary_signal: "jev-security-workload-identity-observed" | "jev-security-workload-identity-unknown"
+    observation_digest: digest
+    read_only: true
+    non_executing: true
+    non_authorizing: true
+  }
+
+  semantics {
+    requires_workload_identity_evidence: true
+    requires_external_evidence: true
+    requires_generation_trace: true
+    requires_reverse_observation_coverage: true
+    effect: observation_only
+    authority: none
+    decision: defer
+  }
+}
