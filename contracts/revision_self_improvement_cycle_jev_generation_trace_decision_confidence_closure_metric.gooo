@@ -1,0 +1,26 @@
+module revision_self_improvement_cycle_jev_generation_trace_decision_confidence_closure_metric
+
+input generation_trace_metric
+input generation_trace_reverse_observation_digest
+input confidence_closure_metric
+input confidence_reverse_observation_digest
+input non_executing
+input non_authorizing
+
+status BOUND generation trace coverage and decision confidence provenance are linked
+status UNKNOWN one or more meta-ontology metrics are missing, invalid, or unsafe
+
+field required_metric_count
+field linked_metric_count
+field missing_stage
+field closure_signal
+field observation_digest
+
+constraint metric_linkage
+constraint observation_only
+constraint no_improvement_claim
+constraint no_execution
+constraint no_authorization
+constraint read_only
+constraint no_edits
+constraint no_command
