@@ -42,3 +42,13 @@ jobs:
           go build ./cmd/gooo-complete
           go build ./cmd/gooo-lsp
           go build ./cmd/gooo-generate
+      - name: Exercise declaration workflows
+        shell: bash
+        run: |
+          generated="$RUNNER_TEMP/support-triage.generated.gooo"
+          go run ./cmd/gooo-generate examples/support-triage/usecase.gooo "$generated"
+          test -s "$generated"
+          go run ./cmd/gooo-complete examples/support-triage/partial.gooo pro > "$RUNNER_TEMP/completion.json"
+          jq -e '.response.non_executing == true and .response.non_authorizing == true and ([.response.items[] | select(.label == "property")] | length) == 1' "$RUNNER_TEMP/completion.json"
+          go run ./cmd/gooo-lsp < examples/support-triage/completion.jsonl > "$RUNNER_TEMP/lsp.jsonl"
+          jq -e '.completion.non_executing == true and .completion.non_authorizing == true and .completion.source_digest != ""' "$RUNNER_TEMP/lsp.jsonl"
