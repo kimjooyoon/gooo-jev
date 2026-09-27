@@ -18,6 +18,9 @@ func TestHoverProjectsBoundSymbolProvenance(t *testing.T) {
 	if hover.SourceDigest != snapshot.SourceDigest || hover.IRDigest != snapshot.IRDigest {
 		t.Fatalf("hover provenance mismatch: %#v", hover)
 	}
+	if hover.EvidencePrefixDigest == "" || hover.MissingStageIndex != -1 {
+		t.Fatalf("hover stage provenance missing: %#v", hover)
+	}
 	if hover.SymbolName != symbol.Name || hover.Kind != symbol.Kind || hover.SymbolDigest != symbol.Digest {
 		t.Fatalf("hover symbol mismatch: %#v", hover)
 	}
@@ -34,6 +37,9 @@ func TestHoverRetainsUnknownPositionStage(t *testing.T) {
 	if hover.Status != "UNKNOWN" || hover.MissingStage != "lsp-hover-position" {
 		t.Fatalf("unexpected unknown hover: %#v", hover)
 	}
+	if hover.MissingStageIndex != 2 || hover.EvidencePrefixDigest != "" {
+		t.Fatalf("unexpected position provenance: %#v", hover)
+	}
 	if err := hover.Validate(); err != nil {
 		t.Fatalf("Validate() error = %v", err)
 	}
@@ -44,6 +50,9 @@ func TestHoverRetainsParserUnknownStage(t *testing.T) {
 	hover := Hover(source, Position{Line: 3, Column: 1})
 	if hover.Status != "UNKNOWN" || hover.MissingStage != "syntax" {
 		t.Fatalf("unexpected parser hover: %#v", hover)
+	}
+	if hover.MissingStageIndex != 0 {
+		t.Fatalf("unexpected parser stage index: %#v", hover)
 	}
 	if err := hover.Validate(); err != nil {
 		t.Fatalf("Validate() error = %v", err)
@@ -59,6 +68,22 @@ func TestHoverRejectsTamperedBoundEvidence(t *testing.T) {
 	hover.Contents = "tampered"
 	if err := hover.Validate(); err == nil {
 		t.Fatal("Validate() error = nil, want tamper rejection")
+	}
+	hover = Hover(validContract, snapshot.Symbols[0].Position)
+	hover.EvidencePrefixDigest = "sha256:tampered"
+	if err := hover.Validate(); err == nil {
+		t.Fatal("Validate() error = nil, want prefix tamper rejection")
+	}
+}
+
+func TestHoverRejectsColumnOutsideSourceLine(t *testing.T) {
+	snapshot := Analyze(validContract)
+	hover := Hover(validContract, Position{Line: snapshot.Symbols[0].Position.Line, Column: 9999})
+	if hover.Status != "UNKNOWN" || hover.MissingStage != "lsp-hover-position" || hover.MissingStageIndex != 2 {
+		t.Fatalf("unexpected out-of-range hover: %#v", hover)
+	}
+	if err := hover.Validate(); err != nil {
+		t.Fatalf("Validate() error = %v", err)
 	}
 }
 

@@ -2,6 +2,18 @@ package jev.gooo.lsp.hover
 namespace jev.gooo.lsp.hover
 
 entity HoverRequest id "urn:jev:gooo:lsp-hover-request"
+  property Source string
+  property Line integer
+  property Column integer
+
 entity HoverResult id "urn:jev:gooo:lsp-hover-result"
+  property Status string
+  property MissingStage string
+  property MissingStageIndex integer
+  property SourceDigest string
+  property IRDigest string
+  property EvidencePrefixDigest string
+  property NonExecuting boolean
+  property NonAuthorizing boolean
 
 activity Hover(HoverRequest) -> HoverResult
