@@ -1,0 +1,37 @@
+package jevlsprevisionselfimprovementcycleevidencecoveragefeedbackdecisionboundarymetricfeedbackdecision
+
+namespace jevlsprevisionselfimprovementcycleevidencecoveragefeedbackdecisionboundarymetricfeedbackdecision
+
+entity LSPRevisionSelfImprovementCycleEvidenceCoverageFeedbackDecisionBoundaryMetricFeedbackDecisionInput {
+  property feedback_digest string
+  property metric_signal string
+  property feedback_signal string
+  property feedback_reason string
+  property decision_signal string
+  property decision_reason string
+  property requires_observation boolean
+  property requires_replan boolean
+  property decision_aligned boolean
+  property decision_digest string
+}
+
+entity LSPRevisionSelfImprovementCycleEvidenceCoverageFeedbackDecisionBoundaryMetricFeedbackDecisionObservation {
+  property status string
+  property missing_stage string
+  property feedback_digest string
+  property metric_signal string
+  property feedback_signal string
+  property feedback_reason string
+  property decision_signal string
+  property decision_reason string
+  property requires_observation boolean
+  property requires_replan boolean
+  property decision_aligned boolean
+  property decision_digest string
+  property projection_digest string
+  property read_only boolean
+  property non_executing boolean
+  property non_authorizing boolean
+}
+
+activity ObserveLSPRevisionSelfImprovementCycleEvidenceCoverageFeedbackDecisionBoundaryMetricFeedbackDecision(LSPRevisionSelfImprovementCycleEvidenceCoverageFeedbackDecisionBoundaryMetricFeedbackDecisionInput) -> LSPRevisionSelfImprovementCycleEvidenceCoverageFeedbackDecisionBoundaryMetricFeedbackDecisionObservation
