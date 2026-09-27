@@ -1,0 +1,72 @@
+package jevrevisionselfimprovementprovenancereplan
+namespace jevrevisionselfimprovementprovenancereplan
+
+entity RevisionSelfImprovementProvenanceReverseDecisionObservation id "gooo://gooo-jev/revision-self-improvement-provenance-reverse-decision-observation"
+property ObservationDigest string
+property DecisionDigest string
+property PlanDigest string
+property SourceDigest string
+property DecisionSignal string
+property DecisionFeedbackSignal string
+property SignalsAligned boolean
+property NonAuthorizing boolean
+
+entity RevisionSelfImprovementExecutionPlanObservation id "gooo://gooo-jev/revision-self-improvement-execution-plan-observation"
+property ObservationDigest string
+property DecisionDigest string
+property PlanObservationDigest string
+property MaterializationDigest string
+property PlanDigest string
+property BindingDigest string
+property SourceDigest string
+property InputIRDigest string
+property CandidateDigest string
+property EditDigest string
+property DecisionSignal string
+property DecisionReason string
+property PlanSignal string
+property PlanningSignal string
+property PlanObserved boolean
+property RequiresObservation boolean
+property RequiresReview boolean
+property RequiresInspection boolean
+property RequiresMeasurement boolean
+property NonAuthorizing boolean
+
+entity RevisionSelfImprovementProvenanceReplanObservation id "gooo://gooo-jev/revision-self-improvement-provenance-replan-observation"
+property Status string
+property MissingStage string
+property ProvenanceDecisionDigest string
+property ExecutionPlanObservationDigest string
+property DecisionDigest string
+property PreviousPlanDigest string
+property NextPlanDigest string
+property PlanObservationDigest string
+property MaterializationDigest string
+property BindingDigest string
+property SourceDigest string
+property InputIRDigest string
+property CandidateDigest string
+property EditDigest string
+property DecisionSignal string
+property DecisionReason string
+property PlanningSignal string
+property PlanSignal string
+property DecisionFeedbackSignal string
+property ReplanSignal string
+property SignalsAligned boolean
+property PlanObserved boolean
+property RequiresObservation boolean
+property RequiresReview boolean
+property RequiresInspection boolean
+property RequiresMeasurement boolean
+property ObservationDigest string
+property NonExecuting boolean
+property NonAuthorizing boolean
+
+entity RevisionSelfImprovementProvenanceReplanInput id "gooo://gooo-jev/revision-self-improvement-provenance-replan-input"
+property Decision RevisionSelfImprovementProvenanceReverseDecisionObservation
+property Plan RevisionSelfImprovementExecutionPlanObservation
+property NonAuthorizing boolean
+
+activity ObserveRevisionSelfImprovementProvenanceReplan(RevisionSelfImprovementProvenanceReplanInput) -> RevisionSelfImprovementProvenanceReplanObservation
