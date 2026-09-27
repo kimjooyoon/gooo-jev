@@ -1,0 +1,36 @@
+package jevrevisionselfimprovementprovenanceplandisposition
+namespace jevrevisionselfimprovementprovenanceplandisposition
+
+entity RevisionSelfImprovementProvenancePlanDispositionInput id "gooo://gooo-jev/revision-self-improvement-provenance-plan-disposition-input"
+property IterationProvenance RevisionSelfImprovementIterationProvenanceObservation
+property ExecutionPlan RevisionSelfImprovementExecutionPlanObservation
+property NonAuthorizing boolean
+
+entity RevisionSelfImprovementProvenancePlanDispositionObservation id "gooo://gooo-jev/revision-self-improvement-provenance-plan-disposition-observation"
+property Status string
+property MissingStage string
+property IterationProvenanceDigest string
+property PlanObservationDigest string
+property PlanDigest string
+property DecisionDigest string
+property CurrentSourceDigest string
+property CandidateSourceDigest string
+property PlanSourceDigest string
+property CandidateProposedSourceDigest string
+property CandidateGeneratedIRDigest string
+property PlanInputIRDigest string
+property ProvenanceHistorySignal string
+property DecisionSignal string
+property PlanningSignal string
+property PlanSignal string
+property DispositionSignal string
+property PlanObserved boolean
+property RequiresObservation boolean
+property RequiresReview boolean
+property RequiresInspection boolean
+property RequiresMeasurement boolean
+property ObservationDigest string
+property NonExecuting boolean
+property NonAuthorizing boolean
+
+activity ObserveRevisionSelfImprovementProvenancePlanDisposition(RevisionSelfImprovementProvenancePlanDispositionInput) -> RevisionSelfImprovementProvenancePlanDispositionObservation
