@@ -40,7 +40,7 @@ type UsageReplanObservation struct {
 func ProposeUsageReplan(window UsageObservationWindow) UsageReplanObservation {
 	observation := UsageReplanObservation{
 		Status:            "BOUND",
-		WindowDigest:      window.EvidenceDigest,
+		WindowDigest:      window.WindowDigest,
 		ObservationCount:  window.ObservationCount,
 		KnownCount:        window.KnownCount,
 		ConfirmedCount:    window.ConfirmedCount,

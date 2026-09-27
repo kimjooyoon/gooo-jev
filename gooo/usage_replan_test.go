@@ -112,7 +112,7 @@ func TestProposeUsageReplanReviewsWindowWithoutConfirmation(t *testing.T) {
 
 func TestProposeUsageReplanPreservesInvalidWindowAsUnknown(t *testing.T) {
 	window := UsageObservationWindow{
-		EvidenceDigest:   "tampered-window",
+		WindowDigest:      "tampered-window",
 		ObservationCount: 1,
 		KnownCount:       1,
 		ConfirmedCount:   1,
