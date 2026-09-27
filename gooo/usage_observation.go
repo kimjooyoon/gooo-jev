@@ -17,18 +17,19 @@ const (
 )
 
 type UsageObservation struct {
-	SourceDigest       string               `json:"source_digest"`
-	DiscoveryDigest    string               `json:"discovery_digest"`
-	PlanDigest         string               `json:"plan_digest"`
-	ActionID           string               `json:"action_id"`
-	CapabilityID       string               `json:"capability_id"`
-	Kind               UsageObservationKind `json:"kind"`
-	MetricName         string               `json:"metric_name"`
-	MetricValue        float64              `json:"metric_value"`
-	EvidenceDigest     string               `json:"evidence_digest"`
-	RecordedAt         time.Time            `json:"recorded_at"`
-	NonAuthorizing     bool                 `json:"non_authorizing"`
-	ObservationDigest  string               `json:"observation_digest"`
+	SourceDigest      string               `json:"source_digest"`
+	DiscoveryDigest   string               `json:"discovery_digest"`
+	PlanDigest        string               `json:"plan_digest"`
+	ActionID          string               `json:"action_id"`
+	CapabilityID      string               `json:"capability_id"`
+	Kind              UsageObservationKind `json:"kind"`
+	MetricName        string               `json:"metric_name"`
+	MetricValue       float64              `json:"metric_value"`
+	EvidenceDigest    string               `json:"evidence_digest"`
+	RecordedAt        time.Time            `json:"recorded_at"`
+	NonExecuting      bool                 `json:"non_executing"`
+	NonAuthorizing    bool                 `json:"non_authorizing"`
+	ObservationDigest string               `json:"observation_digest"`
 }
 
 // ObserveUsageAction records an evidence-bound result without executing or authorizing an action.
@@ -55,6 +56,7 @@ func ObserveUsageAction(plan UsageActionPlan, actionID string, kind UsageObserva
 		MetricValue:     metricValue,
 		EvidenceDigest:  evidenceDigest,
 		RecordedAt:      recordedAt.UTC(),
+		NonExecuting:    true,
 		NonAuthorizing:  true,
 	}
 	observation.ObservationDigest = digestUsageObservation(observation)
@@ -77,8 +79,8 @@ func (observation UsageObservation) Validate() error {
 	if observation.RecordedAt.IsZero() {
 		return errors.New("usage observation recorded time is required")
 	}
-	if !observation.NonAuthorizing {
-		return errors.New("usage observation must remain non-authorizing")
+	if !observation.NonExecuting || !observation.NonAuthorizing {
+		return errors.New("usage observation crossed a capability boundary")
 	}
 	switch observation.Kind {
 	case UsageObservationConfirmed, UsageObservationRefuted, UsageObservationUnknown:
@@ -126,6 +128,7 @@ func digestUsageObservation(observation UsageObservation) string {
 		observation.PlanDigest + "|" + observation.ActionID + "|" + observation.CapabilityID + "|" +
 		string(observation.Kind) + "|" + observation.MetricName + "|" +
 		strconv.FormatFloat(observation.MetricValue, 'g', -1, 64) + "|" + observation.EvidenceDigest + "|" +
-		observation.RecordedAt.UTC().Format(time.RFC3339Nano))
+		observation.RecordedAt.UTC().Format(time.RFC3339Nano) + "|" +
+		strconv.FormatBool(observation.NonExecuting) + "|" + strconv.FormatBool(observation.NonAuthorizing))
 }
 
