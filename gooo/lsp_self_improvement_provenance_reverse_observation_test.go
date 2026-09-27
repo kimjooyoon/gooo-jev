@@ -4,7 +4,9 @@ import "testing"
 
 func lspProvenanceReverseObservationInputs(t *testing.T) (string, string, RevisionSelfImprovementProvenanceApplicationFeedbackObservation, RevisionSelfImprovementProvenanceReverseObservation) {
 	t.Helper()
-	feedback, reverse := provenanceReverseObservationInputs(t)
+	feedback, reverseObservation := provenanceReverseObservationInputs(t)
+	reverse, err := ObserveRevisionSelfImprovementProvenanceReverseObservation(feedback, reverseObservation)
+	if err != nil { t.Fatalf("ObserveRevisionSelfImprovementProvenanceReverseObservation() error = %v", err) }
 	snapshot := Analyze(validContract)
 	if err := snapshot.Validate(); err != nil { t.Fatalf("Analyze(validContract) Validate() error = %v", err) }
 	if len(snapshot.Symbols) == 0 { t.Fatal("Analyze(validContract) returned no symbols") }
