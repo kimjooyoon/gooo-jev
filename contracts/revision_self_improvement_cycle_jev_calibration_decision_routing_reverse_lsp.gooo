@@ -1,0 +1,18 @@
+module jev_calibration_decision_routing_reverse_lsp
+
+input reverse_observation
+
+diagnostic BOUND as jev.route.reverse.bound
+diagnostic DEFERRED as jev.route.reverse.deferred
+diagnostic UNKNOWN as jev.route.reverse.unknown
+
+field observation_digest
+field target_stage
+
+constraint preserve_reverse_status
+constraint preserve_observation_digest
+constraint read_only
+constraint no_edits
+constraint no_command
+constraint no_execution
+constraint no_authorization
