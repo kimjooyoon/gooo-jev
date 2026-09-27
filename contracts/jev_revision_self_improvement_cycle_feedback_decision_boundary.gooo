@@ -1,0 +1,26 @@
+package jevrevisionselfimprovementcyclefeedbackdecisionboundary
+
+namespace jevrevisionselfimprovementcyclefeedbackdecisionboundary
+
+entity RevisionSelfImprovementCycleFeedbackDecisionBoundaryInput {
+  property cycle_digest string
+  property bridge_digest string
+  property decision_link_digest string
+  property decision_signal string
+}
+
+entity RevisionSelfImprovementCycleFeedbackDecisionBoundaryObservation {
+  property status string
+  property missing_stage string
+  property cycle_digest string
+  property bridge_digest string
+  property decision_link_digest string
+  property decision_signal string
+  property boundary_signal string
+  property boundary_aligned boolean
+  property observation_digest string
+  property non_executing boolean
+  property non_authorizing boolean
+}
+
+activity ObserveRevisionSelfImprovementCycleFeedbackDecisionBoundary(RevisionSelfImprovementCycleFeedbackDecisionBoundaryInput) -> RevisionSelfImprovementCycleFeedbackDecisionBoundaryObservation
