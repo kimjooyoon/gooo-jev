@@ -65,3 +65,9 @@ jobs:
           plan_digest=$(jq -r '.plan_digest' "$RUNNER_TEMP/plan.json")
           go run ./cmd/gooo-observe "$RUNNER_TEMP/plan.json" syntax_completion:edit_declaration confirmed completion_quality 1 "$plan_digest" 2026-09-28T00:00:00Z > "$RUNNER_TEMP/observation.json"
           jq -e '.observation.non_executing == true and .observation.non_authorizing == true and .observation.kind == "confirmed" and .observation.plan_digest == (.observation.evidence_digest)' "$RUNNER_TEMP/observation.json"
+          go run ./cmd/gooo-discover examples/support-triage/usecase.gooo > "$RUNNER_TEMP/bound-discovery.json"
+          jq -e '.discovery.status == "BOUND" and ([.discovery.capabilities[] | select(.id == "canonical_generation" and .state == "AVAILABLE")] | length) == 1' "$RUNNER_TEMP/bound-discovery.json"
+          go run ./cmd/gooo-plan "$RUNNER_TEMP/bound-discovery.json" > "$RUNNER_TEMP/bound-plan.json"
+          bound_plan_digest=$(jq -r '.plan_digest' "$RUNNER_TEMP/bound-plan.json")
+          go run ./cmd/gooo-observe "$RUNNER_TEMP/bound-plan.json" canonical_generation:write_generated_declaration confirmed generation_quality 1 "$bound_plan_digest" 2026-09-28T00:00:00Z > "$RUNNER_TEMP/bound-observation.json"
+          jq -e '.observation.capability_id == "canonical_generation" and .observation.kind == "confirmed" and .observation.non_executing == true and .observation.non_authorizing == true' "$RUNNER_TEMP/bound-observation.json"
