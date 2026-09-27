@@ -1,0 +1,40 @@
+module revision_self_improvement_cycle_jev_provenance_stage_coverage_lsp
+
+input status
+input source_version
+input contract_version
+input expected_stages
+input observed_stages
+input coverage_numerator
+input coverage_denominator
+input coverage_percent
+input missing_stage
+input target_stage
+input observation_digest
+input observational_only
+input claims_improvement
+
+status INFORMATION BOUND provenance stage coverage
+status WARNING DEFERRED provenance stage coverage
+status ERROR UNKNOWN, invalid, or improvement-claiming coverage
+
+field code
+field severity
+field source_version
+field contract_version
+field expected_stages
+field observed_stages
+field coverage_numerator
+field coverage_denominator
+field coverage_percent
+field missing_stage
+field target_stage
+field observation_digest
+
+constraint inspection_only
+constraint no_improvement_claim
+constraint no_authorization
+constraint no_execution
+constraint read_only
+constraint no_edits
+constraint no_command
