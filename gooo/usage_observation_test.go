@@ -19,7 +19,7 @@ func TestObserveUsageActionKeepsDeferredWorkUnknown(t *testing.T) {
 		UsageObservationConfirmed,
 		"completion_quality",
 		1,
-		"evidence-ready",
+		plan.PlanDigest,
 		time.Date(2026, 9, 28, 0, 0, 0, 0, time.UTC),
 	)
 	if err != nil {
@@ -35,7 +35,7 @@ func TestObserveUsageActionKeepsDeferredWorkUnknown(t *testing.T) {
 		UsageObservationConfirmed,
 		"generation_quality",
 		1,
-		"evidence-invalid",
+		plan.PlanDigest,
 		time.Date(2026, 9, 28, 0, 0, 0, 0, time.UTC),
 	); err == nil {
 		t.Fatal("expected deferred action confirmation to be rejected")
@@ -47,7 +47,7 @@ func TestObserveUsageActionKeepsDeferredWorkUnknown(t *testing.T) {
 		UsageObservationUnknown,
 		"generation_quality",
 		0,
-		"evidence-unknown",
+		plan.PlanDigest,
 		time.Date(2026, 9, 28, 0, 0, 0, 0, time.UTC),
 	)
 	if err != nil {
