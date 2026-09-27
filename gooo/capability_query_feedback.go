@@ -28,16 +28,16 @@ var capabilityQueryFeedbackRequiredStages = []string{
 // CapabilityQueryFeedback is an evidence-bound observation for the language's
 // self-improvement loop. It never promotes a capability by itself.
 type CapabilityQueryFeedback struct {
-	Query                   string                             \`json:"query"\`
-	ResponseDigest          string                             \`json:"response_digest"\`
-	DeclarationSourceDigest string                             \`json:"declaration_source_digest,omitempty"\`
-	CapabilityIDs           []string                           \`json:"capability_ids"\`
-	VerifiedStages          []string                           \`json:"verified_stages"\`
-	MissingStages           []string                           \`json:"missing_stages"\`
-	Disposition              CapabilityQueryFeedbackDisposition \`json:"disposition"\`
-	EvidenceDigest          string                             \`json:"evidence_digest"\`
-	NonExecuting            bool                               \`json:"non_executing"\`
-	NonAuthorizing          bool                               \`json:"non_authorizing"\`
+	Query                   string                             `json:"query"`
+	ResponseDigest          string                             `json:"response_digest"`
+	DeclarationSourceDigest string                             `json:"declaration_source_digest,omitempty"`
+	CapabilityIDs           []string                           `json:"capability_ids"`
+	VerifiedStages          []string                           `json:"verified_stages"`
+	MissingStages           []string                           `json:"missing_stages"`
+	Disposition              CapabilityQueryFeedbackDisposition `json:"disposition"`
+	EvidenceDigest          string                             `json:"evidence_digest"`
+	NonExecuting            bool                               `json:"non_executing"`
+	NonAuthorizing          bool                               `json:"non_authorizing"`
 }
 
 // ObserveCapabilityQueryFeedback records externally verified evidence for a
