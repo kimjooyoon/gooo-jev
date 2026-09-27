@@ -1,0 +1,38 @@
+name: language usage slice
+
+on:
+  push:
+    branches:
+      - agent/language-usage-slice-20260928
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  usage-contract:
+    name: usage contract
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+          cache: true
+      - name: Test
+        run: go test ./...
+      - name: Race test
+        run: go test -race ./...
+      - name: Vet
+        run: go vet ./...
+      - name: Build usability commands
+        run: |
+          go build ./cmd/gooo-usecase
+          go build ./cmd/gooo-contract
+          go build ./cmd/gooo-feedback
+          go build ./cmd/gooo-complete
+          go build ./cmd/gooo-lsp
