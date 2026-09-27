@@ -1,0 +1,30 @@
+package jev.gooo.selfimprovement.feedbackbridge
+
+entity RevisionSelfImprovementProvenanceFeedbackBridgeObservation {
+    field status string
+    field missing_stage string
+    field history_digest string
+    field decision_digest string
+    field feedback_digest string
+    field window_digest string
+    field history_signal string
+    field comparison_signal string
+    field decision_signal string
+    field feedback_signal string
+    field decision_reason string
+    field metrics_change_count integer
+    field generation_change_count integer
+    field requires_observation boolean
+    field requires_inspection boolean
+    field requires_measurement boolean
+    field bridge_signal string
+    invariant non_executing
+    invariant non_authorizing
+}
+
+activity observe_self_improvement_provenance_feedback_bridge {
+    input revision_self_improvement_provenance_history_observation
+    input revision_self_improvement_provenance_decision_observation
+    input revision_self_improvement_feedback
+    output revision_self_improvement_provenance_feedback_bridge_observation
+}
