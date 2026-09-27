@@ -1,0 +1,43 @@
+package jevrevisionselfimprovementprovenancereversedecision
+namespace jevrevisionselfimprovementprovenancereversedecision
+
+entity RevisionSelfImprovementProvenanceReverseDecisionInput id "gooo://gooo-jev/revision-self-improvement-provenance-reverse-decision-input"
+property ApplicationFeedbackDigest string
+property ReverseObservationDigest string
+property DecisionDigest string
+property NonAuthorizing boolean
+
+entity RevisionSelfImprovementProvenanceReverseDecisionObservation id "gooo://gooo-jev/revision-self-improvement-provenance-reverse-decision-observation"
+property Status string
+property MissingStage string
+property ApplicationFeedbackDigest string
+property ReverseObservationDigest string
+property DecisionDigest string
+property PlanDispositionDigest string
+property IterationProvenanceDigest string
+property PlanDigest string
+property ApplicationDigest string
+property ReceiptDigest string
+property SourceDigest string
+property ProposedSourceDigest string
+property DecisionProposedSourceDigest string
+property GeneratedIRDigest string
+property DecisionGeneratedIRDigest string
+property FeedbackSignal string
+property ApplicationSignal string
+property FeedbackApplicationSignal string
+property ReverseSignal string
+property ProvenanceReverseSignal string
+property DecisionSignal string
+property DecisionFeedbackSignal string
+property DecisionReason string
+property SignalsAligned boolean
+property RequiresObservation boolean
+property RequiresReview boolean
+property RequiresInspection boolean
+property RequiresMeasurement boolean
+property ObservationDigest string
+property NonExecuting boolean
+property NonAuthorizing boolean
+
+activity ObserveRevisionSelfImprovementProvenanceReverseDecision(RevisionSelfImprovementProvenanceReverseDecisionInput) -> RevisionSelfImprovementProvenanceReverseDecisionObservation
