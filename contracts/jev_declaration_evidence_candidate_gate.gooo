@@ -1,0 +1,39 @@
+package jevdeclarationevidencecandidategate
+namespace jevdeclarationevidencecandidategate
+
+entity JEVDeclarationEvidenceCandidateGateInput id "gooo://gooo-jev/declaration-evidence-candidate-gate-input"
+  property MetricStatus string
+  property MetricStageCount integer
+  property MetricStageTotal integer
+  property MetricCoverage float
+  property MetricFirstMissingStage string
+  property MetricEvidenceDigest string
+  property MetricDigest string
+  property MetricNonExecuting boolean
+  property MetricNonAuthorizing boolean
+  property CandidateDigest string
+  property CandidateEvidenceDigest string
+  property CandidateSource string
+  property CandidateNonExecuting boolean
+  property CandidateNonAuthorizing boolean
+  property NonAuthorizing boolean
+
+entity JEVDeclarationEvidenceCandidateGateBinding id "gooo://gooo-jev/declaration-evidence-candidate-gate-binding"
+  property Status string
+  property Decision string
+  property MetricStatus string
+  property MetricStageCount integer
+  property MetricStageTotal integer
+  property MetricCoverage float
+  property MetricFirstMissingStage string
+  property MetricEvidenceDigest string
+  property MetricDigest string
+  property CandidateDigest string
+  property CandidateEvidenceDigest string
+  property CandidateSourceDigest string
+  property MissingStage string
+  property BindingDigest string
+  property NonExecuting boolean
+  property NonAuthorizing boolean
+
+activity BindJEVDeclarationEvidenceToCandidate(JEVDeclarationEvidenceCandidateGateInput) -> JEVDeclarationEvidenceCandidateGateBinding
