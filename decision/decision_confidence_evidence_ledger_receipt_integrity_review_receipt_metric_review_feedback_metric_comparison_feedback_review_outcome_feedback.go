@@ -1,38 +1,29 @@
 package decision
 
-import "testing"
+// DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedback
+// converts an external review outcome into non-authorizing feedback.
+type DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedback struct {
+	OutcomeDigest  string `json:"outcome_digest"`
+	Status         string `json:"status"`
+	NonAuthorizing bool   `json:"non_authorizing"`
+}
 
-func TestDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedbackRemainsNonAuthorizing(t *testing.T) {
-	outcome := DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcome{
-		HandoffDigest:  "handoff",
-		Decision:       "accepted-for-analysis",
-		Status:         "accepted-for-analysis",
+func DeriveDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedback(outcome DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcome) (DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedback, error) {
+	digest, err := Digest(outcome)
+	if err != nil {
+		return DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedback{}, err
+	}
+	feedback := DecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedback{
+		OutcomeDigest:  digest,
+		Status:        "hold",
 		NonAuthorizing: true,
 	}
-	feedback, err := DeriveDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedback(outcome)
-	if err != nil {
-		t.Fatalf("derive accepted feedback: %v", err)
+	switch outcome.Status {
+	case "accepted-for-analysis":
+		feedback.Status = "analysis-ready"
+	case "rejected":
+		feedback.Status = "rejected"
 	}
-	if feedback.Status != "analysis-ready" || feedback.OutcomeDigest == "" || !feedback.NonAuthorizing {
-		t.Fatalf("unexpected accepted feedback: %#v", feedback)
-	}
-
-	outcome.Status = "rejected"
-	outcome.Decision = "rejected"
-	feedback, err = DeriveDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedback(outcome)
-	if err != nil {
-		t.Fatalf("derive rejected feedback: %v", err)
-	}
-	if feedback.Status != "rejected" || !feedback.NonAuthorizing {
-		t.Fatalf("unexpected rejected feedback: %#v", feedback)
-	}
-
-	outcome.Status = "unknown"
-	feedback, err = DeriveDecisionConfidenceEvidenceLedgerReceiptIntegrityReviewReceiptMetricReviewFeedbackMetricComparisonFeedbackReviewOutcomeFeedback(outcome)
-	if err != nil {
-		t.Fatalf("derive held feedback: %v", err)
-	}
-	if feedback.Status != "hold" || !feedback.NonAuthorizing {
-		t.Fatalf("unknown outcome escaped hold: %#v", feedback)
-	}
+	return feedback, nil
 }
+
