@@ -1,0 +1,38 @@
+contract revision_self_improvement_cycle_jev_calibration_outcome_delta {
+  input {
+    baseline_accuracy_milli: integer
+    current_accuracy_milli: integer
+    accuracy_delta_milli: integer
+    baseline_mean_confidence_milli: integer
+    current_mean_confidence_milli: integer
+    confidence_delta_milli: integer
+    baseline_outcome_samples_digest: digest
+    current_outcome_samples_digest: digest
+    source_observation_digest: digest
+    baseline_generation_trace_digest: digest
+    current_generation_trace_digest: digest
+    reverse_observation_coverage_digest: digest
+  }
+
+  observe {
+    status: bound | unknown
+    missing_stage: stage?
+    accuracy_delta_milli: integer
+    confidence_delta_milli: integer
+    delta_signal: "jev-calibration-outcome-delta-improved" | "jev-calibration-outcome-delta-regressed" | "jev-calibration-outcome-delta-flat" | "jev-calibration-outcome-delta-unknown"
+    observation_digest: digest
+    read_only: true
+    non_executing: true
+    non_authorizing: true
+  }
+
+  semantics {
+    requires_two_outcome_windows: true
+    requires_common_source_observation: true
+    requires_common_reverse_observation_coverage: true
+    preserves_generation_trace_pair: true
+    effect: observation_only
+    authority: none
+    decision: defer
+  }
+}
