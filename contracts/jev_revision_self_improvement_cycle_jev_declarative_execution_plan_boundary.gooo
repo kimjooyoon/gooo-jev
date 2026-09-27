@@ -1,0 +1,24 @@
+contract revision_self_improvement_cycle_jev_declarative_execution_plan_boundary {
+  input {
+    task_id: identifier
+    workspace_id: identifier
+    gateway_id: identifier
+    model_id: identifier
+    policy_digest: digest
+  }
+
+  observe {
+    status: bound | unknown
+    missing_stage: stage?
+    boundary_signal: "jev-declarative-plan-boundary-observed" | "jev-declarative-plan-boundary-unknown"
+    boundary_digest: digest
+    non_executing: true
+    non_authorizing: true
+  }
+
+  semantics {
+    stages: [declaration, boundary_observation, provenance_digest]
+    effect: observation_only
+    authorization: none
+  }
+}
