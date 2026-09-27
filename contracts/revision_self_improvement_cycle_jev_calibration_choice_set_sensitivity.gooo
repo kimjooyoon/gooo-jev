@@ -1,0 +1,44 @@
+contract revision_self_improvement_cycle_jev_calibration_choice_set_sensitivity {
+  input {
+    baseline_accuracy_milli: integer
+    current_accuracy_milli: integer
+    accuracy_delta_milli: integer
+    baseline_mean_confidence_milli: integer
+    current_mean_confidence_milli: integer
+    confidence_delta_milli: integer
+    baseline_outcome_samples_digest: digest
+    current_outcome_samples_digest: digest
+    baseline_choice_set_digest: digest
+    current_choice_set_digest: digest
+    baseline_choice_order_digest: digest
+    current_choice_order_digest: digest
+    source_observation_digest: digest
+    baseline_generation_trace_digest: digest
+    current_generation_trace_digest: digest
+    reverse_observation_coverage_digest: digest
+  }
+
+  observe {
+    status: bound | unknown
+    missing_stage: stage?
+    sensitivity_signal: "jev-calibration-choice-set-sensitivity-stable" | "jev-calibration-choice-set-sensitivity-choice-set-changed" | "jev-calibration-choice-set-sensitivity-order-changed" | "jev-calibration-choice-set-sensitivity-choice-set-and-order-changed" | "jev-calibration-choice-set-sensitivity-unknown"
+    decision_signal: "jev-calibration-choice-set-decision-compare" | "jev-calibration-choice-set-decision-defer"
+    accuracy_delta_milli: integer
+    confidence_delta_milli: integer
+    observation_digest: digest
+    read_only: true
+    non_executing: true
+    non_authorizing: true
+  }
+
+  semantics {
+    requires_common_source_observation: true
+    requires_common_reverse_observation_coverage: true
+    preserves_generation_trace_pair: true
+    choice_set_change_defers_comparison: true
+    choice_order_change_defers_comparison: true
+    effect: observation_only
+    authority: none
+    decision: defer
+  }
+}
