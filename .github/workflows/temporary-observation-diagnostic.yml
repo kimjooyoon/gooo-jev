@@ -1,0 +1,28 @@
+name: temporary observation diagnostic
+
+on:
+  push:
+    branches:
+      - feature/decision-batch-boundary-20260928
+
+permissions:
+  contents: read
+
+jobs:
+  diagnostic:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+          cache: true
+      - name: Print bound observation
+        shell: bash
+        run: |
+          set -euo pipefail
+          go run ./cmd/gooo-discover examples/support-triage/usecase.gooo > "$RUNNER_TEMP/bound-discovery.json"
+          go run ./cmd/gooo-plan "$RUNNER_TEMP/bound-discovery.json" > "$RUNNER_TEMP/bound-plan.json"
+          bound_plan_digest=$(jq -r '.plan_digest' "$RUNNER_TEMP/bound-plan.json")
+          go run ./cmd/gooo-observe "$RUNNER_TEMP/bound-plan.json" canonical_generation:write_generated_declaration confirmed generation_quality 1 "$bound_plan_digest" 2026-09-28T00:00:00Z > "$RUNNER_TEMP/bound-observation.json"
+          jq -S . "$RUNNER_TEMP/bound-observation.json"
