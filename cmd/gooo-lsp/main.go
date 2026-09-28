@@ -29,6 +29,7 @@ type response struct {
     CapabilityDiscovery *gooo.CapabilityQueryResponse `json:"capability_discovery,omitempty"`
     CapabilityTrail *gooo.CapabilityQueryTrail `json:"capability_trail,omitempty"`
     CapabilityOverview *gooo.CapabilityQueryOverview `json:"capability_overview,omitempty"`
+    CapabilityGuide *gooo.CapabilityQueryGuide `json:"capability_guide,omitempty"`
     Assistance *gooo.UsageAssistance `json:"assistance,omitempty"`
     Error *problem `json:"error,omitempty"`
 }
@@ -91,8 +92,16 @@ func main() {
             }
             continue
         }
+        capabilityGuide := gooo.DiscoverCapabilityQueryGuide(query, input.Source)
+        if err := capabilityGuide.Validate(); err != nil {
+            if encodeErr := encoder.Encode(response{ID: input.ID, Error: &problem{Code: "invalid_capability_guide", Message: err.Error()}}); encodeErr != nil {
+                fmt.Fprintln(os.Stderr, encodeErr)
+                os.Exit(1)
+            }
+            continue
+        }
         capabilityDiscovery := capabilityTrail.Response
-        if err := encoder.Encode(response{ID: input.ID, Completion: &completion, Discovery: &discovery, CapabilityDiscovery: &capabilityDiscovery, CapabilityTrail: &capabilityTrail, CapabilityOverview: &capabilityOverview, Assistance: &assistance}); err != nil {
+        if err := encoder.Encode(response{ID: input.ID, Completion: &completion, Discovery: &discovery, CapabilityDiscovery: &capabilityDiscovery, CapabilityTrail: &capabilityTrail, CapabilityOverview: &capabilityOverview, CapabilityGuide: &capabilityGuide, Assistance: &assistance}); err != nil {
             fmt.Fprintln(os.Stderr, err)
             os.Exit(1)
         }
