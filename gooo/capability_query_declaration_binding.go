@@ -35,6 +35,9 @@ func bindCapabilityQueryDeclaration(response CapabilityQueryResponse) Capability
 	if declaration == nil || !declaration.Bound || len(response.Capabilities) == 0 {
 		return response
 	}
+	if response.Status == CapabilityQueryDeferred {
+		return response
+	}
 	allowed := make(map[string]struct{}, len(declaration.ObservedCapabilities))
 	for _, capabilityID := range declaration.ObservedCapabilities {
 		allowed[capabilityID] = struct{}{}
