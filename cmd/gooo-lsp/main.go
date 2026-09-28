@@ -31,6 +31,7 @@ type response struct {
     CapabilityOverview *gooo.CapabilityQueryOverview `json:"capability_overview,omitempty"`
     CapabilityGuide *gooo.CapabilityQueryGuide `json:"capability_guide,omitempty"`
     CapabilityHover *gooo.CapabilityQueryHover `json:"capability_hover,omitempty"`
+    CapabilityActions []gooo.CapabilityQueryAction `json:"capability_actions,omitempty"`
     Assistance *gooo.UsageAssistance `json:"assistance,omitempty"`
     Error *problem `json:"error,omitempty"`
 }
@@ -104,13 +105,28 @@ func main() {
         capabilityHover := gooo.DiscoverCapabilityQueryHover(query, input.Source)
         if err := capabilityHover.Validate(); err != nil {
             if encodeErr := encoder.Encode(response{ID: input.ID, Error: &problem{Code: "invalid_capability_hover", Message: err.Error()}}); encodeErr != nil {
+                fmt.Fprintln(os.Stderr, err)
+                os.Exit(1)
+            }
+            continue
+        }
+        capabilityActions, err := gooo.SuggestCapabilityQueryActions(capabilityHover)
+        if err != nil {
+            if encodeErr := encoder.Encode(response{ID: input.ID, Error: &problem{Code: "invalid_capability_actions", Message: err.Error()}}); encodeErr != nil {
                 fmt.Fprintln(os.Stderr, encodeErr)
                 os.Exit(1)
             }
             continue
         }
+        if err := gooo.ValidateCapabilityQueryActions(capabilityHover, capabilityActions); err != nil {
+            if encodeErr := encoder.Encode(response{ID: input.ID, Error: &problem{Code: "invalid_capability_actions", Message: err.Error()}}); encodeErr != nil {
+                fmt.Fprintln(os.Stderr, err)
+                os.Exit(1)
+            }
+            continue
+        }
         capabilityDiscovery := capabilityTrail.Response
-        if err := encoder.Encode(response{ID: input.ID, Completion: &completion, Discovery: &discovery, CapabilityDiscovery: &capabilityDiscovery, CapabilityTrail: &capabilityTrail, CapabilityOverview: &capabilityOverview, CapabilityGuide: &capabilityGuide, CapabilityHover: &capabilityHover, Assistance: &assistance}); err != nil {
+        if err := encoder.Encode(response{ID: input.ID, Completion: &completion, Discovery: &discovery, CapabilityDiscovery: &capabilityDiscovery, CapabilityTrail: &capabilityTrail, CapabilityOverview: &capabilityOverview, CapabilityGuide: &capabilityGuide, CapabilityHover: &capabilityHover, CapabilityActions: capabilityActions, Assistance: &assistance}); err != nil {
             fmt.Fprintln(os.Stderr, err)
             os.Exit(1)
         }
