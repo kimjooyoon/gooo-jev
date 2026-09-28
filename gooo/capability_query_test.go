@@ -71,6 +71,33 @@ func TestDiscoverCapabilityQueryRejectsTamperedDeclarationBinding(t *testing.T) 
 	}
 }
 
+func TestDiscoverCapabilityQueryPrefersScopedCapabilityOverOverview(t *testing.T) {
+	response := DiscoverCapabilityQuery("What can gooo do with provenance?")
+	if response.Status != CapabilityQueryAvailable || len(response.Capabilities) != 1 || response.Capabilities[0].ID != "provenance" {
+		t.Fatalf("specific capability should win over overview: %+v", response)
+	}
+	if err := response.Validate(); err != nil {
+		t.Fatalf("specific capability response should validate: %v", err)
+	}
+}
+
+func TestDiscoverCapabilityQueryNormalizesUnicodePunctuation(t *testing.T) {
+	response := DiscoverCapabilityQuery("  CAN—GOOO? INSPECT… PROVENANCE!  ")
+	if response.Status != CapabilityQueryAvailable || len(response.Capabilities) != 1 || response.Capabilities[0].ID != "provenance" {
+		t.Fatalf("unicode punctuation should not change scoped matching: %+v", response)
+	}
+	if response.Query != "CAN—GOOO? INSPECT… PROVENANCE!" {
+		t.Fatalf("original query should remain evidence-visible: %q", response.Query)
+	}
+}
+
+func TestDiscoverCapabilityQueryRejectsSubstringAlias(t *testing.T) {
+	response := DiscoverCapabilityQuery("provenanceful")
+	if response.Status != CapabilityQueryUnknown || len(response.Capabilities) != 0 {
+		t.Fatalf("substring alias should not match: %+v", response)
+	}
+}
+
 func hasCapabilityQuery(capabilities []CapabilityQueryCapability, id string) bool {
 	_, ok := capabilityQueryByID(capabilities, id)
 	return ok

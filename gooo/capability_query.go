@@ -163,9 +163,9 @@ func inspectCapabilityQueryDeclaration(declaration string) *CapabilityQueryDecla
 }
 
 func capabilityQueryMatches(query string) []CapabilityQueryCapability {
-	normalized := strings.ToLower(strings.TrimSpace(query))
+	normalized := normalizeCapabilityQuery(query)
 	matches := make([]CapabilityQueryCapability, 0)
-	if capabilityQueryIsOverview(normalized) {
+	if capabilityQueryIsOverview(normalized) && !capabilityQueryHasScopedMatch(normalized) {
 		for _, entry := range capabilityQueryCatalog {
 			if entry.Safe {
 				matches = append(matches, capabilityQueryMatch(entry))
@@ -194,8 +194,29 @@ func capabilityQueryMatches(query string) []CapabilityQueryCapability {
 	return unique
 }
 
+func capabilityQueryHasScopedMatch(query string) bool {
+	for _, entry := range capabilityQueryCatalog {
+		for _, alias := range entry.Aliases {
+			if capabilityQueryContainsAlias(query, alias) {
+				return true
+			}
+		}
+	}
+	return false
+}
+
+func normalizeCapabilityQuery(query string) string {
+	normalized := strings.Map(func(r rune) rune {
+		if unicode.IsPunct(r) || unicode.IsSymbol(r) {
+			return ' '
+		}
+		return unicode.ToLower(r)
+	}, query)
+	return strings.Join(strings.Fields(normalized), " ")
+}
+
 func capabilityQueryContainsAlias(query, alias string) bool {
-	normalizedAlias := strings.ToLower(strings.TrimSpace(alias))
+	normalizedAlias := normalizeCapabilityQuery(alias)
 	if normalizedAlias == "" {
 		return false
 	}
@@ -242,7 +263,7 @@ func capabilityQueryMatch(entry capabilityQueryEntry) CapabilityQueryCapability 
 
 func capabilityQueryIsOverview(query string) bool {
 	for _, phrase := range []string{"what can", "capabilities", "show examples", "discover", "help", "무엇을", "가능", "할 수"} {
-		if strings.Contains(query, phrase) {
+		if capabilityQueryContainsAlias(query, phrase) {
 			return true
 		}
 	}
