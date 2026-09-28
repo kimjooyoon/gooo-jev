@@ -48,6 +48,7 @@ jobs:
           go build ./cmd/gooo-trend
           go build ./cmd/gooo-evaluate-trend
           go build ./cmd/gooo-discover
+          go build ./cmd/gooo-capabilities
           go run ./cmd/gooo-contract contracts/usage_replan.gooo > "$RUNNER_TEMP/usage-replan-contract.json"
           jq -e '.Status != "UNKNOWN" and .ContractDigest != "" and .NonExecuting == true and .NonAuthorizing == true' "$RUNNER_TEMP/usage-replan-contract.json"
           printf '{}' > "$RUNNER_TEMP/unknown-usage-window.json"
@@ -69,6 +70,11 @@ jobs:
           go run ./cmd/gooo-discover examples/support-triage/partial.gooo pro > "$RUNNER_TEMP/discovery.json"
           jq -e '.discovery.non_executing == true and .discovery.non_authorizing == true and ([.discovery.capabilities[] | select(.id == "syntax_completion" and .state == "AVAILABLE")] | length) == 1 and ([.discovery.capabilities[] | select(.id == "canonical_generation" and .state == "UNKNOWN")] | length) == 1' "$RUNNER_TEMP/discovery.json"
           go run ./cmd/gooo-discover --query "What can gooo do?" > "$RUNNER_TEMP/query-discovery.json"
+          go run ./cmd/gooo-capabilities -q "What can gooo do?" examples/support-triage/usecase.gooo > "$RUNNER_TEMP/capability-guidance.txt"
+          grep -q "gooo capability discovery" "$RUNNER_TEMP/capability-guidance.txt"
+          grep -q "non-authorizing: true" "$RUNNER_TEMP/capability-guidance.txt"
+          go run ./cmd/gooo-capabilities -json -q "What can gooo do?" examples/support-triage/usecase.gooo > "$RUNNER_TEMP/capability-guidance.json"
+          jq -e ".trail.status == "AVAILABLE" and .guide.action == "INSPECT_NEXT_OPERATION" and .trail.non_executing == true and .trail.non_authorizing == true and .guide.evidence_digest != """ "$RUNNER_TEMP/capability-guidance.json"
           jq -e '.capability_discovery.status == "AVAILABLE" and (.capability_discovery.capabilities | map(.id) | index("canonical_generation")) != null and .capability_discovery.non_executing == true and .capability_discovery.non_authorizing == true' "$RUNNER_TEMP/query-discovery.json"
           go run ./cmd/gooo-discover --query "What can gooo do with this declaration?" examples/support-triage/usecase.gooo > "$RUNNER_TEMP/combined-discovery.json"
           jq -e '.path == "examples/support-triage/usecase.gooo" and .discovery.status == "BOUND" and .capability_discovery.status == "AVAILABLE" and .capability_discovery.non_executing == true and .discovery.non_authorizing == true' "$RUNNER_TEMP/combined-discovery.json"
