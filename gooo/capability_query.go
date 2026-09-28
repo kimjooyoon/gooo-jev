@@ -48,6 +48,7 @@ type CapabilityQueryDeclaration struct {
 	Bound           bool     `json:"bound"`
 	SourceDigest    string   `json:"source_digest"`
 	ObservedSignals []string `json:"observed_signals"`
+	ObservedCapabilities []string `json:"observed_capabilities,omitempty"`
 }
 
 type capabilityQueryEntry struct {
@@ -118,6 +119,7 @@ func DiscoverCapabilityQuery(query string) CapabilityQueryResponse {
 func DiscoverCapabilityQueryWithDeclaration(query, declaration string) CapabilityQueryResponse {
 	response := DiscoverCapabilityQuery(query)
 	response.Declaration = inspectCapabilityQueryDeclaration(declaration)
+	response = bindCapabilityQueryDeclaration(response)
 	response.QueryDigest = digestCapabilityQuery(response)
 	return response
 }
@@ -159,6 +161,7 @@ func inspectCapabilityQueryDeclaration(declaration string) *CapabilityQueryDecla
 		Bound:           raw != "",
 		SourceDigest:    digestString("gooo-capability-declaration|" + raw),
 		ObservedSignals: signals,
+		ObservedCapabilities: capabilityQueryObservedCapabilities(signals),
 	}
 }
 
@@ -344,6 +347,7 @@ func digestCapabilityQuery(response CapabilityQueryResponse) string {
 	if response.Declaration != nil {
 		parts = append(parts, "declaration", fmt.Sprintf("%t", response.Declaration.Bound), response.Declaration.SourceDigest)
 		parts = append(parts, response.Declaration.ObservedSignals...)
+		parts = append(parts, response.Declaration.ObservedCapabilities...)
 	}
 	return digestString(strings.Join(parts, "|"))
 }

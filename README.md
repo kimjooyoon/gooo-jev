@@ -30,3 +30,8 @@ The boundary accepts choice, score, and noul observations. Unknown fields,
 trailing JSON, invalid choices, and incomplete provenance are rejected. A
 receipt never grants execution, changes source, or replaces the later
 capability envelope and reverse-observation checks.
+
+When a declaration is supplied, discovery also narrows a broad question through
+an explicit source-signal binding table. Unmapped declaration shapes remain
+`UNKNOWN`; natural-language wording does not invent a capability, grant
+execution, or authorize a provider.
