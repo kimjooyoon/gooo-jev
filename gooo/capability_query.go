@@ -133,6 +133,12 @@ func inspectCapabilityQueryDeclaration(declaration string) *CapabilityQueryDecla
 			prefix string
 			id     string
 		}{
+			{prefix: "module ", id: "module"},
+			{prefix: "input ", id: "input"},
+			{prefix: "output ", id: "output"},
+			{{prefix: "status ", id: "status"},
+			{prefix: "field ", id: "field"},
+			{prefix: "constraint ", id: "constraint"},
 			{prefix: "entity ", id: "entity"},
 			{prefix: "operation ", id: "operation"},
 			{prefix: "observe ", id: "observe"},
