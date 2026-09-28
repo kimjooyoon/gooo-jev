@@ -11,9 +11,13 @@ func DiscoverCapabilityQueryTrailForDeclaration(query, declaration string) Capab
 		return trail
 	}
 
-	focused := DiscoverCapabilityQueryForDeclaration(declaration)
-	trail.Response = focused
-	trail.NextQuestions = capabilityQueryTrailNextQuestions(focused)
+	focused := capabilityQueryDeclarationSuggestions(trail.Response.Declaration.ObservedSignals)
+	if len(focused) == 0 {
+		return trail
+	}
+	trail.Response.SuggestedQueries = focused
+	trail.Response.QueryDigest = digestCapabilityQuery(trail.Response)
+	trail.NextQuestions = capabilityQueryTrailNextQuestions(trail.Response)
 	trail.EvidenceDigest = digestCapabilityQueryTrail(trail)
 	return trail
 }
