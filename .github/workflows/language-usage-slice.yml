@@ -94,4 +94,5 @@ jobs:
           go run ./cmd/gooo-plan "$RUNNER_TEMP/bound-discovery.json" > "$RUNNER_TEMP/bound-plan.json"
           bound_plan_digest=$(jq -r '.plan_digest' "$RUNNER_TEMP/bound-plan.json")
           go run ./cmd/gooo-observe "$RUNNER_TEMP/bound-plan.json" canonical_generation:write_generated_declaration confirmed generation_quality 1 "$bound_plan_digest" 2026-09-28T00:00:00Z > "$RUNNER_TEMP/bound-observation.json"
+          jq -S . "$RUNNER_TEMP/bound-observation.json"
           jq -e '.observation.capability_id == "canonical_generation" and .observation.kind == "confirmed" and .observation.non_executing == true and .observation.non_authorizing == true' "$RUNNER_TEMP/bound-observation.json"
