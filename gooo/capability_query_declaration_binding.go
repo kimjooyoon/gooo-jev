@@ -6,6 +6,12 @@ import "sort"
 // source observations to catalog capabilities. Natural-language wording never
 // creates a binding that is absent from this table.
 var capabilityQueryDeclarationBindings = map[string][]string{
+	"module":     {"declaration_analysis"},
+	"input":      {"declaration_analysis"},
+	"output":     {"canonical_generation", "ir_generation"},
+	"status":     {"declaration_analysis"},
+	"field":      {"declaration_analysis"},
+	"constraint": {"declaration_analysis"},
 	"entity":    {"declaration_analysis"},
 	"operation": {"canonical_generation", "ir_generation"},
 	"observe":   {"provenance", "reverse_observation", "round_trip_observation"},
