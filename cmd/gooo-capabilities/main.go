@@ -12,8 +12,8 @@ import (
 )
 
 type discoveryDocument struct {
-	Trail gooo.CapabilityQueryTrail
-	Guide gooo.CapabilityQueryGuide
+	Trail gooo.CapabilityQueryTrail  `json:"trail"`
+	Guide gooo.CapabilityQueryGuide `json:"guide"`
 }
 
 func main() {
