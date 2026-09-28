@@ -1,6 +1,9 @@
 package decision
 
-import "testing"
+import (
+	"testing"
+	"time"
+)
 
 func policyFixture(t *testing.T, confidence float64, status Status) (DecisionPolicy, Spec, State, Result, Receipt) {
 	t.Helper()
