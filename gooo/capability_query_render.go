@@ -14,11 +14,8 @@ func RenderCapabilityQuery(trail CapabilityQueryTrail, guide CapabilityQueryGuid
 	if err := guide.Validate(); err != nil {
 		return "", fmt.Errorf("capability query guide: %w", err)
 	}
-	if guide.OverviewDigest != trail.EvidenceDigest {
-		return "", fmt.Errorf("capability query guide is not bound to the trail")
-	}
-	if guide.Status != trail.Response.Status {
-		return "", fmt.Errorf("capability query guide status is not bound to the trail")
+	if err := validateCapabilityQueryGuideBinding(trail, guide); err != nil {
+		return "", err
 	}
 
 	var builder strings.Builder
@@ -73,4 +70,21 @@ func RenderCapabilityQuery(trail CapabilityQueryTrail, guide CapabilityQueryGuid
 		guide.EvidenceDigest,
 	)
 	return builder.String(), nil
+}
+
+func validateCapabilityQueryGuideBinding(trail CapabilityQueryTrail, guide CapabilityQueryGuide) error {
+	if guide.Status != trail.Response.Status {
+		return fmt.Errorf("capability query guide status is not bound to the trail")
+	}
+	if len(guide.CapabilityIDs) != len(trail.Response.Capabilities) ||
+		len(guide.NextOperations) != len(trail.Response.Capabilities) {
+		return fmt.Errorf("capability query guide capabilities are not bound to the trail")
+	}
+	for index, capability := range trail.Response.Capabilities {
+		if guide.CapabilityIDs[index] != capability.ID ||
+			guide.NextOperations[index] != capability.NextOperation {
+			return fmt.Errorf("capability query guide capability %d is not bound to the trail", index)
+		}
+	}
+	return nil
 }
