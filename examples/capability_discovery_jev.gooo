@@ -1,0 +1,27 @@
+module capability_discovery_jev
+
+input query
+input declaration
+input source_digest
+input declaration_digest
+input catalog_digest
+input schema_digest
+input correlation_id
+input evidence_digest
+input first_missing_stage
+
+status AVAILABLE capability evidence is declaration-bound and inspectable
+status DEFERRED an explicit external boundary is required before execution
+status UNKNOWN capability evidence is incomplete and the first missing stage remains visible
+
+field capability_id
+field capability_state
+field next_operation
+field observation_digest
+
+constraint read_only
+constraint no_execution
+constraint no_authorization
+constraint preserve_unknown
+constraint exact_source_declaration_catalog_schema_evidence_tuple
+constraint first_missing_stage_is_explicit
