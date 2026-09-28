@@ -1,18 +1,13 @@
-package usage_replan
-namespace usage_replan
+module usage_replan
 
-entity UsageObservation id "gooo://gooo-jev/usage-observation"
-entity UsageObservationWindow id "gooo://gooo-jev/usage-observation-window"
-entity UsageReplanObservation id "gooo://gooo-jev/usage-replan-observation"
+input usage_observation
+input usage_observation_window
 
-activity MeasureUsageObservationWindow(UsageObservation) -> UsageObservationWindow
-activity ProposeUsageReplan(UsageObservationWindow) -> UsageReplanObservation
-
-status BOUND observation window provenance and metrics are valid
-status UNKNOWN observation window is incomplete, invalid, or tampered
-status PROPOSE_NEXT_ITERATION confirmed usage evidence supports another measurement window
-status HOLD_FOR_EVIDENCE known usage evidence is insufficient or provenance is invalid
-status REVIEW_NO_CONFIRMED_OUTCOME known evidence exists without a confirmed outcome
+status BOUND
+status UNKNOWN
+status PROPOSE_NEXT_ITERATION
+status HOLD_FOR_EVIDENCE
+status REVIEW_NO_CONFIRMED_OUTCOME
 
 field status
 field disposition
