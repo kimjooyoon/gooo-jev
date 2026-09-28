@@ -1,0 +1,91 @@
+name: language usage slice
+
+on:
+  push:
+    branches:
+      - agent/language-usage-slice-20260928
+      - agent/capability-discovery-20260928
+  pull_request:
+    branches:
+      - main
+
+concurrency:
+  group: language-usage-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  usage-contract:
+    if: ${{ github.event_name != 'push' || github.ref_name != 'agent/capability-discovery-20260928' }}
+    name: usage contract
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+          cache: true
+      - name: Test
+        run: go test ./...
+      - name: Race test
+        run: go test -race -timeout=50m ./gooo/...
+      - name: Vet
+        run: go vet ./...
+      - name: Build usability commands
+        run: |
+          go build ./cmd/gooo-usecase
+          go build ./cmd/gooo-contract
+          go build ./cmd/gooo-feedback
+          go build ./cmd/gooo-complete
+          go build ./cmd/gooo-lsp
+          go build ./cmd/gooo-generate
+          go build ./cmd/gooo-evaluate
+          go build ./cmd/gooo-trend
+          go build ./cmd/gooo-evaluate-trend
+          go build ./cmd/gooo-discover
+          go run ./cmd/gooo-contract contracts/usage_replan.gooo > "$RUNNER_TEMP/usage-replan-contract.json"
+          jq -e '.Status != "UNKNOWN" and .ContractDigest != "" and .NonExecuting == true and .NonAuthorizing == true' "$RUNNER_TEMP/usage-replan-contract.json"
+          printf '{}' > "$RUNNER_TEMP/unknown-usage-window.json"
+          go run ./cmd/gooo-replan "$RUNNER_TEMP/unknown-usage-window.json" > "$RUNNER_TEMP/unknown-usage-replan.json"
+          jq -e '.status == "UNKNOWN" and .disposition == "HOLD_FOR_EVIDENCE" and .non_executing == true and .non_authorizing == true and .first_mismatch == "WINDOW_INTEGRITY" and .missing_stage_index == 0' "$RUNNER_TEMP/unknown-usage-replan.json"
+          go build ./cmd/gooo-plan
+          go build ./cmd/gooo-observe
+          go build ./cmd/gooo-assist
+      - name: Exercise declaration workflows
+        shell: bash
+        run: |
+          generated="$RUNNER_TEMP/support-triage.generated.gooo"
+          go run ./cmd/gooo-generate examples/support-triage/usecase.gooo "$generated"
+          test -s "$generated"
+          go run ./cmd/gooo-complete examples/support-triage/partial.gooo pro > "$RUNNER_TEMP/completion.json"
+          jq -e '.response.non_executing == true and .response.non_authorizing == true and ([.response.items[] | select(.label == "property")] | length) == 1' "$RUNNER_TEMP/completion.json"
+          go run ./cmd/gooo-lsp < examples/support-triage/completion.jsonl > "$RUNNER_TEMP/lsp.jsonl"
+          jq -e '.completion.non_executing == true and .completion.non_authorizing == true and .completion.source_digest != "" and .discovery.non_executing == true and .discovery.non_authorizing == true and .capability_discovery.status == "AVAILABLE" and (.capability_discovery.suggested_queries | length) > 0 and .assistance.non_executing == true and .assistance.non_authorizing == true and (.assistance.summary | contains("syntax_completion"))' "$RUNNER_TEMP/lsp.jsonl"
+          go run ./cmd/gooo-discover examples/support-triage/partial.gooo pro > "$RUNNER_TEMP/discovery.json"
+          jq -e '.discovery.non_executing == true and .discovery.non_authorizing == true and ([.discovery.capabilities[] | select(.id == "syntax_completion" and .state == "AVAILABLE")] | length) == 1 and ([.discovery.capabilities[] | select(.id == "canonical_generation" and .state == "UNKNOWN")] | length) == 1' "$RUNNER_TEMP/discovery.json"
+          go run ./cmd/gooo-discover --query "What can gooo do?" > "$RUNNER_TEMP/query-discovery.json"
+          jq -e '.capability_discovery.status == "AVAILABLE" and (.capability_discovery.capabilities | map(.id) | index("canonical_generation")) != null and .capability_discovery.non_executing == true and .capability_discovery.non_authorizing == true' "$RUNNER_TEMP/query-discovery.json"
+          go run ./cmd/gooo-discover --query "What can gooo do with this declaration?" examples/support-triage/usecase.gooo > "$RUNNER_TEMP/combined-discovery.json"
+          jq -e '.path == "examples/support-triage/usecase.gooo" and .discovery.status == "BOUND" and .capability_discovery.status == "AVAILABLE" and .capability_discovery.non_executing == true and .discovery.non_authorizing == true' "$RUNNER_TEMP/combined-discovery.json"
+          go run ./cmd/gooo-discover --query "Can gooo execute and authorize a network workload?" > "$RUNNER_TEMP/deferred-query.json"
+          jq -e '.capability_discovery.status == "DEFERRED" and .capability_discovery.first_mismatch == "external_boundary" and .capability_discovery.non_authorizing == true' "$RUNNER_TEMP/deferred-query.json"
+          go run ./cmd/gooo-plan "$RUNNER_TEMP/discovery.json" > "$RUNNER_TEMP/plan.json"
+          jq -e '([.actions[] | select(.capability_id == "syntax_completion" and .state == "READY")] | length) == 1 and ([.actions[] | select(.capability_id == "canonical_generation" and .state == "DEFERRED")] | length) == 1' "$RUNNER_TEMP/plan.json"
+          go run ./cmd/gooo-assist examples/support-triage/partial.gooo pro > "$RUNNER_TEMP/assistance.txt"
+          test -s "$RUNNER_TEMP/assistance.txt"
+          go run ./cmd/gooo-assist --json examples/support-triage/partial.gooo pro > "$RUNNER_TEMP/assistance.json"
+          jq -e '.non_executing == true and .non_authorizing == true and (.summary | contains("syntax_completion")) and ([.items[] | select(.id == "canonical_generation:complete_declaration" and .state == "DEFERRED")] | length) == 1 and .assistance_digest != ""' "$RUNNER_TEMP/assistance.json"
+          plan_digest=$(jq -r '.plan_digest' "$RUNNER_TEMP/plan.json")
+          go run ./cmd/gooo-observe "$RUNNER_TEMP/plan.json" syntax_completion:edit_declaration confirmed completion_quality 1 "$plan_digest" 2026-09-28T00:00:00Z > "$RUNNER_TEMP/observation.json"
+          jq -e '.observation.non_executing == true and .observation.non_authorizing == true and .observation.kind == "confirmed" and .observation.plan_digest == (.observation.evidence_digest)' "$RUNNER_TEMP/observation.json"
+          go run ./cmd/gooo-discover examples/support-triage/usecase.gooo > "$RUNNER_TEMP/bound-discovery.json"
+          jq -e '.discovery.status == "BOUND" and ([.discovery.capabilities[] | select(.id == "canonical_generation" and .state == "AVAILABLE")] | length) == 1' "$RUNNER_TEMP/bound-discovery.json"
+          go run ./cmd/gooo-plan "$RUNNER_TEMP/bound-discovery.json" > "$RUNNER_TEMP/bound-plan.json"
+          bound_plan_digest=$(jq -r '.plan_digest' "$RUNNER_TEMP/bound-plan.json")
+          go run ./cmd/gooo-observe "$RUNNER_TEMP/bound-plan.json" canonical_generation:write_generated_declaration confirmed generation_quality 1 "$bound_plan_digest" 2026-09-28T00:00:00Z > "$RUNNER_TEMP/bound-observation.json"
+          jq -e '.observation.capability_id == "canonical_generation" and .observation.kind == "confirmed" and .observation.non_executing == true and .observation.non_authorizing == true' "$RUNNER_TEMP/bound-observation.json"
