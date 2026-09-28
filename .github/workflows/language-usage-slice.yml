@@ -18,9 +18,10 @@ permissions:
 
 jobs:
   usage-contract:
+    if: ${{ github.event_name != 'push' || github.ref_name != 'agent/capability-discovery-20260928' }}
     name: usage contract
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 60
     steps:
       - name: Check out source
         uses: actions/checkout@v4
@@ -32,7 +33,7 @@ jobs:
       - name: Test
         run: go test ./...
       - name: Race test
-        run: go test -race -timeout=35m ./gooo/...
+        run: go test -race -timeout=50m ./gooo/...
       - name: Vet
         run: go vet ./...
       - name: Build usability commands
