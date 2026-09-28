@@ -1,0 +1,26 @@
+{
+  "fixture_kind": "illustrative_not_validation",
+  "natural_query": "What can gooo do to compare declaration provenance safely?",
+  "query_digest": "sha256:example-query",
+  "candidate_capability_ids": [
+    "gooo.declaration.diff",
+    "gooo.provenance.compare"
+  ],
+  "unresolved_terms": [],
+  "lsp_status": "BOUND",
+  "read_only_next_question": "Which declaration pair should be compared?",
+  "self_improvement_proposal": {
+    "from_stage": "MEASURED",
+    "to_stage": "PROPOSED",
+    "proposal": "Review a read-only provenance comparison example before implementation work.",
+    "evidence_digest": "sha256:example-observation",
+    "application_digest": "",
+    "authorization_granted": false
+  },
+  "constraints": [
+    "no_execution",
+    "no_permission_grant",
+    "no_automatic_source_mutation",
+    "unresolved_terms_remain_visible"
+  ]
+}
