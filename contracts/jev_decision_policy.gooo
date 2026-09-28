@@ -1,0 +1,7 @@
+package jevdecisionpolicy
+namespace jevdecisionpolicy
+
+entity DecisionPolicy id `gooo://gooo-jev/decision-policy`
+entity DecisionPolicyOutcome id `gooo://gooo-jev/decision-policy-outcome`
+
+activity EvaluateDecisionPolicy(DecisionPolicy, DecisionReceipt) -> DecisionPolicyOutcome
