@@ -206,7 +206,7 @@ func capabilityQueryContainsAlias(query, alias string) bool {
 		}
 		start := offset + relative
 		end := start + len(normalizedAlias)
-		if capabilityQueryAliasBoundary(query, start) && capabilityQueryAliasBoundary(query, end) {
+		if capabilityQueryAliasBoundary(query, start, true) && capabilityQueryAliasBoundary(query, end, false) {
 			return true
 		}
 		offset = end
@@ -214,19 +214,22 @@ func capabilityQueryContainsAlias(query, alias string) bool {
 	return false
 }
 
-func capabilityQueryAliasBoundary(query string, index int) bool {
-	if index == 0 || index == len(query) {
-		return true
-	}
+func capabilityQueryAliasBoundary(query string, index int, left bool) bool {
 	if index < 0 || index > len(query) {
 		return false
 	}
-	right, _ := utf8.DecodeRuneInString(query[index:])
-	if unicode.IsLetter(right) || unicode.IsDigit(right) || right == '_' {
-		return false
+	if left {
+		if index == 0 {
+			return true
+		}
+		boundary, _ := utf8.DecodeLastRuneInString(query[:index])
+		return !unicode.IsLetter(boundary) && !unicode.IsDigit(boundary) && boundary != '_'
 	}
-	left, _ := utf8.DecodeLastRuneInString(query[:index])
-	return !unicode.IsLetter(left) && !unicode.IsDigit(left) && left != '_'
+	if index == len(query) {
+		return true
+	}
+	boundary, _ := utf8.DecodeRuneInString(query[index:])
+	return !unicode.IsLetter(boundary) && !unicode.IsDigit(boundary) && boundary != '_'
 }
 
 func capabilityQueryMatch(entry capabilityQueryEntry) CapabilityQueryCapability {
