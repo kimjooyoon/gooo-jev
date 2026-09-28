@@ -6,11 +6,11 @@ import (
 )
 
 func TestSyntaxCompletionJSONRoundTripPreservesProvenance(t *testing.T) {
-	source := "package support
+	source := `package support
 namespace triage
 entity ticket id "ticket"
 activity assign(ticket) -> ticket
-"
+`
 	original := CompleteSyntax(source, "ti")
 	if err := original.Validate(); err != nil {
 		t.Fatalf("validate original completion: %v", err)
