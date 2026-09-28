@@ -17,6 +17,7 @@ type inputDocument struct {
 }
 
 type outputDocument struct {
+	Trail    gooo.CapabilityQueryTrail    `json:"capability_trail"`
 	Response gooo.CapabilityQueryResponse `json:"response"`
 	Feedback gooo.CapabilityQueryFeedback `json:"feedback"`
 }
@@ -40,12 +41,12 @@ func main() {
 		os.Exit(1)
 	}
 
-	var response gooo.CapabilityQueryResponse
-	if strings.TrimSpace(input.Declaration) == "" {
-		response = gooo.DiscoverCapabilityQuery(input.Query)
-	} else {
-		response = gooo.DiscoverCapabilityQueryWithDeclaration(input.Query, input.Declaration)
+	trail := gooo.DiscoverCapabilityQueryTrail(input.Query, input.Declaration)
+	if err := trail.Validate(); err != nil {
+		fmt.Fprintf(os.Stderr, "invalid capability trail: %v\n", err)
+		os.Exit(1)
 	}
+	response := trail.Response
 	feedback, err := gooo.ObserveCapabilityQueryFeedback(response, input.VerifiedStages)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "observe capability feedback: %v\n", err)
@@ -55,7 +56,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "invalid capability feedback: %v\n", err)
 		os.Exit(1)
 	}
-	if err := json.NewEncoder(os.Stdout).Encode(outputDocument{Response: response, Feedback: feedback}); err != nil {
+	if err := json.NewEncoder(os.Stdout).Encode(outputDocument{Trail: trail, Response: response, Feedback: feedback}); err != nil {
 		fmt.Fprintf(os.Stderr, "write capability feedback: %v\n", err)
 		os.Exit(1)
 	}
