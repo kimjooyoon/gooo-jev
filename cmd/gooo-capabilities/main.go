@@ -12,7 +12,7 @@ import (
 )
 
 type discoveryDocument struct {
-	Trail gooo.CapabilityQueryTrail  `json:"trail"`
+	Trail gooo.CapabilityQueryTrail `json:"trail"`
 	Guide gooo.CapabilityQueryGuide `json:"guide"`
 }
 
@@ -51,7 +51,7 @@ func main() {
 		os.Exit(64)
 	}
 
-	trail := gooo.DiscoverCapabilityQueryTrail(question, string(source))
+	trail := gooo.DiscoverCapabilityQueryTrailForDeclaration(question, string(source))
 	if err := trail.Validate(); err != nil {
 		fmt.Fprintf(os.Stderr, "validate capability query trail: %v\n", err)
 		os.Exit(1)
