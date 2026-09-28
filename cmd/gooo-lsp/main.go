@@ -73,7 +73,7 @@ func main() {
         if query == "" {
             query = "What can gooo do with this declaration?"
         }
-        capabilityDiscovery := gooo.DiscoverCapabilityQuery(query)
+        capabilityDiscovery := gooo.DiscoverCapabilityQueryWithDeclaration(query, input.Source)
         if err := capabilityDiscovery.Validate(); err != nil {
             if encodeErr := encoder.Encode(response{ID: input.ID, Error: &problem{Code: "invalid_capability_discovery", Message: err.Error()}}); encodeErr != nil {
                 fmt.Fprintln(os.Stderr, encodeErr)
