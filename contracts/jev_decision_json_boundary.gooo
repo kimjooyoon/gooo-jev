@@ -1,0 +1,7 @@
+package jevdecisionjsonboundary
+namespace jevdecisionjsonboundary
+
+entity DecisionObservationDocument id `gooo://gooo-jev/decision-observation-document`
+entity DecisionReceiptJSON id `gooo://gooo-jev/decision-receipt-json`
+
+activity ObserveDecisionJSON(DecisionObservationDocument) -> DecisionReceiptJSON
