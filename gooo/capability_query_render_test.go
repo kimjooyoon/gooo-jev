@@ -45,3 +45,11 @@ func TestRenderCapabilityQueryRejectsUnboundGuide(t *testing.T) {
 		t.Fatal("renderer should reject a guide from another query")
 	}
 }
+
+func TestRenderCapabilityQueryRejectsMismatchedCapabilityGuide(t *testing.T) {
+	trail := DiscoverCapabilityQueryTrail("Can gooo inspect provenance?", "")
+	guide := DiscoverCapabilityQueryGuide("Can gooo generate code?", "")
+	if _, err := RenderCapabilityQuery(trail, guide); err == nil {
+		t.Fatal("renderer should reject a guide with different capability evidence")
+	}
+}
