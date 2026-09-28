@@ -27,6 +27,7 @@ type response struct {
     Completion *gooo.SyntaxCompletionResponse `json:"completion,omitempty"`
     Discovery *gooo.UsageDiscoveryResponse `json:"discovery,omitempty"`
     CapabilityDiscovery *gooo.CapabilityQueryResponse `json:"capability_discovery,omitempty"`
+    CapabilityTrail *gooo.CapabilityQueryTrail `json:"capability_trail,omitempty"`
     Assistance *gooo.UsageAssistance `json:"assistance,omitempty"`
     Error *problem `json:"error,omitempty"`
 }
@@ -73,15 +74,16 @@ func main() {
         if query == "" {
             query = "What can gooo do with this declaration?"
         }
-        capabilityDiscovery := gooo.DiscoverCapabilityQueryWithDeclaration(query, input.Source)
-        if err := capabilityDiscovery.Validate(); err != nil {
-            if encodeErr := encoder.Encode(response{ID: input.ID, Error: &problem{Code: "invalid_capability_discovery", Message: err.Error()}}); encodeErr != nil {
+        capabilityTrail := gooo.DiscoverCapabilityQueryTrail(query, input.Source)
+        if err := capabilityTrail.Validate(); err != nil {
+            if encodeErr := encoder.Encode(response{ID: input.ID, Error: &problem{Code: "invalid_capability_trail", Message: err.Error()}}); encodeErr != nil {
                 fmt.Fprintln(os.Stderr, encodeErr)
                 os.Exit(1)
             }
             continue
         }
-        if err := encoder.Encode(response{ID: input.ID, Completion: &completion, Discovery: &discovery, CapabilityDiscovery: &capabilityDiscovery, Assistance: &assistance}); err != nil {
+        capabilityDiscovery := capabilityTrail.Response
+        if err := encoder.Encode(response{ID: input.ID, Completion: &completion, Discovery: &discovery, CapabilityDiscovery: &capabilityDiscovery, CapabilityTrail: &capabilityTrail, Assistance: &assistance}); err != nil {
             fmt.Fprintln(os.Stderr, err)
             os.Exit(1)
         }
