@@ -17,11 +17,12 @@ jobs:
         with:
           go-version-file: go.mod
           cache: true
-      - name: Print bound observation
+      - name: Print bound discovery and observation
         shell: bash
         run: |
           set -euo pipefail
           go run ./cmd/gooo-discover examples/support-triage/usecase.gooo > "$RUNNER_TEMP/bound-discovery.json"
+          jq -S '{source_digest:.discovery.source_digest, ir_digest:.discovery.ir_digest, status:.discovery.status, digest_lengths:{source:(.discovery.source_digest|length),ir:(.discovery.ir_digest|length)}}' "$RUNNER_TEMP/bound-discovery.json"
           go run ./cmd/gooo-plan "$RUNNER_TEMP/bound-discovery.json" > "$RUNNER_TEMP/bound-plan.json"
           bound_plan_digest=$(jq -r '.plan_digest' "$RUNNER_TEMP/bound-plan.json")
           go run ./cmd/gooo-observe "$RUNNER_TEMP/bound-plan.json" canonical_generation:write_generated_declaration confirmed generation_quality 1 "$bound_plan_digest" 2026-09-28T00:00:00Z > "$RUNNER_TEMP/bound-observation.json"
