@@ -106,7 +106,40 @@ func TestObserveBatchRejectsDuplicateAndTamperedState(t *testing.T) {
 	}
 }
 
-func TestObserveBatchJSONPreservesUnknownReceipt(t *testing.T) {
+func TestValidateBatchRejectsReceiptForDifferentSpec(t *testing.T) {
+	confident := 0.8
+	batch, err := ObserveBatch(State{Digest: "state-pairing"}, []BatchObservation{{
+		Spec: Spec{
+			ID:             "route",
+			Question:       "Which route should handle this?",
+			Kind:           KindChoice,
+			AllowedChoices: []string{"fast", "review"},
+			PolicyDigest:   "policy-route",
+		},
+		Result: Result{
+			SpecID:         "route",
+			Kind:           KindChoice,
+			Value:          Value{Choice: "fast"},
+			Confidence:     &confident,
+			EvidenceDigest: "evidence-route",
+			Provider:       "jev",
+			Model:          "jev-latest",
+			Status:         StatusObserved,
+			ObservedAt:     batchResultTime(),
+		},
+	}})
+	if err != nil {
+		t.Fatalf("ObserveBatch() error = %v", err)
+	}
+	batch.SpecIDs[0] = "different-route"
+	batch.BatchDigest, err = batch.computeDigest()
+	if err != nil {
+		t.Fatalf("compute resealed batch digest: %v", err)
+	}
+	if err := batch.Validate(); err == nil {
+		t.Fatal("batch with a receipt paired to a different spec unexpectedly validated")
+	}
+}func TestObserveBatchJSONPreservesUnknownReceipt(t *testing.T) {
 	input := []byte(`{
 		"state": {"digest": "state-json"},
 		"observations": [{

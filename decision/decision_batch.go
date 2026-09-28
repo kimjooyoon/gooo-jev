@@ -146,6 +146,9 @@ func (receipt DecisionBatchReceipt) Validate() error {
 			return fmt.Errorf("decision batch contains duplicate spec id %q", specID)
 		}
 		seen[specID] = struct{}{}
+		if receipt.Receipts[index].SpecID != specID {
+			return errors.New("decision batch receipt spec id mismatch")
+		}
 		if err := receipt.Receipts[index].Validate(); err != nil {
 			return fmt.Errorf("validate decision batch receipt %d: %w", index, err)
 		}
