@@ -1,0 +1,5 @@
+{
+  "source": "module inventory\ninput item\noutput report\nstatus pending\n",
+  "prefix": "input item",
+  "query": "What can gooo do with this declaration?"
+}
