@@ -5,20 +5,20 @@ import "fmt"
 type CapabilityQueryGuideAction string
 
 const (
-	CapabilityQueryGuideAskClarifyingQuestion  CapabilityQueryGuideAction = "ASK_CLARIFYING_QUESTION"
-	CapabilityQueryGuideInspectNextOperation   CapabilityQueryGuideAction = "INSPECT_NEXT_OPERATION"
+	CapabilityQueryGuideAskClarifyingQuestion   CapabilityQueryGuideAction = "ASK_CLARIFYING_QUESTION"
+	CapabilityQueryGuideInspectNextOperation    CapabilityQueryGuideAction = "INSPECT_NEXT_OPERATION"
 	CapabilityQueryGuideRequireExternalBoundary CapabilityQueryGuideAction = "REQUIRE_EXTERNAL_BOUNDARY"
 )
 
 type CapabilityQueryGuide struct {
-	OverviewDigest  string                     `json:"overview_digest"`
-	Status          CapabilityQueryState       `json:"status"`
-	Action          CapabilityQueryGuideAction  `json:"action"`
-	CapabilityIDs   []string                   `json:"capability_ids"`
-	NextOperations  []string                   `json:"next_operations"`
-	Questions       []string                   `json:"questions"`
-	Constraints     []string                   `json:"constraints"`
-	EvidenceDigest  string                     `json:"evidence_digest"`
+	OverviewDigest string                    `json:"overview_digest"`
+	Status         CapabilityQueryState      `json:"status"`
+	Action         CapabilityQueryGuideAction `json:"action"`
+	CapabilityIDs  []string                  `json:"capability_ids"`
+	NextOperations []string                  `json:"next_operations"`
+	Questions      []string                  `json:"questions"`
+	Constraints    []string                  `json:"constraints"`
+	EvidenceDigest string                    `json:"evidence_digest"`
 }
 
 var capabilityQueryGuideConstraints = []string{
@@ -29,6 +29,8 @@ var capabilityQueryGuideConstraints = []string{
 	"no_catalog_mutation",
 	"cache_presence_is_not_semantic_evidence",
 }
+
+const capabilityQueryGuideExternalBoundaryQuestion = "What explicit external boundary is required before execution?"
 
 func DiscoverCapabilityQueryGuide(query, declaration string) CapabilityQueryGuide {
 	overview := DiscoverCapabilityQueryOverview(query, declaration)
@@ -47,11 +49,21 @@ func DiscoverCapabilityQueryGuide(query, declaration string) CapabilityQueryGuid
 		guide.Action = CapabilityQueryGuideAskClarifyingQuestion
 	case CapabilityQueryDeferred:
 		guide.Action = CapabilityQueryGuideRequireExternalBoundary
+		guide.Questions = prependCapabilityQueryGuideQuestion(guide.Questions, capabilityQueryGuideExternalBoundaryQuestion)
 	case CapabilityQueryAvailable:
 		guide.Action = CapabilityQueryGuideInspectNextOperation
 	}
 	guide.EvidenceDigest = digestCapabilityQueryGuide(guide)
 	return guide
+}
+
+func prependCapabilityQueryGuideQuestion(questions []string, wanted string) []string {
+	for _, question := range questions {
+		if question == wanted {
+			return questions
+		}
+	}
+	return append([]string{wanted}, questions...)
 }
 
 func (guide CapabilityQueryGuide) Validate() error {
