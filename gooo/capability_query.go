@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"sort"
 	"strings"
+	"unicode"
+	"unicode/utf8"
 )
 
 type CapabilityQueryState string
@@ -172,7 +174,7 @@ func capabilityQueryMatches(query string) []CapabilityQueryCapability {
 	} else {
 		for _, entry := range capabilityQueryCatalog {
 			for _, alias := range entry.Aliases {
-				if strings.Contains(normalized, strings.ToLower(alias)) {
+				if capabilityQueryContainsAlias(normalized, alias) {
 					matches = append(matches, capabilityQueryMatch(entry))
 					break
 				}
@@ -190,6 +192,41 @@ func capabilityQueryMatches(query string) []CapabilityQueryCapability {
 		unique = append(unique, match)
 	}
 	return unique
+}
+
+func capabilityQueryContainsAlias(query, alias string) bool {
+	normalizedAlias := strings.ToLower(strings.TrimSpace(alias))
+	if normalizedAlias == "" {
+		return false
+	}
+	for offset := 0; offset <= len(query); {
+		relative := strings.Index(query[offset:], normalizedAlias)
+		if relative < 0 {
+			return false
+		}
+		start := offset + relative
+		end := start + len(normalizedAlias)
+		if capabilityQueryAliasBoundary(query, start) && capabilityQueryAliasBoundary(query, end) {
+			return true
+		}
+		offset = end
+	}
+	return false
+}
+
+func capabilityQueryAliasBoundary(query string, index int) bool {
+	if index == 0 || index == len(query) {
+		return true
+	}
+	if index < 0 || index > len(query) {
+		return false
+	}
+	right, _ := utf8.DecodeRuneInString(query[index:])
+	if unicode.IsLetter(right) || unicode.IsDigit(right) || right == '_' {
+		return false
+	}
+	left, _ := utf8.DecodeLastRuneInString(query[:index])
+	return !unicode.IsLetter(left) && !unicode.IsDigit(left) && left != '_'
 }
 
 func capabilityQueryMatch(entry capabilityQueryEntry) CapabilityQueryCapability {
