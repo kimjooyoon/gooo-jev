@@ -13,13 +13,23 @@ type BatchObservation struct {
 	Result Result
 }
 
+type DecisionBatchSpec struct {
+	ID             string   `json:"id"`
+	Question       string   `json:"question"`
+	Kind           Kind     `json:"kind"`
+	AllowedChoices []string `json:"allowed_choices"`
+	Threshold      *float64 `json:"threshold"`
+	PolicyDigest   string   `json:"policy_digest"`
+}
+
 type DecisionBatchReceipt struct {
-	Schema         string    `json:"schema"`
-	StateDigest    string    `json:"state_digest"`
-	SpecIDs        []string  `json:"spec_ids"`
-	Receipts       []Receipt `json:"receipts"`
-	NonAuthorizing bool      `json:"non_authorizing"`
-	BatchDigest    string    `json:"batch_digest"`
+	Schema         string              `json:"schema"`
+	StateDigest    string              `json:"state_digest"`
+	Specs          []DecisionBatchSpec `json:"specs"`
+	SpecIDs        []string            `json:"spec_ids"`
+	Receipts       []Receipt           `json:"receipts"`
+	NonAuthorizing bool                `json:"non_authorizing"`
+	BatchDigest    string              `json:"batch_digest"`
 }
 
 type DecisionBatchObservationJSON struct {
@@ -58,6 +68,7 @@ func ObserveBatch(state State, observations []BatchObservation) (DecisionBatchRe
 		if err != nil {
 			return DecisionBatchReceipt{}, err
 		}
+		receipt.Specs = append(receipt.Specs, batchSpec(observation.Spec))
 		receipt.SpecIDs = append(receipt.SpecIDs, observation.Spec.ID)
 		receipt.Receipts = append(receipt.Receipts, observed)
 	}
@@ -112,12 +123,14 @@ func (receipt DecisionBatchReceipt) computeDigest() (string, error) {
 	return Digest(struct {
 		Schema         string
 		StateDigest    string
+		Specs          []DecisionBatchSpec
 		SpecIDs        []string
 		Receipts       []Receipt
 		NonAuthorizing bool
 	}{
 		Schema:         receipt.Schema,
 		StateDigest:    receipt.StateDigest,
+		Specs:          receipt.Specs,
 		SpecIDs:        receipt.SpecIDs,
 		Receipts:       receipt.Receipts,
 		NonAuthorizing: receipt.NonAuthorizing,
@@ -131,7 +144,7 @@ func (receipt DecisionBatchReceipt) Validate() error {
 	if strings.TrimSpace(receipt.StateDigest) == "" {
 		return errors.New("decision batch state digest is required")
 	}
-	if len(receipt.SpecIDs) == 0 || len(receipt.SpecIDs) != len(receipt.Receipts) {
+	if len(receipt.SpecIDs) == 0 || len(receipt.SpecIDs) != len(receipt.Specs) || len(receipt.SpecIDs) != len(receipt.Receipts) {
 		return errors.New("decision batch spec and receipt counts must match")
 	}
 	if !receipt.NonAuthorizing {
@@ -146,8 +159,19 @@ func (receipt DecisionBatchReceipt) Validate() error {
 			return fmt.Errorf("decision batch contains duplicate spec id %q", specID)
 		}
 		seen[specID] = struct{}{}
-		if receipt.Receipts[index].SpecID != specID {
+		spec := receipt.Specs[index].model()
+		if spec.ID != specID {
 			return errors.New("decision batch receipt spec id mismatch")
+		}
+		if err := spec.Validate(); err != nil {
+			return fmt.Errorf("validate decision batch spec %d: %w", index, err)
+		}
+		specDigest, err := Digest(spec)
+		if err != nil {
+			return fmt.Errorf("digest decision batch spec %d: %w", index, err)
+		}
+		if receipt.Receipts[index].SpecDigest != specDigest || receipt.Receipts[index].PolicyDigest != spec.PolicyDigest {
+			return errors.New("decision batch receipt does not match its spec")
 		}
 		if err := receipt.Receipts[index].Validate(); err != nil {
 			return fmt.Errorf("validate decision batch receipt %d: %w", index, err)
@@ -167,4 +191,30 @@ func (receipt DecisionBatchReceipt) Validate() error {
 		return errors.New("decision batch digest mismatch")
 	}
 	return nil
+}
+
+func batchSpec(spec Spec) DecisionBatchSpec {
+	var allowedChoices []string
+	if spec.AllowedChoices != nil {
+		allowedChoices = make([]string, len(spec.AllowedChoices))
+		copy(allowedChoices, spec.AllowedChoices)
+	}
+	var threshold *float64
+	if spec.Threshold != nil {
+		value := *spec.Threshold
+		threshold = &value
+	}
+	return DecisionBatchSpec{
+		ID: spec.ID, Question: spec.Question, Kind: spec.Kind,
+		AllowedChoices: allowedChoices, Threshold: threshold,
+		PolicyDigest: spec.PolicyDigest,
+	}
+}
+
+func (spec DecisionBatchSpec) model() Spec {
+	return Spec{
+		ID: spec.ID, Question: spec.Question, Kind: spec.Kind,
+		AllowedChoices: spec.AllowedChoices, Threshold: spec.Threshold,
+		PolicyDigest: spec.PolicyDigest,
+	}
 }

@@ -139,7 +139,9 @@ func TestValidateBatchRejectsReceiptForDifferentSpec(t *testing.T) {
 	if err := batch.Validate(); err == nil {
 		t.Fatal("batch with a receipt paired to a different spec unexpectedly validated")
 	}
-}func TestObserveBatchJSONPreservesUnknownReceipt(t *testing.T) {
+}
+
+func TestObserveBatchJSONPreservesUnknownReceipt(t *testing.T) {
 	input := []byte(`{
 		"state": {"digest": "state-json"},
 		"observations": [{
