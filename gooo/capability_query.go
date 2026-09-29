@@ -48,6 +48,7 @@ type CapabilityQueryDeclaration struct {
 	Bound           bool     `json:"bound"`
 	SourceDigest    string   `json:"source_digest"`
 	ObservedSignals []string `json:"observed_signals"`
+	ObservedCapabilities []string `json:"observed_capabilities,omitempty"`
 }
 
 type capabilityQueryEntry struct {
@@ -66,8 +67,8 @@ var capabilityQueryCatalog = []capabilityQueryEntry{
 	{ID: "ir_generation", Stage: "GENERATION", Description: "derive an intermediate representation from a bound declaration", NextOperation: "generate_ir", ExampleQuery: "What IR can this .gooo declaration produce?", Aliases: []string{"ir", "intermediate representation", "representation", "중간 표현"}, Safe: true},
 	{ID: "canonical_generation", Stage: "GENERATION", Description: "produce a canonical .gooo declaration from its representation", NextOperation: "write_generated_declaration", ExampleQuery: "How do I generate a canonical .gooo declaration?", Aliases: []string{"generate", "generation", "codegen", "code generation", "생성", "코드 생성"}, Safe: true},
 	{ID: "round_trip_observation", Stage: "REVERSE_OBSERVATION", Description: "reparse generated source and compare its representation", NextOperation: "compare_round_trip_ir", ExampleQuery: "Can gooo compare a generated declaration round trip?", Aliases: []string{"round trip", "roundtrip", "reparse", "재파싱"}, Safe: true},
-	{ID: "reverse_observation", Stage: "REVERSE_OBSERVATION", Description: "inspect source and generation evidence at a reverse boundary", NextOperation: "inspect_reverse_digest", ExampleQuery: "How do I inspect reverse observation evidence?", Aliases: []string{"reverse observation", "reverse", "provenance", "origin", "기원", "역관찰"}, Safe: true},
-	{ID: "provenance", Stage: "PROVENANCE", Description: "trace source, generation, and reverse-observation evidence", NextOperation: "inspect_provenance_chain", ExampleQuery: "Where did this .gooo declaration come from?", Aliases: []string{"provenance chain", "source lineage", "source", "where did", "come from", "기원 추적"}, Safe: true},
+	{ID: "reverse_observation", Stage: "REVERSE_OBSERVATION", Description: "inspect source and generation evidence at a reverse boundary", NextOperation: "inspect_reverse_digest", ExampleQuery: "How do I inspect reverse observation evidence?", Aliases: []string{"reverse observation", "reverse", "origin", "기원", "역관찰"}, Safe: true},
+	{ID: "provenance", Stage: "PROVENANCE", Description: "trace source, generation, and reverse-observation evidence", NextOperation: "inspect_provenance_chain", ExampleQuery: "Where did this .gooo declaration come from?", Aliases: []string{"provenance", "provenance chain", "source lineage", "source", "where did", "come from", "기원 추적"}, Safe: true},
 	{ID: "feedback_trend", Stage: "FEEDBACK", Description: "compare feedback and calibration windows with evidence lineage", NextOperation: "compare_feedback_window", ExampleQuery: "How has gooo feedback changed over time?", Aliases: []string{"feedback", "trend", "calibration", "피드백", "추세"}, Safe: true},
 	{ID: "support_triage", Stage: "WORKFLOW", Description: "structure support-triage workflows and their next observations", NextOperation: "inspect_support_route", ExampleQuery: "How should I triage this gooo support request?", Aliases: []string{"support", "support triage", "triage", "workflow", "지원", "분류"}, Safe: true},
 	{ID: "security_boundary", Stage: "SECURITY_BOUNDARY", Description: "observe workload identity and network capability boundaries", NextOperation: "bind_external_security_evidence", ExampleQuery: "What external security boundary is required?", Aliases: []string{"security", "spiffe", "workload identity", "network", "credential", "보안"}, Safe: false},
@@ -118,6 +119,7 @@ func DiscoverCapabilityQuery(query string) CapabilityQueryResponse {
 func DiscoverCapabilityQueryWithDeclaration(query, declaration string) CapabilityQueryResponse {
 	response := DiscoverCapabilityQuery(query)
 	response.Declaration = inspectCapabilityQueryDeclaration(declaration)
+	response = bindCapabilityQueryDeclaration(response)
 	response.QueryDigest = digestCapabilityQuery(response)
 	return response
 }
@@ -159,6 +161,7 @@ func inspectCapabilityQueryDeclaration(declaration string) *CapabilityQueryDecla
 		Bound:           raw != "",
 		SourceDigest:    digestString("gooo-capability-declaration|" + raw),
 		ObservedSignals: signals,
+		ObservedCapabilities: capabilityQueryObservedCapabilities(signals),
 	}
 }
 
@@ -344,6 +347,7 @@ func digestCapabilityQuery(response CapabilityQueryResponse) string {
 	if response.Declaration != nil {
 		parts = append(parts, "declaration", fmt.Sprintf("%t", response.Declaration.Bound), response.Declaration.SourceDigest)
 		parts = append(parts, response.Declaration.ObservedSignals...)
+		parts = append(parts, response.Declaration.ObservedCapabilities...)
 	}
 	return digestString(strings.Join(parts, "|"))
 }

@@ -14,7 +14,7 @@ func TestRenderCapabilityQueryAvailable(t *testing.T) {
 	}
 	for _, expected := range []string{
 		"gooo capability discovery",
-		"canonical_generation",
+		"declaration_analysis",
 		"next questions:",
 		"non-executing: true",
 		"non-authorizing: true",
