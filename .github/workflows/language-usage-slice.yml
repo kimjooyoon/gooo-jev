@@ -74,7 +74,7 @@ jobs:
           grep -q "gooo capability discovery" "$RUNNER_TEMP/capability-guidance.txt"
           grep -q "non-authorizing: true" "$RUNNER_TEMP/capability-guidance.txt"
           go run ./cmd/gooo-capabilities -json -q "What can gooo do?" examples/support-triage/usecase.gooo > "$RUNNER_TEMP/capability-guidance.json"
-          jq -e ".trail.status == "AVAILABLE" and .guide.action == "INSPECT_NEXT_OPERATION" and .trail.non_executing == true and .trail.non_authorizing == true and .guide.evidence_digest != """ "$RUNNER_TEMP/capability-guidance.json"
+          jq -e '.trail.status == "AVAILABLE" and .guide.action == "INSPECT_NEXT_OPERATION" and .trail.non_executing == true and .trail.non_authorizing == true and .guide.evidence_digest != ""' "$RUNNER_TEMP/capability-guidance.json"
           jq -e '.capability_discovery.status == "AVAILABLE" and (.capability_discovery.capabilities | map(.id) | index("canonical_generation")) != null and .capability_discovery.non_executing == true and .capability_discovery.non_authorizing == true' "$RUNNER_TEMP/query-discovery.json"
           go run ./cmd/gooo-discover --query "What can gooo do with this declaration?" examples/support-triage/usecase.gooo > "$RUNNER_TEMP/combined-discovery.json"
           jq -e '.path == "examples/support-triage/usecase.gooo" and .discovery.status == "BOUND" and .capability_discovery.status == "AVAILABLE" and .capability_discovery.non_executing == true and .discovery.non_authorizing == true' "$RUNNER_TEMP/combined-discovery.json"
@@ -94,4 +94,5 @@ jobs:
           go run ./cmd/gooo-plan "$RUNNER_TEMP/bound-discovery.json" > "$RUNNER_TEMP/bound-plan.json"
           bound_plan_digest=$(jq -r '.plan_digest' "$RUNNER_TEMP/bound-plan.json")
           go run ./cmd/gooo-observe "$RUNNER_TEMP/bound-plan.json" canonical_generation:write_generated_declaration confirmed generation_quality 1 "$bound_plan_digest" 2026-09-28T00:00:00Z > "$RUNNER_TEMP/bound-observation.json"
+          jq -S . "$RUNNER_TEMP/bound-observation.json"
           jq -e '.observation.capability_id == "canonical_generation" and .observation.kind == "confirmed" and .observation.non_executing == true and .observation.non_authorizing == true' "$RUNNER_TEMP/bound-observation.json"

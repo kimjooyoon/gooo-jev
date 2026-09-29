@@ -1,0 +1,7 @@
+package jevdecisionbatch
+namespace jevdecisionbatch
+
+entity DecisionBatchObservation id `gooo://gooo-jev/decision-batch-observation`
+entity DecisionBatchReceipt id `gooo://gooo-jev/decision-batch-receipt`
+
+activity ObserveDecisionBatch(DecisionBatchObservation) -> DecisionBatchReceipt
