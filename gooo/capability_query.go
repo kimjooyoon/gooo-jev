@@ -17,28 +17,28 @@ const (
 )
 
 type CapabilityQueryCapability struct {
-	ID             string              `json:"id"`
+	ID             string               `json:"id"`
 	State          CapabilityQueryState `json:"state"`
-	Stage          string              `json:"stage"`
-	Description    string              `json:"description"`
-	NextOperation  string              `json:"next_operation"`
-	ExampleQuery   string              `json:"example_query"`
-	NonExecuting   bool                `json:"non_executing"`
-	NonAuthorizing bool                `json:"non_authorizing"`
+	Stage          string               `json:"stage"`
+	Description    string               `json:"description"`
+	NextOperation  string               `json:"next_operation"`
+	ExampleQuery   string               `json:"example_query"`
+	NonExecuting   bool                 `json:"non_executing"`
+	NonAuthorizing bool                 `json:"non_authorizing"`
 }
 
 type CapabilityQueryResponse struct {
-	Status          CapabilityQueryState       `json:"status"`
-	Query           string                     `json:"query"`
-	Capabilities    []CapabilityQueryCapability `json:"capabilities"`
-	Declaration     *CapabilityQueryDeclaration `json:"declaration,omitempty"`
-	Suggestions     []string                   `json:"suggestions"`
-	SuggestedQueries []string                  `json:"suggested_queries"`
-	FirstMismatch   string                     `json:"first_mismatch"`
-	MissingStage    string                     `json:"missing_stage"`
-	QueryDigest     string                     `json:"query_digest"`
-	NonExecuting    bool                       `json:"non_executing"`
-	NonAuthorizing  bool                       `json:"non_authorizing"`
+	Status           CapabilityQueryState        `json:"status"`
+	Query            string                      `json:"query"`
+	Capabilities     []CapabilityQueryCapability `json:"capabilities"`
+	Declaration      *CapabilityQueryDeclaration `json:"declaration,omitempty"`
+	Suggestions      []string                    `json:"suggestions"`
+	SuggestedQueries []string                    `json:"suggested_queries"`
+	FirstMismatch    string                      `json:"first_mismatch"`
+	MissingStage     string                      `json:"missing_stage"`
+	QueryDigest      string                      `json:"query_digest"`
+	NonExecuting     bool                        `json:"non_executing"`
+	NonAuthorizing   bool                        `json:"non_authorizing"`
 }
 
 // CapabilityQueryDeclaration records only source-bound observations from a
@@ -66,8 +66,8 @@ var capabilityQueryCatalog = []capabilityQueryEntry{
 	{ID: "ir_generation", Stage: "GENERATION", Description: "derive an intermediate representation from a bound declaration", NextOperation: "generate_ir", ExampleQuery: "What IR can this .gooo declaration produce?", Aliases: []string{"ir", "intermediate representation", "representation", "중간 표현"}, Safe: true},
 	{ID: "canonical_generation", Stage: "GENERATION", Description: "produce a canonical .gooo declaration from its representation", NextOperation: "write_generated_declaration", ExampleQuery: "How do I generate a canonical .gooo declaration?", Aliases: []string{"generate", "generation", "codegen", "code generation", "생성", "코드 생성"}, Safe: true},
 	{ID: "round_trip_observation", Stage: "REVERSE_OBSERVATION", Description: "reparse generated source and compare its representation", NextOperation: "compare_round_trip_ir", ExampleQuery: "Can gooo compare a generated declaration round trip?", Aliases: []string{"round trip", "roundtrip", "reparse", "재파싱"}, Safe: true},
-	{ID: "reverse_observation", Stage: "REVERSE_OBSERVATION", Description: "inspect source and generation evidence at a reverse boundary", NextOperation: "inspect_reverse_digest", ExampleQuery: "How do I inspect reverse observation evidence?", Aliases: []string{"reverse observation", "reverse", "provenance", "origin", "기원", "역관찰"}, Safe: true},
-	{ID: "provenance", Stage: "PROVENANCE", Description: "trace source, generation, and reverse-observation evidence", NextOperation: "inspect_provenance_chain", ExampleQuery: "Where did this .gooo declaration come from?", Aliases: []string{"provenance chain", "source lineage", "source", "where did", "come from", "기원 추적"}, Safe: true},
+	{ID: "reverse_observation", Stage: "REVERSE_OBSERVATION", Description: "inspect source and generation evidence at a reverse boundary", NextOperation: "inspect_reverse_digest", ExampleQuery: "How do I inspect reverse observation evidence?", Aliases: []string{"reverse observation", "reverse", "origin", "역관찰"}, Safe: true},
+	{ID: "provenance", Stage: "PROVENANCE", Description: "trace source, generation, and reverse-observation evidence", NextOperation: "inspect_provenance_chain", ExampleQuery: "Where did this .gooo declaration come from?", Aliases: []string{"provenance", "provenance chain", "source lineage", "source", "where did", "come from", "기원 추적"}, Safe: true},
 	{ID: "feedback_trend", Stage: "FEEDBACK", Description: "compare feedback and calibration windows with evidence lineage", NextOperation: "compare_feedback_window", ExampleQuery: "How has gooo feedback changed over time?", Aliases: []string{"feedback", "trend", "calibration", "피드백", "추세"}, Safe: true},
 	{ID: "support_triage", Stage: "WORKFLOW", Description: "structure support-triage workflows and their next observations", NextOperation: "inspect_support_route", ExampleQuery: "How should I triage this gooo support request?", Aliases: []string{"support", "support triage", "triage", "workflow", "지원", "분류"}, Safe: true},
 	{ID: "security_boundary", Stage: "SECURITY_BOUNDARY", Description: "observe workload identity and network capability boundaries", NextOperation: "bind_external_security_evidence", ExampleQuery: "What external security boundary is required?", Aliases: []string{"security", "spiffe", "workload identity", "network", "credential", "보안"}, Safe: false},
@@ -78,14 +78,14 @@ var capabilityQueryCatalog = []capabilityQueryEntry{
 // a natural-language question. It never executes a plan or grants authority.
 func DiscoverCapabilityQuery(query string) CapabilityQueryResponse {
 	response := CapabilityQueryResponse{
-		Status:         CapabilityQueryUnknown,
-		Query:          strings.TrimSpace(query),
-		Suggestions:    capabilityQuerySuggestions(),
+		Status:           CapabilityQueryUnknown,
+		Query:            strings.TrimSpace(query),
+		Suggestions:      capabilityQuerySuggestions(),
 		SuggestedQueries: capabilityQueryExampleSuggestions(),
-		FirstMismatch:  "query",
-		MissingStage:   "capability_catalog",
-		NonExecuting:   true,
-		NonAuthorizing: true,
+		FirstMismatch:    "query",
+		MissingStage:     "capability_catalog",
+		NonExecuting:     true,
+		NonAuthorizing:   true,
 	}
 	if response.Query == "" {
 		response.MissingStage = "capability_query"
@@ -250,7 +250,30 @@ func capabilityQueryAliasBoundary(query string, index int, left bool) bool {
 		return true
 	}
 	boundary, _ := utf8.DecodeRuneInString(query[index:])
-	return !unicode.IsLetter(boundary) && !unicode.IsDigit(boundary) && boundary != '_'
+	if !unicode.IsLetter(boundary) && !unicode.IsDigit(boundary) && boundary != '_' {
+		return true
+	}
+	return capabilityQueryKoreanParticleBoundary(query[index:])
+}
+
+// Korean particles attach directly to the preceding noun, so requiring a
+// Unicode word boundary rejects ordinary questions such as "코드 생성은?".
+// Accept only a bounded list of common particles; arbitrary Hangul suffixes
+// must still not turn a substring into a catalog match.
+func capabilityQueryKoreanParticleBoundary(suffix string) bool {
+	if suffix == "" {
+		return false
+	}
+	r, _ := utf8.DecodeRuneInString(suffix)
+	if r < '\uac00' || r > '\ud7a3' {
+		return false
+	}
+	for _, particle := range []string{"에서", "에게", "한테", "으로", "까지", "부터", "처럼", "은", "는", "이", "가", "을", "를", "에", "의", "와", "과", "로", "도", "만"} {
+		if strings.HasPrefix(suffix, particle) {
+			return true
+		}
+	}
+	return false
 }
 
 func capabilityQueryMatch(entry capabilityQueryEntry) CapabilityQueryCapability {

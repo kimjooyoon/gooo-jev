@@ -98,6 +98,35 @@ func TestDiscoverCapabilityQueryRejectsSubstringAlias(t *testing.T) {
 	}
 }
 
+func TestDiscoverCapabilityQueryMatchesKoreanParticleSuffixes(t *testing.T) {
+	cases := []struct {
+		query string
+		want  string
+	}{
+		{query: "코드 생성은 어떻게 해?", want: "canonical_generation"},
+		{query: "진단을 할 수 있나요?", want: "declaration_analysis"},
+		{query: "기원 추적이 가능한가요?", want: "provenance"},
+	}
+	for _, tc := range cases {
+		t.Run(tc.query, func(t *testing.T) {
+			response := DiscoverCapabilityQuery(tc.query)
+			if response.Status != CapabilityQueryAvailable || !hasCapabilityQuery(response.Capabilities, tc.want) {
+				t.Fatalf("Korean particle-attached alias did not match %q: %+v", tc.want, response)
+			}
+			if err := response.Validate(); err != nil {
+				t.Fatalf("response should validate: %v", err)
+			}
+		})
+	}
+}
+
+func TestDiscoverCapabilityQueryDoesNotTreatArbitraryHangulSuffixAsBoundary(t *testing.T) {
+	response := DiscoverCapabilityQuery("코드 생성기")
+	if response.Status != CapabilityQueryUnknown || len(response.Capabilities) != 0 {
+		t.Fatalf("arbitrary Hangul suffix should not match: %+v", response)
+	}
+}
+
 func hasCapabilityQuery(capabilities []CapabilityQueryCapability, id string) bool {
 	_, ok := capabilityQueryByID(capabilities, id)
 	return ok

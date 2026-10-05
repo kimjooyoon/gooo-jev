@@ -15,6 +15,9 @@ The readable output includes matched capabilities, a next operation, example
 questions, declaration signals, constraints, and query/trail/guide digests.
 Execution and authorization requests remain deferred until an explicit
 external boundary is supplied.
+Korean capability phrases also match common attached particles (for example,
+`코드 생성은`), while arbitrary suffixes remain unmatched. Provenance queries
+route to provenance tracing rather than reverse-observation inspection.
 
 ## Typed decision JSON boundary
 
