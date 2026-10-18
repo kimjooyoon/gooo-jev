@@ -74,7 +74,7 @@ jobs:
           grep -q "gooo capability discovery" "$RUNNER_TEMP/capability-guidance.txt"
           grep -q "non-authorizing: true" "$RUNNER_TEMP/capability-guidance.txt"
           go run ./cmd/gooo-capabilities -json -q "What can gooo do?" examples/support-triage/usecase.gooo > "$RUNNER_TEMP/capability-guidance.json"
-          jq -e ".trail.status == "AVAILABLE" and .guide.action == "INSPECT_NEXT_OPERATION" and .trail.non_executing == true and .trail.non_authorizing == true and .guide.evidence_digest != """ "$RUNNER_TEMP/capability-guidance.json"
+          jq -e '.trail.status == "AVAILABLE" and .guide.action == "INSPECT_NEXT_OPERATION" and .trail.non_executing == true and .trail.non_authorizing == true and .guide.evidence_digest != ""' "$RUNNER_TEMP/capability-guidance.json"
           jq -e '.capability_discovery.status == "AVAILABLE" and (.capability_discovery.capabilities | map(.id) | index("canonical_generation")) != null and .capability_discovery.non_executing == true and .capability_discovery.non_authorizing == true' "$RUNNER_TEMP/query-discovery.json"
           go run ./cmd/gooo-discover --query "What can gooo do with this declaration?" examples/support-triage/usecase.gooo > "$RUNNER_TEMP/combined-discovery.json"
           jq -e '.path == "examples/support-triage/usecase.gooo" and .discovery.status == "BOUND" and .capability_discovery.status == "AVAILABLE" and .capability_discovery.non_executing == true and .discovery.non_authorizing == true' "$RUNNER_TEMP/combined-discovery.json"
