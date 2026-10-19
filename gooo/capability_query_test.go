@@ -98,6 +98,39 @@ func TestDiscoverCapabilityQueryRejectsSubstringAlias(t *testing.T) {
 	}
 }
 
+func TestDiscoverCapabilityQueryRoutesProvenanceAndReverseObservation(t *testing.T) {
+	tests := []struct {
+		name   string
+		query  string
+		status CapabilityQueryState
+		ids    []string
+	}{
+		{name: "bare provenance", query: "provenance", status: CapabilityQueryAvailable, ids: []string{"provenance"}},
+		{name: "provenance chain", query: "inspect provenance chain", status: CapabilityQueryAvailable, ids: []string{"provenance"}},
+		{name: "explicit reverse", query: "How do I inspect reverse observation evidence?", status: CapabilityQueryAvailable, ids: []string{"reverse_observation"}},
+		{name: "origin alias", query: "origin", status: CapabilityQueryAvailable, ids: []string{"reverse_observation"}},
+		{name: "mixed observations", query: "show provenance and reverse observation", status: CapabilityQueryAvailable, ids: []string{"provenance", "reverse_observation"}},
+		{name: "external boundary", query: "show provenance and authorize a network workload", status: CapabilityQueryDeferred, ids: []string{"execution_authorization", "provenance", "security_boundary"}},
+		{name: "substring", query: "provenanceful", status: CapabilityQueryUnknown},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			response := DiscoverCapabilityQuery(tt.query)
+			if response.Status != tt.status || len(response.Capabilities) != len(tt.ids) {
+				t.Fatalf("unexpected capability routing: %+v", response)
+			}
+			for i, id := range tt.ids {
+				if response.Capabilities[i].ID != id {
+					t.Fatalf("capability[%d] = %q, want %q", i, response.Capabilities[i].ID, id)
+				}
+			}
+			if err := response.Validate(); err != nil {
+				t.Fatalf("routed response should validate: %v", err)
+			}
+		})
+	}
+}
+
 func hasCapabilityQuery(capabilities []CapabilityQueryCapability, id string) bool {
 	_, ok := capabilityQueryByID(capabilities, id)
 	return ok
