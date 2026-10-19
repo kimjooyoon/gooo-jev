@@ -7,11 +7,15 @@ semantic answer and never executes or authorizes a declaration.
 ~~~text
 go run ./cmd/gooo-discover examples/support-triage/partial.gooo pro
 go run ./cmd/gooo-discover examples/support-triage/usecase.gooo pro
+go run ./cmd/gooo-discover examples/support-triage/partial.gooo pro > /tmp/gooo-discovery.json
+go run ./cmd/gooo-plan /tmp/gooo-discovery.json
 ~~~
 
 A partial declaration can still offer syntax completion and diagnostics.
 Generation, round-trip observation, reverse observation, and symbol
 completion remain UNKNOWN until the declaration reaches the required stage.
+The discovery JSON can be passed directly to the planner; completion
+digests and diagnostics survive the JSON round trip.
 
 The complete example uses this repository's decision declaration dialect:
 `property name type` belongs to the preceding entity, and an activity can

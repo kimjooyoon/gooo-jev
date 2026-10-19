@@ -1,6 +1,7 @@
 package gooo
 
 import (
+	"encoding/json"
 	"os"
 	"strings"
 	"testing"
@@ -39,6 +40,34 @@ func TestParseDiscoveryDeclarationDialectRoundTrip(t *testing.T) {
 	}
 	if err := discovery.Validate(); err != nil {
 		t.Fatalf("discovery validation: %v", err)
+	}
+}
+
+func TestDiscoveryJSONCanBePlannedWithoutLosingCompletionEvidence(t *testing.T) {
+	for _, source := range []string{richDeclaration, "package support\nnamespace triage\nentity ticket\nproperty\n"} {
+		discovery := DiscoverUsage(source, "pro")
+		encoded, err := json.Marshal(struct {
+			Discovery UsageDiscoveryResponse `json:"discovery"`
+		}{Discovery: discovery})
+		if err != nil {
+			t.Fatal(err)
+		}
+		var decoded struct {
+			Discovery UsageDiscoveryResponse `json:"discovery"`
+		}
+		if err := json.Unmarshal(encoded, &decoded); err != nil {
+			t.Fatal(err)
+		}
+		if err := decoded.Discovery.Validate(); err != nil {
+			t.Fatalf("discovery changed across JSON: %v", err)
+		}
+		plan, err := PlanUsageActions(decoded.Discovery)
+		if err != nil {
+			t.Fatalf("plan decoded discovery: %v", err)
+		}
+		if err := plan.Validate(); err != nil {
+			t.Fatalf("plan validation: %v", err)
+		}
 	}
 }
 
