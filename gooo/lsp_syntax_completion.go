@@ -7,23 +7,23 @@ import (
 )
 
 type SyntaxCompletionItem struct {
-	Label      string
-	Kind       string
-	Detail     string
-	ItemDigest string
+	Label      string `json:"label"`
+	Kind       string `json:"kind"`
+	Detail     string `json:"detail"`
+	ItemDigest string `json:"item_digest"`
 }
 
 type SyntaxCompletionResponse struct {
-	Status         string
-	MissingStage   string
-	SourceDigest   string
-	IRDigest       string
-	Prefix         string
-	Items          []SyntaxCompletionItem
-	ItemsDigest    string
-	Diagnostics    []Diagnostic
-	NonExecuting   bool
-	NonAuthorizing bool
+	Status         string                 `json:"status"`
+	MissingStage   string                 `json:"missing_stage"`
+	SourceDigest   string                 `json:"source_digest"`
+	IRDigest       string                 `json:"ir_digest"`
+	Prefix         string                 `json:"prefix"`
+	Items          []SyntaxCompletionItem `json:"items"`
+	ItemsDigest    string                 `json:"items_digest"`
+	Diagnostics    []Diagnostic           `json:"diagnostics"`
+	NonExecuting   bool                   `json:"non_executing"`
+	NonAuthorizing bool                   `json:"non_authorizing"`
 }
 
 // CompleteSyntax provides useful keyword suggestions while a declaration is
