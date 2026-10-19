@@ -61,10 +61,10 @@ func renderCanonical(document DocumentIR) string {
 	var builder strings.Builder
 	fmt.Fprintf(&builder, "package %s\nnamespace %s\n", document.Package, document.Namespace)
 	for _, entity := range document.Entities {
-		fmt.Fprintf(&builder, "entity %s id \"%s\"\n", entity.Name, entity.ID)
+		writeEntityCanonical(&builder, entity)
 	}
 	for _, activity := range document.Activities {
-		fmt.Fprintf(&builder, "activity %s(%s) -> %s\n", activity.Name, activity.Input, activity.Output)
+		writeActivityCanonical(&builder, activity)
 	}
 	return builder.String()
 }
@@ -73,10 +73,50 @@ func structureDigest(document DocumentIR) string {
 	var builder strings.Builder
 	fmt.Fprintf(&builder, "package=%s\nnamespace=%s\n", document.Package, document.Namespace)
 	for _, entity := range document.Entities {
-		fmt.Fprintf(&builder, "entity=%s|%s\n", entity.Name, entity.ID)
+		writeEntityStructure(&builder, entity)
 	}
 	for _, activity := range document.Activities {
-		fmt.Fprintf(&builder, "activity=%s|%s|%s\n", activity.Name, activity.Input, activity.Output)
+		writeActivityStructure(&builder, activity)
 	}
 	return digestString(builder.String())
+}
+
+func writeEntityCanonical(builder *strings.Builder, entity EntityDecl) {
+	fmt.Fprintf(builder, "entity %s id \"%s\"\n", entity.Name, entity.ID)
+	for _, property := range entity.Properties {
+		fmt.Fprintf(builder, "  property %s %s\n", property.Name, property.Type)
+	}
+}
+
+func writeActivityCanonical(builder *strings.Builder, activity ActivityDecl) {
+	if activity.Parameters == nil {
+		fmt.Fprintf(builder, "activity %s(%s) -> %s\n", activity.Name, activity.Input, activity.Output)
+		return
+	}
+	parameters := make([]string, 0, len(activity.Parameters))
+	for _, parameter := range activity.Parameters {
+		if parameter.Name == "" {
+			parameters = append(parameters, parameter.Type)
+		} else {
+			parameters = append(parameters, parameter.Name+" "+parameter.Type)
+		}
+	}
+	fmt.Fprintf(builder, "activity %s(%s) -> %s\n", activity.Name, strings.Join(parameters, ", "), activity.Output)
+}
+
+func writeEntityStructure(builder *strings.Builder, entity EntityDecl) {
+	fmt.Fprintf(builder, "entity=%s|%s\n", entity.Name, entity.ID)
+	for _, property := range entity.Properties {
+		fmt.Fprintf(builder, "property=%s|%s\n", property.Name, property.Type)
+	}
+}
+
+func writeActivityStructure(builder *strings.Builder, activity ActivityDecl) {
+	fmt.Fprintf(builder, "activity=%s|%s|%s\n", activity.Name, activity.Input, activity.Output)
+	if activity.Parameters != nil {
+		fmt.Fprintf(builder, "parameters=%d\n", len(activity.Parameters))
+		for _, parameter := range activity.Parameters {
+			fmt.Fprintf(builder, "parameter=%s|%s\n", parameter.Name, parameter.Type)
+		}
+	}
 }

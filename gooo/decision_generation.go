@@ -63,13 +63,13 @@ func renderDecisionCanonical(document DecisionDocumentIR) string {
 	var builder strings.Builder
 	fmt.Fprintf(&builder, "package %s\nnamespace %s\n", document.Base.Package, document.Base.Namespace)
 	for _, entity := range document.Base.Entities {
-		fmt.Fprintf(&builder, "entity %s id \"%s\"\n", entity.Name, entity.ID)
+		writeEntityCanonical(&builder, entity)
 	}
 	for _, decision := range document.Decisions {
 		fmt.Fprintf(&builder, "decision %s kind %s id \"%s\"\n", decision.Name, decision.Kind, decision.ID)
 	}
 	for _, activity := range document.Base.Activities {
-		fmt.Fprintf(&builder, "activity %s(%s) -> %s\n", activity.Name, activity.Input, activity.Output)
+		writeActivityCanonical(&builder, activity)
 	}
 	return builder.String()
 }
@@ -78,13 +78,13 @@ func decisionStructureDigest(document DecisionDocumentIR) string {
 	var builder strings.Builder
 	fmt.Fprintf(&builder, "package=%s\nnamespace=%s\n", document.Base.Package, document.Base.Namespace)
 	for _, entity := range document.Base.Entities {
-		fmt.Fprintf(&builder, "entity=%s|%s\n", entity.Name, entity.ID)
+		writeEntityStructure(&builder, entity)
 	}
 	for _, decision := range document.Decisions {
 		fmt.Fprintf(&builder, "decision=%s|%s|%s\n", decision.Name, decision.Kind, decision.ID)
 	}
 	for _, activity := range document.Base.Activities {
-		fmt.Fprintf(&builder, "activity=%s|%s|%s\n", activity.Name, activity.Input, activity.Output)
+		writeActivityStructure(&builder, activity)
 	}
 	return digestString(builder.String())
 }

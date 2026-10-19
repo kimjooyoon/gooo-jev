@@ -5,4 +5,7 @@ entity Ticket id "support-ticket"
   property state text
   property confidence number
 
+entity Route id "support-route"
+  property destination text
+
 activity route_ticket(ticket Ticket, confidence number) -> Route
